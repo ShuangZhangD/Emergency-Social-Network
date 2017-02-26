@@ -29,9 +29,10 @@ app.use('/users', users);
 
 
 
-app.post('/login', JoinCommunityCtrl.LoginCommunity)
-app.post('/login/confirmed', JoinCommunityCtrl.AddUser);
+app.post('/login', JoinCommunityCtrl.LoginCommunity);
+app.post('/signup', JoinCommunityCtrl.AddUser);
 app.get('/userlist', JoinCommunityCtrl.ListUser);
+app.post('/logout', JoinCommunityCtrl.Logout);
 
 
 // catch 404 and forward to error handler
