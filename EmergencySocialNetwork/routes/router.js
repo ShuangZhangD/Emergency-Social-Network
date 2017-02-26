@@ -1,7 +1,7 @@
 var express = require('express');
 var myParser = require("body-parser");
 var app = express();
-var JoinCommunityCtrl = require('./JoinCommunityCtrl.js');
+var JoinCommunityCtrl = require('../controller/JoinCommunityCtrl.js');
 
 app.use(myParser.urlencoded({extended : true}));
 

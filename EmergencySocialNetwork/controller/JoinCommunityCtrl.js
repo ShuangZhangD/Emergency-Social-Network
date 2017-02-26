@@ -1,6 +1,6 @@
 var express = require('express');
 var myParser = require("body-parser");
-var dboper = require("./dboperation.js");
+var dboper = require("../models/dboperation.js");
 var app = express();
 var md5 = require('md5');
 
@@ -35,8 +35,8 @@ module.exports = {
         res.status(statuscode).json({"success":0, "errortype":[content]});
       }
       else{
-        sorted_content = SortUserList(content)
-        co
+        sorted_content = SortUserList(content);
+          res.status(statuscode).json({"success":1, "data":[sorted_content]});
       }
     })
   }
