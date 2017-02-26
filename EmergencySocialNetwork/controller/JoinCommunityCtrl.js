@@ -3,6 +3,7 @@ var myParser = require("body-parser");
 var dboper = require("../models/dboperation.js");
 var app = express();
 var md5 = require('md5');
+//var user_class = require("../CreateDatabase.js")
 
 var Validate = function(username, password){
   if( /\w{3,}/.test(username) && /\w{4,}/.test(password) )
