@@ -23,11 +23,18 @@ class User {
     }
 
     // Method to display a user, takes the "USERS" collection as a parameter
-    displayUser(collection) {
+    displayUser(collection, callback) {
       this.collection = collection;
       collection.find({"username" : this.username}).toArray(function(err, results) {
-        console.dir(results);
-      });;
+        callback(results);
+      });
+    }
+
+    CheckPassword(collection, callback) {
+        this.collection = collection;
+        collection.find({"username" : this.username, "password": this.password}).toArray(function(err, results) {
+            callback(results);
+        });
     }
 
     // Method to delete a user, takes the "USERS" collection as a parameter
@@ -36,7 +43,7 @@ class User {
       collection.remove({"username" : this.username});
     }
 }
-
+module.exports = User
 // Creating Message Class
 class Message {
 
@@ -68,7 +75,7 @@ class Message {
 }
 
 // Database Connection to ESNDB
-var MongoClient = require('mongodb').MongoClient;
+/*var MongoClient = require('mongodb').MongoClient;
 MongoClient.connect('mongodb://127.0.0.1:27017/ESNDB', function (err, db) {
   if (err) {
     throw err;
@@ -88,4 +95,4 @@ MongoClient.connect('mongodb://127.0.0.1:27017/ESNDB', function (err, db) {
     test_message.displayMessage(collection);
     db.close();
   }
-});
+});*/
