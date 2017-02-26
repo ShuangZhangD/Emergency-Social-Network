@@ -1,26 +1,31 @@
 # Analysis Classes for Join Commmunity
 
 ### Entity Class: citizen
+- username
+- password
+- status
 
 ### Boundary Class: CitizenJoinCommunity
 - validate()
 - SendRegisterRequest()
-- MD5()
 - displayWelcomePage()
-- displayDirectory()
 - displayHomePage()
 - displayErrorMsg()
 
 ### ControlClass: JoinCommunityController
 - router()
-
-### Boundary Class:DirectoryJoinCommunity
+- validate()
 - CheckIfExist()
 - toConfirm()
-- checkPWD()
-- addUser()
 - setOnline()
 - setOffline()
+- addUser()
+- checkPWD()
+
+### Boundary Class:DirectoryJoinCommunity
+- displayDirectory()
+- SortDirectory()
 
 ### Entity Class: directory
+- citizens
 
