@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2e15bd1-1bf5-46a8-9b33-d18c19772c9a" name="Default" comment="join community backend version 6">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/EmergencySocialNetwork/controller/PublicChatCtrl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/EmergencySocialNetwork/models/PublicChatDBoper.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EmergencySocialNetwork/app.js" afterPath="$PROJECT_DIR$/EmergencySocialNetwork/app.js" />
+    <list default="true" id="f2e15bd1-1bf5-46a8-9b33-d18c19772c9a" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/s17-ESN-SV7.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,7 +27,7 @@
         <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/controller/JoinCommunityCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="435">
-              <caret line="29" column="29" lean-forward="true" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
+              <caret line="29" column="29" lean-forward="false" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -37,7 +37,20 @@
         <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/controller/PublicChatCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="300">
-              <caret line="22" column="22" lean-forward="true" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+              <caret line="22" column="22" lean-forward="false" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#40#0" expanded="false" />
+                <marker date="1488161296000" expanded="true" signature="253:480" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PublicChatDBoper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/models/PublicChatDBoper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
                 <element signature="e#0#40#0" expanded="false" />
               </folding>
@@ -45,14 +58,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PublicChatDBoper.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/models/PublicChatDBoper.js">
+      <file leaf-file-name="chatPublicly.ejs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/views/chatPublicly.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="12" column="18" lean-forward="true" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-              <folding>
-                <element signature="e#0#40#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="75">
+              <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -71,7 +82,7 @@
         <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/package.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
-              <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+              <caret line="8" column="29" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -81,7 +92,7 @@
         <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/models/JoinCommunityDBoper.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="159" column="9" lean-forward="true" selection-start-line="159" selection-start-column="9" selection-end-line="159" selection-end-column="9" />
+              <caret line="159" column="9" lean-forward="false" selection-start-line="159" selection-start-column="9" selection-end-line="159" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -175,24 +186,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="EmergencySocialNetwork" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="s17-ESN-SV7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="s17-ESN-SV7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EmergencySocialNetwork" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -319,7 +312,7 @@
       <workItem from="1488084559615" duration="11014000" />
       <workItem from="1488101190815" duration="6894000" />
       <workItem from="1488136984989" duration="1766000" />
-      <workItem from="1488157531343" duration="4554000" />
+      <workItem from="1488157531343" duration="6579000" />
     </task>
     <task id="LOCAL-00001" summary="join community backend version 1">
       <created>1488078534989</created>
@@ -342,11 +335,18 @@
       <option name="project" value="LOCAL" />
       <updated>1488095802500</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="join community backend version 6">
+      <created>1488165028527</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1488165028527</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25613000" />
+    <option name="totallyTimeSpent" value="27638000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="39" y="23" width="1241" height="777" extended-state="0" />
@@ -354,11 +354,11 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23360656" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31240875" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3109489" sideWeight="0.5032787" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3109489" sideWeight="0.4967213" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32846716" sideWeight="0.4967213" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -379,7 +379,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="join community backend version 1" />
     <MESSAGE value="join community backend version 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="join community backend version 3" />
+    <MESSAGE value="join community backend version 6" />
+    <option name="LAST_COMMIT_MESSAGE" value="join community backend version 6" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -512,7 +513,7 @@
     <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/models/JoinCommunityDBoper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
-          <caret line="159" column="9" lean-forward="true" selection-start-line="159" selection-start-column="9" selection-end-line="159" selection-end-column="9" />
+          <caret line="159" column="9" lean-forward="false" selection-start-line="159" selection-start-column="9" selection-end-line="159" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -521,19 +522,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1488164289000" expanded="true" signature="31355:31372" ph="..." />
-            <marker date="1488164289000" expanded="true" signature="31355:31390" ph="..." />
-            <marker date="1488164289000" expanded="true" signature="31355:31403" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/controller/JoinCommunityCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
-          <caret line="29" column="29" lean-forward="true" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
+          <caret line="29" column="29" lean-forward="false" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="29" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/controller/PublicChatCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="22" column="22" lean-forward="false" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+            <marker date="1488161296000" expanded="true" signature="253:480" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -545,31 +561,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/controller/PublicChatCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="22" column="22" lean-forward="true" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/models/PublicChatDBoper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="12" column="18" lean-forward="true" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+        <state relative-caret-position="240">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
             <element signature="e#0#40#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/views/chatPublicly.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
