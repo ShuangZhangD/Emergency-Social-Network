@@ -6,6 +6,7 @@ var assert = require('assert');
 var express = require('express');
 var url = 'mongodb://localhost:27017/test';
 
+var db_err_msg = "Database Error";
 
 exports.InsertMessage = function(sender, receiver, message, type, postTime, callback) {
     //connect to database
@@ -18,17 +19,10 @@ exports.InsertMessage = function(sender, receiver, message, type, postTime, call
         var collection = db.collection('messages');
         //insert into table
         var data = [{"sender":sender,"receiver":receiver, "message": message, "type": type, "postTime": postTime}];
-        collection.insert(data, function(err, result) {
-            if(err)
-            {
-                console.log('Error:'+ err);
-                callback(null, err);
-            }
-            else callback(result, null);
-        });
+        collection.insert(data, callback);
         db.close();
     });
-}
+};
 
 exports.LoadPublicMessage = function(callback) {
     MongoClient.connect(url, function(err, db) {
@@ -38,6 +32,25 @@ exports.LoadPublicMessage = function(callback) {
         }
         console.log("Connected correctly to server.");
         var collection = db.collection('messages');
-        collection.find({"type": "public"}, callback);
+        collection.find({"type": "public"}).toArray(function(err, results){
+            if(err)
+            {
+                console.log('Error:'+ err);
+                callback(err, "Database error");
+            }else {
+                var datas = [];
+                results.forEach(function(result){
+                    var data = {};
+                    data["username"] = result.sender;
+                    data["pubmsg"] = result.message;
+                    data["timestamp"] = result.postTime;
+                    console.log(result);
+                    datas.push(data);
+                });
+                var jsonString = JSON.stringify(datas);
+                callback(err,jsonString);
+            }
+        });
+        db.close();
     });
-}
+};

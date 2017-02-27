@@ -8,22 +8,31 @@ var dboper = require("../models/PublicChatDBoper.js");
 var app = express();
 
 module.exports = {
+
+
+    AddPublicMessage : function (req, res) {
+        var info = req.body;
+        var message = info["pubmsg"];
+        var sender = info["username"];
+        dboper.InsertMessage(sender, "everyone", message, "public", Date.now(), function (err, results) {
+            if (err) {
+                console.log('Error:'+ err);
+                res.json({success:0, err_type: 1, err_msg:"Database Error"});
+            } else {
+                res.json({success:1, suc_msg: "Success"});
+
+            }});
+    },
+
     LoadPublicMessage : function(req, res){
         dboper.LoadPublicMessage(function (err, results) {
             if (err) {
                 console.log('Error:'+ err);
+                res.json({success:0, err_type: 1, err_msg:results});
             } else {
-                res.status(200).json(results);
+
+                res.json({success:1, data: results});
             }
         });
-    },
-
-    AddPublicMessage : function (req, res) {
-        dboper.InsertMessage(req.sender, req.receiver, req.message, "public", new Date(), function (err, results) {
-            if (err) {
-                console.log('Error:'+ err);
-            } else {
-                res.status(200).json(results);
-            }});
     }
 };

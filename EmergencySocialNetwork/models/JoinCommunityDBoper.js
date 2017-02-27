@@ -55,7 +55,7 @@ var GetAllUsername = function(db, callback) {
         else {
             var userlist = [];
             results.forEach(function(result){
-                console.log(result)
+                console.log(result);
                 userlist.push(result.username);
             });
             callback(userlist, null);

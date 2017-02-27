@@ -11,18 +11,14 @@
     <div class="container">
     <br>
     {{retrieveMsgs}}
-    <tables ng-repeat="msg in displaymsg">
-        <tr>
-            <td>{{msg.username}}</td>
-            <td>{{msg.timestamp}}</td>
-        </tr>
-        <tr>
-            <td>
-                {{msg.message}}
-            </td>
-        </tr>
+    <ul>
+        <li ng-repeat="msg in displaymsg">
+            <div>{{msg.username}}</div>
+            <div>{{msg.timestamp| date: 'MM.dd.yyyy HH:mma' }}</div>
+            <div>{{msg.pubmsg}}</div>
+        </li>
+    </ul>
 
-    </tables>
     </div>
     <div class="container">
         <form class="form-signin" ng-submit="postMsg()">
