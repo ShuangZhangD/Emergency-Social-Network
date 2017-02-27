@@ -16,7 +16,7 @@ app.controller('chatPubliclyCtrl', function($scope, $http) {
                     // post success
                     // TODO update in directory
                     alert('Post Msg Success!');
-                    $scope.displaymsg=pubmsg; //add
+                    $scope.displaymsg.push(pubmsg); //add
                 }
                 else {
                     // login failed
@@ -42,7 +42,7 @@ app.controller('chatPubliclyCtrl', function($scope, $http) {
             });
 
     };
-    $scope.displaymsg=function(){
+    $scope.retrieveMsgs=function(){
         $http({
             method:'get',
             url:'http://localhost:8081/retriveMsgs',
