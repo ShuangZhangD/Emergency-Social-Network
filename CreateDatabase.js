@@ -41,10 +41,11 @@ class User {
 class Message {
 
   // Constructor for initializing values for a new message
-  constructor(senderid, receiverid, message) {
+  constructor(senderid, receiverid, message, created) {
     this.senderid = senderid;
     this.receiverid = receiverid;
     this.message = message;
+    this.created = created;
   }
 
   // Method to insert a new message, takes the "MESSAGE" collection as the parameter
@@ -55,6 +56,7 @@ class Message {
       "senderid"  : this.senderid,
       "receiverid"  : this.receiveid,
       "message"  : this.message,
+      "created"	 : this.created
     });
   }
 
@@ -83,7 +85,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/ESNDB', function (err, db) {
 
     // Initializing and creating a message
     collection = db.collection('MESSAGES');
-    let test_message = new Message("1", "2", "Test message created during testing");
+    let test_message = new Message("1", "2", "Test message created during testing", "12/01/2017 11:11:11");
     test_message.createMessage(collection);
     test_message.displayMessage(collection);
     db.close();
