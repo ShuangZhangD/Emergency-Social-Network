@@ -4,6 +4,7 @@
     <title>ChatPublicly</title>
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/stylesheets/chatPublicly.css" rel="stylesheet">
+    <link href="/stylesheets/app.css" rel="stylesheet">
 </head>
 <body>
 
@@ -11,13 +12,16 @@
     <div class="container">
     <br>
     {{retrieveMsgs}}
-    <ul>
-        <li ng-repeat="msg in displaymsg track by $index">
-            <div>{{msg.username}}</div>
-            <div>{{msg.timestamp| date: 'MM.dd.yyyy HH:mma' }}</div>
-            <div>{{msg.pubmsg}}</div>
-        </li>
-    </ul>
+        <div class="chatroom panel panel-success col-md-9 col-sm-9">
+            <div class="panel-body">
+        <div class="normal-message" ng-repeat="msg in displaymsg track by $index">
+
+            <div class="name-wrapper"><span>{{msg.username}} @ </span><span>{{msg.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
+            <div class="content-wrapper"><span class="content">{{msg.pubmsg}}</span><span class="avatar"></span></div>
+
+        </div>
+            </div>>
+        </div>>
 
     </div>
     <div class="container">
