@@ -6,13 +6,14 @@ var app = angular.module('chatPubliclyAPP', []);
 app.controller('chatPubliclyCtrl', function($scope, $http) {
     //$scope.name = "Runoob";
     $scope.postMsg = function() {
+        $scope.displaymsg.push($scope.pubmsg); //add
             $http({
                 method:'post',
                 url:'http://localhost:8081/public',
                 data:{pubmsg:$scope.pubmsg, username:$scope.username}
             }).success(function(rep){
                 console.log(rep);
-                $scope.displaymsg.push(pubmsg); //add
+                //$scope.displaymsg.push(pubmsg); //add
                 if (rep.success == 1) {
                     // post success
                     // TODO update in directory
@@ -46,7 +47,7 @@ app.controller('chatPubliclyCtrl', function($scope, $http) {
     $scope.retrieveMsgs=function(){
         $http({
             method:'get',
-            url:'http://localhost:8081/retriveMsgs',
+            url:'http://localhost:8081/public',
             //data:{pubmsg:$scope.pubmsg, username:$scope.username}
         }).success(function(rep){
             $scope.displaymsg=rep.data;
