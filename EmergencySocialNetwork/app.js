@@ -10,6 +10,8 @@ var users = require('./routes/users');
 
 var app = express();
 
+var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -24,6 +26,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+
+
+
+app.post('/login', JoinCommunityCtrl.LoginCommunity);
+app.post('/signup', JoinCommunityCtrl.AddUser);
+app.get('/userlist', JoinCommunityCtrl.ListUser);
+app.post('/logout', JoinCommunityCtrl.Logout);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,4 +54,15 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-app.listen(1234);
+app.listen(8081);
+
+
+
+
+
+
+
+
+
+
+
