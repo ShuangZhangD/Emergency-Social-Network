@@ -23,8 +23,8 @@
       <file leaf-file-name="JoinCommunityCtrl.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/controller/JoinCommunityCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <state relative-caret-position="315">
+              <caret line="21" column="18" lean-forward="true" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -126,20 +126,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="s17-ESN-SV7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="s17-ESN-SV7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EmergencySocialNetwork" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -228,7 +214,7 @@
       <workItem from="1488084559615" duration="11014000" />
       <workItem from="1488101190815" duration="6894000" />
       <workItem from="1488136984989" duration="3885000" />
-      <workItem from="1488153087965" duration="521000" />
+      <workItem from="1488153087965" duration="796000" />
     </task>
     <task id="LOCAL-00001" summary="join community backend version 1">
       <created>1488078534989</created>
@@ -272,11 +258,18 @@
       <option name="project" value="LOCAL" />
       <updated>1488153661682</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="join community backend version 6">
+      <created>1488153823194</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1488153823194</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23699000" />
+    <option name="totallyTimeSpent" value="23974000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="38" width="1280" height="725" extended-state="0" />
@@ -496,8 +489,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/EmergencySocialNetwork/controller/JoinCommunityCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        <state relative-caret-position="315">
+          <caret line="21" column="18" lean-forward="true" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
           <folding />
         </state>
       </provider>
