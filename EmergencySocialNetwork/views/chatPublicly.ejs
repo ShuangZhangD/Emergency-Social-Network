@@ -8,6 +8,8 @@
 <body>
 
 <div class="container"  ng-app="chatPubliclyAPP" ng-controller="chatPubliclyCtrl">
+    <br>
+    {{retrieveMsgs}}
     <tables ng-repeat="msg in displaymsg">
         <tr>
             <td>{{msg.username}}</td>
@@ -32,6 +34,7 @@
 
 <script src="/javascripts/angular.min.js"></script>
 <script src="/javascripts/joinCommunity.js"></script>
+<script src="/javascripts/chatPublicly.js"></script>
 
 </body>
 </html>

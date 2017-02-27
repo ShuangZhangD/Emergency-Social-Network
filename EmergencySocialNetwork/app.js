@@ -35,7 +35,7 @@ app.get('/userlist', JoinCommunityCtrl.ListUser);
 app.post('/logout', JoinCommunityCtrl.Logout);
 
 
-app.get('/retrieve', PublicChatCtrl.LoadPublicMessage);
+app.get('/retriveMsgs', PublicChatCtrl.LoadPublicMessage);
 app.post('/public', PublicChatCtrl.AddPublicMessage);
 
 
