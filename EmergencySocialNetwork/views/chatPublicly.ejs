@@ -12,7 +12,7 @@
     <br>
     {{retrieveMsgs}}
     <ul>
-        <li ng-repeat="msg in displaymsg">
+        <li ng-repeat="msg in displaymsg track by $index">
             <div>{{msg.username}}</div>
             <div>{{msg.timestamp| date: 'MM.dd.yyyy HH:mma' }}</div>
             <div>{{msg.pubmsg}}</div>

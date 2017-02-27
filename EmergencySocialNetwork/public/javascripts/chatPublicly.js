@@ -5,7 +5,7 @@
 var app = angular.module('chatPubliclyAPP', []);
 app.controller('chatPubliclyCtrl', function($scope, $http) {
     //$scope.name = "Runoob";
-    var message =[];
+    $scope.displaymsg = [];
     var getMessage=function(){
         $http({
             method:'get',
@@ -13,14 +13,14 @@ app.controller('chatPubliclyCtrl', function($scope, $http) {
             //data:{pubmsg:$scope.pubmsg, username:$scope.username}
         }).success(function(rep){
             console.log(rep);
-            return rep.data;
+            console.log(rep.data);
+            $scope.displaymsg = rep.data;
             alert('Get Msg Success!');
         });
 
     };
-    message = getMessage();
-    $scope.displaymsg = message;
-    $scope.displaymsg = [];
+    getMessage();
+
     $scope.postMsg = function() {
             var data = {pubmsg:$scope.pubmsg, username:"shuang", timestamp:Date.now()};
             $http({

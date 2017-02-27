@@ -47,8 +47,8 @@ exports.LoadPublicMessage = function(callback) {
                     console.log(result);
                     datas.push(data);
                 });
-                var jsonString = JSON.stringify(datas);
-                callback(err,jsonString);
+                //var jsonString = JSON.stringify(datas);
+                callback(err,datas);
             }
         });
         db.close();
