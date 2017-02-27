@@ -11,7 +11,7 @@ var users = require('./routes/users');
 var app = express();
 
 var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
-
+var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -33,6 +33,10 @@ app.post('/login', JoinCommunityCtrl.LoginCommunity);
 app.post('/signup', JoinCommunityCtrl.AddUser);
 app.get('/userlist', JoinCommunityCtrl.ListUser);
 app.post('/logout', JoinCommunityCtrl.Logout);
+
+
+app.get('/retrieve', PublicChatCtrl.LoadPublicMessage);
+app.post('/public', PublicChatCtrl.AddPublicMessage);
 
 
 // catch 404 and forward to error handler
