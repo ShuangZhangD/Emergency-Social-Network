@@ -8,6 +8,7 @@
 <body>
 
 <div class="container"  ng-app="chatPubliclyAPP" ng-controller="chatPubliclyCtrl">
+    <div class="container">
     <br>
     {{retrieveMsgs}}
     <tables ng-repeat="msg in displaymsg">
@@ -22,14 +23,16 @@
         </tr>
 
     </tables>
+    </div>
+    <div class="container">
+        <form class="form-signin" ng-submit="postMsg()">
+            <input ng-model="pubmsg" id="pubmsg" type="text" class="form-control" placeholder="Send Public Msg" required autofocus>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" >Send Msg</button>
+        </form>
+    </div>
 </div> <!-- /container -->
 
-<div class="container" ng-app="chatPubliclyAPP" ng-controller="chatPubliclyCtrl">
-    <form class="form-signin" ng-submit="postMsg()">
-        <input ng-model="pubmsg" id="pubmsg" type="text" class="form-control" placeholder="Send Public Msg" required autofocus>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" >Send Msg</button>
-    </form>
-</div>
+
 
 
 <script src="/javascripts/angular.min.js"></script>
