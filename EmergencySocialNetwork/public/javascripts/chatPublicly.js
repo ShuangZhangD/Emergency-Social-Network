@@ -31,6 +31,7 @@ app.controller('chatPubliclyCtrl', function($scope, $http) {
                 console.log(rep);
 
                 $scope.displaymsg.push(data); //add
+                $scope.pubmsg = "";
                 if (rep.success == 1) {
                     // post success
                     // TODO update in directory
