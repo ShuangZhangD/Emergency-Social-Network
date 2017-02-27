@@ -12,11 +12,12 @@ app.controller('chatPubliclyCtrl', function($scope, $http) {
                 data:{pubmsg:$scope.pubmsg, username:$scope.username}
             }).success(function(rep){
                 console.log(rep);
+                $scope.displaymsg.push(pubmsg); //add
                 if (rep.success == 1) {
                     // post success
                     // TODO update in directory
                     alert('Post Msg Success!');
-                    $scope.displaymsg.push(pubmsg); //add
+                    //$scope.displaymsg.push(pubmsg); //add
                 }
                 else {
                     // login failed
