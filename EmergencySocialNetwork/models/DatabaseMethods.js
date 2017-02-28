@@ -78,7 +78,8 @@ class User {
     // Retrieves the users based on the status passed
     displayStatusUsers(db, status, callback) {
       this.collection = db.collection('USERS');
-        this.collection.find({"status" : status}, function(err, results) {
+        //this.collection.find({"status" : status}, function(err, results) {
+        this.collection.find({"status": status}, {username:1}).toArray(function(err, results) {
         if(err)
         {
             console.dir('Error updating the status ' + err);
@@ -94,7 +95,8 @@ class User {
     // Retrieves all the users
     displayUsers(db, callback) {
       this.collection = db.collection('USERS');
-        this.collection.find().toArray(function(err, results) {
+        //this.collection.find().toArray(function(err, results) {
+        this.collection.find({}, {username:1}).toArray(function(err, results) {
         if(err)
         {
             console.dir('Error updating the status ' + err);
@@ -133,8 +135,8 @@ class User {
             callback(null, err);
           }
           else {
-            console.dir(results);
-            callback(results, null);
+            console.dir(result);
+            callback(result, null);
           }
         });
     }
