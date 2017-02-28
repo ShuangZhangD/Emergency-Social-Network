@@ -13,6 +13,7 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
                     // login success
                     // TODO show directory
                     alert('Login success!');
+                    document.getElementById('login-container').fadeOut();
                 }
                 else {
                     // login failed
