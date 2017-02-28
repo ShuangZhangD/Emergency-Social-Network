@@ -6,7 +6,7 @@ var app = angular.module('chatPubliclyAPP', []);
 app.controller('chatPubliclyCtrl', function($scope, $http) {
     //$scope.name = "Runoob";
     $scope.displaymsg = [];
-    var getMessage=function(){
+     var getMessage=function(){
         $http({
             method:'get',
             url:'http://localhost:8081/public',

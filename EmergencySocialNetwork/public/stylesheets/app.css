@@ -57,6 +57,7 @@ html,body {
 }
 .chatroom.panel {
     height:100%;
+    text-align:center;
     border-radius: 10px;
     overflow: auto;
     position: relative;
