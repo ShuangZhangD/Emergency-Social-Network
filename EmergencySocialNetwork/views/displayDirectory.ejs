@@ -1,0 +1,17 @@
+<!--div id="directory-container" display="none" ng-controller="joinCommunityCtrl" class="container"-->
+<div id="directory-container" class="container" ng-show="directoryShow" class="ng-hide">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>
+             Users
+          </th>
+        </tr>
+      </thead>
+      <tr ng-repeat="user in details">
+        <td>
+            {{user}}
+        </td>
+      </tr>
+    </table>
+</div>
