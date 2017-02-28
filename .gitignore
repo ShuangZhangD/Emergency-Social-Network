@@ -1,6 +1,13 @@
 node_modules/
+<<<<<<< HEAD
 bower_components/
+=======
+>>>>>>> c2cad0cee5c08cec41f8f41fcbeaccc312328665
 *.*~
 *.~
 .DS_Store
 .idea/
+<<<<<<< HEAD
+=======
+workspace.xml
+>>>>>>> c2cad0cee5c08cec41f8f41fcbeaccc312328665

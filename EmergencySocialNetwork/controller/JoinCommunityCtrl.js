@@ -1,10 +1,10 @@
 var express = require('express');
 var myParser = require("body-parser");
-//var dboper = require("../models/JoinCommunityDBoper.js");
 var dboper = require("../models/JoinCommunityDBoper.js");
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var md5 = require('md5');
-//var user_class = require("../CreateDatabase.js")
 
 var Validate = function(username, password){
   if( /\w{3,}/.test(username) && /\w{4,}/.test(password) )
@@ -43,6 +43,11 @@ module.exports = {
       else{
         sorted_content = SortUserList(content);
           res.json({"success":1, "data":sorted_content});
+          io.on('connection', function(socket)
+          {
+              //broadcast to every users of this user's join
+              io.emit('user joincommunity', username);
+          });
       }
     })
   }
@@ -72,6 +77,11 @@ module.exports = {
       else{
         sorted_content = SortUserList(content);
           res.json({"success":1, "data":sorted_content});
+          io.on('connection', function(socket)
+          {
+              //broadcast to every users of this user's join
+              io.emit('user joincommunity', username);
+          });
       }
     })
   }
@@ -98,6 +108,11 @@ module.exports = {
             }
             else{
                 res.json({"success":1, "data": ""});
+                io.on('connection', function(socket)
+                {
+                    //broadcast to every users of this user's join
+                    io.emit('user leftcommunity', username);
+                });
             }
         })
     }
