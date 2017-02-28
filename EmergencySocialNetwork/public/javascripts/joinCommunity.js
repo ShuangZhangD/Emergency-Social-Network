@@ -1,6 +1,8 @@
 var app = angular.module('joinCommunityAPP', []);
 app.controller('joinCommunityCtrl', function($scope, $http) {
     //$scope.name = "Runoob";
+    $scope.loginShow = true;
+    $scope.directoryShow = false;
     $scope.login = function() {
         if (check_usr($scope.username)) {
             $http({  
@@ -15,6 +17,7 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
                     alert('Login success!');
                     //document.getElementById('login-container').hide();
                     //document.getElementById('directory-container').hide();
+                    $scope.loginShow = false;
                     displayDirectory($scope, $http)
                 }
                 else {
@@ -97,12 +100,15 @@ function check_usr(username){
     Komala write this function
 */
 function displayDirectory($scope, $http) {
+  $scope.directoryShow = true;
   $http({
     method:'get',
     url:'http://localhost:8081/userlist'
   }).then(function successCallback(response) {
     console.log(response);
-    $scope.details = response.data;
+    $scope.details = response.data.data;
+    //$scope.details[$scope.details.length] = 'HK';
+    //$scope.details = ['1', '2', '3'];
   }, function errorCallback(response) {
     console.log("Error in displaying the directory");
     console.log("response");
