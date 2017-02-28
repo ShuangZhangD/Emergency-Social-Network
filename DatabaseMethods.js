@@ -126,7 +126,7 @@ class User {
     // Method to authenticate the user
     checkPassword(db, username, password, callback) {
       this.collection = db.collection('USERS');
-      this.collection.find({"username" : username, "password" : password}).toArray(function(err, result) {
+      this.collection.find({"username" : username, "password" : password}).toArray(function(err, results) {
         if(err)
         {
             console.log('Error in authenticating user'+ err);
