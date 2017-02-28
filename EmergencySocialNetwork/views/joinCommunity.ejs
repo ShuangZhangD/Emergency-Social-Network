@@ -4,6 +4,7 @@
     <title>JoinCommunitity</title>
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/stylesheets/joinCommunity.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/DisplayDirectory.css">
   </head>
   <body ng-app="joinCommunityAPP">
     <%- include('navbar') %>
@@ -16,6 +17,9 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='login()'>Sign in</button>
       </form>
     </div> <!-- /container -->
+
+
+    <%- include('displayDirectory') %>
 
 
     <script src="/javascripts/angular.min.js"></script>

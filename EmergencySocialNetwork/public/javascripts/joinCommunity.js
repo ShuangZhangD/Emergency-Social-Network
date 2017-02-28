@@ -13,7 +13,9 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
                     // login success
                     // TODO show directory
                     alert('Login success!');
-                    document.getElementById('login-container').fadeOut();
+                    //document.getElementById('login-container').hide();
+                    //document.getElementById('directory-container').hide();
+                    displayDirectory($scope, $http)
                 }
                 else {
                     // login failed
@@ -56,6 +58,9 @@ function addUser($scope, $http) {
             if (rep.success == 1) {
                 // sign up success
                 alert("Sign up success!");
+                //document.getElementById('login-container').hide();
+                //document.getElementById('directory-container').hide();
+                displayDirectory($scope, $http)
             }
             else {
                 // sign up failed
@@ -86,4 +91,20 @@ function check_usr(username){
         return false;
     }
     return true;
+}
+
+/*
+    Komala write this function
+*/
+function displayDirectory($scope, $http) {
+  $http({
+    method:'get',
+    url:'http://localhost:8081/userlist'
+  }).then(function successCallback(response) {
+    console.log(response);
+    $scope.details = response.data;
+  }, function errorCallback(response) {
+    console.log("Error in displaying the directory");
+    console.log("response");
+  });
 }
