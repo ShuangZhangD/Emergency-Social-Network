@@ -1,9 +1,11 @@
+'use strict';
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
+var User = require('./DatabaseMethods.js');
 var url = 'mongodb://localhost:27017/test';
 
-var CheckUsername = function(db, username, callback) {  
+/*var CheckUsername = function(db, username, callback) {
   var collection = db.collection('users');
   var whereStr = {"username":username};
   collection.find(whereStr).toArray(function(err, result) {
@@ -94,73 +96,142 @@ var ChangeStatus = function(db, username, status, callback) {
         }
         callback(result, null);
     });
-}
+}*/
 
 var db_err_msg = "Database Error";
+var db_err_statuscode = 400;
+var user_not_exist_statuscode = 401;
+var user_not_exist_msg = "Username not Exist";
+var pwd_incorrect_statuscode = 402;
+var pwd_incorrect_msg = "Password Incorrect";
+var success_statuscode = 200;
 
 
 exports.Login = function(username, password, callback){
     MongoClient.connect(url, function(err, db) {
     if(err) {
         console.log('Error:'+ err);
-        callback(400, db_err_msg)
+        callback(db_err_statuscode, db_err_msg)
     }// DB Error. Here error of connecting to db
-  	console.log("Connected correctly to server.");
-  	
-  	//check if the user exist
-   	CheckUsername(db, username, function(result, err) {
-      //querying error
-      if(err){
-        callback(400, db_err_msg);//DB Error. Here query username error
-      }
-
-   		//if username no exist
-   		if(result.length==0){
-   			console.log("no found");
-        callback(401, "Username not Exist");//User not exist Error, to confirm registering
-   		}
-
-   		//if username exist
-   		else {
-            console.log("found");
-            //check if password correct
-            console.log(result);
-            CheckPwd(db, username, password, function (pwdres, err) {
-                if (err) callback(400, db_err_msg);//DB error
-                if (pwdres.length == 0) {
-                    //password incorrect
-                    callback(402, "Password Incorrect");//Password Incorrect Error
-                }
-                else {
-                    //password correct
-                    ChangeStatus(db, username, "online", function(result, err){
-                       if(err) callback(400, db_err_msg);// DB Error.
-                    });
-                    GetUserByStatus(db, "online", function(userlist, err) {
-                        if(err){
-                            callback(400, db_err_msg);// DB Error.
+  	else {
+        console.log("Connected correctly to server.");
+        //create a user
+        //var collection = db.collection('USERS');
+        //check if the user exist
+        let new_user = new User(username, password, "online");
+        new_user.checkUser(db, username, function(result, err){
+            if(err){
+                callback(db_err_statuscode, db_err_msg);
+            }
+            //if username not exist
+            if(result.length == 0){
+                console.log("username not exist");
+                callback(user_not_exist_statuscode, user_not_exist_msg);
+            }
+            //if username exist
+            else{
+                console.log("Username found");
+                console.log(result);
+                new_user.CheckPassword(db, username, password, function(pwdres, err){
+                    if (err) callback(db_err_statuscode, db_err_msg);//DB error
+                    else{
+                        if (pwdres.length == 0) {
+                            //password incorrect
+                            callback(pwd_incorrect_statuscode, pwd_incorrect_msg);//Password Incorrect Error
                         }
-                        else callback(200, userlist);//Login successfully response
-                    });
-                }
-                db.close();
-            })
-        }
+                        else{
+                            new_user.updateStatus(db, username, "online", function(updateres, err){
+                                if(err) callback(db_err_statuscode, db_err_msg);
+                            });
+                            new_user.displayStatusUsers(db, "online", function(results, err){
+                                if(err) callback(db_err_statuscode, db_err_msg);
+                                else{
+                                    var userlist = [];
+                                    results.forEach(function(result){
+                                        userlist.push(result.username);
+                                    });
+                                    callback(success_statuscode, userlist);
+                                }
+                            });
+                        }
+                        db.close();
+                    }
+                });
+            }
+        });
+/*
+        CheckUsername(db, username, function (result, err) {
+            //querying error
+            if (err) {
+                callback(400, db_err_msg);//DB Error. Here query username error
+            }
 
-    });//end of check user exist
+            //if username no exist
+            if (result.length == 0) {
+                console.log("no found");
+                callback(401, "Username not Exist");//User not exist Error, to confirm registering
+            }
 
-  });//end of database operation
-}
+            //if username exist
+            else {
+                console.log("found");
+                //check if password correct
+                console.log(result);
+                CheckPwd(db, username, password, function (pwdres, err) {
+                    if (err) callback(400, db_err_msg);//DB error
+                    if (pwdres.length == 0) {
+                        //password incorrect
+                        callback(402, "Password Incorrect");//Password Incorrect Error
+                    }
+                    else {
+                        //password correct
+                        ChangeStatus(db, username, "online", function (result, err) {
+                            if (err) callback(400, db_err_msg);// DB Error.
+                        });
+                        GetUserByStatus(db, "online", function (userlist, err) {
+                            if (err) {
+                                callback(400, db_err_msg);// DB Error.
+                            }
+                            else callback(200, userlist);//Login successfully response
+                        });
+                    }
+                    db.close();
+                })
+            }
+
+        });//end of check user exist
+*/
+    }
+    });//end of database operation
+};
 
 exports.AddDB = function(username, password, callback) {
     MongoClient.connect(url, function (err, db) {
         if (err) {
             console.log('Error:'+ err);
-            callback(400, db_err_msg);// DB Error. Here error of connecting to db
+            callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
         }
         console.log("Connected correctly to server.");
+        let new_user = new user_class.User(username, password, "online");
+        new_user.createUser(db, function(result, err){
+           if(err) callback(db_err_statuscode, db_err_msg);
+           else{
+               new_user.displayStatusUsers(db, "online", function(results, err) {
+                   if (err) callback(db_err_statuscode, db_err_msg);
+                   else {
+                       var userlist = [];
+                       results.forEach(function (result) {
+                           userlist.push(result.username);
+                       });
+                       callback(success_statuscode, userlist);
+                   }
+               });
+           }
+            db.close();
+        });
 
         //insert information into database
+/*
         InsertUser(db, username, password, function (result, err) {
             if (err) {
                 callback(400, db_err_msg);// DB Error. Here error of inserting operation
@@ -175,9 +246,10 @@ exports.AddDB = function(username, password, callback) {
             }
             db.close();
         });
+*/
 
     });//end of database operation
-}
+};
 
 exports.GetAllUsers = function(callback){
     MongoClient.connect(url, function(err, db) {
