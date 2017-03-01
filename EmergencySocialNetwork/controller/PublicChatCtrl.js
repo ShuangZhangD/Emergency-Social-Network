@@ -24,6 +24,12 @@ module.exports = {
             }});
     },
 
+    publicMessageSocket : function (socket) {
+        return function(data) {
+            socket.emit('Public Message', data);
+            socket.broadcast.emit('Public Message', data);
+        };
+    },
     LoadPublicMessage : function(req, res){
         dboper.LoadPublicMessage(function (err, results) {
             if (err) {
@@ -35,4 +41,5 @@ module.exports = {
             }
         });
     }
+
 };
