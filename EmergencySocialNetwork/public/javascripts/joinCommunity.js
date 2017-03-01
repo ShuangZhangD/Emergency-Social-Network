@@ -1,10 +1,10 @@
-var app = angular.module('joinCommunityAPP', []);
 app.controller('joinCommunityCtrl', function($scope, $http) {
     //$scope.name = "Runoob";
-    $scope.loginShow = true;
-    $scope.directoryShow = false;
+
     $scope.logined = false;
     $scope.login = function() {
+
+        console.log($scope);
         if (check_usr($scope.username)) {
             $http({  
                 method:'post',  
@@ -19,7 +19,7 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
                     //document.getElementById('login-container').hide();
                     //document.getElementById('directory-container').hide();
                     $scope.logined = true
-                    $scope.loginShow = false;
+                    $scope.showList.login = false;
                     displayDirectory($scope, $http)
                 }
                 else {
@@ -64,6 +64,12 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
             });
         }
     };
+    $scope.showPublicChat = function () {
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList['chatPublicly'] = true;
+    };
 });
 
 function addUser($scope, $http) {
@@ -81,7 +87,7 @@ function addUser($scope, $http) {
                 //document.getElementById('login-container').hide();
                 //document.getElementById('directory-container').hide();
                 $scope.logined = true;
-                $scope.loginShow = false;
+                $scope.showList.login = false;
                 displayDirectory($scope, $http)
             }
             else {
@@ -119,7 +125,7 @@ function check_usr(username){
     Komala write this function
 */
 function displayDirectory($scope, $http) {
-  $scope.directoryShow = true;
+  $scope.showList.directory = true;
   $http({
     method:'get',
     url:'http://localhost:8081/userlist'

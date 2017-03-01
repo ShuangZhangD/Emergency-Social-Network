@@ -2,7 +2,6 @@
  * Created by keqinli on 2/26/17.
  */
 
-var app = angular.module('chatPubliclyAPP', []);
 app.factory('mySocket', function($rootScope) {
     //默认连接部署网站的服务器
     var socket = io();

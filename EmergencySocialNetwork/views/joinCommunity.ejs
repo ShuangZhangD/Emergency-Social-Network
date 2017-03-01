@@ -1,31 +1,8 @@
-<!DOCTYPE html>
-<html lang='en'>
-  <head>
-    <title>JoinCommunitity</title>
-    <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/stylesheets/joinCommunity.css" rel="stylesheet">
-    <link rel="stylesheet" href="/stylesheets/DisplayDirectory.css">
-  </head>
-  <body ng-app="joinCommunityAPP" ng-controller="joinCommunityCtrl">
-    <%- include('navbarSimple') %>
-
-    <div id="login-container" class="container" ng-show="loginShow">
-      <div class="form-signin" role="form">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input ng-model="username" id="username" type="username" class="form-control" placeholder="Username" required autofocus>
-        <input ng-model="password" id="password" type="password" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='login()'>Sign in</button>
-      </div>
-    </div> <!-- /container -->
-
-
-    <%- include('displayDirectory') %>
-
-
-    <script src="/javascripts/angular.min.js"></script>
-    <!--script src="angular/angular.js"></script-->
-
-    <script src="/javascripts/joinCommunity.js"></script>
-
-  </body>
-</html>
+<div id="login-container" class="container" ng-show="showList.login">
+  <div class="form-signin" role="form">
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <input ng-model="username" id="username" type="username" class="form-control" placeholder="Username" required autofocus>
+    <input ng-model="password" id="password" type="password" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='login()'>Sign in</button>
+  </div>
+</div> <!-- /container -->
