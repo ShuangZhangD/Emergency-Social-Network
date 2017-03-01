@@ -6,6 +6,8 @@ app.controller('initCtrl', function($scope, $http) {
         directory : false,
         chatPublicly : false
     };
+    $scope.logined = false;
+    $scope.username;
 
     console.log($scope);
 });

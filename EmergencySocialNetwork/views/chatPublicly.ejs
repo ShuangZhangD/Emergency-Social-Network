@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--DOCTYPE html>
 <html lang='en'>
 <head>
     <title>ChatPublicly</title>
@@ -7,9 +7,10 @@
     <link href="/stylesheets/chatPublicly.css" rel="stylesheet">
     <link href="/stylesheets/app.css" rel="stylesheet">
 </head>
-<body>
+<body-->
 
-<div class="container"  ng-app="chatPubliclyAPP" ng-controller="chatPubliclyCtrl">
+<!--div class="container"  ng-app="chatPubliclyAPP" ng-controller="chatPubliclyCtrl"-->
+<div class="container" ng-controller="chatPubliclyCtrl" ng-show="showList.chatPublicly">
     <div class="container">
 
 
@@ -26,10 +27,10 @@
     </div>
 
     <div class="container">
-        <form class="form-signin" ng-submit="postMsg()">
+        <div class="form-signin">
             <input ng-model="pubmsg" id="pubmsg" type="text" class="form-control" placeholder="Send Public Msg" required autofocus>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" >Send Msg</button>
-        </form>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="postMsg()">Send Msg</button>
+        </div>
     </div>
 
 </div> <!-- /container -->
@@ -37,7 +38,7 @@
 
 
 
-<script src="angular/angular.min.js"></script>
+<!--script src="angular/angular.min.js"></script>
 <script src="angular-socket-io/socket.min.js"></script>
 <script src="angular-socket-io/socket.js"></script>
 <script src="socket.io-client/dist/socket.io.js"></script>
@@ -46,4 +47,4 @@
 <script src="/javascripts/chatPublicly.js"></script>
 
 </body>
-</html>
+</html-->

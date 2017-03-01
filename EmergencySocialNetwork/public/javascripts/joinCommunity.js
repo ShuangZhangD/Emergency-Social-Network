@@ -1,4 +1,4 @@
-app.controller('joinCommunityCtrl', function($scope, $http) {
+app.controller('joinCommunityCtrl', function($window, $scope, $http) {
     //$scope.name = "Runoob";
 
     $scope.logined = false;
@@ -18,8 +18,10 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
                     alert('Login success!');
                     //document.getElementById('login-container').hide();
                     //document.getElementById('directory-container').hide();
+
                     $scope.logined = true
                     $scope.showList.login = false;
+                    $window.localStorage.setItem("username", $scope.username);
                     displayDirectory($scope, $http)
                 }
                 else {
