@@ -1,4 +1,4 @@
-app.controller('joinCommunityCtrl', function($window, $scope, $http) {
+app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
     //$scope.name = "Runoob";
 
     $scope.logined = false;
@@ -25,6 +25,8 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http) {
                     $scope.showList.login = false;
                     //$window.localStorage.setItem("username", $scope.username);
                     displayDirectory($scope, $http)
+                    //socket !!!
+                    mySocket.emit("userJoinCommunity", tmpUsername);
                 }
                 else {
                     // login failed
@@ -33,7 +35,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http) {
                     }
                     else if (rep.err_type == 2) {
                         // Username not Exist
-                        addUser($scope, $http, tmpUsername);
+                        addUser($scope, $http, tmpUsername,mySocket);
                     }
                     else if (rep.err_type == 3) {
                         // Password Incorrect
@@ -53,6 +55,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http) {
 
         }
     }; // end of login
+
     $scope.logout = function () {
         if ($scope.logined) {
             $http({  
@@ -66,6 +69,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http) {
                 $scope.directoryShow = false;
                 $scope.loginShow = true;
             });
+            mySocket.emit("left");
         }
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
@@ -80,14 +84,85 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http) {
         $scope.showList['chatPublicly'] = true;
     };
     $scope.showDirectory = function () {
+        if ($scope.logined) {
+            $http({
+                method:'get',
+                url:'http://localhost:8081/userlist'
+            }).then(function successCallback(response) {
+                console.log(response);
+                $scope.details1 = response.data.data1;
+                $scope.details2 = response.data.data2;
+                //$scope.details[$scope.details.length] = 'HK';
+                //$scope.details = ['1', '2', '3'];
+            }, function errorCallback(response) {
+                console.log("Error in displaying the directory");
+                console.log("response");
+            });
+    }
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
         $scope.showList['directory'] = true;
+
     };
+    mySocket.on("userJoined",function(username){
+        if ($scope.logined) {
+            $http({
+                method: 'get',
+                url: 'http://localhost:8081/userlist'
+            }).then(function successCallback(response) {
+                console.log(response);
+                $scope.details1 = response.data.data1;
+                $scope.details2 = response.data.data2;
+                //$scope.details[$scope.details.length] = 'HK';
+                //$scope.details = ['1', '2', '3'];
+            }, function errorCallback(response) {
+                console.log("Error in displaying the directory");
+                console.log("response");
+            });
+        }
+    });
+
+    mySocket.on("userleft",function(){
+        if ($scope.logined) {
+                    $http({
+                        method: 'get',
+                        url: 'http://localhost:8081/userlist'
+                    }).then(function successCallback(response) {
+                        console.log(response);
+                        $scope.details1 = response.data.data1;
+                $scope.details2 = response.data.data2;
+                //$scope.details[$scope.details.length] = 'HK';
+                //$scope.details = ['1', '2', '3'];
+            }, function errorCallback(response) {
+                console.log("Error in displaying the directory");
+                console.log("response");
+            });
+        }
+    });
+    mySocket.on("windowclose", function(){
+        if ($scope.logined) {
+            $http({
+                method:'post',
+                url:'http://localhost:8081/logout',
+                data:{username:$scope.username}
+            }).success(function(rep){
+                // logout
+                console.log(rep);
+                $scope.logined = false;
+                $scope.directoryShow = false;
+                $scope.loginShow = true;
+            });
+            mySocket.emit("left");
+        }
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList['login'] = true;
+    });
 });
 
-function addUser($scope, $http, tmpUsername) {
+function addUser($scope, $http, tmpUsername, mySocket) {
     var add = confirm("User does not exist, do you want to sign up?");
     if (add) {
         $http({  
@@ -104,7 +179,8 @@ function addUser($scope, $http, tmpUsername) {
                 $scope.userClass['username'] = tmpUsername;
                 $scope.logined = true;
                 $scope.showList.login = false;
-                displayDirectory($scope, $http)
+                displayDirectory($scope, $http);
+                mySocket.emit("userJoinCommunity", tmpUsername);
             }
             else {
                 // sign up failed
@@ -147,7 +223,8 @@ function displayDirectory($scope, $http) {
     url:'http://localhost:8081/userlist'
   }).then(function successCallback(response) {
     console.log(response);
-    $scope.details = response.data.data;
+    $scope.details1 = response.data.data1;
+      $scope.details2 = response.data.data2;
     //$scope.details[$scope.details.length] = 'HK';
     //$scope.details = ['1', '2', '3'];
   }, function errorCallback(response) {

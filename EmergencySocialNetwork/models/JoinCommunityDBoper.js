@@ -3,7 +3,7 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
 var User = require('./DatabaseMethods.js');
-var url = 'mongodb://localhost:27017/test';
+var url = 'mongodb://localhost:27017/test2';
 
 var db_err_msg = "Database Error";
 var db_err_statuscode = 400;
@@ -105,7 +105,7 @@ exports.GetAllUsers = function(callback){
         console.log("Connected correctly to server.");
         //insert information into database
         let new_user = new User("", "", "");
-        new_user.displayUsers(db, function(results, err){
+        /*new_user.displayUsers(db, function(results, err){
             if (err) callback(db_err_statuscode, db_err_msg);
             else {
                 var userlist = [];
@@ -115,7 +115,32 @@ exports.GetAllUsers = function(callback){
                 callback(success_statuscode, userlist);
             }
             db.close();
+        });*/
+        new_user.displayStatusUsers(db, "online", function(results, err) {
+            if (err) callback(db_err_statuscode, db_err_msg, null);
+            else {
+                var userlist1 = [];
+                results.forEach(function (result) {
+                    userlist1.push(result.username);
+                });
+
+                new_user.displayStatusUsers(db, "offline", function(results, err) {
+                    if (err) callback(db_err_statuscode, db_err_msg, null);
+                    else {
+                        var userlist2 = [];
+                        results.forEach(function (result) {
+                            userlist2.push(result.username);
+                        });
+                        callback(success_statuscode, userlist1, userlist2);
+                    }
+                    db.close();
+                });
+
+                //callback(success_statuscode, userlist);
+            }
         });
+
+
     });//end of database operation
 };
 
