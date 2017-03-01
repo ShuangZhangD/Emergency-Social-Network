@@ -29,7 +29,7 @@ app.factory('mySocket', function($rootScope) {
     }
 });
 
-app.controller('chatPubliclyCtrl', function($scope, $http, mySocket) {
+app.controller('chatPubliclyCtrl', function($window, $scope, $http, mySocket) {
     //$scope.name = "Runoob";
     var getMessage=function(){
         $http({
@@ -39,7 +39,7 @@ app.controller('chatPubliclyCtrl', function($scope, $http, mySocket) {
         }).success(function(rep){
             console.log(rep);
             $scope.displaymsg = rep.data;
-            alert('Get Msg Success!');
+            //alert('Get Msg Success!');
         });
 
     };
@@ -50,21 +50,27 @@ app.controller('chatPubliclyCtrl', function($scope, $http, mySocket) {
 
     });
     $scope.postMsg = function() {
-
+        $scope.username = $window.localStorage.getItem("username");
+        console.log($scope);
+        console.log($scope.username);
+        console.log($scope.logined);
+        console.log($scope.showList.login);
+        console.log($scope.showList);
             $http({
                 method:'post',
                 url:'http://localhost:8081/public',
-                data:{pubmsg:$scope.pubmsg, username:"shuang", timeStamp:Date.now()}
+                data:{pubmsg:$scope.pubmsg, username:$scope.username, timeStamp:Date.now()}
             }).success(function(rep){
                 console.log(rep);
-                var data = {pubmsg:$scope.pubmsg, username:"shuang", timestamp:Date.now()};
+                var data = {pubmsg:$scope.pubmsg, username:$scope.username, timestamp:Date.now()};
                 //$scope.displaymsg.push(data); //add
                 mySocket.emit('Public Message', data);
                 $scope.pubmsg = "";
                 if (rep.success == 1) {
                     // post success
                     // TODO update in directory
-                    alert('Post Msg Success!');
+                    // alert('Post Msg Success!');
+                    console.log('Post Msg Success!');
                 }
                 else {
                     // login failed
