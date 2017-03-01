@@ -1,9 +1,10 @@
 /**
  * Created by keqinli on 2/26/17.
  */
-'use strict';
-var app = angular.module('chatPubliclyAPP', [ ]);
-app.factory('mySocket', function ($rootScope){
+
+var app = angular.module('chatPubliclyAPP', []);
+app.factory('mySocket', function($rootScope) {
+    //默认连接部署网站的服务器
     var socket = io();
     return {
         on: function(eventname, callback) {
@@ -28,40 +29,38 @@ app.factory('mySocket', function ($rootScope){
         }
     }
 });
+
 app.controller('chatPubliclyCtrl', function($scope, $http, mySocket) {
     //$scope.name = "Runoob";
-    $scope.displaymsg = [];
-     var getMessage=function(){
+    var getMessage=function(){
         $http({
             method:'get',
             url:'http://localhost:8081/public',
             //data:{pubmsg:$scope.pubmsg, username:$scope.username}
         }).success(function(rep){
             console.log(rep);
-            console.log(rep.data);
             $scope.displaymsg = rep.data;
             alert('Get Msg Success!');
         });
 
     };
     getMessage();
-
-    mySocket.on('messagereceive', function(data) {
+    //$scope.displaymsg = [];
+    mySocket.on('Public Message', function(data) {
         $scope.displaymsg.push(data);
-    });
 
+    });
     $scope.postMsg = function() {
-            var data = {pubmsg:$scope.pubmsg, username:"shuang", timestamp:Date.now()};
+
             $http({
                 method:'post',
                 url:'http://localhost:8081/public',
                 data:{pubmsg:$scope.pubmsg, username:"shuang", timeStamp:Date.now()}
             }).success(function(rep){
                 console.log(rep);
-
-                 mySocket.emit('pubicmsg', data); //emit a data to every client
-
-                $scope.displaymsg.push(data); //add
+                var data = {pubmsg:$scope.pubmsg, username:"shuang", timestamp:Date.now()};
+                //$scope.displaymsg.push(data); //add
+                mySocket.emit('Public Message', data);
                 $scope.pubmsg = "";
                 if (rep.success == 1) {
                     // post success

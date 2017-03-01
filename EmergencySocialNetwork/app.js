@@ -8,15 +8,11 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var chatPubliclyRouter = require('./routes/chatPubliclyRouter');
-
-
-
 var http = require('http');
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 server.listen(8081);
-
 var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
 var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
 // view engine setup
@@ -30,6 +26,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'bower_components')));
+app.use(express.static(path.join(__dirname, 'node_modules')));
+
 
 app.use('/', index);
 app.use('/users', users);
@@ -45,6 +44,7 @@ app.post('/logout', JoinCommunityCtrl.Logout);
 
 app.get('/public', PublicChatCtrl.LoadPublicMessage);
 app.post('/public', PublicChatCtrl.AddPublicMessage);
+
 
 
 // catch 404 and forward to error handler
@@ -64,17 +64,14 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-var socket = io();
-    socket.on('publicmsg', function (data) {
-            socket.broadcast.emit('messagereceive', data);
-        });
 
 module.exports = app;
 
 
-
-
-
+var publicChat = require('./controller/PublicChatCtrl.js');
+io.on('connection', function(socket) {
+    socket.on('Public Message', publicChat.publicMessageSocket(socket));
+});
 
 
 
