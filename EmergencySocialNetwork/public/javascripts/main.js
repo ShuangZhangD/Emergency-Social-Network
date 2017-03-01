@@ -6,8 +6,10 @@ app.controller('initCtrl', function($scope, $http) {
         directory : false,
         chatPublicly : false
     };
+    $scope.userClass = {username:""};
     $scope.logined = false;
-    $scope.username;
+    $scope.username = '';
+    $scope.test = '123';
 
     console.log($scope);
 });

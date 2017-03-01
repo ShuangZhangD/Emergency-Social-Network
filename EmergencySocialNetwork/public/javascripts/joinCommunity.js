@@ -6,6 +6,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http) {
 
         console.log($scope);
         if (check_usr($scope.username)) {
+            var tmpUsername = $scope.username;
             $http({  
                 method:'post',  
                 url:'http://localhost:8081/login',  
@@ -18,10 +19,11 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http) {
                     alert('Login success!');
                     //document.getElementById('login-container').hide();
                     //document.getElementById('directory-container').hide();
-
+                    $scope.userClass['username'] = tmpUsername;
+                    $scope.test = '456';
                     $scope.logined = true
                     $scope.showList.login = false;
-                    $window.localStorage.setItem("username", $scope.username);
+                    //$window.localStorage.setItem("username", $scope.username);
                     displayDirectory($scope, $http)
                 }
                 else {
@@ -31,7 +33,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http) {
                     }
                     else if (rep.err_type == 2) {
                         // Username not Exist
-                        addUser($scope, $http);
+                        addUser($scope, $http, tmpUsername);
                     }
                     else if (rep.err_type == 3) {
                         // Password Incorrect
@@ -85,7 +87,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http) {
     };
 });
 
-function addUser($scope, $http) {
+function addUser($scope, $http, tmpUsername) {
     var add = confirm("User does not exist, do you want to sign up?");
     if (add) {
         $http({  
@@ -99,6 +101,7 @@ function addUser($scope, $http) {
                 alert("Sign up success!");
                 //document.getElementById('login-container').hide();
                 //document.getElementById('directory-container').hide();
+                $scope.userClass['username'] = tmpUsername;
                 $scope.logined = true;
                 $scope.showList.login = false;
                 displayDirectory($scope, $http)
