@@ -88,13 +88,14 @@ module.exports = {
   },
 
   ListUser: function(req, res){
-    dboper.GetAllUsers(function(statuscode, content){
+    dboper.GetAllUsers(function(statuscode, content1, content2){
       if(statuscode != 200){
         res.json({success:0, err_type: 1, err_msg:content});
       }
       else{
-        sorted_content = SortUserList(content);
-        res.json({"success":1, "data":sorted_content});
+        sorted_content1 = SortUserList(content1);
+          sorted_content2 = SortUserList(content2);
+        res.json({"success":1, "data1":sorted_content1, "data2":sorted_content2});
       }
     })
   },
