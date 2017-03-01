@@ -65,12 +65,23 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http) {
                 $scope.loginShow = true;
             });
         }
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList['login'] = true;
+
     };
     $scope.showPublicChat = function () {
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
         $scope.showList['chatPublicly'] = true;
+    };
+    $scope.showDirectory = function () {
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList['directory'] = true;
     };
 });
 
