@@ -1,13 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>JoinCommunitity</title>
+    <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/joinCommunity.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/DisplayDirectory.css">
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p>This is the hello page from s17-ESN-SV7 team.</p>
+  <body ng-app="ESN-APP" ng-controller="initCtrl">
+    
+    <div ng-controller="joinCommunityCtrl">
+        <%- include('navbarSimple') %>
+        <%- include('joinCommunity') %>
+        <%- include('displayDirectory') %>
+    </div>
+
+    <%- include('chatPublicly') %>
+
+
+
+
+    <!--script src="/javascripts/angular.min.js"></script-->
+
+    <script src="angular/angular.js"></script>
+    <script src="angular-socket-io/socket.min.js"></script>
+    <script src="angular-socket-io/socket.js"></script>
+    <script src="socket.io-client/dist/socket.io.js"></script>
+
+    <script src="/javascripts/main.js"></script>
+    <script src="/javascripts/joinCommunity.js"></script>
+    <script src="/javascripts/chatPublicly.js"></script>
 
   </body>
 </html>
