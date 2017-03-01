@@ -1,7 +1,10 @@
-var app = angular.module('joinCommunityAPP', []);
 app.controller('joinCommunityCtrl', function($scope, $http) {
     //$scope.name = "Runoob";
+
+    $scope.logined = false;
     $scope.login = function() {
+
+        console.log($scope);
         if (check_usr($scope.username)) {
             $http({  
                 method:'post',  
@@ -13,6 +16,11 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
                     // login success
                     // TODO show directory
                     alert('Login success!');
+                    //document.getElementById('login-container').hide();
+                    //document.getElementById('directory-container').hide();
+                    $scope.logined = true
+                    $scope.showList.login = false;
+                    displayDirectory($scope, $http)
                 }
                 else {
                     // login failed
@@ -40,6 +48,27 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
         else {
 
         }
+    }; // end of login
+    $scope.logout = function () {
+        if ($scope.logined) {
+            $http({  
+                method:'post',  
+                url:'http://localhost:8081/logout',  
+                data:{username:$scope.username}  
+            }).success(function(rep){
+                // logout
+                console.log(rep);
+                $scope.logined = false;
+                $scope.directoryShow = false;
+                $scope.loginShow = true;
+            });
+        }
+    };
+    $scope.showPublicChat = function () {
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList['chatPublicly'] = true;
     };
 });
 
@@ -55,6 +84,11 @@ function addUser($scope, $http) {
             if (rep.success == 1) {
                 // sign up success
                 alert("Sign up success!");
+                //document.getElementById('login-container').hide();
+                //document.getElementById('directory-container').hide();
+                $scope.logined = true;
+                $scope.showList.login = false;
+                displayDirectory($scope, $http)
             }
             else {
                 // sign up failed
@@ -85,4 +119,23 @@ function check_usr(username){
         return false;
     }
     return true;
+}
+
+/*
+    Komala write this function
+*/
+function displayDirectory($scope, $http) {
+  $scope.showList.directory = true;
+  $http({
+    method:'get',
+    url:'http://localhost:8081/userlist'
+  }).then(function successCallback(response) {
+    console.log(response);
+    $scope.details = response.data.data;
+    //$scope.details[$scope.details.length] = 'HK';
+    //$scope.details = ['1', '2', '3'];
+  }, function errorCallback(response) {
+    console.log("Error in displaying the directory");
+    console.log("response");
+  });
 }
