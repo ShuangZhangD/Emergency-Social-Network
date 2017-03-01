@@ -3,6 +3,7 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
     //$scope.name = "Runoob";
     $scope.loginShow = true;
     $scope.directoryShow = false;
+    $scope.logined = false;
     $scope.login = function() {
         if (check_usr($scope.username)) {
             $http({  
@@ -17,6 +18,7 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
                     alert('Login success!');
                     //document.getElementById('login-container').hide();
                     //document.getElementById('directory-container').hide();
+                    $scope.logined = true
                     $scope.loginShow = false;
                     displayDirectory($scope, $http)
                 }
@@ -46,6 +48,21 @@ app.controller('joinCommunityCtrl', function($scope, $http) {
         else {
 
         }
+    }; // end of login
+    $scope.logout = function () {
+        if ($scope.logined) {
+            $http({  
+                method:'post',  
+                url:'http://localhost:8081/logout',  
+                data:{username:$scope.username}  
+            }).success(function(rep){
+                // logout
+                console.log(rep);
+                $scope.logined = false;
+                $scope.directoryShow = false;
+                $scope.loginShow = true;
+            });
+        }
     };
 });
 
@@ -63,6 +80,8 @@ function addUser($scope, $http) {
                 alert("Sign up success!");
                 //document.getElementById('login-container').hide();
                 //document.getElementById('directory-container').hide();
+                $scope.logined = true;
+                $scope.loginShow = false;
                 displayDirectory($scope, $http)
             }
             else {
