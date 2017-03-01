@@ -173,7 +173,7 @@ function addUser($scope, $http, tmpUsername, mySocket) {
             console.log(rep);  
             if (rep.success == 1) {
                 // sign up success
-                alert("Sign up success!");
+                alert("Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
                 //document.getElementById('login-container').hide();
                 //document.getElementById('directory-container').hide();
                 $scope.userClass['username'] = tmpUsername;
