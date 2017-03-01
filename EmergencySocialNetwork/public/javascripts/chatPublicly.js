@@ -4,14 +4,13 @@
 
 var app = angular.module('chatPubliclyAPP', []);
 app.factory('mySocket', function($rootScope) {
-    //默认连接部署网站的服务器
+
     var socket = io();
     return {
         on: function(eventname, callback) {
             socket.on(eventname, function() {
-                // arguments是函数内部的类数组对象
+
                 var args = arguments;
-                //手动执行 脏值检查
                 $rootScope.$apply(function() {
                     callback.apply(socket, args);
                 })
@@ -40,7 +39,7 @@ app.controller('chatPubliclyCtrl', function($scope, $http, mySocket) {
         }).success(function(rep){
             console.log(rep);
             $scope.displaymsg = rep.data;
-            alert('Get Msg Success!');
+            //alert('Get Msg Success!');
         });
 
     };
@@ -89,7 +88,6 @@ app.controller('chatPubliclyCtrl', function($scope, $http, mySocket) {
             }).error(function (rep) {
                 console.log(rep);
             });
-
 
     };
 
