@@ -1,9 +1,34 @@
 /**
  * Created by keqinli on 2/26/17.
  */
-
-var app = angular.module('chatPubliclyAPP', []);
-app.controller('chatPubliclyCtrl', function($scope, $http) {
+'use strict';
+var app = angular.module('chatPubliclyAPP', [ ]);
+app.factory('mySocket', function ($rootScope){
+    var socket = io();
+    return {
+        on: function(eventname, callback) {
+            socket.on(eventname, function() {
+                // arguments是函数内部的类数组对象
+                var args = arguments;
+                //手动执行 脏值检查
+                $rootScope.$apply(function() {
+                    callback.apply(socket, args);
+                })
+            });
+        },
+        emit: function(eventname, data, callback) {
+            socket.emit(eventname, data, function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    if (callback) {
+                        callback.apply(socket, args);
+                    }
+                });
+            })
+        }
+    }
+});
+app.controller('chatPubliclyCtrl', function($scope, $http, mySocket) {
     //$scope.name = "Runoob";
     $scope.displaymsg = [];
      var getMessage=function(){
@@ -21,6 +46,10 @@ app.controller('chatPubliclyCtrl', function($scope, $http) {
     };
     getMessage();
 
+    mySocket.on('messagereceive', function(data) {
+        $scope.displaymsg.push(data);
+    });
+
     $scope.postMsg = function() {
             var data = {pubmsg:$scope.pubmsg, username:"shuang", timestamp:Date.now()};
             $http({
@@ -29,6 +58,8 @@ app.controller('chatPubliclyCtrl', function($scope, $http) {
                 data:{pubmsg:$scope.pubmsg, username:"shuang", timeStamp:Date.now()}
             }).success(function(rep){
                 console.log(rep);
+
+                 mySocket.emit('pubicmsg', data); //emit a data to every client
 
                 $scope.displaymsg.push(data); //add
                 $scope.pubmsg = "";

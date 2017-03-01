@@ -9,7 +9,13 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var chatPubliclyRouter = require('./routes/chatPubliclyRouter');
 
+
+
+var http = require('http');
 var app = express();
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+server.listen(8081);
 
 var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
 var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
@@ -58,9 +64,13 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+var socket = io();
+    socket.on('publicmsg', function (data) {
+            socket.broadcast.emit('messagereceive', data);
+        });
 
 module.exports = app;
-app.listen(8081);
+
 
 
 

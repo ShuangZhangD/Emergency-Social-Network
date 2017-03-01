@@ -11,7 +11,7 @@
 <div class="container"  ng-app="chatPubliclyAPP" ng-controller="chatPubliclyCtrl">
     <div class="container">
     <br>
-    {{retrieveMsgs}}
+        {{retrieveMsgs}}
         <div class="chatroom panel panel-success col-md-9 col-sm-9">
             <div class="panel-body">
         <div class="normal-message" ng-repeat="msg in displaymsg track by $index">
@@ -38,6 +38,7 @@
 <script src="/javascripts/angular.min.js"></script>
 <script src="/javascripts/joinCommunity.js"></script>
 <script src="/javascripts/chatPublicly.js"></script>
+<script src="/javascripts/socket.io.js"></script>
 
 </body>
 </html>
