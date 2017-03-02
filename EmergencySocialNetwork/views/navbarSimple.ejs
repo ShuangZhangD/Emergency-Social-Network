@@ -2,8 +2,8 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <ul class="nav navbar-nav">
-      <li><a href="#" ng-click='showDirectory()'>Directory<!--span class="sr-only">(current)</span--></a></li>
-      <li><a href="#" ng-click='showPublicChat()'>PublicChat</a></li>
+      <li><a href="#" ng-click='showDirectory()' ng-show="logined">Directory<!--span class="sr-only">(current)</span--></a></li>
+      <li><a href="#" ng-click='showPublicChat()' ng-show="logined">PublicChat</a></li>
       <li><a href="#" ng-click='logout()' ng-show="logined">Logout</a></li>
     </ul>
 

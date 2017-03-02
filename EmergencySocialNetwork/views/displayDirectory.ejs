@@ -1,6 +1,6 @@
 <!--div id="directory-container" display="none" ng-controller="joinCommunityCtrl" class="container"-->
 <div id="directory-container" class="container" ng-show="showList.directory" class="ng-hide">
-    <table class="table table-striped">
+    <table class="table">
       <thead>
         <tr>
           <th>
@@ -8,10 +8,15 @@
           </th>
         </tr>
       </thead>
-      <tr ng-repeat="user in details">
+      <tr ng-repeat="user in details1">
         <td>
-            {{user}}
+            Online {{user}}
         </td>
       </tr>
+        <tr ng-repeat="user in details2">
+            <td>
+                Offline {{user}}
+            </td>
+        </tr>
     </table>
 </div>
