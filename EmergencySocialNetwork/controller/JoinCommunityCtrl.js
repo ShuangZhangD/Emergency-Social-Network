@@ -19,8 +19,23 @@ var SortUserList = function(userlist)
     return userlist.sort();
 }
 
-module.exports = {
-  LoginCommunity: function (req, res) {
+class JoinCommunityController {
+
+
+Validate (username, password){
+  if( /\w{3,}/.test(username) && /\w{4,}/.test(password) )
+    return true;
+  else 
+    return false;
+}
+
+SortUserList (userlist)
+//userlist should be an array of users
+{
+    return userlist.sort();
+}
+
+   LoginCommunity (req, res) {
 	var info = req.body;
 	var username = info["username"];
 	var password = info["password"];
@@ -41,7 +56,7 @@ module.exports = {
             res.json({success:0, err_type: 3, err_msg:content});
       }
       else{
-        sorted_content = SortUserList(content);
+        var sorted_content = SortUserList(content);
           res.json({"success":1, "data":sorted_content});
           io.on('connection', function(socket)
           {
@@ -51,9 +66,9 @@ module.exports = {
       }
     })
   }
-},
+}
 
-  AddUser: function (req,res){
+   AddUser (req,res){
   var info = req.body;
   var username = info["username"];
   var password = info["password"];
@@ -85,21 +100,21 @@ module.exports = {
       }
     })
   }
-  },
+  }
 
-  ListUser: function(req, res){
+   ListUser (req, res){
     dboper.GetAllUsers(function(statuscode, content){
       if(statuscode != 200){
         res.json({success:0, err_type: 1, err_msg:content});
       }
       else{
-        sorted_content = SortUserList(content);
+        var sorted_content = SortUserList(content);
         res.json({"success":1, "data":sorted_content});
       }
     })
-  },
+  }
 
-    Logout: function(req, res){
+  Logout (req, res){
         var info = req.body;
         var username = info["username"];
         dboper.Logout(username, function(statuscode, content){
@@ -116,4 +131,13 @@ module.exports = {
             }
         })
     }
+}
+
+let jcc = new JoinCommunityController();
+
+module.exports = {
+  LoginCommunity: jcc.LoginCommunity,
+  AddUser: jcc.AddUser,
+  ListUser: jcc.ListUser,
+  Logout: jcc.Logout 
 }
