@@ -8,6 +8,8 @@
  */
 
 app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket) {
+	console.log("Hi");
+	$scope.announcementList = [];
     // get all announcement from server while open this app page
 	var getAnnouncement = function() {
         $http({
@@ -23,6 +25,7 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket
 		});
     };
 	getAnnouncement();
+	$scope.announcementList.push({announcement:'test', username:'j & k', timestamp:Date.now()});
 	// receive a new announcement from server vie socket.io
 	mySocket.on('New Announcement', function(data) {
 		$scope.announcementList.push(data);
@@ -35,6 +38,7 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket
                 usename: $scope.userClass['username'],
                 timestamp: Date.now()
         };
+		console.log(announcement_data);
 		mySocket.emit('New Announcement', announcement_data);
 		$http({
 			method:'post',
