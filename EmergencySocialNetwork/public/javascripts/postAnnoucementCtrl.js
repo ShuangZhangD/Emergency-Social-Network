@@ -8,7 +8,6 @@
  */
 
 app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket) {
-	console.log("Hi");
 	$scope.announcementList = [];
     // get all announcement from server while open this app page
 	var getAnnouncement = function() {
@@ -44,7 +43,7 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket
 			method:'post',
 			url:'http://localhost:8081/post_announcement',
 			data: announcement_data
-		}),success(function(rep) {
+		}).success(function(rep) {
 			if (rep.success == 1) {
 				console.log('Post Announcement Success!');
 			}
