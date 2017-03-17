@@ -109,7 +109,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
-        $scope.showList['postAnncement'] = true;
+        $scope.showList['postAnnouncement'] = true;
     };
     mySocket.on("userJoined",function(username){
         if ($scope.logined) {
