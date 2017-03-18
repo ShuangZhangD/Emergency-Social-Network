@@ -13,7 +13,7 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket
 	var getAnnouncement = function() {
         $http({
 			method:'get',
-			url:'localhost:8081/announcement'
+			url:'/announcement'
         }).success(function(rep){
 			if (rep.success) {
 				$scope.announcementList = rep.data;
@@ -41,7 +41,7 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket
 		mySocket.emit('New Announcement', announcement_data);
 		$http({
 			method:'post',
-			url:'localhost:8081/post_announcement',
+			url:'/post_announcement',
 			data: announcement_data
 		}).success(function(rep) {
 			if (rep.success == 1) {

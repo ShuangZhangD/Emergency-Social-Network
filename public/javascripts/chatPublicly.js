@@ -33,7 +33,7 @@ app.controller('chatPubliclyCtrl', function($window, $scope, $http, mySocket) {
     var getMessage=function(){
         $http({
             method:'get',
-            url:'localhost:8081/public',
+            url:'/public',
             //data:{pubmsg:$scope.pubmsg, username:$scope.username}
         }).success(function(rep){
             console.log(rep);
@@ -59,7 +59,7 @@ app.controller('chatPubliclyCtrl', function($window, $scope, $http, mySocket) {
         console.log($scope.userClass);
         $http({
             method:'post',
-            url:'localhost:8081/public',
+            url:'/public',
             data:{pubmsg:$scope.pubmsg, username:$scope.userClass['username'], timeStamp:Date.now()}
         }).success(function(rep){
             console.log(rep);

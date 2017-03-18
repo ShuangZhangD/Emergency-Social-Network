@@ -9,7 +9,7 @@ class joinCommunityBoundary {
         if (add) {
             $http({  
                 method:'post',  
-                url:'localhost:8081/signup',
+                url:'/signup',
                 data:{username:$scope.username, password:$scope.password}  
             }).success(function(rep){  
                 console.log(rep);  
