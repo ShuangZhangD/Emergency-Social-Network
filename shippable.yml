@@ -1,0 +1,27 @@
+# Language setting
+language: node_js
+
+# Version number
+node_js:
+  - "4.5.0"
+
+services:
+  - mongodb
+
+before_install:
+  - npm install
+  - bower --allow-root install
+
+before_script:
+ - npm install
+ - mkdir -p shippable/testresults
+ - mkdir -p shippable/codecoverage
+
+script:
+  - mocha --timeout 5000
+
+after_script:
+  - ./node_modules/.bin/mocha -R xunit ./test > shippable/testresults/result.xml
+  - npm run-script test-coverage
+  - npm run-script shippable-cobertura
+# after_success:
