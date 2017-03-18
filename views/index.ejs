@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>JoinCommunitity</title>
+    <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/joinCommunity.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/DisplayDirectory.css">
+  </head>
+  <body ng-app="ESN-APP" ng-controller="initCtrl">
+    
+    <div ng-controller="joinCommunityCtrl">
+        <%- include('navbarSimple') %>
+        <%- include('joinCommunity') %>
+        <%- include('displayDirectory') %>
+    </div>
+
+    <%- include('chatPublicly') %>
+    <%- include('postAnnouncement') %>
+
+
+
+    <!--script src="/javascripts/angular.min.js"></script-->
+
+    <script src="angular/angular.js"></script>
+    <script src="angular-socket-io/socket.min.js"></script>
+    <script src="angular-socket-io/socket.js"></script>
+    <script src="socket.io-client/dist/socket.io.js"></script>
+
+    <script src="/javascripts/main.js"></script>
+    <script src="/javascripts/joinCommunityBoundary.js"></script>
+    <script src="/javascripts/joinCommunity.js"></script>
+    <script src="/javascripts/chatPublicly.js"></script>
+    <script src="/javascripts/postAnnoucementCtrl.js"></script>
+  </body>
+</html>
