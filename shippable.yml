@@ -13,7 +13,7 @@ env:
   global:
     - APP_NAME=quiet-peak-31270
     - IS_SHIPPABLE=true
-    - secure:HEROKU_API_KEY=48d8b542-3cd9-4c80-9713-22467f344f43
+    - HEROKU_API_KEY=48d8b542-3cd9-4c80-9713-22467f344f43
 
 before_install:
   - npm install
