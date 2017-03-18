@@ -8,7 +8,7 @@
     "poststop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "pretest": "mongod --dbpath data --fork --logpath /dev/null",
     "test": "mocha test",
-    "posttest": "mongo admin --eval 'db.shutdownServer()' > /dev/null"
+    "posttest": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "postinstall": "bower install"
   },
   "dependencies": {
