@@ -9,7 +9,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
             var tmpUsername = $scope.username;
             $http({  
                 method:'post',  
-                url:'http://localhost:8081/login',  
+                url:'https://localhost:8081/login',
                 data:{username:$scope.username, password:$scope.password}  
             }).success(function(rep){  
                 console.log(rep);  
@@ -87,7 +87,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
         if ($scope.logined) {
             $http({
                 method:'get',
-                url:'http://localhost:8081/userlist'
+                url:'https://localhost:8081/userlist'
             }).then(function successCallback(response) {
                 console.log(response);
                 $scope.details1 = response.data.data1;
@@ -115,7 +115,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
         if ($scope.logined) {
             $http({
                 method: 'get',
-                url: 'http://localhost:8081/userlist'
+                url: 'https://localhost:8081/userlist'
             }).then(function successCallback(response) {
                 console.log(response);
                 $scope.details1 = response.data.data1;
@@ -133,7 +133,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
         if ($scope.logined) {
                     $http({
                         method: 'get',
-                        url: 'http://localhost:8081/userlist'
+                        url: 'https://localhost:8081/userlist'
                     }).then(function successCallback(response) {
                         console.log(response);
                         $scope.details1 = response.data.data1;
@@ -150,7 +150,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
         if ($scope.logined) {
             $http({
                 method:'post',
-                url:'http://localhost:8081/logout',
+                url:'https://localhost:8081/logout',
                 data:{username:$scope.username}
             }).success(function(rep){
                 // logout
@@ -173,7 +173,7 @@ function addUser($scope, $http, tmpUsername, mySocket) {
     if (add) {
         $http({  
             method:'post',  
-            url:'http://localhost:8081/signup',  
+            url:'https://localhost:8081/signup',
             data:{username:$scope.username, password:$scope.password}  
         }).success(function(rep){  
             console.log(rep);  
@@ -243,7 +243,7 @@ function displayDirectory($scope, $http) {
   $scope.showList.directory = true;
   $http({
     method:'get',
-    url:'http://localhost:8081/userlist'
+    url:'https://localhost:8081/userlist'
   }).then(function successCallback(response) {
     console.log(response);
     $scope.details1 = response.data.data1;
