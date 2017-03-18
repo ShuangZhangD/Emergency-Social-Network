@@ -3,7 +3,7 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
 var User = require('./DatabaseMethods.js');
-var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
+var url = 'mongodb://localhost:27017/test2';
 
 var db_err_msg = "Database Error";
 var db_err_statuscode = 400;

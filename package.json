@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "database": "mongod"
   },
   "dependencies": {
     "body-parser": "~1.15.2",
