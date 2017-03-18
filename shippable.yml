@@ -23,13 +23,13 @@ before_script:
  - mkdir -p shippable/testresults
  - mkdir -p shippable/codecoverage
 
-# Your build commands goes here
-build:
-  # Commands that should be executed during the build.
-  ci:
-    - npm install -g grunt-cli mocha istanbul
-    - npm install
-    - grunt circleci
+## Your build commands goes here
+#build:
+#  # Commands that should be executed during the build.
+#  ci:
+#    - npm install -g grunt-cli mocha istanbul
+#    - npm install
+#    - grunt circleci
 
 
 # Commands to run after a successfull build
