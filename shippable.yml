@@ -3,7 +3,7 @@ language: node_js
 
 # Version number
 node_js:
-  - "4.5.0"
+  - "7.4.0"
 
 services:
   - mongodb
@@ -18,4 +18,10 @@ before_script:
  - mkdir -p shippable/codecoverage
 
 
-# after_success:
+# Commands to run after a successfull build
+after_success:
+  - git push -f git@heroku.com:quiet-peak-31270.git master
+
+# Notifications for each build
+notifications:
+   email: false
