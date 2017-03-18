@@ -19,11 +19,11 @@ dependencies:
     - npm install -g grunt-cli mocha istanbul
     - npm install
 
-## run tests
-#test:
-#  override:
-#    - mkdir -p $CIRCLE_TEST_REPORTS/mocha
-#    - grunt circleci
+# run tests
+test:
+  override:
+    - mkdir -p $CIRCLE_TEST_REPORTS/mocha
+    - grunt circleci
 
 deployment:
   staging:

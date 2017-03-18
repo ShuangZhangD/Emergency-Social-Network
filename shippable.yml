@@ -13,6 +13,7 @@ env:
   global:
     - APP_NAME=quiet-peak-31270
     - IS_SHIPPABLE=true
+    - secure:HEROKU_API_KEY=48d8b542-3cd9-4c80-9713-22467f344f43
 
 before_install:
   - npm install
@@ -22,10 +23,20 @@ before_script:
  - mkdir -p shippable/testresults
  - mkdir -p shippable/codecoverage
 
+# Your build commands goes here
+build:
+  # Commands that should be executed during the build.
+  ci:
+    - npm install -g grunt-cli mocha istanbul
+    - npm install
+    - grunt circleci
+
 
 # Commands to run after a successfull build
 after_success:
-  - git push -f git@heroku.com:$APP_NAME.git master
+  - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f /tmp/ssh/00_sub > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
+  - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME
+  - git push -f heroku master
 
 # Notifications for each build
 notifications:
