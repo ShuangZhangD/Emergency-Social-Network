@@ -36,7 +36,7 @@ build:
 # Commands to run after a successfull build
 after_success:
   - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME
-  - git push -f heroku master
+  - git push -f heroku shuang-iteration-2:master
 
 # Notifications for each build
 notifications:
