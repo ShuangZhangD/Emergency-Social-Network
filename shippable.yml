@@ -23,10 +23,11 @@ before_script:
  - mkdir -p shippable/testresults
  - mkdir -p shippable/codecoverage
 
-## Your build commands goes here
-#build:
-#  # Commands that should be executed during the build.
-#  ci:
+# Your build commands goes here
+build:
+  # Commands that should be executed during the build.
+  ci:
+    - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 #    - npm install -g grunt-cli mocha istanbul
 #    - npm install
 #    - grunt circleci
