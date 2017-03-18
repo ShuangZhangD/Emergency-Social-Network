@@ -8,6 +8,12 @@ node_js:
 services:
   - mongodb
 
+# Declare global variables to be used during your build.
+env:
+  global:
+    - APP_NAME=quiet-peak-31270
+    - IS_SHIPPABLE=true
+
 before_install:
   - npm install
   - bower --allow-root install
@@ -19,7 +25,7 @@ before_script:
 
 # Commands to run after a successfull build
 after_success:
-  - git push -f git@heroku.com:quiet-peak-31270.git master
+  - git push -f git@heroku.com:$APP_NAME.git master
 
 # Notifications for each build
 notifications:
