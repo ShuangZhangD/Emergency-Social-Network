@@ -12,7 +12,7 @@ var http = require('http');
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
-server.listen(process.env.PORT || 8081);
+server.listen(process.env.PORT || 5000);
 var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
 var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
 // view engine setup
