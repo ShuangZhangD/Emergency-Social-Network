@@ -25,8 +25,8 @@ dependencies:
 #    - mkdir -p $CIRCLE_TEST_REPORTS/mocha
 #    - grunt circleci
 
- deployment:
-   staging:
-     branch: master
-     heroku:
-       appname: quiet-peak-31270
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: quiet-peak-31270
