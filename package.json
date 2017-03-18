@@ -3,9 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "prestart": "mongod --dbpath data --fork --logpath /dev/null",
     "start": "node ./bin/www",
-    "postinstall": "bower install",
-    "database": "mongod"
+    "poststop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
+    "pretest": "mongod --dbpath data --fork --logpath /dev/null",
+    "test": "mocha test",
+    "posttest": "mongo admin --eval 'db.shutdownServer()' > /dev/null"
+    "postinstall": "bower install"
   },
   "dependencies": {
     "body-parser": "~1.15.2",
