@@ -13,7 +13,6 @@ before_install:
   - bower --allow-root install
 
 before_script:
- - npm install
  - mkdir -p shippable/testresults
  - mkdir -p shippable/codecoverage
 
