@@ -60,7 +60,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
         if ($scope.logined) {
             $http({  
                 method:'post',  
-                url:'http://localhost:8081/logout',  
+                url:'https://localhost:8081/logout',  
                 data:{username:$scope.username}  
             }).success(function(rep){
                 // logout
