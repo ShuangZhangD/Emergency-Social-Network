@@ -5,10 +5,11 @@
 class User {
 
     // Constructor for initializing values for a new user
-    constructor(username, password, status) {
+    constructor(username, password, status, EmergencyStatus) {
         this.username = username;
         this.password = password;
         this.status   = status;
+        this.EmergencyStatus = EmergencyStatus;
         console.log("No error load user")
     }
 
