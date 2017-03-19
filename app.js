@@ -17,7 +17,7 @@ server.listen(process.env.PORT || 5000);
 var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
 var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
 var PrivateChatCtrl = require('./controller/PrivateChatCtrl.js');
-
+var PostAnnouncementCtrl = require('./controller/PostAnnouncementCtrlCtrl.js');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -51,6 +51,8 @@ app.post('/public', PublicChatCtrl.AddPublicMessage);
 app.get('/privatechat/:sender/:receiver', PrivateChatCtrl.LoadPrivateHistoryMessage);
 app.post('/privatechat', PrivateChatCtrl.AddPrivateMessage);
 
+app.get('/announcement', PostAnnouncementCtrl.LoadAnnouncement);
+app.post('/post_announcement', PostAnnouncementCtrl.AddAnnouncement);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -78,6 +80,7 @@ var privateChat = require('./controller/PrivateChatCtrl.js');
 io.on('connection', function(socket) {
 
     socket.on('Public Message', publicChat.publicMessageSocket(socket));
+    socket.on('Post Announcement', PostAnnouncementCtrl.AnnouncementSocket(socket));
 
     //when a private message is sent
     socket.on('Private Message', privateChat.privateMessageSocket(socket, ConnectedSockets));
