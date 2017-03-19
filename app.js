@@ -48,7 +48,7 @@ app.get('/public', PublicChatCtrl.LoadPublicMessage);
 app.post('/public', PublicChatCtrl.AddPublicMessage);
 
 app.get('/announcement', PostAnnouncementCtrl.LoadAnnouncement);
-app.get('/post_announcement', PostAnnouncementCtrl.AddAnnouncement);
+app.post('/post_announcement', PostAnnouncementCtrl.AddAnnouncement);
 
 
 // catch 404 and forward to error handler
@@ -75,7 +75,7 @@ module.exports = app;
 var publicChat = require('./controller/PublicChatCtrl.js');
 io.on('connection', function(socket) {
     socket.on('Public Message', publicChat.publicMessageSocket(socket));
-    socket.on('Post Announcement', publicChat.AnnouncementSocket(socket));
+    socket.on('Post Announcement', PostAnnouncementCtrl.AnnouncementSocket(socket));
     socket.on('userJoinCommunity', function(username){
       socket.broadcast.emit("userJoined",username);
     });

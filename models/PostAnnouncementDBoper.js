@@ -8,7 +8,7 @@ var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
 
 var db_err_msg = "Database Error";
 
-exports.InsertAnouncement = function(sender, announcement, postTime, callback) {
+exports.InsertAnnouncement = function(username, announcement, postTime, callback) {
     //connect to database
     MongoClient.connect(url, function (err, db) {
         if (err) {
@@ -16,9 +16,9 @@ exports.InsertAnouncement = function(sender, announcement, postTime, callback) {
             callback(400, db_err_msg);// DB Error. Here error of connecting to db
         }
         console.log("Connected correctly to server.");
-        var collection = db.collection('amouncement');
+        var collection = db.collection('announcement');
         //insert into table
-        var data = [{"sender": sender,"announcement":announcement, "postTime": postTime}];
+        var data = [{"username": username,"announcement":announcement, "postTime": postTime}];
         collection.insert(data, callback);
         db.close();
     });
@@ -31,8 +31,8 @@ exports.LoadAnnouncement = function(callback) {
             callback(400, db_err_msg);// DB Error. Here error of connecting to db
         }
         console.log("Connected correctly to server.");
-        var collection = db.collection('messages');
-        collection.find({"type": "public"}).toArray(function(err, results){
+        var collection = db.collection('announcement');
+        collection.find({}).toArray(function(err, results){
             if(err)
             {
                 console.log('Error:'+ err);

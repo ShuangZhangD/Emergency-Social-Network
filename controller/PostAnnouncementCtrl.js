@@ -4,7 +4,7 @@
 
 var express = require('express');
 var myParser = require("body-parser");
-var dboper = require("../models/PublicChatDBoper.js");
+var dboper = require("../models/PostAnnouncementDBoper.js");
 var app = express();
 
 module.exports = {
@@ -13,8 +13,8 @@ module.exports = {
     AddAnnouncement : function (req, res) {
         var info = req.body;
         var announcement = info["announcement"];
-        var sender = info["username"];
-        dboper.InsertAnnouncement(sender, announcement, Date.now(), function (err, results) {
+        var username = info["username"];
+        dboper.InsertAnnouncement(username, announcement, Date.now(), function (err, results) {
             if (err) {
                 console.log('Error:'+ err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
