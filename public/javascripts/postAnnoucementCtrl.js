@@ -26,7 +26,7 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket
 	getAnnouncement();
 	$scope.announcementList.push({announcement:'test', username:'j & k', timestamp:Date.now()});
 	// receive a new announcement from server vie socket.io
-	mySocket.on('New Announcement', function(data) {
+	mySocket.on('Post Announcement', function(data) {
 		$scope.announcementList.push(data);
 		// TODO notification of new announcement
 		alert(data);
@@ -34,7 +34,7 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket
 	$scope.submitAnnouncement = function() {
 		var announcement_data = {
                 announcement: $scope.announcement_content,
-                usename: $scope.userClass['username'],
+                username: $scope.userClass['username'],
                 timestamp: Date.now()
         };
 		console.log(announcement_data);
