@@ -1,0 +1,19 @@
+
+<div class="container" ng-controller="postAnnouncementCtrl" ng-show="showList.postAnnouncement">
+    <div class="container">
+	<h3> Anncement </h3>
+        <div class="panel panel-default" ng-repeat="ann in announcementList track by $index">
+            <div class="panel-heading"><span>{{ann.username}} @ </span><span>{{ann.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
+            <div class="panel-body"><span class="content">{{ann.announcement}}</span><span class="avatar"></span></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="form-signin">
+            <input ng-model="announcement_content" id="postAnnouncement" type="text" class="form-control" placeholder="Post Announcement" required autofocus>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="submitAnnouncement()">Post Announcement</button>
+        </div>
+    </div>
+</div>
+
+
+

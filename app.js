@@ -10,11 +10,13 @@ var users = require('./routes/users');
 var chatPubliclyRouter = require('./routes/chatPubliclyRouter');
 var http = require('http');
 var app = express();
+// app.set('port', (process.env.PORT || 5000));
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
-server.listen(8081);
+server.listen(process.env.PORT || 5000);
 var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
 var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
+var PostAnnouncementCtrl = require('./controller/PostAnnouncementCtrl.js');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -45,6 +47,8 @@ app.post('/logout', JoinCommunityCtrl.Logout);
 app.get('/public', PublicChatCtrl.LoadPublicMessage);
 app.post('/public', PublicChatCtrl.AddPublicMessage);
 
+app.get('/announcement', PostAnnouncementCtrl.LoadAnnouncement);
+app.post('/post_announcement', PostAnnouncementCtrl.AddAnnouncement);
 
 
 // catch 404 and forward to error handler
@@ -71,11 +75,12 @@ module.exports = app;
 var publicChat = require('./controller/PublicChatCtrl.js');
 io.on('connection', function(socket) {
     socket.on('Public Message', publicChat.publicMessageSocket(socket));
+    socket.on('Post Announcement', PostAnnouncementCtrl.AnnouncementSocket(socket));
     socket.on('userJoinCommunity', function(username){
       socket.broadcast.emit("userJoined",username);
     });
     socket.on('left', function(){
-      console.log("user left here!!!!")
+      console.log("user left here!!!!");
         socket.broadcast.emit("userleft");
     });
     // socket.on("disconnect", function(){
