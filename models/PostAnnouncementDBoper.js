@@ -41,7 +41,7 @@ exports.LoadAnnouncement = function(callback) {
                 var datas = [];
                 results.forEach(function(result){
                     var data = {};
-                    data["username"] = result.sender;
+                    data["username"] = result.username;
                     data["announcement"] = result.announcement;
                     data["timestamp"] = result.postTime;
                     console.log(result);
