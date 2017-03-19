@@ -11,16 +11,23 @@ class ShareStatusController {
     AddShareStatus(req, res){
         var info = req.body;
         var username = info["username"];
-        var status=info["status"];
+        var status=info["emergencystatus"];
 
         //update database through ShareStatusDBoper.addsharestatus
-        dboper.Updatesharestatus(username, status, function (err, results) {
+        dboper.Updatesharestatus(username, emergencystatus, function (err, results) {
             if (err) {
                 console.log('Error:'+ err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             } else {
                 res.json({success:1, suc_msg: "Success"});
             }});
+    }
+
+    AddShareStatusSocket(socket){
+        return function(data) {
+            socket.emit('Update Share Status', data);
+            socket.broadcast.emit('Update Share Status', data);
+        };
     }
 }
 
