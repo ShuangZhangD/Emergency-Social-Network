@@ -26,26 +26,12 @@ var SortUserList = function(userlist)
     return userlist.sort();
 }
 
-class JoinCommunityController {
-	
-	Validate (username, password) {
-    if( /\w{3,}/.test(username) && /\w{4,}/.test(password) )
-      return true;
-    else 
-      return false;
-  }
-
-  SortUserList (userlist) {
-    //userlist should be an array of users
-    return userlist.sort();
-  }
-
-	
-  LoginCommunity (req, res) {
+module.exports = {
+  LoginCommunity: function (req, res) {
 	var info = req.body;
 	var username = info["username"];
 	var password = info["password"];
-  	var encry_password = md5(password);
+  var encry_password = md5(password);
 
   //validate the username and password
   if(!Validate(username, password)) {
@@ -62,7 +48,7 @@ class JoinCommunityController {
             res.json({success:0, err_type: 3, err_msg:content});
       }
       else{
-        var sorted_content = SortUserList(content);
+        sorted_content = SortUserList(content);
           res.json({"success":1, "data":sorted_content});
           io.on('connection', function(socket)
           {
@@ -72,9 +58,9 @@ class JoinCommunityController {
       }
     })
   }
-}
+},
 
-  AddUser (req,res){
+  AddUser: function (req,res){
   var info = req.body;
   var username = info["username"];
   var password = info["password"];
@@ -96,7 +82,7 @@ class JoinCommunityController {
               res.json({success:0, err_type: 3, err_msg:content});
       }
       else{
-        var sorted_content = SortUserList(content);
+        sorted_content = SortUserList(content);
           res.json({"success":1, "data":sorted_content});
           io.on('connection', function(socket)
           {
@@ -106,22 +92,22 @@ class JoinCommunityController {
       }
     })
   }
-  }
+  },
 
-  ListUser (req, res){
+  ListUser: function(req, res){
     dboper.GetAllUsers(function(statuscode, content1, content2){
       if(statuscode != 200){
         res.json({success:0, err_type: 1, err_msg:content});
       }
       else{
-        var sorted_content1 = SortUserList(content1);
-        var sorted_content2 = SortUserList(content2);
+        sorted_content1 = SortUserList(content1);
+          sorted_content2 = SortUserList(content2);
         res.json({"success":1, "data1":sorted_content1, "data2":sorted_content2});
       }
     })
-  }
+  },
 
-    Logout (req, res){
+    Logout: function(req, res){
         var info = req.body;
         var username = info["username"];
         dboper.Logout(username, function(statuscode, content){
@@ -138,13 +124,4 @@ class JoinCommunityController {
             }
         })
     }
-}
-
-let jcc = new JoinCommunityController();
-
-module.exports = {
-  LoginCommunity: jcc.LoginCommunity,
-  AddUser: jcc.AddUser,
-  ListUser: jcc.ListUser,
-  Logout: jcc.Logout 
 }
