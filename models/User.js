@@ -48,6 +48,23 @@ class User {
         });
     }
 
+    // Update the user's emergency status based on the username
+    updateEmergencyStatus(db, username, emergencystatus, callback) {
+        this.collection = db.collection('USERS');
+        //this.collection.find({"status" : status}, function(err, results) {
+        this.collection.update({"username": this.username}, {$set :{"EmergencyStatus":emergencystatus}}, function(err, results) {
+            if(err)
+            {
+                console.log('Error updating the status ' + err);
+                callback(null, err);
+            }
+            else {
+                console.log(results.EmergencyStatus);
+                callback(String(results.EmergencyStatus), null);
+            }
+        });
+    }
+
     // Method to display a user, takes the "USERS" collection as a parameter
     displayUser(db, callback) {
         this.collection = db.collection('USERS');
