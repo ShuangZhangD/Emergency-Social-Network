@@ -17,7 +17,7 @@ server.listen(process.env.PORT || 5000);
 var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
 var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
 var PrivateChatCtrl = require('./controller/PrivateChatCtrl.js');
-var PostAnnouncementCtrl = require('./controller/PostAnnouncementCtrlCtrl.js');
+var PostAnnouncementCtrl = require('./controller/PostAnnouncementCtrl.js');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
