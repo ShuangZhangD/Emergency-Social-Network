@@ -1,0 +1,50 @@
+<!--DOCTYPE html>
+<html lang='en'>
+<head>
+    <title>ChatPublicly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/chatPublicly.css" rel="stylesheet">
+    <link href="/stylesheets/app.css" rel="stylesheet">
+</head>
+<body-->
+
+<!--div class="container"  ng-app="chatPubliclyAPP" ng-controller="chatPubliclyCtrl"-->
+<div class="container" ng-controller="chatPubliclyCtrl" ng-show="showList.chatPublicly">
+    <div class="container">
+
+
+            <div class="panel panel-default " ng-repeat="msg in displaymsg track by $index">
+
+
+            <div class="panel-heading"><span>{{msg.username}} @ </span><span>{{msg.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
+            <div class="panel-body"><span class="content">{{msg.pubmsg}}</span><span class="avatar"></span></div>
+
+
+            </div>
+
+
+    </div>
+
+    <div class="container">
+        <div class="form-signin">
+            <input ng-model="pubmsg" id="pubmsg" type="text" class="form-control" placeholder="Send Public Msg" required autofocus>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="postMsg()">Send Msg</button>
+        </div>
+    </div>
+
+</div> <!-- /container -->
+
+
+
+
+<!--script src="angular/angular.min.js"></script>
+<script src="angular-socket-io/socket.min.js"></script>
+<script src="angular-socket-io/socket.js"></script>
+<script src="socket.io-client/dist/socket.io.js"></script>
+
+<script src="/javascripts/joinCommunity.js"></script>
+<script src="/javascripts/chatPublicly.js"></script>
+
+</body>
+</html-->

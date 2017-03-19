@@ -1,0 +1,70 @@
+<html>
+  <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	<link rel=”stylesheet” href=”//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css”>
+	<link rel="stylesheet" href="../public/stylesheets/ShareStatus.css">
+  </head>
+  <body>
+	<div ng-app="searchStatusApp" ng-controller="SearchStatusCtrl" class="container">
+		<table class="table table-striped">
+			<tr>
+				<th>
+					Status
+				</th>
+				<th>
+					Explanation
+				</th>
+				<th>
+					Icon
+				</th>
+			</tr>
+			<tr>
+				<td>
+					OK
+				</td>
+				<td>
+					I am OK, I do not need help. 
+				</td>
+				<td>
+					<img src="../public/images/Okay.png" height="20%" width="50%" />
+				</td>
+			</tr>
+			<tr>
+                <td>
+                    Help
+                </td>
+                <td>
+                    I need help, but this is not a life threatening emergency. 
+                </td>
+                <td>
+                    <img src="../public/images/Warning.png" height="20%" width="50%"/>
+                </td>
+            </tr>
+	    <tr>
+                <td>
+                   	Emergency
+                </td>
+                <td>
+                	I need help now, as this is a life threatening emergency!
+		</td>
+                <td>
+                    <img src="../public/images/Emergency.png" height="10%" width="50%"/>
+                </td>
+            </tr>
+		</table>
+		<center>
+		<h5> Choose your status: </h5>
+		<div class="btn-group" data-toggle="buttons">
+  			<label class="btn btn-primary"><input type="radio" name="status" id="OK" value="OK">OK</label>
+			<label class="btn btn-primary"><input type="radio" name="status" id="Help" value="Help">Help</label>
+			<label class="btn btn-primary"><input type="radio" name="status" id="Emergency" value="Emergency">Emergency</label>
+		</div>
+		</center>
+	</div>
+  </body>
+</html>
+
+
