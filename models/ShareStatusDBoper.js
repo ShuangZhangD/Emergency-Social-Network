@@ -8,6 +8,8 @@ var express = require('express');
 var User = require('./DatabaseMethods.js');
 var url = 'mongodb://localhost:27017/test2';
 
+var userdbmethod =require('./User.js');
+
 var db_err_msg = "Database Error";
 
 class ShareStatusDBoper{
@@ -24,6 +26,7 @@ class ShareStatusDBoper{
                 console.log("Connected correctly to server.");
                 var usercollection = db.collection("user");
                 //To do here, invoke dbmethods to update user status
+
             }
         });
     }
