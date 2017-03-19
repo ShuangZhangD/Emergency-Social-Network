@@ -151,7 +151,7 @@ class Message {
     this.receiver = receiver;
     this.type = type;
     this.message = message;
-    this.created = created;
+    this.created = created; //should add status
   }
 
   // Method to insert a new message, takes the "MESSAGE" collection as the parameter
