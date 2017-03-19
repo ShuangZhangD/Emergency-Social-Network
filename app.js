@@ -10,7 +10,7 @@ var users = require('./routes/users');
 var chatPubliclyRouter = require('./routes/chatPubliclyRouter');
 var http = require('http');
 var app = express();
-// app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 5000));
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 server.listen(process.env.PORT || 5000);
