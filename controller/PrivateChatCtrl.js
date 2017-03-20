@@ -131,12 +131,19 @@ module.exports = {
     /* Called when indivudual number of private unread message of this username is needed
      */
     getCount_IndividualPrivateSender : function(req,res){
-            var username = req.param("receiver");
-            let dboper = new PrivateChatDBOper("", username);
+            console.log('==== getCount_IndividualPrivateSender called! ======');
+			var username = req.param("receiver");
+             console.log(username);
+			let dboper = new PrivateChatDBOper("", username);
             //emit count of all unread msg(public + private)
             dboper.GetCount_IndividualPrivateSender(function(statuscode, results){
-                if(statuscode==success_statuscode) res.json({success:1, data: results});
+                if(statuscode==success_statuscode) {
+					res.json({success:1, data: results});
+					console.log('succ');
+					console.log(results);
+				}
                 else{
+					console.log('err');
                     res.json({success:0, err_type: 1, err_msg:"Database Error"});
                 }
             });

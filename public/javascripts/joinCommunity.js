@@ -1,4 +1,4 @@
-app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
+app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http, mySocket) {
     //$scope.name = "Runoob";
 
     $scope.logined = false;
@@ -7,12 +7,12 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
         console.log($scope);
         if (check_usr($scope.username)) {
             var tmpUsername = $scope.username;
-            $http({  
-                method:'post',  
+            $http({
+                method:'post',
                 url:'/login',
-                data:{username:$scope.username, password:$scope.password}  
-            }).success(function(rep){  
-                console.log(rep);  
+                data:{username:$scope.username, password:$scope.password}
+            }).success(function(rep){
+                console.log(rep);
                 if (rep.success == 1) {
                     // login success
                     // TODO show directory
@@ -27,6 +27,10 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
                     displayDirectory($scope, $http)
                     //socket !!!
                     mySocket.emit("userJoinCommunity", tmpUsername);
+
+					// After logged in, get announcements, private chats, etc. (public chat seems ....)
+					$rootScope.$emit("loginGetAnnouncement");
+          $rootScope.$emit("loginGetPrivateChatList");
                 }
                 else {
                     // login failed
@@ -58,10 +62,10 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
 
     $scope.logout = function () {
         if ($scope.logined) {
-            $http({  
-                method:'post',  
+            $http({
+                method:'post',
                 url:'/logout',
-                data:{username:$scope.username}  
+                data:{username:$scope.username}
             }).success(function(rep){
                 // logout
                 console.log(rep);
@@ -111,6 +115,12 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
         }
         $scope.showList['postAnnouncement'] = true;
     };
+	$scope.showPrivateChat = function () {
+		for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+		$scope.showList['privateChatList'] = true;
+	};
     mySocket.on("userJoined",function(username){
         if ($scope.logined) {
             $http({
@@ -171,12 +181,12 @@ app.controller('joinCommunityCtrl', function($window, $scope, $http, mySocket) {
 function addUser($scope, $http, tmpUsername, mySocket) {
     var add = confirm("User does not exist, do you want to sign up?");
     if (add) {
-        $http({  
-            method:'post',  
+        $http({
+            method:'post',
             url:'/signup',
-            data:{username:$scope.username, password:$scope.password}  
-        }).success(function(rep){  
-            console.log(rep);  
+            data:{username:$scope.username, password:$scope.password}
+        }).success(function(rep){
+            console.log(rep);
             if (rep.success == 1) {
                 // sign up success
                 alert("Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
