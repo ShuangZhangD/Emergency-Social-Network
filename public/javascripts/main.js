@@ -4,8 +4,7 @@ app.controller('initCtrl', function($scope, $http) {
     $scope.showList = {
         login : true,
         directory : false,
-        chatPublicly : false,
-	postAnnouncement : false
+        chatPublicly : false
     };
     $scope.userClass = {username:""};
     $scope.logined = false;
