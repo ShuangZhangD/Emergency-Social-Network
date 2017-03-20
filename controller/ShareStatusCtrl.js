@@ -32,7 +32,7 @@ class ShareStatusController {
                 console.log('Error:' +err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             } else {
-                res.json({success:1, suc_msg: "Success"});
+                res.json({success:1, emergencystatus: results});
             }
 
         });
