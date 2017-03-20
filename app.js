@@ -19,7 +19,7 @@ var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
 var PostAnnouncementCtrl = require('./controller/PostAnnouncementCtrl.js');
 var ShareStatusCtrl = require('./controller/ShareStatusCtrl');
 
-// var privateChat = require('./controller/PrivateChatCtrl.js');
+// var privatechat/< = require('./controller/PrivateChatCtrl.js');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -79,6 +79,7 @@ module.exports = app;
 io.on('connection', function(socket) {
     socket.on('Public Message', PublicChatCtrl.publicMessageSocket(socket));
     socket.on('Post Announcement', PostAnnouncementCtrl.AnnouncementSocket(socket));
+    socket.on('Update Share Status', ShareStatusCtrl.UpdateShareStatusSocket(socket)); //for directory updating status
     socket.on('userJoinCommunity', function(username){
       socket.broadcast.emit("userJoined",username);
     });

@@ -10,6 +10,7 @@ class User {
         this.password = password;
         this.status   = status;
         this.EmergencyStatus = EmergencyStatus;
+       // this.updatetimestamp =
         console.log("No error load user")
     }
 

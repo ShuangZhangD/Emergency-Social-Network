@@ -22,8 +22,8 @@ class ShareStatusController {
                 res.json({success:1, suc_msg: "Success"});
             }});
     }
-
-    AddShareStatusSocket(socket){
+    //
+    UpdateShareStatusSocket(socket){
         return function(data) {
             socket.emit('Update Share Status', data);
             socket.broadcast.emit('Update Share Status', data);
@@ -34,5 +34,6 @@ class ShareStatusController {
 let ssc = new ShareStatusController();
 
 module.exports = {
-    AddShareStatus : ssc.AddShareStatus
+    AddShareStatus : ssc.AddShareStatus,
+    UpdateShareStatusSocket : ssc.UpdateShareStatusSocket
 }
