@@ -17,6 +17,8 @@ server.listen(process.env.PORT || 5000);
 var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
 var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
 var PostAnnouncementCtrl = require('./controller/PostAnnouncementCtrl.js');
+var ShareStatusCtrl = require('./controller/ShareStatusCtrl');
+
 // var privateChat = require('./controller/PrivateChatCtrl.js');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -50,6 +52,8 @@ app.post('/public', PublicChatCtrl.AddPublicMessage);
 
 app.get('/announcement', PostAnnouncementCtrl.LoadAnnouncement);
 app.post('/post_announcement', PostAnnouncementCtrl.AddAnnouncement);
+
+app.post('/userstatus', ShareStatusCtrl.AddShareStatus);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

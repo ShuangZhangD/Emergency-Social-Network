@@ -27,7 +27,7 @@ class ShareStatusDBoper{
                 console.log("Connected correctly to server.");
                 var usercollection = db.collection("user");
                 //To do here, invoke dbmethods to update user status
-
+                db.close();
             }
         });
     }
