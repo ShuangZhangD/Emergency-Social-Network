@@ -4,8 +4,8 @@
 'use strict';
 var MongoClient = require('mongodb').MongoClient;
 var User = require('./User.js');
-// var url = 'mongodb://localhost:27017/test';
-var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
+var url = 'mongodb://localhost:27017/test';
+//var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
 var Message = require('./Message.js');
 
 var db_err_msg = "Database Error";
