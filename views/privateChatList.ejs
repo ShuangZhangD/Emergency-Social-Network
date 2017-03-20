@@ -1,0 +1,8 @@
+<div class="container" ng-controller="privateChatListCtrl" ng-show="showList.privateChatList">
+    <div class="container">
+	<h3> Private Chat List </h3>
+        <div class="panel panel-default" ng-repeat="sender in privateSenderList track by $index">
+            <div class="panel-body"><span class="content">{{sender.sender}}</span><span class="avatar" style="color:red">{{sender.count}}</span></div>
+        </div>
+    </div>
+</div>

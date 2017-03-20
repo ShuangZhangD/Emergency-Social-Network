@@ -24,7 +24,7 @@ class JoinCommunityDBOper {
         else {
             console.log("Connected correctly to server.");
             //check if the user exist
-            let new_user = new User(username, password, "online");
+            let new_user = new User(username, password, "online", "");
             new_user.checkUser(db, username, function(result, err){
                 if(err){
                     callback(db_err_statuscode, db_err_msg);
