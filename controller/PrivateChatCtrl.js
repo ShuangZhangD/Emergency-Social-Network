@@ -1,7 +1,10 @@
 /**
  * Created by Ling on 2017/3/18.
  */
+var express = require('express');
+var myParser = require("body-parser");
 var PrivateChatDBOper = require("../models/PrivateChatDBoper.js");
+var app = express();
 
 var success_statuscode = 200;
 module.exports = {
