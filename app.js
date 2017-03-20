@@ -49,7 +49,7 @@ app.get('/public', PublicChatCtrl.LoadPublicMessage);
 app.post('/public', PublicChatCtrl.AddPublicMessage);
 
 app.get('/privatechat/:sender/:receiver', PrivateChatCtrl.LoadPrivateHistoryMessage);
-app.post('/privatechat', PrivateChatCtrl.AddPrivateMessage);x
+app.post('/privatechat', PrivateChatCtrl.AddPrivateMessage);
 
 
 // catch 404 and forward to error handler
