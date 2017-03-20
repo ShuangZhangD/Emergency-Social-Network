@@ -7,7 +7,7 @@
  *
  */
 
-app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket) {
+app.controller('postAnnouncementCtrl', function($window, $scope, $rootScope, $http, mySocket) {
 	$scope.announcementList = [];
     // get all announcement from server while open this app page
 	var getAnnouncement = function() {
@@ -19,7 +19,11 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $http, mySocket
 
 		});
     };
-	getAnnouncement();
+	// Call this function after login
+	//getAnnouncement();
+	$rootScope.$on("loginGetAnnouncement", function() {
+		getAnnouncement();
+	});
 	// $scope.announcementList.push({announcement:'test', username:'j & k', timestamp:Date.now()});
 	// receive a new announcement from server vie socket.io
 	mySocket.on('Post Announcement', function(data) {
