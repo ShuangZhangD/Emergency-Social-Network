@@ -179,6 +179,7 @@ class PrivateChatDBOper {
                     if (err) callback(db_err_statuscode, db_err_msg);
                     else {
                         var results = [];
+                        if(senderlist.length == 0)callback(success_statuscode, results);
                         for(var i = 0 ; i < senderlist.length;i++){
                             (function (i) {
                                 var sender = senderlist[i];
@@ -217,6 +218,7 @@ class PrivateChatDBOper {
                     if (err) callback(db_err_statuscode, db_err_msg);
                     else {
                         var results = [];
+                        if(senderlist.length == 0)callback(success_statuscode, results);
                         for(var i = 0 ; i < senderlist.length;i++){
                             (function (i) {
                                 var sender = senderlist[i];
@@ -252,6 +254,7 @@ class PrivateChatDBOper {
                     if (err) callback(db_err_statuscode, db_err_msg);
                     else {
                         var results = [];
+                        if(senderlist.length == 0)callback(success_statuscode, results);
                         for(var i = 0 ; i < senderlist.length;i++){
                             (function (i) {
                                 var sender = senderlist[i];
