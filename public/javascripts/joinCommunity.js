@@ -30,7 +30,8 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
 
 					// After logged in, get announcements, private chats, etc. (public chat seems ....)
 					$rootScope.$emit("loginGetAnnouncement");
-          $rootScope.$emit("loginGetPrivateChatList");
+          			$rootScope.$emit("loginGetPrivateChatList");
+					$rootScope.$emit("loginGetShareStatus");
                 }
                 else {
                     // login failed
@@ -121,6 +122,13 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
         }
 		$scope.showList['privateChatList'] = true;
 	};
+	$scope.showShareStatus = function() {
+		for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList['shareStatus'] = true;
+	};
+
     mySocket.on("userJoined",function(username){
         if ($scope.logined) {
             $http({
@@ -176,6 +184,26 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
         }
         $scope.showList['login'] = true;
     });
+
+
+	// in directory, open private chat
+	$scope.openPrivateChat = function (sender) {
+		for (var i = 0; i < $scope.privateSenderList.length; i++) {
+            if ($scope.privateSenderList[i].sender == sender) {
+                $scope.privateSenderList[i].count = 0;
+            }
+        }
+        $scope.updateNewMsgNum();
+        $scope.userClass['privateChatSender'] = sender;
+        $rootScope.$emit('openPrivateChatContent');
+
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList['privateChatContent'] = true;	
+	};
+
+
 });
 
 function addUser($scope, $http, tmpUsername, mySocket) {

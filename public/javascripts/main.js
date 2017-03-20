@@ -5,7 +5,7 @@ app.controller('initCtrl', function($scope, $http) {
         login : true,
         directory : false,
         chatPublicly : false,
-		    privateChatList : false,
+		privateChatList : false,
         privateChatContent: false,
         shareStatus: false
     };
