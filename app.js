@@ -16,8 +16,8 @@ var io = require('socket.io').listen(server);
 server.listen(process.env.PORT || 5000);
 var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
 var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
-var PrivateChatCtrl = require('./controller/PrivateChatCtrl.js');
-
+var PostAnnouncementCtrl = require('./controller/PostAnnouncementCtrl.js');
+// var privateChat = require('./controller/PrivateChatCtrl.js');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -48,9 +48,8 @@ app.post('/logout', JoinCommunityCtrl.Logout);
 app.get('/public', PublicChatCtrl.LoadPublicMessage);
 app.post('/public', PublicChatCtrl.AddPublicMessage);
 
-app.get('/privatechat/:sender/:receiver', PrivateChatCtrl.LoadPrivateHistoryMessage);
-app.post('/privatechat', PrivateChatCtrl.AddPrivateMessage);
-
+app.get('/announcement', PostAnnouncementCtrl.LoadAnnouncement);
+app.post('/post_announcement', PostAnnouncementCtrl.AddAnnouncement);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -72,44 +71,18 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-var ConnectedSockets = {};
-var publicChat = require('./controller/PublicChatCtrl.js');
-var privateChat = require('./controller/PrivateChatCtrl.js');
+
 io.on('connection', function(socket) {
-
-    socket.on('Public Message', publicChat.publicMessageSocket(socket));
-
-    //when a private message is sent
-    socket.on('Private Message', privateChat.privateMessageSocket(socket, ConnectedSockets));
-
-    //when total number of unread(private+public) message is needed
-    socket.on('GetCount AllUnreadMsg', privateChat.getCount_AllUnreadMsg(socket));
-
-    //when total number of private unread message is needed
-    socket.on('GetCount AllPrivateUnreadMsg', privateChat.getCount_AllPrivateUnreadMsg(socket));
-
-    //when individual number of unread message is needed
-    socket.on('GetCount IndividualUnreadMsg', privateChat.getCount_IndividualPrivateUnreadMsg(socket));
-
-    //when individual latest msg of unread message is needed
-    socket.on('GetMsg IndividualLatestUnreadMsg', privateChat.get_IndividualPrivateUnreadMsg(socket));
-
-    //set the private msg of sender and receiver to be read
-    socket.on('PrivateMsgRead', privateChat.MarkedAsRead());
-
+    socket.on('Public Message', PublicChatCtrl.publicMessageSocket(socket));
+    socket.on('Post Announcement', PostAnnouncementCtrl.AnnouncementSocket(socket));
     socket.on('userJoinCommunity', function(username){
       socket.broadcast.emit("userJoined",username);
-      ConnectedSockets[username] = socket;
-      //privateChat.UnreadCount(socket, username);
+    });
+    socket.on('left', function(){
+      console.log("user left here!!!!")
+        socket.broadcast.emit("userleft");
     });
 
-    socket.on('left', function(username){
-      console.log("user left here!!!!");
-        socket.broadcast.emit("userleft");
-        if(ConnectedSockets.hasOwnProperty(username)) {
-            delete ConnectedSockets[username]
-        }
-    });
     // socket.on("disconnect", function(){
     //   console.log("window close")
     //     socket.emit("windowclose");
