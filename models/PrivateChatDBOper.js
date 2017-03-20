@@ -203,6 +203,44 @@ class PrivateChatDBOper {
         })
     }
 
+    /* Get individual count of private msg of receiver
+     * return type is an object
+     */
+    GetCount_IndividualPrivateSender(callback, receiver = this.receiver) {
+        MongoClient.connect(url, function (err, db) {
+            if (err) {
+                callback(db_err_statuscode, db_err_msg)
+            }// DB Error. Here error of connecting to db
+            else {
+                let MSG = new Message("", receiver, "", "", "", "", "");
+                MSG.getPrivateMsgSenderList(db, function (senderlist, err) {
+                    if (err) callback(db_err_statuscode, db_err_msg);
+                    else {
+                        var results = [];
+                        for(var i = 0 ; i < senderlist.length;i++){
+                            (function (i) {
+                                var sender = senderlist[i];
+                                MSG.getCount_PrivateUnreadMsg(db, sender, receiver, function (count, err) {
+                                    if (err) callback(db_err_statuscode, db_err_msg);
+                                    else {
+                                        var result = {};
+                                        result["sender"] = sender;
+                                        result["count"] = count;
+                                        results.push(result);
+                                        if(i == senderlist.length-1){
+                                            callback(success_statuscode, results);
+                                        }
+                                    }
+                                });
+                            })(i);
+                        }
+                    }
+                    db.close()
+                })
+            }
+        })
+    }
+
     Get_LatestIndividualUnreadMsg(callback, receiver = this.receiver){
         MongoClient.connect(url, function (err, db) {
             if (err) {

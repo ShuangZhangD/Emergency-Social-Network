@@ -153,6 +153,20 @@ class Message {
         })
     }
 
+    //get name list of sender list who have private msg with receiver
+    getPrivateMsgSenderList(db, callback){
+        this.collection = db.collection('MESSAGES');
+        this.collection.distinct("sender",{
+            "receiver":this.receiver,
+            "type" : "private"
+        }, function (err, results) {
+            if(err) callback(null, err);
+            else {
+                callback(results, null);
+            }
+        })
+    }
+
     get_LatestPrivateUnreadMsg(db, sender, receiver, callback){
         this.collection = db.collection('MESSAGES');
         this.collection.find({
