@@ -2,7 +2,7 @@
     <div class="container">
 	<h3> Private Chat List </h3>
         <div class="panel panel-default" ng-repeat="sender in privateSenderList track by $index">
-            <div class="panel-body"><span class="content">{{sender.sender}}</span><span class="avatar" style="color:red">{{sender.count}}</span></div>
+            <div class="panel-body"><span class="content">{{sender.sender}}</span><span class="avatar" style="color:red">{{sender.count}}</span><button ng-click="openMsg(sender.sender)">Open</button></div>
         </div>
     </div>
 </div>

@@ -5,14 +5,16 @@ app.controller('initCtrl', function($scope, $http) {
         login : true,
         directory : false,
         chatPublicly : false,
-		privateChatList : false,
-    privateChatContent: false
+		    privateChatList : false,
+        privateChatContent: false,
+        shareStatus: false
     };
     $scope.userClass = {
 		username:"",
 		hasNewMsg:false,
 		newMsgNum:0,
-    privateChatSender: ""
+    privateChatSender: "",
+    status: ""
 	};
     $scope.logined = false;
     $scope.username = '';

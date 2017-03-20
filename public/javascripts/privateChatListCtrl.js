@@ -7,13 +7,10 @@
 app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $http, mySocket) {
 	$scope.privateSenderList = []; // [{username:'komala', newMsgNum:3}, {username:'jerry', newMsgNum:0}]
 	var getPrivateSenderList = function() {
-        console.log('hi-1');
-		$http({
+        $http({
 			method:'get',
-			url:'/privatechat/helen' //+ $scope.userClass['username']  // TODO helen define this API
+			url:'/privatechat/' + $scope.userClass['username']  // TODO helen define this API
         }).success(function(rep){
-				console.log('hi');
-				console.log(rep);
 				$scope.getPrivateSenderList = rep.data;
 				$scope.userClass['newMsgNum'] = 0;
 				for (var i = 0; i < $scope.getPrivateSenderList.length; i++) {
@@ -44,5 +41,13 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 	$scope.privateSenderList = [{"sender":"helen","count":0},{"sender":"ivy","count":3}];
 
 	// TODO socket.io
+	$scope.openMsg = function (sender) {
+		$scope.userClass['privateChatSender'] = sender;
+		$rootScope.$emit('openPrivateChatContent');
 
+			for (var item in $scope.showList) {
+	            $scope.showList[item] = false;
+	        }
+			$scope.showList['privateChatContent'] = true;
+	}
 });
