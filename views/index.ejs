@@ -5,6 +5,7 @@
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/stylesheets/joinCommunity.css" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/DisplayDirectory.css">
+    <link rel="stylesheet" href="/stylesheets/ShareStatus.css">
   </head>
   <body ng-app="ESN-APP" ng-controller="initCtrl">
     
@@ -18,7 +19,7 @@
     <%- include('postAnnouncement') %>
 	<%- include('privateChatList') %>
 	<%- include('privateChatContent') %>
-
+	<%- include('shareStatus') %>
 
     <!--script src="/javascripts/angular.min.js"></script-->
 
@@ -34,5 +35,6 @@
     <script src="/javascripts/postAnnoucementCtrl.js"></script>
     <script src="/javascripts/privateChatListCtrl.js"></script>
     <script src="/javascripts/privateChatContentCtrl.js"></script>
-  </body>
+ 	<script src="/javascripts/shareStatusCtrl.js"></script>
+   </body>
 </html>
