@@ -12,7 +12,12 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
             url:'/userstatus/' + $scope.userClass['username']
         }).success(function(rep){
         	console.log(rep);
-			    $scope.currentstatus=rep.data;
+			if(rep.data) {
+				$scope.currentstatus=rep.data;
+			}
+			else {
+				$scope.currentstatus="Undefined";
+			}
         });
     };
 
