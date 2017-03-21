@@ -13,7 +13,7 @@ class ShareStatusController {
         var username = info["username"];
         var status=info["emergencystatus"];
 
-        //update database through ShareStatusDBoper.updatesharestatus
+        //update database through ShareStatusDBoper.addsharestatus
         dboper.Updatesharestatus(username, emergencystatus, function (err, results) {
             if (err) {
                 console.log('Error:'+ err);

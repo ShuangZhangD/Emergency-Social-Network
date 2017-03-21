@@ -11,8 +11,15 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
             method:'get',
             url:'/userstatus/' + $scope.userClass['username']
         }).success(function(rep){
-        	console.log(rep);
-			    $scope.currentstatus=rep.data;
+        	console.log("Printing response in getsharestatus");
+			console.log(rep.data);
+			//console.log(rep);
+			if(rep.data) {
+				$scope.currentstatus=rep.data;
+			}
+			else {
+				$scope.currentstatus="Undefined";
+			}
         });
     };
 
@@ -23,8 +30,27 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
 	});
 
 	// For testing
-	$scope.currentstatus="Okay";
+	//$scope.currentstatus={emergencystatus:"Okay"};;
 	// Post function 
 	// data: {username:$scope.userClass['username'], emergencystatus:$scope.userClass['status']}
+	
+	$scope.setStatus = function(value) {
+      console.log("setting status to ");
+		console.log(value);
+        $http({
+            method:'post',
+            url:'/userstatus',
+            data: {username:$scope.userClass['username'], emergencystatus: value }
+        }).success(function(rep) {
+            if (rep.success == 1) {
+                console.log('Updated the status!');
+            }
+            else {
+                // TODO error handling
+                console.log("Unexpected error in setting status");
+				alert("Error in setting status");
+            }
+        });
+    };
 
 });

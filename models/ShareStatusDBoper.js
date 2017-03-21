@@ -5,11 +5,11 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
-var User = require('./DatabaseMethods.js');
+//var User = require('./DatabaseMethods.js');
 // var url = 'mongodb://localhost:27017/test2';
 var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
 
-var userdbmethod =require('./User.js');
+var User =require('./User.js');
 
 var db_err_msg = "Database Error";
 
@@ -18,15 +18,19 @@ class ShareStatusDBoper{
 
     Updatesharestatus(username, emergencystatus, callback){
         //connect to database
-        MongoClient.connect(url, function (err, db) {
+       console.log(" ================= inside updatesharestatus in dboper.js");
+		 MongoClient.connect(url, function (err, db) {
             if (err) {
                 console.log('Error:'+ err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             else {
                 console.log("Connected correctly to server.");
-                var usercollection = db.collection("user");
-                usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
+                console.log("Calling update in db");
+				var usercollection = db.collection("USERS");
+				console.log(username);
+				console.log(emergencystatus);
+                usercollection.update({"username": username}, {$set :{"emergencystatus":emergencystatus}},callback);
                     //To do here, invoke dbmethods to update user status
                 db.close();
             }
@@ -42,20 +46,24 @@ class ShareStatusDBoper{
             }
             else {
                 console.log("Connected correctly to server.");
-                var usercollection = db.collection("user");
-                usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
+                var usercollection = db.collection("USERS");
+              //  usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
                 //To do here, invoke dbmethods to get particular user's status
-                var EmergencyStatus={};
-                userdbmethod.getEmergencyStatus(db, function(data, err){
+                var emergencystatus={};
+                let user = new User(username, "", "", "Undefined");
+				user.getEmergencyStatus(db, function(data, err){
                     if(err){
                         console.log('Error:'+ err);
                         callback(400, db_err_msg);// DB Error. Here error of connecting to db
                     }
                     else {
-                        EmergencyStatus=data;
+                        //console.log("Printing emergencystatus in dboper.js");
+						emergencystatus=data;
+						//console.log(emergencystatus);
+
                     }
                 });
-                callback(err, EmergencyStatus);
+                callback(err, emergencystatus);
             }
             db.close();
         });

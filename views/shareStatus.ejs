@@ -47,11 +47,11 @@
             </tr>
         </table>
 		<center>
-		<h5>Your current status is: <span ng-model="currentstatus"></span>
+		<h5>Your current status is: <span>{{currentstatus}}</span>
 		<br/> Choose your status: </h5>
         <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary"><input type="radio" name="status" id="OK" value="OK">OK</label>
-            <label class="btn btn-primary"><input type="radio" name="status" id="Help" value="Help">Help</label>
-            <label class="btn btn-primary"><input type="radio" name="status" id="Emergency" value="Emergency">Emergency</label>
+            <label class="btn btn-primary"><input type="radio" name="status" id="OK" value="OK" ng-click="setStatus('OK')">OK</label>
+            <label class="btn btn-primary"><input type="radio" name="status" id="Help" value="Help" ng-click="setStatus('Help')">Help</label>
+            <label class="btn btn-primary"><input type="radio" name="status" id="Emergency" value="Emergency" ng-click="setStatus('Emergency')">Emergency</label>
         </div>
         </center>
