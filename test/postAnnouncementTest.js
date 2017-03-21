@@ -8,11 +8,13 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
 
-var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
+var url = 'mongodb://localhost:27017/test3';
 
 suite('Post Announcement Tests', function(){
 
-    suiteSetup()
+    suiteSetup('Init A DB for Test', function(done){
+        MongoClient.connect(url, function(err, db);
+    });
 
     test('Creating An Announcement in DB', function(done){
         console.log('Test Creating An Announcement in DB');

@@ -54,7 +54,7 @@ app.get('/announcement', PostAnnouncementCtrl.LoadAnnouncement);
 app.post('/post_announcement', PostAnnouncementCtrl.AddAnnouncement);
 
 app.post('/userstatus', ShareStatusCtrl.AddShareStatus);
-app.get('/userstatus', ShareStatusCtrl.GetShareStatus);
+app.get('/userstatus/:sender', ShareStatusCtrl.GetShareStatus);
 
 app.get('/privatechat/:sender/:receiver', PrivateChatCtrl.LoadPrivateHistoryMessage);
 app.post('/privatechat', PrivateChatCtrl.AddPrivateMessage);
