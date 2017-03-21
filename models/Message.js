@@ -76,8 +76,8 @@ class Message {
     loadPrivateHistoryMsg(db, callback) {
         this.collection = db.collection('MESSAGES');
         this.collection.find({
-            "sender": this.sender,
-            "receiver": this.receiver,
+            "sender": { $in: [this.sender, this.receiver] },
+            "receiver": { $in: [this.sender, this.receiver] },
             "type": "private"
         }).toArray(function (err, results) {
             if (err) {
@@ -155,14 +155,18 @@ class Message {
 
     //get name list of sender list who have private msg with receiver
     getPrivateMsgSenderList(db, callback){
+        var receiver = this.receiver;
         this.collection = db.collection('MESSAGES');
         this.collection.distinct("sender",{
-            "receiver":this.receiver,
+            //"receiver":this.receiver,
+            $or: [{"receiver":this.receiver}, {"sender":this.receiver}],
             "type" : "private"
         }, function (err, results) {
             if(err) callback(null, err);
             else {
-                callback(results, null);
+                var loc_receiver = results.indexOf(receiver)
+                if(loc_receiver != -1)results.splice(loc_receiver,1)
+                callback(results,null)
             }
         })
     }
