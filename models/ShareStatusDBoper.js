@@ -49,36 +49,31 @@ class ShareStatusDBoper{
                 var usercollection = db.collection("USERS");
               //  usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
                 //To do here, invoke dbmethods to get particular user's status
-                var emergencystatus={};
-                let user = new User(username, "", "", "Undefined");
-
-                // user.getEmergencyStatus(db, function(data, err){
-                //     if(err){
-                //         console.log('Error:'+ err);
-                //         callback(400, db_err_msg);// DB Error. Here error of connecting to db
-                //     }
-                //     else {
-                //         //console.log("Printing emergencystatus in dboper.js");
-					// 	emergencystatus=data;
-					// 	//console.log(emergencystatus);
-                //
-                //     }
-                // });
-
-                usercollection.find({"username": username}, {"emergencystatus":1}).toArray(function(err, results){
+                var data={};
+                console.log("=============" + username);
+                usercollection.find({"username": username}).toArray(function(err, results){
+                //usercollection.find({"username": "keqin"}).toArray(function(err, results){
                     if(err)
                         console.log('Error updating the status ' + err);
                     else {
-                        if(!results.emergencystatus)
-                            results.emergencystatus="Undefined";
-                        else {
-                            emergencystatus = emergencystatus;
+                        if(results.length===0) {
+                            results.emergencystatus = "Undefined1234";
+                            console.log("get  status: here:" + String(results.emergencystatus));
                         }
+                        else {
+                            results.forEach(function(result){
+                            console.log("get share status: here:"+ result.emergencystatus);
+                                data["emergencystatus"] = result.emergencystatus;
+                        });
+                        }
+                        callback(err, data);
+
                     }
+
                 });
 
-				console.log("get share status: here:"+ emergencystatus.emergencystatus);
-                callback(err, emergencystatus);
+				//console.log("get share status: here:"+ emergencystatus.emergencystatus);
+                //callback(err, emergencystatus);
             }
             db.close();
         });
