@@ -81,7 +81,7 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 var ConnectedSockets = {};
-// var publicChat = require('./controller/PublicChatCtrl.js');
+var publicChat = require('./controller/PublicChatCtrl.js');
 // var privateChat = require('./controller/PrivateChatCtrl.js');
 io.on('connection', function(socket) {
 
