@@ -35,7 +35,8 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
 	// data: {username:$scope.userClass['username'], emergencystatus:$scope.userClass['status']}
 	
 	$scope.setStatus = function(value) {
-    //    console.log("setting status");
+      console.log("setting status to ");
+		console.log(value);
         $http({
             method:'post',
             url:'/userstatus',

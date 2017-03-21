@@ -27,7 +27,9 @@ class ShareStatusDBoper{
             else {
                 console.log("Connected correctly to server.");
                 console.log("Calling update in db");
-				var usercollection = db.collection("user");
+				var usercollection = db.collection("USERS");
+				console.log(username);
+				console.log(emergencystatus);
                 usercollection.update({"username": username}, {$set :{"emergencystatus":emergencystatus}},callback);
                     //To do here, invoke dbmethods to update user status
                 db.close();
@@ -44,7 +46,7 @@ class ShareStatusDBoper{
             }
             else {
                 console.log("Connected correctly to server.");
-                var usercollection = db.collection("user");
+                var usercollection = db.collection("USERS");
               //  usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
                 //To do here, invoke dbmethods to get particular user's status
                 var emergencystatus={};
