@@ -52,7 +52,12 @@ module.exports = {
      * @param ConnectedSockets: all connected sockets
      */
     privateMessageSocket : function(socket, ConnectedSockets){
-        return function(msg, sender, receiver) {
+        return function(msg) {
+            sender = msg.sender;
+            receiver = msg.receiver;
+            console.log("SENDER IS "+sender)
+                    console.log("RECEIVER IS"+receiver)
+                    console.log("MESSAGE IS" +msg)
             // emit msg
             // msg should be in form of {"sender": , "receiver": , "private_msg": }
             msg["timestamp"] = Date.now();
@@ -61,8 +66,14 @@ module.exports = {
                 if (statuscode == success_statuscode){
                     msg["EmergencyStatus"] = status;
 
-                    socket.emit('PrivateChat', msg);
+                    //socket.emit('PrivateChat', msg);
+                    console.log("PRIVATE CHAT NEED TO SEND TO 0001")
+                    //console.log(ConnectedSockets)
+                    console.log("IF FOUND: "+ConnectedSockets.hasOwnProperty(receiver))
+
+                    console.log("SOCKET OF 0002"+ConnectedSockets["0002"])
                 if (ConnectedSockets.hasOwnProperty(receiver)) {
+                    console.log("PRIVATE CHAT NEED TO SEND TO 0002")
                     ConnectedSockets[receiver].emit('PrivateChat', msg);
 
                     //emit update notification of unread

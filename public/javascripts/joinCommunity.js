@@ -188,19 +188,9 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
 
 	// in directory, open private chat
 	$scope.openPrivateChat = function (sender) {
-		for (var i = 0; i < $scope.privateSenderList.length; i++) {
-            if ($scope.privateSenderList[i].sender == sender) {
-                $scope.privateSenderList[i].count = 0;
-            }
-        }
-        $scope.updateNewMsgNum();
+        console.log(sender);
         $scope.userClass['privateChatSender'] = sender;
-        $rootScope.$emit('openPrivateChatContent');
-
-        for (var item in $scope.showList) {
-            $scope.showList[item] = false;
-        }
-        $scope.showList['privateChatContent'] = true;	
+        $rootScope.$emit("openPrivateChat");
 	};
 
 

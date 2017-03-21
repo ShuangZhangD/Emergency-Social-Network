@@ -10,13 +10,14 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 
 	$scope.updateNewMsgNum = function () {
 		$scope.userClass['newMsgNum'] = 0;
-		for (var i = 0; i < $scope.privateSenderList.length; i++) {
-            var sender = $scope.getPrivateSenderList[i];
+		console.log($scope.privateSenderList);
+        for (var i = 0; i < $scope.privateSenderList.length; i++) {
+            var sender = $scope.privateSenderList[i];
             if (sender.count != '') {
 				$scope.userClass['newMsgNum'] += sender.count;
             }
 			if (sender.count == 0) {
-                $scope.getPrivateSenderList[i].count = "";
+                $scope.privateSenderList[i].count = "";
             }
         }
 		if ($scope.userClass['newMsgNum'] != 0) {
@@ -25,16 +26,18 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
         else {
             $scope.userClass['hasNewMsg'] = false;
         }
+        console.log($scope.privateSenderList);
+        console.log($scope.userClass['newMsgNum']);
 	};
 
-	$scope.updateNewMsgNumByData = function (data) {
+	$rootScope.updateNewMsgNumByData = function (data) {
 		for (var i = 0; i < $scope.privateSenderList.length; i++) {
-            if ($scope.getPrivateSenderList[i].sender == data.sender) {
-				if ($scope.getPrivateSenderList[i].count == '') {
-					$scope.getPrivateSenderList[i].count = 1;
+            if ($scope.privateSenderList[i].sender == data.sender) {
+				if ($scope.privateSenderList[i].count == '') {
+					$scope.privateSenderList[i].count = 1;
 				}
 				else {
-					$scope.getPrivateSenderList[i].count += 1;
+					$scope.privateSenderList[i].count += 1;
 				}
 			}
         }
@@ -47,6 +50,7 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 			url:'/privatechat/' + $scope.userClass['username']  // TODO helen define this API
         }).success(function(rep){
 			$scope.privateSenderList = rep.data;
+			console.log($scope.privateSenderList);
 			$scope.updateNewMsgNum();
 		});
     };
@@ -56,7 +60,7 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 		getPrivateSenderList();
 	});
 	// For Test
-	$scope.privateSenderList = [{"sender":"helen","count":0},{"sender":"ivy","count":3}];
+	//$scope.privateSenderList = [{"sender":"helen","count":0},{"sender":"ivy","count":3}];
 
 	// TODO socket.io
 	
@@ -76,4 +80,11 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
         }
 		$scope.showList['privateChatContent'] = true;
 	}
+
+
+	$rootScope.$on("openPrivateChat", function() {
+		console.log($scope.userClass['privateChatSender']);
+		$scope.openMsg($scope.userClass['privateChatSender']);
+	});
+
 });

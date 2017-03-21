@@ -97,7 +97,10 @@ class PrivateChatDBOper {
                         //load all private messages between sender and receiver
                         MSG.loadPrivateHistoryMsg(db, function (results, err) {
                             if (err) callback(db_err_statuscode, db_err_msg);
-                            else callback(success_statuscode, results)
+                            else {
+                                callback(success_statuscode, results)
+                                //let MSG2 = new Message(receiver, sender)
+                            }
                         });
                         db.close()
                     }
@@ -215,6 +218,7 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message("", receiver, "", "", "", "", "");
                 MSG.getPrivateMsgSenderList(db, function (senderlist, err) {
+                    console.log("SENDER LIST: "+senderlist);
                     if (err) callback(db_err_statuscode, db_err_msg);
                     else {
                         var results = [];
