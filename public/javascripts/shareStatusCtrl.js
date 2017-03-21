@@ -45,7 +45,8 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
             data: {username:$scope.userClass['username'], emergencystatus: value }
         }).success(function(rep) {
             if (rep.success == 1) {
-                console.log('Updated the status!');
+                alert("Updated your status to " + value);
+				console.log('Updated the status!');
             }
             else {
                 // TODO error handling
