@@ -29,13 +29,13 @@ class ShareStatusController {
     GetShareStatus(req, res){
         var info=req.body;
         var username = info["username"];
-
+        console.log("GetShareStatus" + info.data["username"]);
         dboper.Getsharestatus(username, function(err, results){
             if(err) {
                 console.log('Error:' +err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             } else {
-                res.json({success:1, emergencystatus: results});
+                res.json({success:1, data: results});
             }
 
         });

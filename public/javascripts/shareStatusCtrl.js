@@ -10,7 +10,7 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
         console.log("############### Printing username in sharestatusctrl " + $scope.userClass['username']);
 		$http({
             method:'get',
-            url:'/userstatus/' + $scope.userClass['username'],
+            url:'/userstatus/'+ $scope.userClass['username'],
 			data: {username: $scope.userClass['username']}
         }).success(function(rep){
         	console.log("Printing response in getsharestatus");
@@ -28,6 +28,7 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
 	// Call this function after login 
 	// shareStatus();
 	$rootScope.$on("loginGetShareStatus", function() {
+        console.log("############### Printing username in sharestatusctrl " + $scope.userClass['username']);
 		shareStatus();
 	});
 
