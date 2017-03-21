@@ -16,7 +16,7 @@ var db_err_msg = "Database Error";
 class ShareStatusDBoper{
     //update user table and message talbe in db
 
-    Updatesharestatus(username, status, callback){
+    Updatesharestatus(username, emergencystatus, callback){
         //connect to database
         MongoClient.connect(url, function (err, db) {
             if (err) {
@@ -26,9 +26,38 @@ class ShareStatusDBoper{
             else {
                 console.log("Connected correctly to server.");
                 var usercollection = db.collection("user");
-                //To do here, invoke dbmethods to update user status
+                usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
+                    //To do here, invoke dbmethods to update user status
                 db.close();
             }
+        });
+    }
+
+    Getsharestatus(username, callback){
+        MongoClient.connect(url, function(err, db){
+
+            if (err) {
+                console.log('Error:'+ err);
+                callback(400, db_err_msg);// DB Error. Here error of connecting to db
+            }
+            else {
+                console.log("Connected correctly to server.");
+                var usercollection = db.collection("user");
+                usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
+                //To do here, invoke dbmethods to get particular user's status
+                var EmergencyStatus={};
+                userdbmethod.getEmergencyStatus(db, function(data, err){
+                    if(err){
+                        console.log('Error:'+ err);
+                        callback(400, db_err_msg);// DB Error. Here error of connecting to db
+                    }
+                    else {
+                        EmergencyStatus=data;
+                    }
+                });
+                callback(err, EmergencyStatus);
+            }
+            db.close();
         });
     }
 }
@@ -36,5 +65,6 @@ class ShareStatusDBoper{
 let ssdboper = new ShareStatusDBoper();
 
 module.exports = {
-    Updatesharestatus : ssdboper.Updatesharestatus
+    Updatesharestatus : ssdboper.Updatesharestatus,
+    Getsharestatus : ssdboper.Getsharestatus
 }

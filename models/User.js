@@ -36,7 +36,7 @@ class User {
     getEmergencyStatus(db, callback) {
         this.collection = db.collection('USERS');
         //this.collection.find({"status" : status}, function(err, results) {
-        //should be "EmergencyStatus": this.EmergencyStatus    fix this attribute for now
+        //should be "EmergencyStatus":
         this.collection.find({"username": this.username}, {"EmergencyStatus":1}).toArray(function(err, results) {
             if(err)
             {
