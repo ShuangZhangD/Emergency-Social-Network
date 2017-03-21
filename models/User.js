@@ -11,7 +11,7 @@ class User {
         this.status   = status;
         this.EmergencyStatus = EmergencyStatus;
        // this.updatetimestamp =
-        console.log("No error load user")
+        //console.log("No error load user")
     }
 
     // Method to create a new user, takes the "USERS" collection as a parameter
@@ -44,7 +44,7 @@ class User {
                 callback(null, err);
             }
             else {
-                console.log(results.EmergencyStatus);
+                //console.log(results.EmergencyStatus);
                 callback(String(results.EmergencyStatus), null);
             }
         });
@@ -109,7 +109,7 @@ class User {
                 callback(null, err);
             }
             else {
-                console.dir(results);
+                //console.dir(results);
                 callback(results, null);
             }
         });
@@ -126,7 +126,7 @@ class User {
                 callback(null, err);
             }
             else {
-                console.dir(results);
+                //console.dir(results);
                 callback(results, null);
             }
         });
@@ -159,7 +159,7 @@ class User {
                 callback(null, err);
             }
             else {
-                console.dir(result);
+                //console.dir(result);
                 callback(result, null);
             }
         });
@@ -175,7 +175,7 @@ class User {
                 callback(null, err);
             }
             else {
-                console.dir(result);
+                //console.dir(result);
                 callback(result, null);
             }
         });

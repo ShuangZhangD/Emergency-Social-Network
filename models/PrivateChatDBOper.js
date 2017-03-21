@@ -218,6 +218,7 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message("", receiver, "", "", "", "", "");
                 MSG.getPrivateMsgSenderList(db, function (senderlist, err) {
+                    console.log("SENDER LIST: "+senderlist);
                     if (err) callback(db_err_statuscode, db_err_msg);
                     else {
                         var results = [];
