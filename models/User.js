@@ -9,7 +9,7 @@ class User {
         this.username = username;
         this.password = password;
         this.status   = status;
-        this.EmergencyStatus = EmergencyStatus;
+        this.emergencystatus = EmergencyStatus;
        // this.updatetimestamp =
         console.log("No error load user")
     }
@@ -21,7 +21,7 @@ class User {
             "username"  : this.username,
             "password"  : this.password,
             "status"    : this.status,
-            "EmergencyStatus" : "Undefined"
+            "emergencystatus" : "Undefined"
         }, function(err, results) {
             if(err)
             {
@@ -36,16 +36,16 @@ class User {
     getEmergencyStatus(db, callback) {
         this.collection = db.collection('USERS');
         //this.collection.find({"status" : status}, function(err, results) {
-        //should be "EmergencyStatus": this.EmergencyStatus    fix this attribute for now
-        this.collection.find({"username": this.username}, {"EmergencyStatus":1}).toArray(function(err, results) {
+        //should be "EmergencyStatus":
+        this.collection.find({"username": this.username}, {"emergencystatus":1}).toArray(function(err, results) {
             if(err)
             {
                 console.log('Error updating the status ' + err);
                 callback(null, err);
             }
             else {
-                console.log(results.EmergencyStatus);
-                callback(String(results.EmergencyStatus), null);
+                console.log(results.emergencystatus);
+                callback(String(results.emergencystatus), null);
             }
         });
     }
@@ -54,7 +54,7 @@ class User {
     // updateEmergencyStatus(db, username, emergencystatus, callback) {
     //     this.collection = db.collection('USERS');
     //     //this.collection.find({"status" : status}, function(err, results) {
-    //     this.collection.update({"username": this.username}, {$set :{"EmergencyStatus":emergencystatus}}, function(err, results) {
+    //     this.collection.update({"username": this.username}, {$set :{"emergencystatus":emergencystatus}}, function(err, results) {
     //         if(err)
     //         {
     //             console.log('Error updating the status ' + err);
