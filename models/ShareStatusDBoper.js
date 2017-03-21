@@ -42,8 +42,8 @@ class ShareStatusDBoper{
             }
             else {
                 console.log("Connected correctly to server.");
-                var usercollection = db.collection("user");
-                usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
+                //var usercollection = db.collection("user");
+                //usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
                 //To do here, invoke dbmethods to get particular user's status
                 var EmergencyStatus={};
                 userdbmethod.getEmergencyStatus(db, function(data, err){
