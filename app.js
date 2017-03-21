@@ -18,7 +18,7 @@ var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
 var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
 // var PrivateChatCtrl = require('./controller/PrivateChatCtrl.js');
 var PostAnnouncementCtrl = require('./controller/PostAnnouncementCtrl.js');
-var ShareStatusCtrl = require('./controller/ShareStatusCtrl');
+// var ShareStatusCtrl = require('./controller/ShareStatusCtrl');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -53,8 +53,8 @@ app.post('/public', PublicChatCtrl.AddPublicMessage);
 app.get('/announcement', PostAnnouncementCtrl.LoadAnnouncement);
 app.post('/post_announcement', PostAnnouncementCtrl.AddAnnouncement);
 
-app.post('/userstatus', ShareStatusCtrl.AddShareStatus);
-app.get('/userstatus', ShareStatusCtrl.GetShareStatus);
+// app.post('/userstatus', ShareStatusCtrl.AddShareStatus);
+// app.get('/userstatus', ShareStatusCtrl.GetShareStatus);
 
 // app.get('/privatechat/:sender/:receiver', PrivateChatCtrl.LoadPrivateHistoryMessage);
 // app.post('/privatechat', PrivateChatCtrl.AddPrivateMessage);
@@ -88,7 +88,7 @@ io.on('connection', function(socket) {
     socket.on('Public Message', publicChat.publicMessageSocket(socket));
 
     socket.on('Post Announcement', PostAnnouncementCtrl.AnnouncementSocket(socket));
-    socket.on('Update Share Status', ShareStatusCtrl.UpdateShareStatusSocket(socket)); //for directory updating status
+    // socket.on('Update Share Status', ShareStatusCtrl.UpdateShareStatusSocket(socket)); //for directory updating status
 
     //when a private message is sent
     // socket.on('Private Message', privateChat.privateMessageSocket(socket, ConnectedSockets));
