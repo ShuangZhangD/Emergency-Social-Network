@@ -7,33 +7,35 @@
 
 app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, mySocket) {
     var shareStatus = function() {
-        $http({
+        //console.log("############### Printing username in sharestatusctrl " + $scope.userClass['username']);
+		$http({
             method:'get',
-            url:'/userstatus/' + $scope.userClass['username']
+            url:'/userstatus/' + $scope.userClass['username'],
+			data: {username: $scope.userClass['username']}
         }).success(function(rep){
-        	console.log("Printing response in getsharestatus");
-			console.log(rep.data);
-			//console.log(rep);
+        	//console.log("Printing response in getsharestatus");
+			//console.log(rep.data);
+			console.log(rep);
 			if(rep.data) {
 				$scope.currentstatus=rep.data;
 			}
 			else {
-				$scope.currentstatus="Undefined";
+				$scope.currentstatus={emergencystatus:"Undefined"};
 			}
         });
     };
 
-	// Call this function after login 
+	// Call this function after login
 	// shareStatus();
 	$rootScope.$on("loginGetShareStatus", function() {
 		shareStatus();
 	});
 
 	// For testing
-	//$scope.currentstatus={emergencystatus:"Okay"};;
-	// Post function 
+	//$scope.currentstatus="Test status";
+	// Post function
 	// data: {username:$scope.userClass['username'], emergencystatus:$scope.userClass['status']}
-	
+
 	$scope.setStatus = function(value) {
       console.log("setting status to ");
 		console.log(value);
