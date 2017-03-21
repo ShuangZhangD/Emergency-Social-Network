@@ -16,7 +16,7 @@ var io = require('socket.io').listen(server);
 server.listen(process.env.PORT || 5000);
 var JoinCommunityCtrl = require('./controller/JoinCommunityCtrl.js');
 var PublicChatCtrl = require('./controller/PublicChatCtrl.js');
-//var PrivateChatCtrl = require('./controller/PrivateChatCtrl.js');
+var PrivateChatCtrl = require('./controller/PrivateChatCtrl.js');
 var PostAnnouncementCtrl = require('./controller/PostAnnouncementCtrl.js');
 var ShareStatusCtrl = require('./controller/ShareStatusCtrl');
 
