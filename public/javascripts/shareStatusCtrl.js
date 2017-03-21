@@ -7,21 +7,21 @@
 
 app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, mySocket) {
     var shareStatus = function() {
-        console.log("+++++++++ " + $scope.userClass['username']);
-        $http({
+        console.log("############### Printing username in sharestatusctrl " + $scope.userClass['username']);
+		$http({
             method:'get',
             url:'/userstatus/' + $scope.userClass['username'],
-            data : {username : $scope.userClass['username']}
+			data: {username: $scope.userClass['username']}
         }).success(function(rep){
         	console.log("Printing response in getsharestatus");
-			//console.log(rep.data);
+			console.log(rep.data);
 			console.log(rep);
-			// if(rep.data) {
+			if(rep.data) {
 				$scope.currentstatus=rep.data;
-			// }
-			// else {
-			// 	$scope.currentstatus="Undefined";
-			// }
+			}
+			else {
+				$scope.currentstatus={emergencystatus:"Undefined"};
+			}
         });
     };
 
@@ -32,7 +32,7 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
 	});
 
 	// For testing
-	//$scope.currentstatus={emergencystatus:"Okay"};;
+	//$scope.currentstatus="Test status";
 	// Post function 
 	// data: {username:$scope.userClass['username'], emergencystatus:$scope.userClass['status']}
 	
