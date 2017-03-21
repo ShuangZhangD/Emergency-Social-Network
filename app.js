@@ -81,32 +81,31 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 var ConnectedSockets = {};
-var publicChat = require('./controller/PublicChatCtrl.js');
-var privateChat = require('./controller/PrivateChatCtrl.js');
+
 io.on('connection', function(socket) {
 
-    socket.on('Public Message', publicChat.publicMessageSocket(socket));
+    socket.on('Public Message', PublicChatCtrl.publicMessageSocket(socket));
 
     socket.on('Post Announcement', PostAnnouncementCtrl.AnnouncementSocket(socket));
     socket.on('Update Share Status', ShareStatusCtrl.UpdateShareStatusSocket(socket)); //for directory updating status
 
     //when a private message is sent
-    socket.on('Private Message', privateChat.privateMessageSocket(socket, ConnectedSockets));
+    socket.on('Private Message', PrivateChatCtrl.privateMessageSocket(socket, ConnectedSockets));
 
     //when total number of unread(private+public) message is needed
-    socket.on('GetCount AllUnreadMsg', privateChat.getCount_AllUnreadMsg(socket));
+    socket.on('GetCount AllUnreadMsg', PrivateChatCtrl.getCount_AllUnreadMsg(socket));
 
     //when total number of private unread message is needed
-    socket.on('GetCount AllPrivateUnreadMsg', privateChat.getCount_AllPrivateUnreadMsg(socket));
+    socket.on('GetCount AllPrivateUnreadMsg', PrivateChatCtrl.getCount_AllPrivateUnreadMsg(socket));
 
     //when individual number of unread message is needed
-    socket.on('GetCount IndividualUnreadMsg', privateChat.getCount_IndividualPrivateUnreadMsg(socket));
+    socket.on('GetCount IndividualUnreadMsg', PrivateChatCtrl.getCount_IndividualPrivateUnreadMsg(socket));
 
     //when individual latest msg of unread message is needed
-    socket.on('GetMsg IndividualLatestUnreadMsg', privateChat.get_IndividualPrivateUnreadMsg(socket));
+    socket.on('GetMsg IndividualLatestUnreadMsg', PrivateChatCtrl.get_IndividualPrivateUnreadMsg(socket));
 
     //set the private msg of sender and receiver to be read
-    socket.on('PrivateMsgRead', privateChat.MarkedAsRead());
+    socket.on('PrivateMsgRead', PrivateChatCtrl.MarkedAsRead());
 
     socket.on('userJoinCommunity', function(username){
       socket.broadcast.emit("userJoined",username);
