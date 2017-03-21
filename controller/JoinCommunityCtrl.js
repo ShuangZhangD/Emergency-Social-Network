@@ -145,6 +145,8 @@ class JoinCommunityController {
             }
         })
     }
+
+
 }
 
 let jcc = new JoinCommunityController();
