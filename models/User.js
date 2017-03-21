@@ -44,7 +44,14 @@ class User {
                 callback(null, err);
             }
             else {
-                console.log(results.emergencystatus);
+                //console.log("printing results.emergencystatus in user.js");
+				//console.log(results.emergencystatus);
+				if(!results.emergencystatus) {
+					// Invoked when the user has not set the status yet
+					results.emergencystatus="Undefined";
+				}
+				//console.log("printing results.emergencystatus again in user.js");
+                //console.log(results.emergencystatus);
                 callback(String(results.emergencystatus), null);
             }
         });

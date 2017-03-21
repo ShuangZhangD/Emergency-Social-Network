@@ -18,14 +18,18 @@ class ShareStatusDBoper{
 
     Updatesharestatus(username, emergencystatus, callback){
         //connect to database
-        MongoClient.connect(url, function (err, db) {
+       console.log(" ================= inside updatesharestatus in dboper.js");
+		 MongoClient.connect(url, function (err, db) {
             if (err) {
                 console.log('Error:'+ err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             else {
                 console.log("Connected correctly to server.");
-                var usercollection = db.collection("user");
+                console.log("Calling update in db");
+				var usercollection = db.collection("USERS");
+				console.log(username);
+				console.log(emergencystatus);
                 usercollection.update({"username": username}, {$set :{"emergencystatus":emergencystatus}},callback);
                     //To do here, invoke dbmethods to update user status
                 db.close();
@@ -53,7 +57,10 @@ class ShareStatusDBoper{
                         callback(400, db_err_msg);// DB Error. Here error of connecting to db
                     }
                     else {
-                        emergencystatus=data;
+                        //console.log("Printing emergencystatus in dboper.js");
+						emergencystatus=data;
+						//console.log(emergencystatus);
+
                     }
                 });
 				console.log("get share status: here:"+ emergencystatus);
