@@ -13,7 +13,7 @@ class ShareStatusController {
 		var info = req.body;
         var username = info["username"];
         var status=info["emergencystatus"];
-		console.log("After inits");	
+		console.log("After inits");
         //update database through ShareStatusDBoper.updatesharestatus
         dboper.Updatesharestatus(username, status, function (err, results) {
             console.log("inside sharestatuscontroller again");
@@ -29,7 +29,10 @@ class ShareStatusController {
     GetShareStatus(req, res){
         var info=req.body;
         var username = info["username"];
-        console.log("GetShareStatus" + info.data["username"]);
+      
+        username = req.param("username");
+
+
         dboper.Getsharestatus(username, function(err, results){
             if(err) {
                 console.log('Error:' +err);

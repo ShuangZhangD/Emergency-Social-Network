@@ -19,7 +19,7 @@ class ShareStatusDBoper{
     Updatesharestatus(username, emergencystatus, callback){
         //connect to database
        console.log(" ================= inside updatesharestatus in dboper.js");
-		 MongoClient.connect(url, function (err, db) {
+   MongoClient.connect(url, function (err, db) {
             if (err) {
                 console.log('Error:'+ err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
@@ -27,9 +27,9 @@ class ShareStatusDBoper{
             else {
                 console.log("Connected correctly to server.");
                 console.log("Calling update in db");
-				var usercollection = db.collection("USERS");
-				console.log(username);
-				console.log(emergencystatus);
+    var usercollection = db.collection("USERS");
+    console.log(username);
+    console.log(emergencystatus);
                 usercollection.update({"username": username}, {$set :{"emergencystatus":emergencystatus}},callback);
                     //To do here, invoke dbmethods to update user status
                 db.close();
@@ -50,7 +50,7 @@ class ShareStatusDBoper{
               //  usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
                 //To do here, invoke dbmethods to get particular user's status
                 var data={};
-                console.log("=============" + username);
+              //  console.log("=============" + username);
                 usercollection.find({"username": username}).toArray(function(err, results){
                 //usercollection.find({"username": "keqin"}).toArray(function(err, results){
                     if(err)
@@ -72,7 +72,7 @@ class ShareStatusDBoper{
 
                 });
 
-				//console.log("get share status: here:"+ emergencystatus.emergencystatus);
+    //console.log("get share status: here:"+ emergencystatus.emergencystatus);
                 //callback(err, emergencystatus);
             }
             db.close();
