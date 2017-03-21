@@ -5,11 +5,11 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
-var User = require('./DatabaseMethods.js');
+//var User = require('./DatabaseMethods.js');
 // var url = 'mongodb://localhost:27017/test2';
 var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
 
-var userdbmethod =require('./User.js');
+var User =require('./User.js');
 
 var db_err_msg = "Database Error";
 
@@ -26,7 +26,7 @@ class ShareStatusDBoper{
             else {
                 console.log("Connected correctly to server.");
                 var usercollection = db.collection("user");
-                usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
+                usercollection.update({"username": username}, {$set :{"emergencystatus":emergencystatus}},callback);
                     //To do here, invoke dbmethods to update user status
                 db.close();
             }
@@ -42,21 +42,21 @@ class ShareStatusDBoper{
             }
             else {
                 console.log("Connected correctly to server.");
-                //var usercollection = db.collection("user");
-                //usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
+                var usercollection = db.collection("user");
+              //  usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
                 //To do here, invoke dbmethods to get particular user's status
-                var EmergencyStatus={};
-                let new_user = new usermethod("", "", "", "");
-                new_user.getEmergencyStatus(db, function(data, err){
+                var emergencystatus={};
+                let user = new User(username, "", "", "Undefined");
+				user.getEmergencyStatus(db, function(data, err){
                     if(err){
                         console.log('Error:'+ err);
                         callback(400, db_err_msg);// DB Error. Here error of connecting to db
                     }
                     else {
-                        EmergencyStatus=data;
+                        emergencystatus=data;
                     }
                 });
-                callback(err, EmergencyStatus);
+                callback(err, emergencystatus);
             }
             db.close();
         });

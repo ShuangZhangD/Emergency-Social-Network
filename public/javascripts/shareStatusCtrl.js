@@ -11,7 +11,8 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
             method:'get',
             url:'/userstatus/' + $scope.userClass['username']
         }).success(function(rep){
-        	console.log(rep);
+        	console.log("HI");
+			console.log(rep.data);
 			if(rep.data) {
 				$scope.currentstatus=rep.data;
 			}
@@ -28,7 +29,7 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
 	});
 
 	// For testing
-	$scope.currentstatus="Okay";
+	//$scope.currentstatus={emergencystatus:"Okay"};;
 	// Post function 
 	// data: {username:$scope.userClass['username'], emergencystatus:$scope.userClass['status']}
 
