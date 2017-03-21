@@ -46,7 +46,8 @@ class ShareStatusDBoper{
                 //usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
                 //To do here, invoke dbmethods to get particular user's status
                 var EmergencyStatus={};
-                userdbmethod.getEmergencyStatus(db, function(data, err){
+                let new_user = new usermethod("", "", "", "");
+                new_user.getEmergencyStatus(db, function(data, err){
                     if(err){
                         console.log('Error:'+ err);
                         callback(400, db_err_msg);// DB Error. Here error of connecting to db
