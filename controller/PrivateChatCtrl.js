@@ -3,7 +3,7 @@
  */
 var express = require('express');
 var myParser = require("body-parser");
-var PrivateChatDBOper = require("../models/PrivateChatDBoper.js");
+var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
 var app = express();
 
 var success_statuscode = 200;
