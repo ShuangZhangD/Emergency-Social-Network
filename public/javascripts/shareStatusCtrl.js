@@ -22,6 +22,7 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
 			// }
 			if(rep.data) {
 				$scope.currentstatus=rep.data;
+				$scope.userClass['status'] = $scope.currentstatus.emergencystatus;
 				console.log("inside if");
 			}
 			else {
@@ -62,6 +63,7 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
                 alert("Updated your status to " + value);
 				        console.log('Updated the status!');
                 $scope.currentstatus.emergencystatus = value;
+                $scope.userClass['status'] = value;
             }
             else {
                 // TODO error handling
