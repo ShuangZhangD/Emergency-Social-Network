@@ -12,11 +12,17 @@
         <td>
             Online {{user}}
         </td>
+        <td>
+          {{ statusList[user]}}
+        </td>
 		<td><button ng-click="openPrivateChat(user)"></button></td>
       </tr>
         <tr ng-repeat="user in details2">
             <td>
                 Offline {{user}}
+            </td>
+            <td>
+              {{ statusList[user]}}
             </td>
 			<td><button ng-click="openPrivateChat(user)"></button></td>
         </tr>
