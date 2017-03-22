@@ -7,20 +7,26 @@
 
 app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, mySocket) {
     var shareStatus = function() {
-        //console.log("############### Printing username in sharestatusctrl " + $scope.userClass['username']);
+        console.log("############### Printing username in sharestatusctrl " + $scope.userClass['username']);
 		$http({
             method:'get',
             url:'/userstatus/'+ $scope.userClass['username'],
 			data: {username: $scope.userClass['username']}
         }).success(function(rep){
-        	//console.log("Printing response in getsharestatus");
+        	console.log("Printing response in getsharestatus");
 			//console.log(rep.data);
-			console.log(rep);
+			console.log(rep.data.emergencystatus);
+
+      // 	if(!$scope.currentstatus) {
+			// 	$scope.currentstatus.emergencystatus = "Undefined";
+			// }
 			if(rep.data) {
 				$scope.currentstatus=rep.data;
+				console.log("inside if");
 			}
 			else {
 				$scope.currentstatus={emergencystatus:"Undefined"};
+				console.log("Inside else");
 			}
         });
     };
@@ -47,13 +53,13 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
         }).success(function(rep) {
             if (rep.success == 1) {
                 alert("Updated your status to " + value);
-				console.log('Updated the status!');
-              $scope.currentstatus.emergencystatus = value;
+				        console.log('Updated the status!');
+                $scope.currentstatus.emergencystatus = value;
             }
             else {
                 // TODO error handling
                 console.log("Unexpected error in setting status");
-				alert("Error in setting status");
+				        alert("Error in setting status");
             }
         });
     };
