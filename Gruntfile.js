@@ -9,7 +9,7 @@ module.exports = function(grunt){
         pkg: grunt.file.readJSON('package.json'),
         mochaTest: {
             local: {
-                option: {
+                options: {
                     reporter:'spec',
                     quiet: false,
                     clearRequireCache:false,
