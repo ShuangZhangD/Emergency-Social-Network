@@ -9,30 +9,36 @@ var app = express();
 
 class ShareStatusController {
     AddShareStatus(req, res){
-        var info = req.body;
+        console.log("Inside Sharestatuscontroller");
+		var info = req.body;
         var username = info["username"];
         var status=info["emergencystatus"];
-
-        //update database through ShareStatusDBoper.addsharestatus
-        dboper.Updatesharestatus(username, emergencystatus, function (err, results) {
-            if (err) {
+		console.log("After inits");
+        //update database through ShareStatusDBoper.updatesharestatus
+        dboper.Updatesharestatus(username, status, function (err, results) {
+            console.log("inside sharestatuscontroller again");
+			if (err) {
                 console.log('Error:'+ err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             } else {
-                res.json({success:1, suc_msg: "Success"});
+               console.log("else in sharestatuscontroller");
+				 res.json({success:1, suc_msg: "Success"});
             }});
     }
 
     GetShareStatus(req, res){
         var info=req.body;
         var username = info["username"];
+      
+        username = req.param("username");
+
 
         dboper.Getsharestatus(username, function(err, results){
             if(err) {
                 console.log('Error:' +err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             } else {
-                res.json({success:1, emergencystatus: results});
+                res.json({success:1, data: results});
             }
 
         });

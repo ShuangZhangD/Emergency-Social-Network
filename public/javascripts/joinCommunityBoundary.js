@@ -7,12 +7,12 @@ class joinCommunityBoundary {
     sendRegisterRequest ($scope, $http, tmpUsername, mySocket) {
         var add = confirm("User does not exist, do you want to sign up?");
         if (add) {
-            $http({  
-                method:'post',  
+            $http({
+                method:'post',
                 url:'/signup',
-                data:{username:$scope.username, password:$scope.password}  
-            }).success(function(rep){  
-                console.log(rep);  
+                data:{username:$scope.username, password:$scope.password}
+            }).success(function(rep){
+                console.log(rep);
                 if (rep.success == 1) {
                     // sign up success
                     //document.getElementById('login-container').hide();
@@ -24,6 +24,7 @@ class joinCommunityBoundary {
                     $scope.showList.login = false;
                     displayDirectory($scope, $http);
                     mySocket.emit("userJoinCommunity", tmpUsername);
+
                 }
                 else {
                     // sign up failed

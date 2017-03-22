@@ -6,21 +6,25 @@
           <th>
              Users
           </th>
-          <th>
-          </th>
         </tr>
       </thead>
       <tr ng-repeat="user in details1">
         <td>
             Online {{user}}
         </td>
-		<td><button ng-click="openPrivateChat(user)">Chat</button></td>
+        <td>
+          {{ statusList[user]}}
+        </td>
+		<td><button ng-click="openPrivateChat(user)"></button></td>
       </tr>
         <tr ng-repeat="user in details2">
             <td>
                 Offline {{user}}
             </td>
-			<td><button ng-click="openPrivateChat(user)">Chat</button></td>
+            <td>
+              {{ statusList[user]}}
+            </td>
+			<td><button ng-click="openPrivateChat(user)"></button></td>
         </tr>
     </table>
 </div>
