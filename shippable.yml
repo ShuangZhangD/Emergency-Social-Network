@@ -35,7 +35,7 @@ build:
   #  - npm install
 #    - npm start
     - grunt test
-    - ./node_modules/.bin/mocha -R xunit ./test > shippable/testresults/result.xml
+    - ./node_modules/.bin/mocha -R xunit ./test > shippable/testresults/result.xml --ui tdd
     - ./node_modules/.bin/istanbul cover grunt -- -u tdd
     - ./node_modules/.bin/istanbul cobertura --dir shippable/codecoverage/
 
