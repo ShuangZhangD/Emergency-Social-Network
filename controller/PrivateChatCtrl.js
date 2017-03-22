@@ -55,9 +55,9 @@ module.exports = {
      */
     privateMessageSocket : function(socket, ConnectedSockets){
         return function(msg) {
-            sender = msg.sender;
-            receiver = msg.receiver;
-            status = msg.emergency_status;
+            var sender = msg.sender;
+            var receiver = msg.receiver;
+            var status = msg.emergency_status;
             console.log("SENDER IS "+sender)
                     console.log("RECEIVER IS"+receiver)
                     console.log("MESSAGE IS" +msg)
@@ -231,8 +231,8 @@ module.exports = {
     MarkedAsRead : function(){
         return function(userinfo){
             console.dir("++++")
-            sender = userinfo.sender;
-            receiver = userinfo.receiver;
+            var sender = userinfo.sender;
+            var receiver = userinfo.receiver;
             console.dir(userinfo)
             console.log("=====IN MARKASREAD====")
             let dboper = new PrivateChatDBOper(sender, receiver);
