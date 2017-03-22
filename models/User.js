@@ -187,6 +187,25 @@ class User {
             }
         });
     }
+    getAllUsernameAndEmergencyStatus(db, callback){
+        this.collection = db.collection('USERS');
+        this.collection.find({}, {username:1, emergencystatus:1}).toArray(function(err, results) {
+            if(err)
+            {
+                console.log('Error in authenticating user'+ err);
+                callback(null, err);
+            }
+            else {
+                var userstatuslist = {};
+                results.forEach(function (result) {
+                    //console.log("USERNAME IN DB: "+result.username);
+                    //console.log("EMERGENCY IN DB: "+result.emergencystatus);
+                    userstatuslist[result.username] = result.emergencystatus;
+                });
+                callback(userstatuslist, null);
+            }
+        });
+    }
 }
 
 module.exports = User;

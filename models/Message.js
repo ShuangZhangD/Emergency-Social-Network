@@ -26,7 +26,7 @@ class Message {
             "type": this.type,
             "message": this.message,
             "postTime": this.postTime,
-            "EmergencyStatus": this.EmergencyStatus,
+            "emergencystatus": this.EmergencyStatus,
             "ReadStatus": this.ReadStatus
         }, function (err, results) {
             if (err) {
@@ -76,8 +76,8 @@ class Message {
     loadPrivateHistoryMsg(db, callback) {
         this.collection = db.collection('MESSAGES');
         this.collection.find({
-            "sender": this.sender,
-            "receiver": this.receiver,
+            "sender": { $in: [this.sender, this.receiver] },
+            "receiver": { $in: [this.sender, this.receiver] },
             "type": "private"
         }).toArray(function (err, results) {
             if (err) {
@@ -91,7 +91,7 @@ class Message {
                     data["receiver"] = result.receiver;
                     data["private_msg"] = result.message;
                     data["timestamp"] = result.postTime;
-                    data["emergency_status"] = result.EmergencyStatus;
+                    data["emergency_status"] = result.emergencystatus;
                     datas.push(data);
                 })
                 //var jsonString = JSON.stringify(datas);
@@ -155,14 +155,33 @@ class Message {
 
     //get name list of sender list who have private msg with receiver
     getPrivateMsgSenderList(db, callback){
+        var receiver = this.receiver;
         this.collection = db.collection('MESSAGES');
-        this.collection.distinct("sender",{
-            "receiver":this.receiver,
+        /*this.collection.distinct("sender",{
+            //"receiver":this.receiver,
+            $or: [{"receiver":this.receiver}, {"sender":this.receiver}],
             "type" : "private"
-        }, function (err, results) {
+        }, function (err, results) {*/
+        this.collection.aggregate([{$match: {"type":"private", $or: [{"receiver":receiver}, {"sender":receiver}]}}, {$group: {"_id": {sender: "$sender",receiver: "$receiver"} }}], function (err, results) {
             if(err) callback(null, err);
             else {
-                callback(results, null);
+                console.log("IN MESSAGES.JS SENDERLIST"+results);
+                console.log(typeof (results))
+                console.dir(results)
+                var userlist = [];
+                results.forEach(function(result){
+                    var sendername = result["_id"]["sender"];
+                    if(userlist.indexOf(sendername) == -1 && sendername != receiver){
+                        userlist.push(sendername);
+                    }
+                    var receivername = result["_id"]["receiver"];
+                    if(userlist.indexOf(receivername) == -1 && receivername != receiver){
+                        userlist.push(receivername);
+                    }
+                });
+                //var loc_receiver = results.indexOf(receiver)
+                //if(loc_receiver != -1)results.splice(loc_receiver,1)
+                callback(userlist,null)
             }
         })
     }

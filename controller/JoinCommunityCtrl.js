@@ -108,25 +108,31 @@ class JoinCommunityController {
   }
   }
 
-  ListUser (req, res){
-    dboper.GetAllUsers(function(statuscode, content1, content2){
-      if(statuscode != 200){
-        res.json({success:0, err_type: 1, err_msg:content});
-      }
-      else{
-        var sorted_content1 = SortUserList(content1);
-        var sorted_content2 = SortUserList(content2);
-        var all_sorted_content = sorted_content1.concat(sorted_content2);
-        dboper.GetUserEmergencyStatus(all_sorted_content, function(statuscode, user_status){
-            if(statuscode == 200)
-            res.json({"success":1, "data1":sorted_content1, "data2":sorted_content2, "status":user_status});
-            else res.json({success:0, err_type: 1, err_msg:content});
-        });
+    ListUser (req, res){
+        console.log("=========START GET USERLIST!!!=========");
+        dboper.GetAllUsers(function(statuscode, content1, content2){
+            if(statuscode != 200){
+                res.json({success:0, err_type: 1, err_msg:content});
+            }
+            else{
+                var sorted_content1 = SortUserList(content1);
+                var sorted_content2 = SortUserList(content2);
+                //var all_sorted_content = sorted_content1.concat(sorted_content2);
+                /*dboper.GetUserEmergencyStatus(all_sorted_content, function(statuscode, user_status){
+                 if(statuscode == 200)
+                 res.json({"success":1, "data1":sorted_content1, "data2":sorted_content2, "status":user_status});
+                 else res.json({success:0, err_type: 1, err_msg:content});
+                 });*/
+                dboper.GetAllUsernameAndEmergencyStatus(function (statuscode, user_status) {
+                    if(statuscode == 200)
+                        res.json({"success":1, "data1":sorted_content1, "data2":sorted_content2, "status":user_status});
+                    else res.json({success:0, err_type: 1, err_msg:content});
+                })
+                console.log("ENDING GET USERLIST");
+            }
+        })
 
-      }
-    })
-
-  }
+    }
 
     Logout (req, res){
         var info = req.body;

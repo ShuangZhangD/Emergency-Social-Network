@@ -4,12 +4,11 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
-//var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
-var url = 'mongodb://localhost:27017/test2';
+var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
 
 var db_err_msg = "Database Error";
 
-exports.InsertMessage = function(sender, receiver, message, type, postTime, callback) {
+exports.InsertMessage = function(sender, receiver, message, type, postTime,emergencystatus, callback) {
     //connect to database
     MongoClient.connect(url, function (err, db) {
         if (err) {
@@ -19,7 +18,7 @@ exports.InsertMessage = function(sender, receiver, message, type, postTime, call
         console.log("Connected correctly to server.");
         var collection = db.collection('MESSAGES');
         //insert into table
-        var data = [{"sender":sender,"receiver":receiver, "message": message, "type": type, "postTime": postTime}];
+        var data = [{"sender":sender,"receiver":receiver, "message": message, "type": type, "postTime": postTime,"emergencystatus":emergencystatus}];
         collection.insert(data, callback);
         db.close();
     });
@@ -45,6 +44,7 @@ exports.LoadPublicMessage = function(callback) {
                     data["username"] = result.sender;
                     data["pubmsg"] = result.message;
                     data["timestamp"] = result.postTime;
+                    data["emergencystatus"] = result.emergencystatus;
                     console.log(result);
                     datas.push(data);
                 });

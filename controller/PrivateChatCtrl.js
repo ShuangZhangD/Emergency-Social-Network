@@ -15,10 +15,11 @@ module.exports = {
         var message = info["PrivateMsg"];
         var sender = info["sender"];
         var receiver = info["receiver"];
-        console.log("messages: "+message);
+        console.log("=========INFO--------: ")
+        console.dir(info);
 
         let dboper = new PrivateChatDBOper(sender, receiver);
-        dboper.InsertMessage(message, function(statuscode, content){
+        dboper.InsertMessage(info, function(statuscode, content){
             if(statuscode == success_statuscode){
                 res.json({success:1, suc_msg: "Success"});
             }
@@ -52,22 +53,35 @@ module.exports = {
      * @param ConnectedSockets: all connected sockets
      */
     privateMessageSocket : function(socket, ConnectedSockets){
-        return function(msg, sender, receiver) {
+        return function(msg) {
+            sender = msg.sender;
+            receiver = msg.receiver;
+            status = msg.emergency_status;
+            console.log("SENDER IS "+sender)
+                    console.log("RECEIVER IS"+receiver)
+                    console.log("MESSAGE IS" +msg)
             // emit msg
             // msg should be in form of {"sender": , "receiver": , "private_msg": }
             msg["timestamp"] = Date.now();
-            let dboper = new PrivateChatDBOper(sender, receiver);
-            dboper.GetUserEmergencyStatus(sender, function(statuscode, status) {
-                if (statuscode == success_statuscode){
+            //let dboper = new PrivateChatDBOper(sender, receiver);
+            //dboper.GetUserEmergencyStatus(sender, function(statuscode, status) {
+                //if (statuscode == success_statuscode){
                     msg["EmergencyStatus"] = status;
 
-                    socket.emit('PrivateChat', msg);
+                    //socket.emit('PrivateChat', msg);
+                    console.log("PRIVATE CHAT NEED TO SEND TO 0001")
+                    //console.log(ConnectedSockets)
+                    console.log("IF FOUND: "+ConnectedSockets.hasOwnProperty(receiver))
+
+                    console.log("SOCKET OF 0002"+ConnectedSockets["0002"])
                 if (ConnectedSockets.hasOwnProperty(receiver)) {
+                    console.log("PRIVATE CHAT NEED TO SEND TO 0002")
                     ConnectedSockets[receiver].emit('PrivateChat', msg);
 
                     //emit update notification of unread
 
                     //emit count of all unread msg(public + private)
+                    let dboper = new PrivateChatDBOper(sender, receiver);
                     dboper.GetCount_AllUnreadMsg(function (statuscode, count) {
                         if (statuscode == success_statuscode) ConnectedSockets[receiver].emit('AllUnreadMsgCnt', count)
                     });
@@ -87,8 +101,8 @@ module.exports = {
                         if(statuscode==success_statuscode) ConnectedSockets[receiver].emit('IndividualPrivateUnreadMsg', results)
                     });
                 }
-            }
-        });
+            //}
+       // });
         };
     },
 

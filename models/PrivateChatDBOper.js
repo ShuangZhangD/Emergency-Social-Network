@@ -5,8 +5,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var User = require('./User.js');
 //var url = 'mongodb://localhost:27017/test';
-//var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
-var url = 'mongodb://localhost:27017/test2';
+var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
 var Message = require('./Message.js');
 
 var db_err_msg = "Database Error";
@@ -52,26 +51,31 @@ class PrivateChatDBOper {
             }// DB Error. Here error of connecting to db
             else {
                 //get sender emergency status
-                let user = new User(sender, "", "");
-                user.getEmergencyStatus(db, function (status, err) {
+                /* let user = new User(sender, "", "");
+                 user.getEmergencyStatus(db, function (status, err) {
+                 if (err) {
+                 console.log('Error:' + err);
+                 callback(db_err_statuscode, db_err_msg)
+                 }// DB Error
+                 else {*/
+                var sender = message.sender;
+                var receiver = message.receiver;
+                var msg = message.PrivateMsg;
+                var status = message.emergency_status;
+                var time = message.timestamp;
+                let MSG = new Message(sender, receiver, "private", msg, time, status, "unread")
+                MSG.insertMessage(db, function (msgres, err) {
                     if (err) {
                         console.log('Error:' + err);
                         callback(db_err_statuscode, db_err_msg)
                     }// DB Error
                     else {
-                        let MSG = new Message(sender, receiver, "private", message, Date.now(), status, "unread")
-                        MSG.insertMessage(db, function (msgres, err) {
-                            if (err) {
-                                console.log('Error:' + err);
-                                callback(db_err_statuscode, db_err_msg)
-                            }// DB Error
-                            else {
-                                callback(success_statuscode, null)
-                            }
-                        });
-                        db.close()
+                        callback(success_statuscode, null)
                     }
                 });
+                db.close()
+                //        }
+                //    });
 
             }
         })
@@ -98,7 +102,10 @@ class PrivateChatDBOper {
                         //load all private messages between sender and receiver
                         MSG.loadPrivateHistoryMsg(db, function (results, err) {
                             if (err) callback(db_err_statuscode, db_err_msg);
-                            else callback(success_statuscode, results)
+                            else {
+                                callback(success_statuscode, results)
+                                //let MSG2 = new Message(receiver, sender)
+                            }
                         });
                         db.close()
                     }
@@ -216,6 +223,7 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message("", receiver, "", "", "", "", "");
                 MSG.getPrivateMsgSenderList(db, function (senderlist, err) {
+                    console.log("SENDER LIST: "+senderlist);
                     if (err) callback(db_err_statuscode, db_err_msg);
                     else {
                         var results = [];

@@ -7,20 +7,27 @@
 
 app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, mySocket) {
     var shareStatus = function() {
-        //console.log("############### Printing username in sharestatusctrl " + $scope.userClass['username']);
+        console.log("############### Printing username in sharestatusctrl " + $scope.userClass['username']);
 		$http({
             method:'get',
-            url:'/userstatus/'+ $scope.userClass['username'],
+            url:'/userstatus/' + $scope.userClass['username'],
 			data: {username: $scope.userClass['username']}
         }).success(function(rep){
-        	//console.log("Printing response in getsharestatus");
+        	console.log("Printing response in getsharestatus");
 			//console.log(rep.data);
-			console.log(rep);
+			console.log(rep.data.emergencystatus);
+
+      // 	if(!$scope.currentstatus) {
+			// 	$scope.currentstatus.emergencystatus = "Undefined";
+			// }
 			if(rep.data) {
 				$scope.currentstatus=rep.data;
+				$scope.userClass['status'] = $scope.currentstatus.emergencystatus;
+				console.log("inside if");
 			}
 			else {
 				$scope.currentstatus={emergencystatus:"Undefined"};
+				console.log("Inside else");
 			}
         });
     };
@@ -28,9 +35,15 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
 	// Call this function after login
 	// shareStatus();
 	$rootScope.$on("loginGetShareStatus", function() {
-        console.log("############### Printing username in sharestatusctrl " + $scope.userClass['username']);
 		shareStatus();
 	});
+
+  mySocket.on('Update Share Status', function(data) {
+        console.log(data);
+        //$scope.displayStatus = data;
+        //$rootScope.$emit("User Changed Status", data);
+        $rootScope.userChangedStatus(data);
+    });
 
 	// For testing
 	//$scope.currentstatus="Test status";
@@ -45,15 +58,17 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
             url:'/userstatus',
             data: {username:$scope.userClass['username'], emergencystatus: value }
         }).success(function(rep) {
+          mySocket.emit('Update Share Status', {username:$scope.userClass['username'], emergencystatus: value });
             if (rep.success == 1) {
                 alert("Updated your status to " + value);
-				console.log('Updated the status!');
-              $scope.currentstatus.emergencystatus = value;
+				        console.log('Updated the status!');
+                $scope.currentstatus.emergencystatus = value;
+                $scope.userClass['status'] = value;
             }
             else {
                 // TODO error handling
                 console.log("Unexpected error in setting status");
-				alert("Error in setting status");
+				        alert("Error in setting status");
             }
         });
     };

@@ -7,8 +7,7 @@ var assert = require('assert');
 var express = require('express');
 //var User = require('./DatabaseMethods.js');
 // var url = 'mongodb://localhost:27017/test2';
-//var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
-var url = 'mongodb://localhost:27017/test2';
+var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
 
 var User =require('./User.js');
 
