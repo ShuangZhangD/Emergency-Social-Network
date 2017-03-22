@@ -17,12 +17,18 @@ module.exports = function(grunt){
                 },
                 src: ['test/**/*.js']
             }
+        },
+        mocha_istanbul: {
+            coverage: {
+                src: 'test', // a folder works nicely
+            }
         }
 
     });
 
     grunt.loadNpmTasks('grunt-mocha-test');
-
+    grunt.loadNpmTasks('grunt-mocha-istanbul');
+    grunt.registerTask('coverage', ['mocha_istanbul']);
     grunt.registerTask('test', ['mochaTest:local']);
 
 };

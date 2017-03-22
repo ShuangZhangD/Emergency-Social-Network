@@ -36,8 +36,8 @@ build:
 #    - npm start
     - grunt test
     - ./node_modules/.bin/mocha -R xunit ./test > shippable/testresults/result.xml --ui tdd
-    - ./node_modules/.bin/istanbul cover grunt -- -u tdd
-    - ./node_modules/.bin/istanbul cobertura --dir shippable/codecoverage/
+    - ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --ui tdd -- -R spec ./test/*
+    - ./node_modules/.bin/istanbul report cobertura --dir shippable/codecoverage/
 
 
 # Commands to run after a successfull build
