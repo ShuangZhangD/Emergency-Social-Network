@@ -97,7 +97,7 @@ suite('Private Chat Test', function(){
                 "receiver": "test1000lkq",
                 "PrivateMsg": "private chat function",
                 "emergency_status": "OK",
-                "timestamp": ""
+                "timestamp": Date.now()
             }
             dboper.InsertMessage(fake, function(statuscode2, content2) {
                 expect(statuscode2).to.equal(200);
