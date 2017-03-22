@@ -43,7 +43,9 @@ class PrivateChatDBOper {
         })
     }
 
-    InsertMessage(message, callback, sender = this.sender, receiver = this.receiver) {
+    InsertMessage(message, callback) {
+        var sender = this.sender;
+        var receiver = this.receiver;
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 console.log('Error:' + err);
@@ -85,7 +87,9 @@ class PrivateChatDBOper {
      * Load all private history message
      * Also update all unread private msg to be read
      */
-    LoadHistoryMsg(callback, sender = this.sender, receiver = this.receiver) {
+    LoadHistoryMsg(callback) {
+        var sender = this.sender;
+        var receiver = this.receiver;
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
