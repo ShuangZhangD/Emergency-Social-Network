@@ -2,6 +2,8 @@
  * Created by keqinli on 3/20/17.
  */
 
+'use strict';
+
 var expect = require('expect.js');
 var request = require('supertest');
 var express = require('express');

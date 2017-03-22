@@ -1,6 +1,7 @@
 /**
  * Created by keqinli on 3/21/17.
  */
+'use strict';
 
 var expect = require('expect.js');
 var request = require('supertest');
