@@ -28,9 +28,11 @@ build:
   # Commands that should be executed during the build.
   ci:
     - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-    - npm install -g grunt-cli mocha grunt supertest grunt-mocha-test expect.js --save-dev
+    - sudo npm install -g grunt-cli mocha grunt
+    - sudo npm install expect.js -save
+    - sudo npm install grunt supertest grunt-mocha-test expect.js --save-dev
   #  - npm install -g
-    - npm install
+  #  - npm install
     - grunt test
 
 
