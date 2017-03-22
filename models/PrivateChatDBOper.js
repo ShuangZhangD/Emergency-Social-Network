@@ -118,7 +118,9 @@ class PrivateChatDBOper {
         })
     }
 
-    UpdateReadStatus(callback, sender = this.sender, receiver = this.receiver){
+    UpdateReadStatus(callback){
+        var sender = this.sender;
+        var receiver = this.receiver;
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -142,7 +144,8 @@ class PrivateChatDBOper {
     /* Get how many unread msg of receiver
      * public + private msg
      */
-    GetCount_AllUnreadMsg(callback, receiver = this.receiver) {
+    GetCount_AllUnreadMsg(callback) {
+        var receiver = this.receiver
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -161,7 +164,8 @@ class PrivateChatDBOper {
     /* Get how many unread private msg of receiver
      * only private msg
      */
-    GetCount_AllPrivateUnreadMsg(callback, receiver = this.receiver) {
+    GetCount_AllPrivateUnreadMsg(callback) {
+        var receiver = this.receiver
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -180,7 +184,8 @@ class PrivateChatDBOper {
     /* Get individual count of private msg of receiver
      * return type is an object
      */
-    GetCount_IndividualUnreadMsg(callback, receiver = this.receiver) {
+    GetCount_IndividualUnreadMsg(callback) {
+        var receiver = this.receiver
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -219,7 +224,8 @@ class PrivateChatDBOper {
     /* Get individual count of private msg of receiver
      * return type is an object
      */
-    GetCount_IndividualPrivateSender(callback, receiver = this.receiver) {
+    GetCount_IndividualPrivateSender(callback) {
+        var receiver = this.receiver
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -256,7 +262,8 @@ class PrivateChatDBOper {
         })
     }
 
-    Get_LatestIndividualUnreadMsg(callback, receiver = this.receiver){
+    Get_LatestIndividualUnreadMsg(callback){
+        var receiver = this.receiver
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
