@@ -97,9 +97,9 @@ module.exports = {
                     });
 
                     //emit individual latest unread msg(private)
-                    dboper.Get_LatestIndividualUnreadMsg(function(statuscode, results){
+                    /*dboper.Get_LatestIndividualUnreadMsg(function(statuscode, results){
                         if(statuscode==success_statuscode) ConnectedSockets[receiver].emit('IndividualPrivateUnreadMsg', results)
-                    });
+                    });*/
                 }
             //}
        // });
@@ -228,7 +228,12 @@ module.exports = {
      * This function can update all msg between sender and receiver to be read
      */
     MarkedAsRead : function(){
-        return function(sender, receiver){
+        return function(userinfo){
+            console.dir("++++")
+            sender = userinfo.sender;
+            receiver = userinfo.receiver;
+            console.dir(userinfo)
+            console.log("=====IN MARKASREAD====")
             let dboper = new PrivateChatDBOper(sender, receiver);
             dboper.UpdateReadStatus(function(statuscode, content){})
         }
