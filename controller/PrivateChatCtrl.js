@@ -1,6 +1,7 @@
 /**
  * Created by Ling on 2017/3/18.
  */
+'use strict';
 var express = require('express');
 var myParser = require("body-parser");
 var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
@@ -15,10 +16,11 @@ module.exports = {
         var message = info["PrivateMsg"];
         var sender = info["sender"];
         var receiver = info["receiver"];
-        console.log("messages: "+message);
+        console.log("=========INFO--------: ")
+        console.dir(info);
 
         let dboper = new PrivateChatDBOper(sender, receiver);
-        dboper.InsertMessage(message, function(statuscode, content){
+        dboper.InsertMessage(info, function(statuscode, content){
             if(statuscode == success_statuscode){
                 res.json({success:1, suc_msg: "Success"});
             }
@@ -53,17 +55,18 @@ module.exports = {
      */
     privateMessageSocket : function(socket, ConnectedSockets){
         return function(msg) {
-            sender = msg.sender;
-            receiver = msg.receiver;
+            var sender = msg.sender;
+            var receiver = msg.receiver;
+            var status = msg.emergency_status;
             console.log("SENDER IS "+sender)
                     console.log("RECEIVER IS"+receiver)
                     console.log("MESSAGE IS" +msg)
             // emit msg
             // msg should be in form of {"sender": , "receiver": , "private_msg": }
             msg["timestamp"] = Date.now();
-            let dboper = new PrivateChatDBOper(sender, receiver);
-            dboper.GetUserEmergencyStatus(sender, function(statuscode, status) {
-                if (statuscode == success_statuscode){
+            //let dboper = new PrivateChatDBOper(sender, receiver);
+            //dboper.GetUserEmergencyStatus(sender, function(statuscode, status) {
+                //if (statuscode == success_statuscode){
                     msg["EmergencyStatus"] = status;
 
                     //socket.emit('PrivateChat', msg);
@@ -79,6 +82,7 @@ module.exports = {
                     //emit update notification of unread
 
                     //emit count of all unread msg(public + private)
+                    let dboper = new PrivateChatDBOper(sender, receiver);
                     dboper.GetCount_AllUnreadMsg(function (statuscode, count) {
                         if (statuscode == success_statuscode) ConnectedSockets[receiver].emit('AllUnreadMsgCnt', count)
                     });
@@ -94,12 +98,12 @@ module.exports = {
                     });
 
                     //emit individual latest unread msg(private)
-                    dboper.Get_LatestIndividualUnreadMsg(function(statuscode, results){
+                    /*dboper.Get_LatestIndividualUnreadMsg(function(statuscode, results){
                         if(statuscode==success_statuscode) ConnectedSockets[receiver].emit('IndividualPrivateUnreadMsg', results)
-                    });
+                    });*/
                 }
-            }
-        });
+            //}
+       // });
         };
     },
 
@@ -225,7 +229,12 @@ module.exports = {
      * This function can update all msg between sender and receiver to be read
      */
     MarkedAsRead : function(){
-        return function(sender, receiver){
+        return function(userinfo){
+            console.dir("++++")
+            var sender = userinfo.sender;
+            var receiver = userinfo.receiver;
+            console.dir(userinfo)
+            console.log("=====IN MARKASREAD====")
             let dboper = new PrivateChatDBOper(sender, receiver);
             dboper.UpdateReadStatus(function(statuscode, content){})
         }

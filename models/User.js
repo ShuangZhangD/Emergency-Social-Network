@@ -11,7 +11,7 @@ class User {
         this.status   = status;
         this.emergencystatus = EmergencyStatus;
        // this.updatetimestamp =
-        //console.log("No error load user")
+        console.log("No error load user")
     }
 
     // Method to create a new user, takes the "USERS" collection as a parameter
@@ -133,7 +133,7 @@ class User {
                 callback(null, err);
             }
             else {
-                //console.dir(results);
+                console.dir(results);
                 callback(results, null);
             }
         });
@@ -187,7 +187,6 @@ class User {
             }
         });
     }
-
     getAllUsernameAndEmergencyStatus(db, callback){
         this.collection = db.collection('USERS');
         this.collection.find({}, {username:1, emergencystatus:1}).toArray(function(err, results) {

@@ -1,6 +1,7 @@
 /**
  * Created by keqinli on 3/18/17.
  */
+'use strict';
 var express = require('express');
 var myParser = require("body-parser");
 
@@ -9,6 +10,7 @@ var app = express();
 
 class ShareStatusController {
     AddShareStatus(req, res){
+        //console.log(res)
         console.log("Inside Sharestatuscontroller");
 		var info = req.body;
         var username = info["username"];

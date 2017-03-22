@@ -31,8 +31,10 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 	};
 
 	$rootScope.updateNewMsgNumByData = function (data) {
+		var found = false;
 		for (var i = 0; i < $scope.privateSenderList.length; i++) {
             if ($scope.privateSenderList[i].sender == data.sender) {
+            	found = true;
 				if ($scope.privateSenderList[i].count == '') {
 					$scope.privateSenderList[i].count = 1;
 				}
@@ -41,6 +43,9 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 				}
 			}
         }
+        if (!found) {
+            $scope.privateSenderList.push({sender: data.sender, count: 1});
+		}
 		$scope.updateNewMsgNum();
 	};
 
@@ -65,10 +70,17 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 	// TODO socket.io
 	
 	// Open Private Chat Content Page of a sender.
-	$scope.openMsg = function (sender) {
+	$scope.openMsg = function (sender, isFromDirectory) {
 		for (var i = 0; i < $scope.privateSenderList.length; i++) { 
 			if ($scope.privateSenderList[i].sender == sender) {
+				$scope.userClass["newMsgOfSender"] = $scope.privateSenderList[i].count;
 				$scope.privateSenderList[i].count = 0;
+				if (isFromDirectory || $scope.userClass["newMsgOfSender"] == 0) {
+                    $scope.userClass["displayHistory"] = true;
+				}
+				else {
+                    $scope.userClass["displayHistory"] = false;
+				}
 			}
 		}
 		$scope.updateNewMsgNum();
@@ -84,7 +96,7 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 
 	$rootScope.$on("openPrivateChat", function() {
 		console.log($scope.userClass['privateChatSender']);
-		$scope.openMsg($scope.userClass['privateChatSender']);
+		$scope.openMsg($scope.userClass['privateChatSender'], true);
 	});
 
 });

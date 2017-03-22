@@ -5,7 +5,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var User = require('./User.js');
 //var url = 'mongodb://localhost:27017/test';
-var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
+var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
 var Message = require('./Message.js');
 
 var db_err_msg = "Database Error";
@@ -43,7 +43,9 @@ class PrivateChatDBOper {
         })
     }
 
-    InsertMessage(message, callback, sender = this.sender, receiver = this.receiver) {
+    InsertMessage(message, callback) {
+        var sender = this.sender;
+        var receiver = this.receiver;
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 console.log('Error:' + err);
@@ -51,26 +53,31 @@ class PrivateChatDBOper {
             }// DB Error. Here error of connecting to db
             else {
                 //get sender emergency status
-                let user = new User(sender, "", "");
-                user.getEmergencyStatus(db, function (status, err) {
+                /* let user = new User(sender, "", "");
+                 user.getEmergencyStatus(db, function (status, err) {
+                 if (err) {
+                 console.log('Error:' + err);
+                 callback(db_err_statuscode, db_err_msg)
+                 }// DB Error
+                 else {*/
+                var sender = message.sender;
+                var receiver = message.receiver;
+                var msg = message.PrivateMsg;
+                var status = message.emergency_status;
+                var time = message.timestamp;
+                let MSG = new Message(sender, receiver, "private", msg, time, status, "unread")
+                MSG.insertMessage(db, function (msgres, err) {
                     if (err) {
                         console.log('Error:' + err);
                         callback(db_err_statuscode, db_err_msg)
                     }// DB Error
                     else {
-                        let MSG = new Message(sender, receiver, "private", message, Date.now(), status, "unread")
-                        MSG.insertMessage(db, function (msgres, err) {
-                            if (err) {
-                                console.log('Error:' + err);
-                                callback(db_err_statuscode, db_err_msg)
-                            }// DB Error
-                            else {
-                                callback(success_statuscode, null)
-                            }
-                        });
-                        db.close()
+                        callback(success_statuscode, null)
                     }
                 });
+                db.close()
+                //        }
+                //    });
 
             }
         })
@@ -80,7 +87,9 @@ class PrivateChatDBOper {
      * Load all private history message
      * Also update all unread private msg to be read
      */
-    LoadHistoryMsg(callback, sender = this.sender, receiver = this.receiver) {
+    LoadHistoryMsg(callback) {
+        var sender = this.sender;
+        var receiver = this.receiver;
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -109,7 +118,9 @@ class PrivateChatDBOper {
         })
     }
 
-    UpdateReadStatus(callback, sender = this.sender, receiver = this.receiver){
+    UpdateReadStatus(callback){
+        var sender = this.sender;
+        var receiver = this.receiver;
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -133,7 +144,8 @@ class PrivateChatDBOper {
     /* Get how many unread msg of receiver
      * public + private msg
      */
-    GetCount_AllUnreadMsg(callback, receiver = this.receiver) {
+    GetCount_AllUnreadMsg(callback) {
+        var receiver = this.receiver
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -152,7 +164,8 @@ class PrivateChatDBOper {
     /* Get how many unread private msg of receiver
      * only private msg
      */
-    GetCount_AllPrivateUnreadMsg(callback, receiver = this.receiver) {
+    GetCount_AllPrivateUnreadMsg(callback) {
+        var receiver = this.receiver
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -171,7 +184,8 @@ class PrivateChatDBOper {
     /* Get individual count of private msg of receiver
      * return type is an object
      */
-    GetCount_IndividualUnreadMsg(callback, receiver = this.receiver) {
+    GetCount_IndividualUnreadMsg(callback) {
+        var receiver = this.receiver
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -210,7 +224,8 @@ class PrivateChatDBOper {
     /* Get individual count of private msg of receiver
      * return type is an object
      */
-    GetCount_IndividualPrivateSender(callback, receiver = this.receiver) {
+    GetCount_IndividualPrivateSender(callback) {
+        var receiver = this.receiver
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)
@@ -247,7 +262,8 @@ class PrivateChatDBOper {
         })
     }
 
-    Get_LatestIndividualUnreadMsg(callback, receiver = this.receiver){
+    Get_LatestIndividualUnreadMsg(callback){
+        var receiver = this.receiver
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg)

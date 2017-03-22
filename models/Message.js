@@ -57,7 +57,9 @@ class Message {
 
     //update all private messages between sender and receiver to be read
     updateReadStatus(db, callback) {
+        console.log("=======IN MESSAGE UPDATEREADSTATUS====")
         this.collection = db.collection('MESSAGES');
+        console.log("MARKREAD SENDER IS "+this.sender)
         this.collection.updateMany({
             "sender": this.sender,
             "receiver": this.receiver
@@ -91,7 +93,7 @@ class Message {
                     data["receiver"] = result.receiver;
                     data["private_msg"] = result.message;
                     data["timestamp"] = result.postTime;
-                    data["emergency_status"] = result.EmergencyStatus;
+                    data["emergency_status"] = result.emergencystatus;
                     datas.push(data);
                 })
                 //var jsonString = JSON.stringify(datas);

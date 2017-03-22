@@ -1,9 +1,9 @@
-
+'use strict';
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
 var User = require('./User.js');
-var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
+var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
 //var url = 'mongodb://localhost:27017/test';
 
 var db_err_msg = "Database Error";
@@ -177,8 +177,8 @@ class JoinCommunityDBOper {
                         else {
                             user_status[username] = status;
                             if(i == userlist.length - 1){
-                                //console.log("USER STATUS");
-                                //console.dir(user_status);
+                                console.log("USER STATUS");
+                                console.dir(user_status);
                                 callback(success_statuscode, user_status)
                             }
                         }
@@ -189,7 +189,6 @@ class JoinCommunityDBOper {
             db.close();
         })
     };
-
     GetAllUsernameAndEmergencyStatus(callback){
         MongoClient.connect(url, function(err, db) {
             if (err) {
@@ -203,7 +202,7 @@ class JoinCommunityDBOper {
                 })
             }
         })
-    }
+    };
 }
 
 let dboper = new JoinCommunityDBOper();
@@ -214,5 +213,5 @@ module.exports = {
   GetAllUsers: dboper.GetAllUsers,
   Logout: dboper.Logout,
     GetUserEmergencyStatus: dboper.GetUserEmergencyStatus,
-    GetAllUsernameAndEmergencyStatus:dboper.GetAllUsernameAndEmergencyStatus
+    GetAllUsernameAndEmergencyStatus: dboper.GetAllUsernameAndEmergencyStatus
 }
