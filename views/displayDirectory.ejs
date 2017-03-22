@@ -1,0 +1,30 @@
+<!--div id="directory-container" display="none" ng-controller="joinCommunityCtrl" class="container"-->
+<div id="directory-container" class="container" ng-show="showList.directory" class="ng-hide">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+             Users
+          </th>
+        </tr>
+      </thead>
+      <tr ng-repeat="user in details1">
+        <td>
+            Online {{user}}
+        </td>
+        <td>
+          {{ statusList[user]}}
+        </td>
+		<td><button ng-click="openPrivateChat(user)"></button></td>
+      </tr>
+        <tr ng-repeat="user in details2">
+            <td>
+                Offline {{user}}
+            </td>
+            <td>
+              {{ statusList[user]}}
+            </td>
+			<td><button ng-click="openPrivateChat(user)"></button></td>
+        </tr>
+    </table>
+</div>

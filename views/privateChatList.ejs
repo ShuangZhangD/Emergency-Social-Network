@@ -1,0 +1,47 @@
+<div class="container" ng-controller="privateChatListCtrl" ng-show="showList.privateChatList">
+    <div class="container">
+        <h3> Private Chat List </h3>
+        <!--div class="panel panel-default">
+            <div class="panel-body">
+                <table ng-repeat="sender in privateSenderList track by $index">
+                    <tr>
+                        <td>
+                            <span class="content">{{sender.sender}}</span>
+                        </td>
+                        <td>
+                            <span class="avatar" style="color:red">{{sender.count}}</span>
+                        </td>
+                        <td>
+                            <button ng-click="openMsg(sender.sender)">Open</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Senders
+                    </th>
+                    <th>
+                        New Messages
+                    </th>
+                    <th>
+                        Chat Page
+                    </th> 
+                </tr>
+            </thead>
+            <tr ng-repeat="sender in privateSenderList track by $index">
+                <td>
+                    {{sender.sender}}
+                </td>
+                <td>
+                    <span style="color:red">{{sender.count}}</span>
+                <td>
+                    <button ng-click="openMsg(sender.sender)">Open</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

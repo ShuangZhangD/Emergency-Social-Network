@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>JoinCommunitity</title>
+    <link href="../public/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../public/stylesheets/joinCommunity.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="container"  ng-app="joinCommunityAPP" ng-controller="joinCommunityCtrl">
+      <form class="form-signin" role="form">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input ng-model="username" id="username" type="username" class="form-control" placeholder="Username" required autofocus>
+        <input ng-model="password" id="password" type="password" class="form-control" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click='login()'>Sign in</button>
+      </form>
+    </div> <!-- /container -->
+
+
+    <script src="../public/javascripts/angular.min.js"></script>
+    <script src="../public/javascripts/joinCommunity.js"></script>
+
+  </body>
+</html>
