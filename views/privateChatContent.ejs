@@ -18,7 +18,7 @@
     </div>
 
 
-    <div class="container">
+    <div class="container" ng-show="userClass.displayHistory">
         <div class="form-signin">
             <input ng-model="private_msg" id="private_msg" type="text" class="form-control" placeholder="Send Private Msg" required autofocus>
             <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="postPrivateMsg()">Send Private Msg</button>

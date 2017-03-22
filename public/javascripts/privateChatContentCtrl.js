@@ -8,6 +8,8 @@ app.controller('privateChatContentCtrl', function ($window, $scope, $rootScope, 
 	$scope.privateMsgs = [];
 	$scope.newMsgs = [];
 	var getPrivateMsgs = function() {
+        $scope.privateMsgs = [];
+        $scope.newMsgs = [];
 		console.log('getPrivateMsgs');
         $http({
 			method:'get',
