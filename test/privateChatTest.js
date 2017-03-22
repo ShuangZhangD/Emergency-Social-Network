@@ -17,7 +17,7 @@ var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
 var app = express();
 
 
-var url = 'mongodb://localhost:27017/test3';
+var url = 'mongodb://localhost:27017/test2';
 
 //using server not app to listening port 5000
 var server = request.agent("http://localhost:5000");
@@ -87,8 +87,8 @@ suite('Private Chat Test', function(){
             });
     });
 
-    //to test unread function
-    test('Unread Function Test', function(done){
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver', function(done){
         let dboper = new PrivateChatDBOper("keqin", "test1000lkq");
         dboper.GetCount_IndividualPrivateSender(function(statuscode1, results1){
             dboper.InsertMessage("private chat function", function(statuscode2, content2) {
@@ -105,6 +105,26 @@ suite('Private Chat Test', function(){
         });
 
     });
+
+    //to test unread number
+    test('Unread Function Test', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq");
+        dboper.GetCount_IndividualUnreadMsg(function(statuscode1, results1){
+            dboper.InsertMessage("Unread private chat function", function(statuscode2, content2) {
+                expect(statuscode2).to.equal(200);
+                dboper.GetCount_IndividualUnreadMsg(function(statuscode3, results3){
+                    for(var i=0; i<results3.length; i++){
+                        if(results3[i]["sender"] === "keqin"){
+                            expect(results3[i]["count"]).to.equal(results1[i]["count"]+1);
+                        }
+                    }
+                    done();
+                });
+            });
+        });
+
+    });
+
 
     //to test the chat private function
     test('Private Chat Function Test', function(done){
@@ -125,5 +145,7 @@ suite('Private Chat Test', function(){
         //done();
 
     });
+
+
 })
 

@@ -9,11 +9,12 @@ var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
+var dboper = require("../models/PostAnnouncementDBoper.js");
 
 var app = express();
 
 
-var url = 'mongodb://localhost:27017/test3';
+var url = 'mongodb://localhost:27017/test2';
 
 //using server not app to listening port 5000
 var server = request.agent("http://localhost:5000");
@@ -45,9 +46,6 @@ suite('Post Announcement Tests', function(){
     });
 
     test('Getting Announcement Through RESTful Api', function(done){
-        console.log('Test Creating An Announcement in DB');
-        //expect(2).to.eql(2);
-        //request(app).get('/announcement').expect("Content-type",/json/)
         server.get('/announcement')
             .expect(200, function(err, res){
             if(err) return done(err);
@@ -76,4 +74,14 @@ suite('Post Announcement Tests', function(){
                 }
             });
     });
+
+    test('Testing Announcement Function', function(done){
+        dboper.InsertAnnouncement("keqin", "testing announcement function in Unit Test", Date.now(), function (err, results1){
+            dboper.LoadAnnouncement(function (err, results2) {
+               expect(results2[results2.length-1]["announcement"]).to.equal("testing announcement function in Unit Test");
+               done();
+            });
+        });
+    });
+
 })

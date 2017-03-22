@@ -16,7 +16,7 @@ var dboper = require("../models/ShareStatusDBoper");
 var app = express();
 
 
-var url = 'mongodb://localhost:27017/test3';
+var url = 'mongodb://localhost:27017/test2';
 
 //using server not app to listening port 5000
 var server = request.agent("http://localhost:5000");
@@ -82,9 +82,9 @@ suite('Share Status Tests', function(){
     //to test the share status if it is consistent
     test('Share Status Function Test', function(done){
         //should have a
-        dboper.Updatesharestatus("mary","OK", function(err, results) {
+        dboper.Updatesharestatus("12345","OK", function(err, results) {
             expect(err).to.equal(null);
-            dboper.Getsharestatus("mary",function(err, results1){
+            dboper.Getsharestatus("12345",function(err, results1){
                 expect(results1["emergencystatus"]).to.equal("OK");
                 done();
             });
