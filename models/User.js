@@ -9,7 +9,7 @@ class User {
         this.username = username;
         this.password = password;
         this.status   = status;
-        this.EmergencyStatus = EmergencyStatus;
+        this.emergencystatus = EmergencyStatus;
        // this.updatetimestamp =
         //console.log("No error load user")
     }
@@ -21,7 +21,7 @@ class User {
             "username"  : this.username,
             "password"  : this.password,
             "status"    : this.status,
-            "EmergencyStatus" : "Undefined"
+            "emergencystatus" : "Undefined"
         }, function(err, results) {
             if(err)
             {
@@ -36,16 +36,23 @@ class User {
     getEmergencyStatus(db, callback) {
         this.collection = db.collection('USERS');
         //this.collection.find({"status" : status}, function(err, results) {
-        //should be "EmergencyStatus": this.EmergencyStatus    fix this attribute for now
-        this.collection.find({"username": this.username}, {"EmergencyStatus":1}).toArray(function(err, results) {
+        //should be "EmergencyStatus":
+        this.collection.find({"username": this.username}, {"emergencystatus":1}).toArray(function(err, results) {
             if(err)
             {
                 console.log('Error updating the status ' + err);
                 callback(null, err);
             }
             else {
-                //console.log(results.EmergencyStatus);
-                callback(String(results.EmergencyStatus), null);
+                //console.log("printing results.emergencystatus in user.js");
+				//console.log(results.emergencystatus);
+				if(!results.emergencystatus) {
+					// Invoked when the user has not set the status yet
+					results.emergencystatus="Undefined";
+				}
+				//console.log("printing results.emergencystatus again in user.js");
+                //console.log(results.emergencystatus);
+                callback(String(results.emergencystatus), null);
             }
         });
     }
@@ -54,7 +61,7 @@ class User {
     // updateEmergencyStatus(db, username, emergencystatus, callback) {
     //     this.collection = db.collection('USERS');
     //     //this.collection.find({"status" : status}, function(err, results) {
-    //     this.collection.update({"username": this.username}, {$set :{"EmergencyStatus":emergencystatus}}, function(err, results) {
+    //     this.collection.update({"username": this.username}, {$set :{"emergencystatus":emergencystatus}}, function(err, results) {
     //         if(err)
     //         {
     //             console.log('Error updating the status ' + err);
@@ -109,7 +116,7 @@ class User {
                 callback(null, err);
             }
             else {
-                //console.dir(results);
+                console.dir(results);
                 callback(results, null);
             }
         });
@@ -159,7 +166,7 @@ class User {
                 callback(null, err);
             }
             else {
-                //console.dir(result);
+                console.dir(result);
                 callback(result, null);
             }
         });
@@ -175,8 +182,28 @@ class User {
                 callback(null, err);
             }
             else {
-                //console.dir(result);
+                console.dir(result);
                 callback(result, null);
+            }
+        });
+    }
+
+    getAllUsernameAndEmergencyStatus(db, callback){
+        this.collection = db.collection('USERS');
+        this.collection.find({}, {username:1, emergencystatus:1}).toArray(function(err, results) {
+            if(err)
+            {
+                console.log('Error in authenticating user'+ err);
+                callback(null, err);
+            }
+            else {
+                var userstatuslist = {};
+                results.forEach(function (result) {
+                    //console.log("USERNAME IN DB: "+result.username);
+                    //console.log("EMERGENCY IN DB: "+result.emergencystatus);
+                    userstatuslist[result.username] = result.emergencystatus;
+                });
+                callback(userstatuslist, null);
             }
         });
     }

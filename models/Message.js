@@ -26,7 +26,7 @@ class Message {
             "type": this.type,
             "message": this.message,
             "postTime": this.postTime,
-            "EmergencyStatus": this.EmergencyStatus,
+            "emergencystatus": this.EmergencyStatus,
             "ReadStatus": this.ReadStatus
         }, function (err, results) {
             if (err) {
@@ -165,9 +165,6 @@ class Message {
         this.collection.aggregate([{$match: {"type":"private", $or: [{"receiver":receiver}, {"sender":receiver}]}}, {$group: {"_id": {sender: "$sender",receiver: "$receiver"} }}], function (err, results) {
             if(err) callback(null, err);
             else {
-                console.log("IN MESSAGES.JS SENDERLIST"+results);
-                console.log(typeof (results))
-                console.dir(results)
                 var userlist = [];
                 results.forEach(function(result){
                     var sendername = result["_id"]["sender"];

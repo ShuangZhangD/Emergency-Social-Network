@@ -44,7 +44,7 @@ exports.LoadAnnouncement = function(callback) {
                     data["username"] = result.username;
                     data["announcement"] = result.announcement;
                     data["timestamp"] = result.postTime;
-                    console.log(result);
+                    //console.log(result);
                     datas.push(data);
                 });
                 //var jsonString = JSON.stringify(datas);

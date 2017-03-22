@@ -177,8 +177,8 @@ class JoinCommunityDBOper {
                         else {
                             user_status[username] = status;
                             if(i == userlist.length - 1){
-                                console.log("USER STATUS");
-                                console.dir(user_status);
+                                //console.log("USER STATUS");
+                                //console.dir(user_status);
                                 callback(success_statuscode, user_status)
                             }
                         }
@@ -189,6 +189,21 @@ class JoinCommunityDBOper {
             db.close();
         })
     };
+
+    GetAllUsernameAndEmergencyStatus(callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log('Error:' + err);
+                callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
+            }
+            else {
+                let new_user = new User("", "", "", "");
+                new_user.getAllUsernameAndEmergencyStatus(db, function(results, err){
+                    callback(success_statuscode, results);
+                })
+            }
+        })
+    }
 }
 
 let dboper = new JoinCommunityDBOper();
@@ -198,5 +213,6 @@ module.exports = {
   AddDB: dboper.AddDB,
   GetAllUsers: dboper.GetAllUsers,
   Logout: dboper.Logout,
-    GetUserEmergencyStatus: dboper.GetUserEmergencyStatus
+    GetUserEmergencyStatus: dboper.GetUserEmergencyStatus,
+    GetAllUsernameAndEmergencyStatus:dboper.GetAllUsernameAndEmergencyStatus
 }
