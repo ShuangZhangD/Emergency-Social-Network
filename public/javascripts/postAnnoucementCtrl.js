@@ -29,7 +29,9 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $rootScope, $ht
 	mySocket.on('Post Announcement', function(data) {
 		$scope.announcementList.push(data);
 		// TODO notification of new announcement
-		//alert(data);
+        if (data.username != $scope.userClass["username"]) {
+            alert("New Announcement (" + data.username + ") : " + data.announcement);
+        }
 	});
 	$scope.submitAnnouncement = function() {
 		var announcement_data = {
