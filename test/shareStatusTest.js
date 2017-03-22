@@ -10,7 +10,8 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
 
-var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
+//var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
+var dboper = require("../models/ShareStatusDBoper");
 
 var app = express();
 
@@ -33,8 +34,9 @@ suite('Share Status Tests', function(){
             else {
                 testDB = db;
             }
+            done();
         });
-        done();
+        //done();
 
     });
 
@@ -68,9 +70,7 @@ suite('Share Status Tests', function(){
             .expect(200, function(err, res){
                 if(err) return done(err);
                 else {
-                    // for(var i=0; i<res.body.data.length; i++){
-                    //     console.log(res.body.data[i]["announcement"]);
-                    // }
+                   // console.log("here" + res.body.suc_msg);
                     expect(res.body.suc_msg).to.equal("Success");
 
                     done();
@@ -81,20 +81,16 @@ suite('Share Status Tests', function(){
     });
     //to test the share status if it is consistent
     test('Share Status Function Test', function(done){
-         var fake= {"body" : {
-            "username": "mary",
-            "emergencystatus": "OK"
-        }
-         }
 
-        ShareStatusCtrl.AddShareStatus(fake, function(res){
-            expect(res.body.suc_msg).to.equal("Success");
-            ShareStatusCtrl.GetShareStatus({"username": "keqin"}, function(data){
-                expect(data.body.data).to.equal("OK");
+        dboper.Updatesharestatus("mary","OK", function(err, results) {
+            expect(err).to.equal(null);
+            dboper.Getsharestatus("mary",function(err, results){
+                expect(results["emergencystatus"]).to.equal("OK");
+                done();
             });
         });
 
-        done();
+        //done();
 
     });
 })

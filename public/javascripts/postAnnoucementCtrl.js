@@ -22,6 +22,7 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $rootScope, $ht
 	// Call this function after login
 	//getAnnouncement();
 	$rootScope.$on("loginGetAnnouncement", function() {
+        console.log("############### Post Announcement here ");
 		getAnnouncement();
 	});
 	// $scope.announcementList.push({announcement:'test', username:'j & k', timestamp:Date.now()});

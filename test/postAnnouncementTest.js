@@ -32,8 +32,9 @@ suite('Post Announcement Tests', function(){
             else {
                 testDB = db;
             }
+            done();
         });
-        done();
+        //done();
 
     });
 
@@ -51,8 +52,6 @@ suite('Post Announcement Tests', function(){
             .expect(200, function(err, res){
             if(err) return done(err);
             else {
-                //console.log("TYPE "+typeof(res.body.data));
-                //console.dir("DATA "+res.body.data);
                 for(var i=0; i<res.body.data.length; i++){
                     console.log(res.body.data[i]["announcement"]);
                 }

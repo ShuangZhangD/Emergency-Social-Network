@@ -9,6 +9,7 @@ var app = express();
 
 class ShareStatusController {
     AddShareStatus(req, res){
+        //console.log(res)
         console.log("Inside Sharestatuscontroller");
 		var info = req.body;
         var username = info["username"];
