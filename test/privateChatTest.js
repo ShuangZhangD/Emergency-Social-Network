@@ -87,6 +87,25 @@ suite('Private Chat Test', function(){
             });
     });
 
+    //to test unread function
+    test('Unread Function Test', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq");
+        dboper.GetCount_IndividualPrivateSender(function(statuscode1, results1){
+            dboper.InsertMessage("private chat function", function(statuscode2, content2) {
+                expect(statuscode2).to.equal(200);
+                dboper.GetCount_IndividualPrivateSender(function(statuscode3, results3){
+                    for(var i=0; i<results3.length; i++){
+                        if(results3[i]["sender"] === "keqin"){
+                            expect(results3[i]["count"]).to.equal(results1[i]["count"]+1);
+                        }
+                    }
+                    done();
+                });
+            });
+        });
+
+    });
+
     //to test the chat private function
     test('Private Chat Function Test', function(done){
         let dboper = new PrivateChatDBOper("keqin", "test1000lkq");

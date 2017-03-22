@@ -34,9 +34,9 @@ suite('Share Status Tests', function(){
             else {
                 testDB = db;
             }
-            done();
+            //done();
         });
-        //done();
+        done();
 
     });
 
@@ -81,11 +81,11 @@ suite('Share Status Tests', function(){
     });
     //to test the share status if it is consistent
     test('Share Status Function Test', function(done){
-
+        //should have a
         dboper.Updatesharestatus("mary","OK", function(err, results) {
             expect(err).to.equal(null);
-            dboper.Getsharestatus("mary",function(err, results){
-                expect(results["emergencystatus"]).to.equal("OK");
+            dboper.Getsharestatus("mary",function(err, results1){
+                expect(results1["emergencystatus"]).to.equal("OK");
                 done();
             });
         });
