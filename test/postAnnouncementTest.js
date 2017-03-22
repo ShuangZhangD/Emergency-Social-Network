@@ -54,7 +54,7 @@ suite('Post Announcement Tests', function(){
                 //console.log("TYPE "+typeof(res.body.data));
                 //console.dir("DATA "+res.body.data);
                 for(var i=0; i<res.body.data.length; i++){
-                    console.log(res.body.data[i]["username"]);
+                    console.log(res.body.data[i]["announcement"]);
                 }
 
                 done();
@@ -71,6 +71,8 @@ suite('Post Announcement Tests', function(){
                 if(err) return done(err);
                 else {
                     console.log(res.body.suc_msg);
+                    //expect
+                    expect(res.body.suc_msg).to.equal("Success");
                     done();
                 }
             });

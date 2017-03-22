@@ -50,6 +50,8 @@ class ShareStatusController {
             socket.broadcast.emit('Update Share Status', data);
         };
     }
+
+
 }
 
 let ssc = new ShareStatusController();
