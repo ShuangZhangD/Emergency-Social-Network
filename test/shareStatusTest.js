@@ -2,6 +2,8 @@
  * Created by keqinli on 3/20/17.
  */
 
+'use strict';
+
 var expect = require('expect.js');
 var request = require('supertest');
 var express = require('express');
@@ -10,12 +12,13 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
 
-var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
+//var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
+var dboper = require("../models/ShareStatusDBoper");
 
 var app = express();
 
 
-var url = 'mongodb://localhost:27017/test3';
+var url = 'mongodb://localhost:27017/test2';
 
 //using server not app to listening port 5000
 var server = request.agent("http://localhost:5000");
@@ -33,6 +36,7 @@ suite('Share Status Tests', function(){
             else {
                 testDB = db;
             }
+            //done();
         });
         done();
 
@@ -68,9 +72,7 @@ suite('Share Status Tests', function(){
             .expect(200, function(err, res){
                 if(err) return done(err);
                 else {
-                    // for(var i=0; i<res.body.data.length; i++){
-                    //     console.log(res.body.data[i]["announcement"]);
-                    // }
+                   // console.log("here" + res.body.suc_msg);
                     expect(res.body.suc_msg).to.equal("Success");
 
                     done();
@@ -81,20 +83,16 @@ suite('Share Status Tests', function(){
     });
     //to test the share status if it is consistent
     test('Share Status Function Test', function(done){
-         var fake= {"body" : {
-            "username": "mary",
-            "emergencystatus": "OK"
-        }
-         }
-
-        ShareStatusCtrl.AddShareStatus(fake, function(res){
-            expect(res.body.suc_msg).to.equal("Success");
-            ShareStatusCtrl.GetShareStatus({"username": "keqin"}, function(data){
-                expect(data.body.data).to.equal("OK");
+        //should have a
+        dboper.Updatesharestatus("keqin","OK", function(err, results) {
+            expect(err).to.equal(null);
+            dboper.Getsharestatus("keqin",function(err, results1){
+                expect(results1["emergencystatus"]).to.equal("OK");
+                done();
             });
         });
 
-        done();
+        //done();
 
     });
 })
