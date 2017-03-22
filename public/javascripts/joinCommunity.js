@@ -217,8 +217,11 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
         }
         $scope.showList['privateChatContent'] = true;
         */
-        $scope.userClass['privateChatSender'] = sender;
-        $rootScope.$emit("openPrivateChat");
+        if (sender != $scope.username['username']) {
+            $scope.userClass['privateChatSender'] = sender;
+            $rootScope.$emit("openPrivateChat");
+
+        }
 	};
 
 

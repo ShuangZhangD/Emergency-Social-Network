@@ -16,6 +16,7 @@ app.controller('privateChatContentCtrl', function ($window, $scope, $rootScope, 
 			console.log('getPrivateMsgs success');
 			console.log(rep);
 				$scope.privateMsgs = rep.data;
+            $scope.newMsgs = [];
 			if ($scope.userClass['newMsgOfSender'] > 0) {
 				for (var i = $scope.userClass['newMsgOfSender']; i > 0; i--) {
                     $scope.newMsgs.push($scope.privateMsgs[$scope.privateMsgs.length - i]);
