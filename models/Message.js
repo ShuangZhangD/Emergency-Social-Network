@@ -26,7 +26,7 @@ class Message {
             "type": this.type,
             "message": this.message,
             "postTime": this.postTime,
-            "EmergencyStatus": this.EmergencyStatus,
+            "emergencystatus": this.EmergencyStatus,
             "ReadStatus": this.ReadStatus
         }, function (err, results) {
             if (err) {
