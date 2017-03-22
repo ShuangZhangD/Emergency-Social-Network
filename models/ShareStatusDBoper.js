@@ -5,9 +5,12 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
+var DBConfig = require('./DBConfig');
+let dbconfig = new DBConfig();
+var url = dbconfig.getURL();
 //var User = require('./DatabaseMethods.js');
 // var url = 'mongodb://localhost:27017/test2';
-var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
+//var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
 
 var User =require('./User.js');
 

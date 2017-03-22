@@ -6,7 +6,10 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
-var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
+var DBConfig = require('./DBConfig');
+let dbconfig = new DBConfig();
+var url = dbconfig.getURL();
+//var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
 
 var db_err_msg = "Database Error";
 
