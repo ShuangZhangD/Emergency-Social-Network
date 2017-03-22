@@ -31,8 +31,10 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 	};
 
 	$rootScope.updateNewMsgNumByData = function (data) {
+		var found = false;
 		for (var i = 0; i < $scope.privateSenderList.length; i++) {
             if ($scope.privateSenderList[i].sender == data.sender) {
+            	found = true;
 				if ($scope.privateSenderList[i].count == '') {
 					$scope.privateSenderList[i].count = 1;
 				}
@@ -41,6 +43,9 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 				}
 			}
         }
+        if (!found) {
+            $scope.privateSenderList.push({sender: data.sender, count: 1});
+		}
 		$scope.updateNewMsgNum();
 	};
 
