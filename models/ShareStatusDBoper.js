@@ -1,7 +1,7 @@
 /**
  * Created by keqinli on 3/18/17.
  */
-
+'use strict';
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');

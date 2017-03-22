@@ -1,7 +1,6 @@
 /**
  * Created by shuang on 3/18/17.
  */
-
 var express = require('express');
 var myParser = require("body-parser");
 var dboper = require("../models/PostAnnouncementDBoper.js");
