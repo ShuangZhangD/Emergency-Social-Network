@@ -47,6 +47,7 @@ app.controller('shareStatusCtrl', function($window, $scope, $rootScope, $http, m
             if (rep.success == 1) {
                 alert("Updated your status to " + value);
 				console.log('Updated the status!');
+              $scope.currentstatus.emergencystatus = value;
             }
             else {
                 // TODO error handling
