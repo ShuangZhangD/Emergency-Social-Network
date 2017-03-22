@@ -6,6 +6,7 @@
 
 app.controller('privateChatContentCtrl', function ($window, $scope, $rootScope, $http, mySocket) {
 	$scope.privateMsgs = [];
+	$scope.newMsgs = [];
 	var getPrivateMsgs = function() {
 		console.log('getPrivateMsgs');
         $http({
@@ -15,6 +16,11 @@ app.controller('privateChatContentCtrl', function ($window, $scope, $rootScope, 
 			console.log('getPrivateMsgs success');
 			console.log(rep);
 				$scope.privateMsgs = rep.data;
+			if ($scope.userClass['newMsgOfSender'] > 0) {
+				for (var i = $scope.userClass['newMsgOfSender']; i > 0; i--) {
+                    $scope.newMsgs.push($scope.privateMsgs[$scope.privateMsgs.length - i]);
+				}
+			}
 		});
     };
 	// Call this function after login
@@ -27,6 +33,12 @@ app.controller('privateChatContentCtrl', function ($window, $scope, $rootScope, 
 	// For Test
 	//$scope.privateMsgs = [{"sender":"a", "receiver": "b", "private_msg":"hello", "timestamp": 1111,"emergency_status": "OK"}];
 
+
+    $scope.showHistoryMsg = function () {
+		$scope.userClass["displayHistory"] = true;
+    }
+	
+	
 	$scope.postPrivateMsg = function () {
 		var time = new Date();
 		var msg_data = {
@@ -74,7 +86,8 @@ app.controller('privateChatContentCtrl', function ($window, $scope, $rootScope, 
 		if ($scope.showList.privateChatContent && $scope.userClass['privateChatSender'] == data.sender) {
 			// in current page, just show it
 			console.log('in the content page');
-			$scope.privateMsgs.push(data);
+            $scope.privateMsgs.push(data);
+            $scope.newMsgs.push(data);
 			mySocket.emit('PrivateMsgRead', {sender: data.sender, receiver: data.receiver});
 		}
 		else {
