@@ -55,15 +55,16 @@ module.exports = {
         return function(msg) {
             sender = msg.sender;
             receiver = msg.receiver;
+            status = msg.emergency_status;
             console.log("SENDER IS "+sender)
                     console.log("RECEIVER IS"+receiver)
                     console.log("MESSAGE IS" +msg)
             // emit msg
             // msg should be in form of {"sender": , "receiver": , "private_msg": }
             msg["timestamp"] = Date.now();
-            let dboper = new PrivateChatDBOper(sender, receiver);
-            dboper.GetUserEmergencyStatus(sender, function(statuscode, status) {
-                if (statuscode == success_statuscode){
+            //let dboper = new PrivateChatDBOper(sender, receiver);
+            //dboper.GetUserEmergencyStatus(sender, function(statuscode, status) {
+                //if (statuscode == success_statuscode){
                     msg["EmergencyStatus"] = status;
 
                     //socket.emit('PrivateChat', msg);
@@ -98,8 +99,8 @@ module.exports = {
                         if(statuscode==success_statuscode) ConnectedSockets[receiver].emit('IndividualPrivateUnreadMsg', results)
                     });
                 }
-            }
-        });
+            //}
+       // });
         };
     },
 

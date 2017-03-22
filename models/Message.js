@@ -91,7 +91,7 @@ class Message {
                     data["receiver"] = result.receiver;
                     data["private_msg"] = result.message;
                     data["timestamp"] = result.postTime;
-                    data["emergency_status"] = result.EmergencyStatus;
+                    data["emergency_status"] = result.emergencystatus;
                     datas.push(data);
                 })
                 //var jsonString = JSON.stringify(datas);

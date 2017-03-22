@@ -14,7 +14,7 @@ app.controller('initCtrl', function($scope, $http) {
 		hasNewMsg:false,
 		newMsgNum:0,
     privateChatSender: "",
-    status: ""
+    status: "TEST"
 	};
     $scope.logined = false;
     $scope.username = '';

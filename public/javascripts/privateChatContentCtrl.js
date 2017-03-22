@@ -31,7 +31,8 @@ app.controller('privateChatContentCtrl', function ($window, $scope, $rootScope, 
 		var msg_data = {
 			PrivateMsg : $scope.private_msg,
 			sender : $scope.userClass['username'],
-			receiver : $scope.userClass['privateChatSender']
+			receiver : $scope.userClass['privateChatSender'],
+            emergency_status : $scope.userClass['status']
 		};
 		console.log(msg_data);
 		$http({
