@@ -117,6 +117,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
         $scope.showList['postAnnouncement'] = true;
     };
 	$scope.showPrivateChat = function () {
+        $rootScope.$emit("loginGetPrivateChatList");
 		for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
