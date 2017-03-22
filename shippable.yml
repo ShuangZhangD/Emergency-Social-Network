@@ -28,9 +28,10 @@ build:
   # Commands that should be executed during the build.
   ci:
     - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-#    - npm install -g grunt-cli mocha istanbul
-#    - npm install
-#    - grunt circleci
+    - npm install -g grunt-cli mocha grunt supertest grunt-mocha-test expect
+  #  - npm install -g
+    - npm install
+    - grunt circleci
 
 
 # Commands to run after a successfull build
