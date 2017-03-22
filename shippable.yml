@@ -33,7 +33,7 @@ build:
     - sudo npm install grunt supertest grunt-mocha-test expect.js --save-dev
   #  - npm install -g
   #  - npm install
-    - npm start
+#    - npm start
     - grunt test
 
 
