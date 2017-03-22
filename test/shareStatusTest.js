@@ -18,10 +18,10 @@ var dboper = require("../models/ShareStatusDBoper");
 var app = express();
 
 
-var url = 'mongodb://localhost:27017/test2';
+var url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
 
 //using server not app to listening port 5000
-var server = request.agent("http://localhost:5000");
+var server = request.agent("https://quiet-peak-31270.herokuapp.com/");
 
 suite('Share Status Tests', function(){
 
