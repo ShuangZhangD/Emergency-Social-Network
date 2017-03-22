@@ -15,10 +15,11 @@ module.exports = {
         var message = info["PrivateMsg"];
         var sender = info["sender"];
         var receiver = info["receiver"];
-        console.log("messages: "+message);
+        console.log("=========INFO--------: ")
+        console.dir(info);
 
         let dboper = new PrivateChatDBOper(sender, receiver);
-        dboper.InsertMessage(message, function(statuscode, content){
+        dboper.InsertMessage(info, function(statuscode, content){
             if(statuscode == success_statuscode){
                 res.json({success:1, suc_msg: "Success"});
             }
@@ -80,6 +81,7 @@ module.exports = {
                     //emit update notification of unread
 
                     //emit count of all unread msg(public + private)
+                    let dboper = new PrivateChatDBOper(sender, receiver);
                     dboper.GetCount_AllUnreadMsg(function (statuscode, count) {
                         if (statuscode == success_statuscode) ConnectedSockets[receiver].emit('AllUnreadMsgCnt', count)
                     });

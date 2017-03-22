@@ -14,7 +14,8 @@ module.exports = {
         var info = req.body;
         var message = info["pubmsg"];
         var sender = info["username"];
-        dboper.InsertMessage(sender, "", message, "public", Date.now(), function (err, results) {
+        var emergencystatus = info["emergencystatus"];
+        dboper.InsertMessage(sender, "", message, "public", Date.now(),emergencystatus, function (err, results) {
             if (err) {
                 console.log('Error:'+ err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});

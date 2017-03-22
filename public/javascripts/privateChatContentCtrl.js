@@ -28,11 +28,13 @@ app.controller('privateChatContentCtrl', function ($window, $scope, $rootScope, 
 	//$scope.privateMsgs = [{"sender":"a", "receiver": "b", "private_msg":"hello", "timestamp": 1111,"emergency_status": "OK"}];
 
 	$scope.postPrivateMsg = function () {
+		var time = new Date();
 		var msg_data = {
 			PrivateMsg : $scope.private_msg,
 			sender : $scope.userClass['username'],
 			receiver : $scope.userClass['privateChatSender'],
-            emergency_status : $scope.userClass['status']
+            emergency_status : $scope.userClass['status'],
+			timestamp : time
 		};
 		console.log(msg_data);
 		$http({
@@ -47,7 +49,8 @@ app.controller('privateChatContentCtrl', function ($window, $scope, $rootScope, 
 					sender : $scope.userClass['username'],
 					receiver : $scope.userClass['privateChatSender'],
 					private_msg : $scope.private_msg,
-					emergency_status : $scope.userClass['status']
+					emergency_status : $scope.userClass['status'],
+					timestamp : time
 				};
 				$scope.private_msg = "";
 				$scope.privateMsgs.push(msg_data_2);
