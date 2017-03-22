@@ -82,9 +82,9 @@ suite('Share Status Tests', function(){
     //to test the share status if it is consistent
     test('Share Status Function Test', function(done){
         //should have a
-        dboper.Updatesharestatus("12345","OK", function(err, results) {
+        dboper.Updatesharestatus("keqin","OK", function(err, results) {
             expect(err).to.equal(null);
-            dboper.Getsharestatus("12345",function(err, results1){
+            dboper.Getsharestatus("keqin",function(err, results1){
                 expect(results1["emergencystatus"]).to.equal("OK");
                 done();
             });

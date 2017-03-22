@@ -91,7 +91,14 @@ suite('Private Chat Test', function(){
     test('test message number of a particular receiver', function(done){
         let dboper = new PrivateChatDBOper("keqin", "test1000lkq");
         dboper.GetCount_IndividualPrivateSender(function(statuscode1, results1){
-            dboper.InsertMessage("private chat function", function(statuscode2, content2) {
+            var fake = {
+                "sender": "keqin",
+                "receiver": "test1000lkq",
+                "PrivateMsg": "private chat function",
+                "emergency_status": "OK",
+                "timestamp": ""
+            }
+            dboper.InsertMessage(fake, function(statuscode2, content2) {
                 expect(statuscode2).to.equal(200);
                 dboper.GetCount_IndividualPrivateSender(function(statuscode3, results3){
                     for(var i=0; i<results3.length; i++){
@@ -110,7 +117,14 @@ suite('Private Chat Test', function(){
     test('Unread Function Test', function(done){
         let dboper = new PrivateChatDBOper("keqin", "test1000lkq");
         dboper.GetCount_IndividualUnreadMsg(function(statuscode1, results1){
-            dboper.InsertMessage("Unread private chat function", function(statuscode2, content2) {
+            var fake = {
+                "sender": "keqin",
+                "receiver": "test1000lkq",
+                "PrivateMsg": "private chat function",
+                "emergency_status": "OK",
+                "timestamp": ""
+            }
+            dboper.InsertMessage(fake, function(statuscode2, content2) {
                 expect(statuscode2).to.equal(200);
                 dboper.GetCount_IndividualUnreadMsg(function(statuscode3, results3){
                     for(var i=0; i<results3.length; i++){
@@ -129,7 +143,14 @@ suite('Private Chat Test', function(){
     //to test the chat private function
     test('Private Chat Function Test', function(done){
         let dboper = new PrivateChatDBOper("keqin", "test1000lkq");
-        dboper.InsertMessage("private chat function", function(statuscode, content){
+        var fake = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "PrivateMsg": "private chat function",
+            "emergency_status": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake, function(statuscode, content){
             expect(statuscode).to.equal(200);
 
             dboper.LoadHistoryMsg(function(statuscode, content){
