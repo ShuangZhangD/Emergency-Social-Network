@@ -4,7 +4,7 @@ var assert = require('assert');
 var express = require('express');
 var User = require('./User.js');
 var url = 'mongodb://root:1234@ds135700.mlab.com:35700/esnsv7';
-// var url = 'mongodb://localhost:27017/test';
+//var url = 'mongodb://localhost:27017/test';
 
 var db_err_msg = "Database Error";
 var db_err_statuscode = 400;
@@ -159,6 +159,36 @@ class JoinCommunityDBOper {
             db.close();
         });//end of database operation
     };
+
+    GetUserEmergencyStatus (userlist, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log('Error:' + err);
+                callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
+            }
+            console.log("Connected correctly to server.");
+            var user_status = {};
+            for(var i = 0 ; i < userlist.length;i++){
+                (function (i) {
+                    var username = userlist[i];
+                    let new_user = new User(username, "", "");
+                    new_user.getEmergencyStatus(db, function (status, err) {
+                        if (err) callback(db_err_statuscode, db_err_msg);
+                        else {
+                            user_status[username] = status;
+                            if(i == userlist.length - 1){
+                                console.log("USER STATUS");
+                                console.dir(user_status);
+                                callback(success_statuscode, user_status)
+                            }
+                        }
+                    });
+
+                })(i);
+            }
+            db.close();
+        })
+    };
 }
 
 let dboper = new JoinCommunityDBOper();
@@ -167,5 +197,6 @@ module.exports = {
   Login: dboper.Login,
   AddDB: dboper.AddDB,
   GetAllUsers: dboper.GetAllUsers,
-  Logout: dboper.Logout 
+  Logout: dboper.Logout,
+    GetUserEmergencyStatus: dboper.GetUserEmergencyStatus
 }
