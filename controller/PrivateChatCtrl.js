@@ -1,6 +1,7 @@
 /**
  * Created by Ling on 2017/3/18.
  */
+'use strict';
 var express = require('express');
 var myParser = require("body-parser");
 var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
