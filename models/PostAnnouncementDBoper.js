@@ -1,5 +1,5 @@
 /**
- * Created by shuang on 2/26/17.
+ * Created by shuang on 3/18/17.
  */
 'use strict';
 
@@ -13,7 +13,7 @@ var url = dbconfig.getURL();
 
 var db_err_msg = "Database Error";
 
-exports.InsertMessage = function(sender, receiver, message, type, postTime,emergencystatus, callback) {
+exports.InsertAnnouncement = function(username, announcement, postTime, callback) {
     //connect to database
     MongoClient.connect(url, function (err, db) {
         if (err) {
@@ -21,23 +21,23 @@ exports.InsertMessage = function(sender, receiver, message, type, postTime,emerg
             callback(400, db_err_msg);// DB Error. Here error of connecting to db
         }
         console.log("Connected correctly to server.");
-        var collection = db.collection('MESSAGES');
+        var collection = db.collection('announcement');
         //insert into table
-        var data = [{"sender":sender,"receiver":receiver, "message": message, "type": type, "postTime": postTime,"emergencystatus":emergencystatus}];
+        var data = [{"username": username,"announcement":announcement, "postTime": postTime}];
         collection.insert(data, callback);
         db.close();
     });
 };
 
-exports.LoadPublicMessage = function(callback) {
+exports.LoadAnnouncement = function(callback) {
     MongoClient.connect(url, function(err, db) {
         if (err) {
             console.log('Error:' + err);
             callback(400, db_err_msg);// DB Error. Here error of connecting to db
         }
         console.log("Connected correctly to server.");
-        var collection = db.collection('MESSAGES');
-        collection.find({"type": "public"}).toArray(function(err, results){
+        var collection = db.collection('announcement');
+        collection.find({}).toArray(function(err, results){
             if(err)
             {
                 console.log('Error:'+ err);
@@ -46,11 +46,10 @@ exports.LoadPublicMessage = function(callback) {
                 var datas = [];
                 results.forEach(function(result){
                     var data = {};
-                    data["username"] = result.sender;
-                    data["pubmsg"] = result.message;
+                    data["username"] = result.username;
+                    data["announcement"] = result.announcement;
                     data["timestamp"] = result.postTime;
-                    data["emergencystatus"] = result.emergencystatus;
-                    console.log(result);
+                    //console.log(result);
                     datas.push(data);
                 });
                 //var jsonString = JSON.stringify(datas);

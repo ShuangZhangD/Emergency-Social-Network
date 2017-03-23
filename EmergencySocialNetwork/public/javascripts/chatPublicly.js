@@ -33,7 +33,7 @@ app.controller('chatPubliclyCtrl', function($window, $scope, $http, mySocket) {
     var getMessage=function(){
         $http({
             method:'get',
-            url:'http://localhost:8081/public',
+            url:'/public',
             //data:{pubmsg:$scope.pubmsg, username:$scope.username}
         }).success(function(rep){
             console.log(rep);
@@ -45,11 +45,13 @@ app.controller('chatPubliclyCtrl', function($window, $scope, $http, mySocket) {
     getMessage();
     //$scope.displaymsg = [];
     mySocket.on('Public Message', function(data) {
+        console.log(data);
         $scope.displaymsg.push(data);
 
     });
     $scope.postMsg = function() {
         //$scope.username = $window.localStorage.getItem("username");
+        /*
         console.log($scope);
         console.log($scope.username);
         console.log($scope.logined);
@@ -57,13 +59,14 @@ app.controller('chatPubliclyCtrl', function($window, $scope, $http, mySocket) {
         console.log($scope.showList);
         console.log($scope.test);
         console.log($scope.userClass);
+        */
         $http({
             method:'post',
-            url:'http://localhost:8081/public',
-            data:{pubmsg:$scope.pubmsg, username:$scope.userClass['username'], timeStamp:Date.now()}
+            url:'/public',
+            data:{pubmsg:$scope.pubmsg, username:$scope.userClass['username'], timeStamp:Date.now(), emergencystatus:$scope.userClass['status']}
         }).success(function(rep){
             console.log(rep);
-            var data = {pubmsg:$scope.pubmsg, username:$scope.userClass['username'], timestamp:Date.now()};
+            var data = {pubmsg:$scope.pubmsg, username:$scope.userClass['username'], timestamp:Date.now(),emergencystatus:$scope.userClass['status']};
             //$scope.displaymsg.push(data); //add
             mySocket.emit('Public Message', data);
             $scope.pubmsg = "";

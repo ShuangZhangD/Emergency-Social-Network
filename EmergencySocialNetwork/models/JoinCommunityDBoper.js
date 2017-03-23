@@ -1,9 +1,13 @@
-
+'use strict';
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
-var User = require('./DatabaseMethods.js');
-var url = 'mongodb://localhost:27017/test2';
+var User = require('./User.js');
+var DBConfig = require('./DBConfig');
+let dbconfig = new DBConfig();
+var url = dbconfig.getURL();
+//var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
+//var url = 'mongodb://localhost:27017/test';
 
 var db_err_msg = "Database Error";
 var db_err_statuscode = 400;
@@ -23,7 +27,7 @@ class JoinCommunityDBOper {
         else {
             console.log("Connected correctly to server.");
             //check if the user exist
-            let new_user = new User(username, password, "online");
+            let new_user = new User(username, password, "online", "");
             new_user.checkUser(db, username, function(result, err){
                 if(err){
                     callback(db_err_statuscode, db_err_msg);
@@ -158,6 +162,50 @@ class JoinCommunityDBOper {
             db.close();
         });//end of database operation
     };
+
+    GetUserEmergencyStatus (userlist, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log('Error:' + err);
+                callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
+            }
+            console.log("Connected correctly to server.");
+            var user_status = {};
+            for(var i = 0 ; i < userlist.length;i++){
+                (function (i) {
+                    var username = userlist[i];
+                    let new_user = new User(username, "", "");
+                    new_user.getEmergencyStatus(db, function (status, err) {
+                        if (err) callback(db_err_statuscode, db_err_msg);
+                        else {
+                            user_status[username] = status;
+                            if(i == userlist.length - 1){
+                                console.log("USER STATUS");
+                                console.dir(user_status);
+                                callback(success_statuscode, user_status)
+                            }
+                        }
+                    });
+
+                })(i);
+            }
+            db.close();
+        })
+    };
+    GetAllUsernameAndEmergencyStatus(callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log('Error:' + err);
+                callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
+            }
+            else {
+                let new_user = new User("", "", "", "");
+                new_user.getAllUsernameAndEmergencyStatus(db, function(results, err){
+                    callback(success_statuscode, results);
+                })
+            }
+        })
+    };
 }
 
 let dboper = new JoinCommunityDBOper();
@@ -166,5 +214,7 @@ module.exports = {
   Login: dboper.Login,
   AddDB: dboper.AddDB,
   GetAllUsers: dboper.GetAllUsers,
-  Logout: dboper.Logout 
+  Logout: dboper.Logout,
+    GetUserEmergencyStatus: dboper.GetUserEmergencyStatus,
+    GetAllUsernameAndEmergencyStatus: dboper.GetAllUsernameAndEmergencyStatus
 }

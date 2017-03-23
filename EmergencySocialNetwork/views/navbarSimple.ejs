@@ -4,7 +4,10 @@
     <ul class="nav navbar-nav">
       <li><a href="#" ng-click='showDirectory()' ng-show="logined">Directory<!--span class="sr-only">(current)</span--></a></li>
       <li><a href="#" ng-click='showPublicChat()' ng-show="logined">PublicChat</a></li>
-      <li><a href="#" ng-click='logout()' ng-show="logined">Logout</a></li>
+      <li><a href="#" ng-click='showAnnouncement()' ng-show="logined">Announcements</a></li>
+      <li><a href="#" ng-click='showShareStatus()' ng-show="logined">Share Status</a></li>
+      <li><a href="#" ng-click='showPrivateChat()' ng-show="logined">PrivateChat (<span ng-show="userClass.hasNewMsg" style="color:red">{{userClass.newMsgNum}}</span><span ng-show="!userClass.hasNewMsg">0</span>) </a></li>
+	  <li><a href="#" ng-click='logout()' ng-show="logined">Logout({{userClass.username}})</a></li>
     </ul>
 
     <!-- Collect the nav links, forms, and other content for toggling  //   class="active" -->
