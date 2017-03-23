@@ -5,8 +5,8 @@
 class DBConfig{
 
     constructor(){
-        //this.url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
-        this.url=process.argv[2];
+        this.url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
+        //this.url=process.argv[2];
     }
 
     setURL(dburl){
