@@ -1,0 +1,28 @@
+<div class="container" ng-controller="privateChatContentCtrl" ng-show="showList.privateChatContent">
+    <h3>Chat with: {{privateChatSender}}</h3>
+    <div class="container" ng-show="userClass.displayHistory">
+        <div class="panel panel-default " ng-repeat="msg in privateMsgs track by $index">
+            <div class="panel-heading"><span>{{msg.sender}} @ </span><span>(Status: {{msg.emergency_status}}){{msg.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
+            <div class="panel-body"><span class="content">{{msg.private_msg}}</span><span class="avatar"></span></div>
+            </div>
+    </div>
+
+    <button ng-show="!userClass.displayHistory" class="btn btn-lg btn-primary btn-block" type="submit" ng-click="showHistoryMsg()">Show History Message</button>
+
+
+    <div class="container" ng-show="!userClass.displayHistory">
+        <div class="panel panel-default " ng-repeat="msg in newMsgs track by $index">
+            <div class="panel-heading"><span>{{msg.sender}} @ </span><span>(Status: {{msg.emergency_status}}){{msg.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
+            <div class="panel-body"><span class="content">{{msg.private_msg}}</span><span class="avatar"></span></div>
+        </div>
+    </div>
+
+
+    <div class="container" ng-show="userClass.displayHistory">
+        <div class="form-signin">
+            <input ng-model="private_msg" id="private_msg" type="text" class="form-control" placeholder="Send Private Msg" required autofocus>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="postPrivateMsg()">Send Private Msg</button>
+        </div>
+    </div>
+
+</div>
