@@ -310,7 +310,15 @@ class PrivateChatDBOper {
             callback(db_err_statuscode, db_err_msg)
         }// DB Error. Here error of connecting to db
         else {
-            
+          let MSG = new Message("", "", "", "", "", "", "");
+          MSG.getAllMessagesForSearch(db, username, words, function (results, err) {
+              if (err) {
+                callback(db_err_statuscode, db_err_msg);
+              }
+              else {
+                callback(success_statuscode, results);
+              }
+          });
         }
     });
 	}
