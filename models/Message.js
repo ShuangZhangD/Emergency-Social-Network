@@ -210,9 +210,12 @@ class Message {
     getAllMessagesForSearch(db, username, words, callback) {
       this.collection = db.collection('MESSAGES');
       var datas=[];
+      var searchTerm = words[0];
       words.forEach(function(word) {
-        var regExWord = new RegExp(".*" + word + ".*");
-        this.collection.find({$or: [{"sender" : username}, {"receiver":username}] "message": regExWord}).toArray(err, results) {
+        searchTerm=searchTerm+"|"+word;
+      });
+        var regExWord = new RegExp(".*" + searchTerm + ".*");
+        this.collection.find({$or: [{"sender" : username}, {"receiver":username}] "message": regExWord}).toArray(function(err, results) {
           if(err) {
             console.log("Error when retrieving messages for search terms");
             callback(null, err);
@@ -227,10 +230,11 @@ class Message {
                 data["emergency_status"] = result.emergencystatus;
                 datas.push(data);
             });
+            callback(datas, null);
           }
-        }
-      });
-      callback(datas, null);
+        });
+
+
     }
 }
 module.exports = Message;
