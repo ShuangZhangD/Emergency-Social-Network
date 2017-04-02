@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2e15bd1-1bf5-46a8-9b33-d18c19772c9a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="f2e15bd1-1bf5-46a8-9b33-d18c19772c9a" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -383,7 +381,7 @@
       <workItem from="1490640433792" duration="2115000" />
       <workItem from="1490751163630" duration="27000" />
       <workItem from="1490816135897" duration="704000" />
-      <workItem from="1491106624103" duration="14197000" />
+      <workItem from="1491106624103" duration="14469000" />
     </task>
     <task id="LOCAL-00094" summary="Merge branches 'komala-iteration-2' and 'shuang-iteration-2' of https://github.com/cmusv-fse/s17-ESN-SV7 into shuang-iteration-2&#10;&#10;# Conflicts:&#10;#&#9;public/javascripts/joinCommunity.js&#10;#&#9;views/displayDirectory.ejs&#10;">
       <created>1490155424976</created>
@@ -732,7 +730,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="253779000" />
+    <option name="totallyTimeSpent" value="254051000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
