@@ -1,5 +1,4 @@
-
-de_modules/
+node_modules/
 /EmergencySocialNetwork/npm-debug.log
 EmergencySocialNetwork/npm-debug.log
 EmergencySocialNetwork/node_modules/
