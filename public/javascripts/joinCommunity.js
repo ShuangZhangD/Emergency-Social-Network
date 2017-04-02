@@ -92,6 +92,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
             $scope.showList[item] = false;
         }
         $scope.showList['chatPublicly'] = true;
+        $scope.showList['publicSearchResult'] = false;
     };
 
     $rootScope.userChangedStatus = function(data) {
@@ -128,6 +129,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
             $scope.showList[item] = false;
         }
         $scope.showList['postAnnouncement'] = true;
+        $scope.showList['annoucementSearchResult'] = false;
     };
 	$scope.showPrivateChat = function () {
         $rootScope.$emit("loginGetPrivateChatList");
