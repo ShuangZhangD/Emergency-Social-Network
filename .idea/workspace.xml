@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2e15bd1-1bf5-46a8-9b33-d18c19772c9a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/javascripts/.chatPublicly.js.swp" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/chatPublicly.js" afterPath="$PROJECT_DIR$/public/javascripts/chatPublicly.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/joinCommunity.js" afterPath="$PROJECT_DIR$/public/javascripts/joinCommunity.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/main.js" afterPath="$PROJECT_DIR$/public/javascripts/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/postAnnoucementCtrl.js" afterPath="$PROJECT_DIR$/public/javascripts/postAnnoucementCtrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/chatPublicly.ejs" afterPath="$PROJECT_DIR$/views/chatPublicly.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/postAnnouncement.ejs" afterPath="$PROJECT_DIR$/views/postAnnouncement.ejs" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,11 +20,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="chatPublicly.ejs" pinned="false" current-in-tab="false">
+      <file leaf-file-name="chatPublicly.ejs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/chatPublicly.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="23" column="10" lean-forward="true" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
+            <state relative-caret-position="345">
+              <caret line="23" column="10" lean-forward="false" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
@@ -74,8 +67,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/javascripts/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="31" />
+            <state relative-caret-position="270">
+              <caret line="18" column="26" lean-forward="true" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -91,11 +84,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chatPublicly.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chatPublicly.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/javascripts/chatPublicly.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="160" column="33" lean-forward="false" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
+            <state relative-caret-position="2460">
+              <caret line="164" column="17" lean-forward="true" selection-start-line="164" selection-start-column="17" selection-end-line="164" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -203,11 +206,11 @@
         <option value="$PROJECT_DIR$/test/shareStatusTest.js" />
         <option value="$PROJECT_DIR$/shippable.yml" />
         <option value="$PROJECT_DIR$/public/javascripts/main.js" />
-        <option value="$PROJECT_DIR$/views/chatPublicly.ejs" />
         <option value="$PROJECT_DIR$/views/postAnnouncement.ejs" />
         <option value="$PROJECT_DIR$/public/javascripts/joinCommunity.js" />
         <option value="$PROJECT_DIR$/public/javascripts/postAnnoucementCtrl.js" />
         <option value="$PROJECT_DIR$/public/javascripts/chatPublicly.js" />
+        <option value="$PROJECT_DIR$/views/chatPublicly.ejs" />
       </list>
     </option>
   </component>
@@ -380,14 +383,7 @@
       <workItem from="1490640433792" duration="2115000" />
       <workItem from="1490751163630" duration="27000" />
       <workItem from="1490816135897" duration="704000" />
-      <workItem from="1491106624103" duration="12771000" />
-    </task>
-    <task id="LOCAL-00092" summary="Merge branches 'huiliang-iteration-2' and 'shuang-iteration-2' of https://github.com/cmusv-fse/s17-ESN-SV7 into shuang-iteration-2&#10;&#10;# Conflicts:&#10;#&#9;controller/ShareStatusCtrl.js&#10;#&#9;models/ShareStatusDBoper.js&#10;#&#9;models/User.js&#10;">
-      <created>1490139472349</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1490139472349</updated>
+      <workItem from="1491106624103" duration="14098000" />
     </task>
     <task id="LOCAL-00093" summary="Merge branches 'komala-iteration-2' and 'shuang-iteration-2' of https://github.com/cmusv-fse/s17-ESN-SV7 into shuang-iteration-2&#10;&#10;# Conflicts:&#10;#&#9;public/javascripts/joinCommunity.js&#10;#&#9;views/displayDirectory.ejs&#10;">
       <created>1490153277381</created>
@@ -725,11 +721,18 @@
       <option name="project" value="LOCAL" />
       <updated>1490251411495</updated>
     </task>
-    <option name="localTasksCounter" value="141" />
+    <task id="LOCAL-00141" summary="publicChat and Announcement search information">
+      <created>1491122831901</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1491122831903</updated>
+    </task>
+    <option name="localTasksCounter" value="142" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="252353000" />
+    <option name="totallyTimeSpent" value="253680000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -823,7 +826,8 @@
     <MESSAGE value="Merge branches 'huiliang-iteration-2' and 'shuang-iteration-2' of https://github.com/cmusv-fse/s17-ESN-SV7 into shuang-iteration-2&#10;&#10;# Conflicts:&#10;#&#9;controller/ShareStatusCtrl.js&#10;#&#9;models/ShareStatusDBoper.js&#10;#&#9;models/User.js&#10;" />
     <MESSAGE value="Merge branches 'komala-iteration-2' and 'shuang-iteration-2' of https://github.com/cmusv-fse/s17-ESN-SV7 into shuang-iteration-2&#10;&#10;# Conflicts:&#10;#&#9;public/javascripts/joinCommunity.js&#10;#&#9;views/displayDirectory.ejs&#10;" />
     <MESSAGE value="Merge branches 'master' and 'shuang-iteration-2.3' of https://github.com/cmusv-fse/s17-ESN-SV7&#10;&#10;# Conflicts:&#10;#&#9;EmergencySocialNetwork/models/JoinCommunityDBoper.js&#10;#&#9;EmergencySocialNetwork/models/PublicChatDBoper.js&#10;#&#9;EmergencySocialNetwork/package.json&#10;#&#9;EmergencySocialNetwork/public/javascripts/chatPublicly.js&#10;#&#9;EmergencySocialNetwork/public/javascripts/main.js&#10;#&#9;EmergencySocialNetwork/views/displayDirectory.ejs&#10;#&#9;EmergencySocialNetwork/views/joinCommunity.html&#10;#&#9;EmergencySocialNetwork/views/navbarSimple.ejs&#10;#&#9;Gruntfile.js&#10;#&#9;controller/JoinCommunityCtrl.js&#10;#&#9;controller/PostAnnouncementCtrl.js&#10;#&#9;controller/PrivateChatCtrl.js&#10;#&#9;controller/ShareStatusCtrl.js&#10;#&#9;models/Message.js&#10;#&#9;models/PostAnnouncementDBoper.js&#10;#&#9;models/PrivateChatDBOper.js&#10;#&#9;models/ShareStatusDBoper.js&#10;#&#9;models/User.js&#10;#&#9;public/javascripts/joinCommunity.js&#10;#&#9;public/javascripts/postAnnoucementCtrl.js&#10;#&#9;public/javascripts/privateChatContentCtrl.js&#10;#&#9;public/javascripts/privateChatListCtrl.js&#10;#&#9;public/javascripts/shareStatusCtrl.js&#10;#&#9;shippable.yml&#10;#&#9;test/postAnnouncementTest.js&#10;#&#9;test/shareStatusTest.js&#10;#&#9;views/privateChatContent.ejs&#10;#&#9;views/privateChatList.ejs&#10;#&#9;views/shareStatus.ejs&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branches 'master' and 'shuang-iteration-2.3' of https://github.com/cmusv-fse/s17-ESN-SV7&#10;&#10;# Conflicts:&#10;#&#9;EmergencySocialNetwork/models/JoinCommunityDBoper.js&#10;#&#9;EmergencySocialNetwork/models/PublicChatDBoper.js&#10;#&#9;EmergencySocialNetwork/package.json&#10;#&#9;EmergencySocialNetwork/public/javascripts/chatPublicly.js&#10;#&#9;EmergencySocialNetwork/public/javascripts/main.js&#10;#&#9;EmergencySocialNetwork/views/displayDirectory.ejs&#10;#&#9;EmergencySocialNetwork/views/joinCommunity.html&#10;#&#9;EmergencySocialNetwork/views/navbarSimple.ejs&#10;#&#9;Gruntfile.js&#10;#&#9;controller/JoinCommunityCtrl.js&#10;#&#9;controller/PostAnnouncementCtrl.js&#10;#&#9;controller/PrivateChatCtrl.js&#10;#&#9;controller/ShareStatusCtrl.js&#10;#&#9;models/Message.js&#10;#&#9;models/PostAnnouncementDBoper.js&#10;#&#9;models/PrivateChatDBOper.js&#10;#&#9;models/ShareStatusDBoper.js&#10;#&#9;models/User.js&#10;#&#9;public/javascripts/joinCommunity.js&#10;#&#9;public/javascripts/postAnnoucementCtrl.js&#10;#&#9;public/javascripts/privateChatContentCtrl.js&#10;#&#9;public/javascripts/privateChatListCtrl.js&#10;#&#9;public/javascripts/shareStatusCtrl.js&#10;#&#9;shippable.yml&#10;#&#9;test/postAnnouncementTest.js&#10;#&#9;test/shareStatusTest.js&#10;#&#9;views/privateChatContent.ejs&#10;#&#9;views/privateChatList.ejs&#10;#&#9;views/shareStatus.ejs&#10;" />
+    <MESSAGE value="publicChat and Announcement search information" />
+    <option name="LAST_COMMIT_MESSAGE" value="publicChat and Announcement search information" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -981,14 +985,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/postAnnouncementTest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -1085,24 +1081,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/chatPublicly.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="23" column="10" lean-forward="true" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/joinCommunity.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
@@ -1129,11 +1107,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="26" lean-forward="true" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/chatPublicly.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="160" column="33" lean-forward="false" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
+        <state relative-caret-position="2460">
+          <caret line="164" column="17" lean-forward="true" selection-start-line="164" selection-start-column="17" selection-end-line="164" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/chatPublicly.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="10" lean-forward="false" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
