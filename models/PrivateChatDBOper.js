@@ -303,5 +303,16 @@ class PrivateChatDBOper {
             }
         })
     }
+
+	SearchMessages(username, words, callback) {
+    MongoClient.connect(url, function (err, db) {
+        if (err) {
+            callback(db_err_statuscode, db_err_msg)
+        }// DB Error. Here error of connecting to db
+        else {
+            
+        }
+    });
+	}
 }
 module.exports = PrivateChatDBOper;
