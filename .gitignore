@@ -1,0 +1,14 @@
+
+de_modules/
+/EmergencySocialNetwork/npm-debug.log
+EmergencySocialNetwork/npm-debug.log
+EmergencySocialNetwork/node_modules/
+bower_components/
+*.*~
+*.~
+.DS_Store
+.idea/
+workspace.xml
+backups/
+bower.json
+package.json
