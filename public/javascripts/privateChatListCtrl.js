@@ -100,9 +100,9 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 	});
 
 	$scope.searchPrivateChat = function(){
-        $scope.PrivateChatSearchResult = [];
+        $scope.privatechat_search_results = [];
         $scope.privatechat_search_results_suite = [];
-        $scope.SearchPrivateChatMore = false;
+        $scope.searchPrivateChatMore = false;
 
         var PrivateChatSearch = $scope.privatechat_search_area;
         var SearchKeys = PrivateChatSearch.split(" ");
@@ -126,10 +126,46 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 			}).success(function(req){
                 console.log('search private chat success');
 				var all_history_privatechat = req.data;  //data: [[],[],...]
+				var history_privatechat_suite = [];
+				var history_privatechat_set = [];
+                var count = 0;
+				for(var i=all_history_privatechat.length-1; i>=0; i--){
+					count++;
+                    history_privatechat_set.push(all_history_privatechat[i]);
+                    if(count % 10 ==0) {
+                        history_privatechat_suite.push(history_privatechat_set);
+                        history_privatechat_set = [];
+                    }
+				}
+				if(history_privatechat_set.length >0){
+                    history_privatechat_suite.push(history_privatechat_set);
+                    history_privatechat_set = [];
+				}
+				if(history_privatechat_suite.length >0){
+					$scope.privatechat_search_results = history_privatechat_suite[0];
+                    history_privatechat_suite.splice(0,1);
+                    $scope.privatechat_search_results_suite =history_privatechat_suite;
 
+                    if(history_privatechat_suite.length > 0)
+                        $scope.searchPrivateChatMore = true;
+				}
 
-			})
+			});
 		}
-	}
+        $scope.showList['privateChatSearchResult'] = true;
+	};
+
+    $scope.GetMoreSearchResults = function () {
+        var more_results = $scope.privatechat_search_results_suite[0];
+        $scope.privatechat_search_results = $scope.privatechat_search_results.concat(more_results);
+
+        $scope.privatechat_search_results_suite.splice(0,1);
+
+        if($scope.privatechat_search_results_suite.length > 0){
+            $scope.searchPrivateChatMore = true;
+        }else{
+            $scope.searchPrivateChatMore = false;
+        }
+    };
 
 });
