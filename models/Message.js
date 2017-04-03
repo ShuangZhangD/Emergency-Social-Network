@@ -215,7 +215,7 @@ class Message {
         searchTerm=searchTerm+"|"+word;
       });
         var regExWord = new RegExp(".*" + searchTerm + ".*");
-        this.collection.find({$or: [{"sender" : username}, {"receiver":username}] "message": regExWord}).toArray(function(err, results) {
+        this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message": regExWord}).toArray(function(err, results) {
           if(err) {
             console.log("Error when retrieving messages for search terms");
             callback(null, err);
