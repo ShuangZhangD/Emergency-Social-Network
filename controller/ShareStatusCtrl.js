@@ -23,7 +23,6 @@ class ShareStatusController {
                 console.log('Error:'+ err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             } else {
-               console.log("else in sharestatuscontroller");
 				 res.json({success:1, suc_msg: "Success"});
             }});
     }
@@ -31,7 +30,7 @@ class ShareStatusController {
     GetShareStatus(req, res){
         var info=req.body;
         var username = info["username"];
-      
+
         username = req.param("username");
 
 
