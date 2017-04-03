@@ -1,5 +1,20 @@
 <!--div id="directory-container" display="none" ng-controller="joinCommunityCtrl" class="container"-->
 <div id="directory-container" class="container" ng-show="showList.directory" class="ng-hide">
+    <center>
+        <h5>Search Citizen By Status</h5>
+    <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary ok"><input type="radio" name="status" id="OK" value="OK" ng-click="getStatus('OK')">OK</label>
+        <label class="btn btn-primary help"><input type="radio" name="status" id="Help" value="Help" ng-click="getStatus('Help')">Help</label>
+        <label class="btn btn-primary emergency"><input type="radio" name="status" id="Emergency" value="Emergency" ng-click="getStatus('Emergency')">Emergency</label>
+        <!--<button type="submit" class="btn btn-default">Submit</button>-->
+    </div>
+
+    <div class="container">
+        <div class="form-signin">
+            <input ng-model="namesearchmsg" id="namesearchmsg" type="text" class="form-control" placeholder="Search Citizen Name" autofocus>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="searchDirectory()">Search Citizen Name</button>
+        </div>
+    </div>
     <table class="table">
       <thead>
         <tr>

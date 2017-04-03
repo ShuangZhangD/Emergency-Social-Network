@@ -111,6 +111,10 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
                 $scope.details1 = response.data.data1;
                 $scope.details2 = response.data.data2;
                 $scope.statusList = response.data.status;
+                $scope.historyList1 = $scope.details1;
+                console.log("History msg are: "+$scope.historyList1);
+                $scope.historyList2 = $scope.details2;
+                $scope.historyStatus = $scope.statusList;
                 //$scope.details[$scope.details.length] = 'HK';
                 //$scope.details = ['1', '2', '3'];
             }, function errorCallback(response) {
@@ -123,6 +127,101 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
         }
         $scope.showList['directory'] = true;
 
+    };
+    $scope.getStatus = function (value) {
+        var directory_search_result1 = [];
+        var directory_search_result2 = [];
+        var history_detail1 = $scope.historyList1;
+        var history_detail2 = $scope.historyList2;
+        console.log("History msg are: "+history_detail1);
+        // console.log("History msg are: "+$scope.historyList1);
+        for(var i = history_detail1.length-1 ; i >= 0 ; i--){
+
+            var name1 = history_detail1[i];
+            console.log("========" + name1);
+            if($scope.statusList[name1] == value){
+
+                directory_search_result1.push(history_detail1[i]);
+                console.log("directory search result" + directory_search_result1);
+            }
+        }
+        for(var i = history_detail2.length-1 ; i >= 0 ; i--){
+
+            var name2 = history_detail2[i];
+            console.log("========" + name2);
+            if($scope.statusList[name2] == value){
+
+                directory_search_result2.push(history_detail2[i]);
+                console.log("directory search result" + directory_search_result2);
+            }
+
+        }
+        $scope.details1 = directory_search_result1;
+        $scope.details2 = directory_search_result2;
+
+    };
+
+    /** Check if one keyword of key_words exist in msg
+     */
+    var IfKeyWordExist=function(key_words, msg){
+        for(var i = 0 ; i < key_words.length ; i++){
+            if(msg != null && msg.includes(key_words[i]))
+                return true;
+        }
+        return false;
+    };
+    $scope.searchDirectory = function() {
+        var directory_search_result1 = [];
+        var directory_search_result2 = [];
+        //filter stop words
+        console.log("==========search user list ");
+        var DirectorySearchMsg = $scope.namesearchmsg;
+        var SearchKeys = DirectorySearchMsg.split(" ");
+        var stop_words = ["a","able","about","across","after","all","almost","also","am","among","an","and","any","are","as","at","be","because","been","but","by","can","cannot","could","dear","did","do","does","either","else","ever","every","for","from","get","got","had","has","have","he","her","hers","him","his","how","however","i","if","in","into","is","it","its","just","least","let","like",
+            "likely","may","me","might","most","must","my","neither","no","nor","not","of","off","often","on","only","or","other","our","own","rather","said","say","says","she","should","since","so","some","than","that","the","their","them","then","there","these","they","this","tis","to","too","twas","us","wants","was","we","were","what","when","where","which","while","who"
+            ,"whom","why","will","with","would","yet","you","your"];
+        for(var i = 0; i < SearchKeys.length ; ){
+            var index = stop_words.indexOf(SearchKeys[i]);
+            if( index != -1){
+                //it is a stop key, remove it
+                SearchKeys.splice(i, 1)
+            }else{
+                i++;
+            }
+        }
+        //if search keys is not empty, search it and get the result msg array suite
+        if(SearchKeys.length > 0){
+
+            console.log("Searching user list, keys: "+SearchKeys);
+            var history_detail1 = $scope.historyList1;
+            var history_detail2 = $scope.historyList2;
+            console.log("History msg are: "+history_detail1);
+            // console.log("History msg are: "+$scope.historyList1);
+            for(var i = history_detail1.length-1 ; i >= 0 ; i--){
+
+                var name1 = history_detail1[i];
+                console.log("========" + name1);
+                if(IfKeyWordExist(SearchKeys, name1)){
+
+                    directory_search_result1.push(history_detail1[i]);
+                    console.log("directory search result" + directory_search_result1);
+                }
+            }
+            for(var i = history_detail2.length-1 ; i >= 0 ; i--){
+
+                var name2 = history_detail2[i];
+
+                if(IfKeyWordExist(SearchKeys, name2)){
+
+                    directory_search_result2.push(history_detail2[i]);
+
+                }
+            }
+            $scope.details1 = directory_search_result1;
+            $scope.details2 = directory_search_result2;
+        }
+        // $scope.showList['annoucementSearchResult'] = true;
+        $scope.namesearchmsg="";
     };
     $scope.showAnnouncement = function () {
         for (var item in $scope.showList) {
@@ -156,6 +255,10 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
                 $scope.details2 = response.data.data2;
 
                 $scope.statusList = response.data.status;
+                $scope.historyList1 = $scope.details1;
+                // console.log("History msg are: "+$scope.historyList1);
+                $scope.historyList2 = $scope.details2;
+                $scope.historyStatus = $scope.statusList;
                 //$scope.details[$scope.details.length] = 'HK';
                 //$scope.details = ['1', '2', '3'];
             }, function errorCallback(response) {
@@ -176,6 +279,10 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
                 $scope.details2 = response.data.data2;
 
                         $scope.statusList = response.data.status;
+                        $scope.historyList1 = $scope.details1;
+                        // console.log("History msg are: "+$scope.historyList1);
+                        $scope.historyList2 = $scope.details2;
+                        $scope.historyStatus = $scope.statusList;
                 //$scope.details[$scope.details.length] = 'HK';
                 //$scope.details = ['1', '2', '3'];
             }, function errorCallback(response) {
@@ -329,6 +436,10 @@ function displayDirectory($scope, $http) {
       $scope.details2 = response.data.data2;
 
       $scope.statusList = response.data.status;
+      $scope.historyList1 = $scope.details1;
+      // console.log("History msg are: "+$scope.historyList1);
+      $scope.historyList2 = $scope.details2;
+      $scope.historyStatus = $scope.statusList;
     //$scope.details[$scope.details.length] = 'HK';
     //$scope.details = ['1', '2', '3'];
   }, function errorCallback(response) {
