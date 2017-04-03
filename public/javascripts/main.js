@@ -10,7 +10,6 @@ app.controller('initCtrl', function($scope, $http) {
         shareStatus: false,
         publicSearchResult: false,
         annoucementSearchResult: false,
-        directorySearchResult: false
     };
     $scope.userClass = {
 		username:"",
