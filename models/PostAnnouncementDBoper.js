@@ -49,8 +49,8 @@ class PostAnnouncementDBoper {
                     });
                     callback(err,datas);
                 }
+                db.close();
             });
-            db.close();
         });
     }
 }
