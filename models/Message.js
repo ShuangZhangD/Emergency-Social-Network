@@ -224,7 +224,7 @@ class Message {
             results.forEach(function (result) {
                 var data = {};
                 data["sender"] = result.sender;
-                data["receiver"] = result.reciever;
+                data["receiver"] = result.receiver;
                 data["message"] = result.message;
                 data["timestamp"] = result.postTime;
                 data["emergency_status"] = result.emergencystatus;
