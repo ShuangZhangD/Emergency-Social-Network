@@ -7,6 +7,9 @@ var myParser = require("body-parser");
 
 var dboper = require("../models/ShareStatusDBoper");
 var app = express();
+var DBConfig = require("./DBConfig");
+let dbconfig = new DBConfig();
+var url = dbconfig.getURL();
 
 class ShareStatusController {
     AddShareStatus(req, res){
@@ -17,7 +20,7 @@ class ShareStatusController {
         var status=info["emergencystatus"];
 		console.log("After inits");
         //update database through ShareStatusDBoper.updatesharestatus
-        dboper.Updatesharestatus(username, status, function (err, results) {
+        dboper.Updatesharestatus(username, status, url, function (err, results) {
             console.log("inside sharestatuscontroller again");
 			if (err) {
                 console.log('Error:'+ err);
@@ -34,7 +37,7 @@ class ShareStatusController {
         username = req.param("username");
 
 
-        dboper.Getsharestatus(username, function(err, results){
+        dboper.Getsharestatus(username, url, function(err, results){
             if(err) {
                 console.log('Error:' +err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
@@ -61,4 +64,4 @@ module.exports = {
     AddShareStatus : ssc.AddShareStatus,
     GetShareStatus : ssc.GetShareStatus,
     UpdateShareStatusSocket : ssc.UpdateShareStatusSocket
-}
+};

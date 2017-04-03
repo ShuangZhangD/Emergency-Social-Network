@@ -3,9 +3,7 @@
  */
 "use strict";
 var MongoClient = require("mongodb").MongoClient;
-var DBConfig = require("./DBConfig");
-let dbconfig = new DBConfig();
-var url = dbconfig.getURL();
+
 //var url = "mongodb://localhost:27017/test";
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 
@@ -14,9 +12,10 @@ var db_err_msg = "Database Error";
 class ShareStatusDBoper{
     //update user table and message table in db
 
-    Updatesharestatus(username, emergencystatus, callback){
+    Updatesharestatus(username, emergencystatus, url, callback){
         //connect to database
         MongoClient.connect(url, function (err, db) {
+            console.log("Connected to "+url+" Successfully");
             if (err) {
                 console.log("Error:"+ err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
@@ -30,7 +29,7 @@ class ShareStatusDBoper{
         });
     }
 
-    Getsharestatus(username, callback){
+    Getsharestatus(username, url, callback){
         MongoClient.connect(url, function(err, db){
 
             if (err) {

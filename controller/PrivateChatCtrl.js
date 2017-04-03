@@ -4,6 +4,9 @@
 'use strict';
 var express = require('express');
 var myParser = require("body-parser");
+var DBConfig = require("./DBConfig");
+let dbconfig = new DBConfig();
+var url = dbconfig.getURL();
 var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
 var app = express();
 
@@ -19,7 +22,7 @@ module.exports = {
         console.log("=========INFO--------: ")
         console.dir(info);
 
-        let dboper = new PrivateChatDBOper(sender, receiver);
+        let dboper = new PrivateChatDBOper(sender, receiver, url);
         dboper.InsertMessage(info, function(statuscode, content){
             if(statuscode == success_statuscode){
                 res.json({success:1, suc_msg: "Success"});
@@ -37,7 +40,7 @@ module.exports = {
         var sender = req.param("sender");
         var receiver = req.param("receiver");
 
-        let dboper = new PrivateChatDBOper(sender, receiver);
+        let dboper = new PrivateChatDBOper(sender, receiver, url);
         dboper.LoadHistoryMsg(function(statuscode, content){
             if(statuscode == success_statuscode){
                 res.json({success:1, data: content});
@@ -82,7 +85,7 @@ module.exports = {
                     //emit update notification of unread
 
                     //emit count of all unread msg(public + private)
-                    let dboper = new PrivateChatDBOper(sender, receiver);
+                    let dboper = new PrivateChatDBOper(sender, receiver, url);
                     dboper.GetCount_AllUnreadMsg(function (statuscode, count) {
                         if (statuscode == success_statuscode) ConnectedSockets[receiver].emit('AllUnreadMsgCnt', count)
                     });
@@ -111,7 +114,7 @@ module.exports = {
      */
     getCount_AllUnreadMsg : function(socket){
         return function(username){
-            let dboper = new PrivateChatDBOper("", username);
+            let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
             dboper.GetCount_AllUnreadMsg(function(statuscode, count){
                 if(statuscode==success_statuscode) socket.emit('AllUnreadMsgCnt', count)
@@ -123,7 +126,7 @@ module.exports = {
      */
     getCount_AllPrivateUnreadMsg : function(socket){
         return function(username){
-            let dboper = new PrivateChatDBOper("", username);
+            let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
             dboper.GetCount_AllPrivateUnreadMsg(function(statuscode, count){
                 if(statuscode==success_statuscode) socket.emit('AllPrivateUnreadMsgCnt', count)
@@ -135,7 +138,7 @@ module.exports = {
      */
     getCount_IndividualPrivateUnreadMsg : function(socket){
         return function(username){
-            let dboper = new PrivateChatDBOper("", username);
+            let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
             dboper.GetCount_IndividualUnreadMsg(function(statuscode, results){
                 if(statuscode==success_statuscode) socket.emit('IndividualPrivateUnreadMsgCnt', results)
@@ -149,7 +152,7 @@ module.exports = {
             console.log('==== getCount_IndividualPrivateSender called! ======');
 			var username = req.param("receiver");
              console.log(username);
-			let dboper = new PrivateChatDBOper("", username);
+			let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
             dboper.GetCount_IndividualPrivateSender(function(statuscode, results){
                 if(statuscode==success_statuscode) {
@@ -169,7 +172,7 @@ module.exports = {
      */
     get_IndividualPrivateUnreadMsg : function(socket){
         return function(username){
-            let dboper = new PrivateChatDBOper("", username);
+            let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
             dboper.Get_LatestIndividualUnreadMsg(function(statuscode, results){
                 if(statuscode==success_statuscode) socket.emit('IndividualPrivateUnreadMsg', results)
@@ -183,7 +186,7 @@ module.exports = {
      * Use socket.io
      */
     UnreadCount : function(socket, username){
-        let dboper = new PrivateChatDBOper("", username);
+        let dboper = new PrivateChatDBOper("", username, url);
         //emit count of all unread msg(public + private)
         dboper.GetCount_AllUnreadMsg(function(statuscode, count){
             if(statuscode==success_statuscode) socket.emit('AllUnreadMsgCnt', count)
@@ -207,7 +210,7 @@ module.exports = {
         // emit msg
         // msg should be in form of {"sender": , "receiver": , "private_msg": }
         var receiver = req.param("receiver");
-        let dboper = new PrivateChatDBOper("", receiver);
+        let dboper = new PrivateChatDBOper("", receiver, url);
 
         //emit individual count of unread msg(private)
         dboper.Get_LatestIndividualUnreadMsg(function (statuscode, results) {
@@ -235,7 +238,7 @@ module.exports = {
             var receiver = userinfo.receiver;
             console.dir(userinfo)
             console.log("=====IN MARKASREAD====")
-            let dboper = new PrivateChatDBOper(sender, receiver);
+            let dboper = new PrivateChatDBOper(sender, receiver, url);
             dboper.UpdateReadStatus(function(statuscode, content){})
         }
     },
@@ -246,7 +249,7 @@ module.exports = {
     search : function (req, res) {
         var user = req.param("user");
         var keywords = req.body;
-        let dboper = new PrivateChatDBOper("", user);
+        let dboper = new PrivateChatDBOper("", user, url);
         //var message = info["PrivateMsg"];
         //console.log(user);
         //console.log(info);
