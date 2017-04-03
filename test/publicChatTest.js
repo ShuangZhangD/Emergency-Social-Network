@@ -11,7 +11,7 @@ var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
-var dboper = require("../models/PostAnnouncementDBoper.js");
+var dboper = require("../models/PublicChatDBoper.js");
 
 var app = express();
 
@@ -22,7 +22,7 @@ var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb:
 var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 // var server = request.agent("http://localhost:5000");
 
-suite('Post Announcement Tests', function(){
+suite('Public Chat Tests', function(){
     this.timeout(15000);
     var testDB = {};
 
@@ -51,8 +51,8 @@ suite('Post Announcement Tests', function(){
         done();
     });
 
-    test('Getting Announcement Through RESTful Api', function(done){
-        server.get('/announcement')
+    test('Getting Public Chat Through RESTful Api', function(done){
+        server.get('/public')
             .expect(200, function(err, res){
             if(err) return done(err);
             else {
@@ -67,9 +67,9 @@ suite('Post Announcement Tests', function(){
 
     });
 
-    test('Posting Announcement Through RESTful Api', function(done){
-        server.post('/post_announcement')
-            .send({"username": "keqin", "announcement": "testing from Unit Test"})
+    test('Public Chat Through RESTful Api', function(done){
+        server.post('/public')
+            .send({"username": "keqin", "pubmsg": "hello from Test", "emergencystatus": "OK","timeStamp": Date.now()})
             .expect(200, function(err,res){
                 if(err) return done(err);
                 else {
@@ -82,9 +82,9 @@ suite('Post Announcement Tests', function(){
     });
 
     test('Testing Announcement Function', function(done){
-        dboper.InsertAnnouncement("keqin", "testing announcement function in Unit Test", Date.now(), function (err, results1){
-            dboper.LoadAnnouncement(function (err, results2) {
-               expect(results2[results2.length-1]["announcement"]).to.equal("testing announcement function in Unit Test");
+        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test", "public",Date.now(), "OK",function (err, results1){
+            dboper.LoadPublicMessage(function (err, results2) {
+               expect(results2[results2.length-1]["pubmsg"]).to.equal("testing public chat function in Unit Test");
                done();
             });
         });
