@@ -11,10 +11,9 @@ var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
 
-module.exports = {
+class PublicChatCtrl{
 
-
-    AddPublicMessage : function (req, res) {
+    AddPublicMessage (req, res) {
         var info = req.body;
         var message = info["pubmsg"];
         var sender = info["username"];
@@ -27,15 +26,15 @@ module.exports = {
                 res.json({success:1, suc_msg: "Success"});
 
             }});
-    },
+    }
 
-    publicMessageSocket : function (socket) {
+    publicMessageSocket (socket) {
         return function(data) {
             socket.emit('Public Message', data);
             socket.broadcast.emit('Public Message', data);
         };
-    },
-    LoadPublicMessage : function(req, res){
+    }
+    LoadPublicMessage (req, res){
         dboper.LoadPublicMessage(url, function (err, results) {
             if (err) {
                 console.log('Error:'+ err);
@@ -47,4 +46,11 @@ module.exports = {
         });
     }
 
+}
+
+let pubtrl = new PublicChatCtrl();
+module.exports={
+    AddPublicMessage: pubtrl.AddPublicMessage,
+    publicMessageSocket: pubtrl.publicMessageSocket,
+    LoadPublicMessage: pubtrl.LoadPublicMessage
 };

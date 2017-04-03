@@ -100,8 +100,8 @@ class PrivateChatDBOper {
                                 callback(success_statuscode, results);
                                 //let MSG2 = new Message(receiver, sender)
                             }
+                            db.close();
                         });
-                        db.close();
                     }
                 });
             }
