@@ -59,6 +59,7 @@ app.get('/userstatus/:username', ShareStatusCtrl.GetShareStatus);
 app.get('/privatechat/:sender/:receiver', PrivateChatCtrl.LoadPrivateHistoryMessage);
 app.post('/privatechat', PrivateChatCtrl.AddPrivateMessage);
 app.get('/privatechat/:receiver', PrivateChatCtrl.getCount_IndividualPrivateSender);
+app.post('/privatechat/search/:user', PrivateChatCtrl.search);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

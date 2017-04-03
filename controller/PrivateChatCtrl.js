@@ -238,6 +238,29 @@ module.exports = {
             let dboper = new PrivateChatDBOper(sender, receiver);
             dboper.UpdateReadStatus(function(statuscode, content){})
         }
+    },
+
+    /*
+     * User search for serval keywords
+     */
+    search : function (req, res) {
+        var user = req.param("user");
+        var keywords = req.body;
+        let dboper = new PrivateChatDBOper("", user);
+        //var message = info["PrivateMsg"];
+        //console.log(user);
+        //console.log(info);
+        dboper.SearchMessages(user, keywords, function(statuscode, results) {
+            if(statuscode==success_statuscode) {
+                res.json({success:1, data: results});
+                console.log('Search result:');
+                console.log(results);
+            }
+            else{
+                console.log('err');
+                res.json({success:0, err_type: 1, err_msg:"Database Error"});
+            }
+        });
     }
 
 };
