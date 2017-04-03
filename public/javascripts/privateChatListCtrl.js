@@ -121,7 +121,7 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
         if(SearchKeys.length > 0){
         	$http({
                 method : 'post',
-                url : '/privatechat/search' +$scope.userClass['username'],
+                url : '/privatechat/search/' +$scope.userClass['username'],
 				data: SearchKeys
 			}).success(function(req){
                 console.log('search private chat success');
