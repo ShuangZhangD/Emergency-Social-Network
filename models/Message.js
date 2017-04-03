@@ -1,7 +1,7 @@
 /**
  * Created by Ling on 2017/3/18.
  */
-'use strict';
+"use strict";
 class Message {
 
     // Constructor for initializing values for a new message
@@ -19,7 +19,7 @@ class Message {
     // If the receiverid is null, it indicates a message that was shared publicly
     // The type can have values "Public", "Private" or "GroupName"
     insertMessage(db, callback) {
-        this.collection = db.collection('MESSAGES');
+        this.collection = db.collection("MESSAGES");
         this.collection.insert({
             "sender": this.sender,
             "receiver": this.receiver,
@@ -30,7 +30,7 @@ class Message {
             "ReadStatus": this.ReadStatus
         }, function (err, results) {
             if (err) {
-                console.log('Error inserting the message ' + err);
+                console.log("Error inserting the message " + err);
                 callback(null, err);
             }
             else {
@@ -42,14 +42,13 @@ class Message {
 
     // Method to display all the messages
     displayMessages(db, callback) {
-        this.collection = db.collection('MESSAGES');
+        this.collection = db.collection("MESSAGES");
         this.collection.find().toArray(function (err, results) {
             if (err) {
-                console.dir('Error inserting the message ' + err);
+                console.dir("Error inserting the message " + err);
                 callback(null, err);
             }
             else {
-                console.dir(results);
                 callback(results, null);
             }
         });
@@ -57,33 +56,31 @@ class Message {
 
     //update all private messages between sender and receiver to be read
     updateReadStatus(db, callback) {
-        console.log("=======IN MESSAGE UPDATEREADSTATUS====")
-        this.collection = db.collection('MESSAGES');
-        console.log("MARKREAD SENDER IS "+this.sender)
+        this.collection = db.collection("MESSAGES");
         this.collection.updateMany({
             "sender": this.sender,
             "receiver": this.receiver
         }, {$set: {"ReadStatus": "read"}}, function (err, results) {
             if (err) {
-                console.log('Error updating read status' + err);
+                console.log("Error updating read status" + err);
                 callback(null, err);
             }
             else {
                 callback(results, null);
             }
-        })
+        });
     }
 
     //load all private meaages between sender and receiver
     loadPrivateHistoryMsg(db, callback) {
-        this.collection = db.collection('MESSAGES');
+        this.collection = db.collection("MESSAGES");
         this.collection.find({
             "sender": { $in: [this.sender, this.receiver] },
             "receiver": { $in: [this.sender, this.receiver] },
             "type": "private"
         }).toArray(function (err, results) {
             if (err) {
-                console.log('Error when loading private history msg:' + err);
+                console.log("Error when loading private history msg:" + err);
                 callback(null, err);
             } else {
                 var datas = [];
@@ -95,41 +92,49 @@ class Message {
                     data["timestamp"] = result.postTime;
                     data["emergency_status"] = result.emergencystatus;
                     datas.push(data);
-                })
+                });
                 //var jsonString = JSON.stringify(datas);
                 callback(datas, null);
             }
-        })
+        });
     }
 
     //get how many unread msg of receiver
     getCount_AllUnreadMsg(db, callback){
-        this.collection = db.collection('MESSAGES');
+        this.collection = db.collection("MESSAGES");
         this.collection.find({
             "receiver": this.receiver,
             "ReadStatus": "unread"
         }).toArray(function (err, results) {
-           if(err) callback(null, err);
-           else callback(results.length, null)
-        })
+            if(err) {
+                callback(null, err);
+            }
+            else {
+                callback(results.length, null);
+            }
+        });
     }
 
     //get how many private unread msg of receiver
     getCount_AllPrivateUnreadMsg(db, callback){
-        this.collection = db.collection('MESSAGES');
+        this.collection = db.collection("MESSAGES");
         this.collection.find({
             "receiver": this.receiver,
             "type" : "private",
             "ReadStatus": "unread"
         }).toArray(function (err, results) {
-            if(err) callback(null, err);
-            else callback(results.length, null)
-        })
+            if(err) {
+                callback(null, err);
+            }
+            else {
+                callback(results.length, null);
+            }
+        });
     }
 
     //get how many private unread msg between sender and receiver
     getCount_PrivateUnreadMsg(db, sender, receiver, callback){
-        this.collection = db.collection('MESSAGES');
+        this.collection = db.collection("MESSAGES");
         this.collection.find({
             "sender" : sender,
             "receiver": receiver,
@@ -137,13 +142,13 @@ class Message {
             "ReadStatus": "unread"
         }).toArray(function (err, results) {
             if(err) callback(null, err);
-            else callback(results.length, null)
-        })
+            else callback(results.length, null);
+        });
     }
 
     //get name list of senders of unread private msg
     getUnreadMsgSenderList(db, callback){
-        this.collection = db.collection('MESSAGES');
+        this.collection = db.collection("MESSAGES");
         this.collection.distinct("sender",{
             "receiver":this.receiver,
             "ReadStatus": "unread"
@@ -152,13 +157,13 @@ class Message {
             else {
                 callback(results, null);
             }
-        })
+        });
     }
 
     //get name list of sender list who have private msg with receiver
     getPrivateMsgSenderList(db, callback){
         var receiver = this.receiver;
-        this.collection = db.collection('MESSAGES');
+        this.collection = db.collection("MESSAGES");
         /*this.collection.distinct("sender",{
             //"receiver":this.receiver,
             $or: [{"receiver":this.receiver}, {"sender":this.receiver}],
@@ -180,13 +185,13 @@ class Message {
                 });
                 //var loc_receiver = results.indexOf(receiver)
                 //if(loc_receiver != -1)results.splice(loc_receiver,1)
-                callback(userlist,null)
+                callback(userlist,null);
             }
-        })
+        });
     }
 
     get_LatestPrivateUnreadMsg(db, sender, receiver, callback){
-        this.collection = db.collection('MESSAGES');
+        this.collection = db.collection("MESSAGES");
         this.collection.find({
             "sender" : sender,
             "receiver": receiver,
@@ -202,40 +207,37 @@ class Message {
                 data["timestamp"] = result[0].postTime;
                 data["emergency_status"] = result[0].EmergencyStatus;
 
-                callback(data, null)
+                callback(data, null);
             }
-        })
+        });
     }
 
     getAllMessagesForSearch(db, username, words, callback) {
-      this.collection = db.collection('MESSAGES');
-      var datas=[];
-      var searchTerm = words[0];
-      words.forEach(function(word) {
-        searchTerm=searchTerm+"|"+word;
-      });
-        var regExWord = new RegExp(".*" + searchTerm + ".*");
-//        this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message": { $regex: regExWord, $options: "i"}}).toArray(function(err, results) {
-  this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message":  regExWord}).toArray(function(err, results) {
-        if(err) {
-            console.log("Error when retrieving messages for search terms");
-            callback(null, err);
-          }
-          else {
-            results.forEach(function (result) {
-                var data = {};
-                data["sender"] = result.sender;
-                data["receiver"] = result.receiver;
-                data["message"] = result.message;
-                data["timestamp"] = result.postTime;
-                data["emergency_status"] = result.emergencystatus;
-                datas.push(data);
-            });
-            callback(datas, null);
-          }
+        this.collection = db.collection("MESSAGES");
+        var datas=[];
+        var searchTerm = words[0];
+        words.forEach(function(word) {
+            searchTerm=searchTerm+"|"+word;
         });
-
-
+        var regExWord = new RegExp(".*" + searchTerm + ".*");
+        this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message":  regExWord}).toArray(function(err, results) {
+            if(err) {
+                console.log("Error when retrieving messages for search terms");
+                callback(null, err);
+            }
+            else {
+                results.forEach(function (result) {
+                    var data = {};
+                    data["sender"] = result.sender;
+                    data["receiver"] = result.receiver;
+                    data["message"] = result.message;
+                    data["timestamp"] = result.postTime;
+                    data["emergency_status"] = result.emergencystatus;
+                    datas.push(data);
+                });
+                callback(datas, null);
+            }
+        });
     }
 }
 module.exports = Message;
