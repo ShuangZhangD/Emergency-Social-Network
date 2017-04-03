@@ -1,7 +1,7 @@
 <div class="container" ng-controller="privateChatListCtrl" ng-show="showList.privateChatList">
     <div class="container">
         <h3> Private Chat List </h3>
-        <div class="container" ng-show="showList.annoucementSearchResult">
+        <div class="container" ng-show="showList.privateChatSearchResult">
             <div class="panel panel-default " ng-repeat="privatechat in privatechat_search_results track by $index">
                 <div class="panel-heading"><span>{{privatechat.username}} @ </span><span>(Status: {{privatechat.emergency_status}}){{privatechat.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
                 <div class="panel-body"><span class="content">{{privatechat.private_msg}}</span><span class="avatar"></span></div>
@@ -14,7 +14,7 @@
 
         <div class="container">
             <div class="form-signin">
-                <input ng-model="privatechat_search_area" id="annsearchmsg" type="text" class="form-control" placeholder="Search Private Chat Contents" autofocus>
+                <input ng-model="privatechat_search_area" id="privatechat_search_area" type="text" class="form-control" placeholder="Search Private Chat Contents" autofocus>
                 <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="searchPrivateChat()">Search</button>
             </div>
         </div>
