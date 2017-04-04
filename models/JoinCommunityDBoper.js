@@ -5,7 +5,7 @@ var User = require("./User.js");
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 //var url = "mongodb://localhost:27017/test";
 
-var db_err_msg = "Datab   ase Error";
+var db_err_msg = "Database Error";
 var db_err_statuscode = 400;
 var user_not_exist_statuscode = 401;
 var user_not_exist_msg = "Username not Exist";

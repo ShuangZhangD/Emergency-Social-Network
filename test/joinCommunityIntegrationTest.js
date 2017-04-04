@@ -17,8 +17,8 @@ var app = express();
 
 
 //var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
-var TestDBConfig = require("./TestDBConfig");
-let dbconfig = new TestDBConfig();
+var DBConfig = require("../controller/DBConfig");
+let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
 
 //using server not app to listening port 5000
@@ -88,7 +88,7 @@ suite('Join Comunity Integration Tests', function(){
         server.post('/signup')
             .send({"username": "test_user_for_rest_api", password: "1234"})
             .expect(200, function(err, res) {
-                server.get('/logout')
+                server.post('/logout')
                     .send({"username": "test_user_for_rest_api"})
                     .expect(200, function(err, res){
                         server.get('/userlist')
@@ -97,7 +97,6 @@ suite('Join Comunity Integration Tests', function(){
                                     return done(err);
                                 }
                                 else {
-                                    console.log(res.body);
                                     var idx = res.body.data2.indexOf("test_user_for_rest_api");
                                     expect(idx).to.above(-1);
                                     done();
