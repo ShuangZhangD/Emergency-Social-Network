@@ -15,7 +15,7 @@ class PublicChatDBoper {
         //connect to database
         MongoClient.connect(url, function (err, db) {
             if (err) {
-                console.log("Error:"+ err);
+                //console.log("Error:"+ err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             var collection = db.collection("MESSAGES");
@@ -29,14 +29,14 @@ class PublicChatDBoper {
     LoadPublicMessage (url, callback) {
         MongoClient.connect(url, function(err, db) {
             if (err) {
-                console.log("Error:" + err);
+                //console.log("Error:" + err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             var collection = db.collection("MESSAGES");
             collection.find({"type": "public"}).toArray(function(err, results){
                 if(err)
                 {
-                    console.log("Error:"+ err);
+                    //console.log("Error:"+ err);
                     callback(err, "Database error");
                 }else {
                     var datas = [];

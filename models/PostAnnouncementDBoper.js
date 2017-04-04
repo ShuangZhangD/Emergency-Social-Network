@@ -14,7 +14,7 @@ class PostAnnouncementDBoper {
         //connect to database
         MongoClient.connect(url, function (err, db) {
             if (err) {
-                console.log("Error:"+ err);
+                //console.log("Error:"+ err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             var collection = db.collection("announcement");
@@ -27,16 +27,16 @@ class PostAnnouncementDBoper {
 
     LoadAnnouncement (url, callback) {
         MongoClient.connect(url, function(err, db) {
-            console.log("Load Announcement connect to "+ url);
+            //console.log("Load Announcement connect to "+ url);
             if (err) {
-                console.log("Error1:" + err);
+                //console.log("Error1:" + err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             var collection = db.collection("announcement");
             collection.find({}).toArray(function(err, results){
                 if(err)
                 {
-                    console.log("Error2:"+ err);
+                    //console.log("Error2:"+ err);
                     callback(err, "Database error");
                 }else {
                     var datas = [];

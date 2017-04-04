@@ -23,7 +23,7 @@ class PrivateChatDBOper {
         this.url = url;
     }
 
-    GetUserEmergencyStatus(username, callback){
+    /*GetUserEmergencyStatus(username, callback){
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 console.log("Error:" + err);
@@ -44,12 +44,12 @@ class PrivateChatDBOper {
                 db.close();
             }
         });
-    }
+    }*/
 
     InsertMessage(message, callback) {
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
-                console.log("Error:" + err);
+                //console.log("Error:" + err);
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
             else {
@@ -61,7 +61,7 @@ class PrivateChatDBOper {
                 let MSG = new Message(sender, receiver, "private", msg, time, status, "unread");
                 MSG.insertMessage(db, function (msgres, err) {
                     if (err) {
-                        console.log("Error:" + err);
+                        //console.log("Error:" + err);
                         callback(db_err_statuscode, db_err_msg);
                     }// DB Error
                     else {
@@ -89,7 +89,7 @@ class PrivateChatDBOper {
                 let MSG = new Message(sender, receiver, "", "", "", "", "");
                 MSG.updateReadStatus(db, function (result, err) {
                     if (err) {
-                        console.log("Error:" + err);
+                        //console.log("Error:" + err);
                         callback(db_err_statuscode, db_err_msg);
                     }// DB Error
                     else {
@@ -120,7 +120,7 @@ class PrivateChatDBOper {
                 let MSG = new Message(sender, receiver, "", "", "", "", "");
                 MSG.updateReadStatus(db, function (result, err) {
                     if (err) {
-                        console.log("Error:" + err);
+                        //console.log("Error:" + err);
                         callback(db_err_statuscode, db_err_msg);
                     }// DB Error
                     else {

@@ -169,7 +169,7 @@ class PrivateChatCtrl{
     /*
       For testing, ignore it
      */
-    privateMessageTest (req,res){
+    /*privateMessageTest (req,res){
         // emit msg
         // msg should be in form of {"sender": , "receiver": , "private_msg": }
         var receiver = req.param("receiver");
@@ -185,7 +185,7 @@ class PrivateChatCtrl{
         dboper.GetUserEmergencyStatus(receiver, function(statuscode, status){
             console.log("STATUS:" + status);
         });
-    }
+    }*/
 
     /* Called in socket.io when private msg between sender and receiver are read
      * It is supposed to be called when receiver is in private chat page with sender, which means all the message sent

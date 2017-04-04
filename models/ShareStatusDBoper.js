@@ -15,9 +15,9 @@ class ShareStatusDBoper{
     Updatesharestatus(username, emergencystatus, url, callback){
         //connect to database
         MongoClient.connect(url, function (err, db) {
-            console.log("Connected to "+url+" Successfully");
+            //console.log("Connected to "+url+" Successfully");
             if (err) {
-                console.log("Error:"+ err);
+                //console.log("Error:"+ err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             else {
@@ -33,7 +33,7 @@ class ShareStatusDBoper{
         MongoClient.connect(url, function(err, db){
 
             if (err) {
-                console.log("Error:"+ err);
+                //console.log("Error:"+ err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             else {
@@ -45,7 +45,7 @@ class ShareStatusDBoper{
 
                 usercollection.find({"username": username}).toArray(function(err, results){
                     if(err) {
-                        console.log("Error updating the status " + err);
+                        //console.log("Error updating the status " + err);
                     }
                     else {
                         if(results.length===0) {

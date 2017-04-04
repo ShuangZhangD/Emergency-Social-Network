@@ -30,7 +30,7 @@ class Message {
             "ReadStatus": this.ReadStatus
         }, function (err, results) {
             if (err) {
-                console.log("Error inserting the message " + err);
+                //console.log("Error inserting the message " + err);
                 callback(null, err);
             }
             else {
@@ -41,7 +41,7 @@ class Message {
 
 
     // Method to display all the messages
-    displayMessages(db, callback) {
+    /*displayMessages(db, callback) {
         this.collection = db.collection("MESSAGES");
         this.collection.find().toArray(function (err, results) {
             if (err) {
@@ -52,7 +52,7 @@ class Message {
                 callback(results, null);
             }
         });
-    }
+    }*/
 
     //update all private messages between sender and receiver to be read
     updateReadStatus(db, callback) {
@@ -62,7 +62,7 @@ class Message {
             "receiver": this.receiver
         }, {$set: {"ReadStatus": "read"}}, function (err, results) {
             if (err) {
-                console.log("Error updating read status" + err);
+                //console.log("Error updating read status" + err);
                 callback(null, err);
             }
             else {
@@ -80,7 +80,7 @@ class Message {
             "type": "private"
         }).toArray(function (err, results) {
             if (err) {
-                console.log("Error when loading private history msg:" + err);
+                //console.log("Error when loading private history msg:" + err);
                 callback(null, err);
             } else {
                 var datas = [];
@@ -100,23 +100,23 @@ class Message {
     }
 
     //get how many unread msg of receiver
-    getCount_AllUnreadMsg(db, callback){
-        this.collection = db.collection("MESSAGES");
-        this.collection.find({
-            "receiver": this.receiver,
-            "ReadStatus": "unread"
-        }).toArray(function (err, results) {
-            if(err) {
-                callback(null, err);
-            }
-            else {
-                callback(results.length, null);
-            }
-        });
-    }
+    // getCount_AllUnreadMsg(db, callback){
+    //     this.collection = db.collection("MESSAGES");
+    //     this.collection.find({
+    //         "receiver": this.receiver,
+    //         "ReadStatus": "unread"
+    //     }).toArray(function (err, results) {
+    //         if(err) {
+    //             callback(null, err);
+    //         }
+    //         else {
+    //             callback(results.length, null);
+    //         }
+    //     });
+    // }
 
     //get how many private unread msg of receiver
-    getCount_AllPrivateUnreadMsg(db, callback){
+    /*getCount_AllPrivateUnreadMsg(db, callback){
         this.collection = db.collection("MESSAGES");
         this.collection.find({
             "receiver": this.receiver,
@@ -130,7 +130,7 @@ class Message {
                 callback(results.length, null);
             }
         });
-    }
+    }*/
 
     //get how many private unread msg between sender and receiver
     getCount_PrivateUnreadMsg(db, sender, receiver, callback){
@@ -190,7 +190,7 @@ class Message {
         });
     }
 
-    get_LatestPrivateUnreadMsg(db, sender, receiver, callback){
+    /*get_LatestPrivateUnreadMsg(db, sender, receiver, callback){
         this.collection = db.collection("MESSAGES");
         this.collection.find({
             "sender" : sender,
@@ -210,7 +210,7 @@ class Message {
                 callback(data, null);
             }
         });
-    }
+    }*/
 
     getAllMessagesForSearch(db, username, words, callback) {
         this.collection = db.collection("MESSAGES");
@@ -222,7 +222,7 @@ class Message {
         var regExWord = new RegExp(".*" + searchTerm + ".*");
         this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message":  regExWord}).toArray(function(err, results) {
             if(err) {
-                console.log("Error when retrieving messages for search terms");
+                //console.log("Error when retrieving messages for search terms");
                 callback(null, err);
             }
             else {
