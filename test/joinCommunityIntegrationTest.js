@@ -108,5 +108,32 @@ suite('Join Comunity Integration Tests', function(){
             });
     });
 
+    test("Testing Remove User in Join Community", function(done){
+        dboper.RemoveUser("testuser", url, function (statuscode1, content1){
+            expect(statuscode1).to.equal(200);
+            done();
+        });
+    });
+
+    test('Testing User SignUp in Join Community', function(done){
+        dboper.AddDB("testuser", "testpwd", url, function (statuscode1, content1){
+            expect(statuscode1).to.equal(200);
+            dboper.Logout("testuser", url, function (statuscode2, content2){
+                expect(statuscode1).to.equal(200);
+            });
+            done();
+        });
+    });
+
+    test('Testing User Login in Join Community', function(done){
+        dboper.Login("testuser", "testpwd", url, function (statuscode1, content1){
+            expect(statuscode1).to.equal(200);
+            dboper.GetAllUsers(url, function(statuscode2, list1, list2){
+                expect(list1.indexOf("testuser")).to.above(-1);
+            });
+            done();
+        });
+    });
+
 });
 

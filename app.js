@@ -95,16 +95,16 @@ io.on("connection", function(socket) {
     socket.on("Private Message", privateChat.privateMessageSocket(socket, ConnectedSockets));
 
     //when total number of unread(private+public) message is needed
-    socket.on("GetCount AllUnreadMsg", privateChat.getCount_AllUnreadMsg(socket));
+    //socket.on("GetCount AllUnreadMsg", privateChat.getCount_AllUnreadMsg(socket));
 
     //when total number of private unread message is needed
-    socket.on("GetCount AllPrivateUnreadMsg", privateChat.getCount_AllPrivateUnreadMsg(socket));
+    //socket.on("GetCount AllPrivateUnreadMsg", privateChat.getCount_AllPrivateUnreadMsg(socket));
 
     //when individual number of unread message is needed
     socket.on("GetCount IndividualUnreadMsg", privateChat.getCount_IndividualPrivateUnreadMsg(socket));
 
     //when individual latest msg of unread message is needed
-    socket.on("GetMsg IndividualLatestUnreadMsg", privateChat.get_IndividualPrivateUnreadMsg(socket));
+   // socket.on("GetMsg IndividualLatestUnreadMsg", privateChat.get_IndividualPrivateUnreadMsg(socket));
 
     //set the private msg of sender and receiver to be read
     socket.on("PrivateMsgRead", privateChat.MarkedAsRead());

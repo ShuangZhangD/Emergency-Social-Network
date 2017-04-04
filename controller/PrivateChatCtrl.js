@@ -63,13 +63,13 @@ class PrivateChatCtrl{
                 //emit update notification of unread
                 //emit count of all unread msg(public + private)
                 let dboper = new PrivateChatDBOper(sender, receiver, url);
-                dboper.GetCount_AllUnreadMsg(function (statuscode, count) {
+                /*dboper.GetCount_AllUnreadMsg(function (statuscode, count) {
                     if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("AllUnreadMsgCnt", count);
                 });
                 //emit count of all unread msg(private)
                 dboper.GetCount_AllPrivateUnreadMsg(function (statuscode, count) {
                     if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("AllPrivateUnreadMsgCnt", count);
-                });
+                });*/
                 //emit individual count of unread msg(private)
                 dboper.GetCount_IndividualUnreadMsg(function (statuscode, results) {
                     if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("IndividualPrivateUnreadMsgCnt", results);
@@ -80,7 +80,7 @@ class PrivateChatCtrl{
 
     /* Called when total number of unread message of this username is needed
      */
-    getCount_AllUnreadMsg (socket){
+    /*getCount_AllUnreadMsg (socket){
         return function(username){
             let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
@@ -88,19 +88,19 @@ class PrivateChatCtrl{
                 if(statuscode==success_statuscode) socket.emit("AllUnreadMsgCnt", count);
             });
         };
-    }
+    }*/
 
     /* Called when total number of private unread message of this username is needed
      */
-    getCount_AllPrivateUnreadMsg (socket){
-        return function(username){
-            let dboper = new PrivateChatDBOper("", username, url);
-            //emit count of all unread msg(public + private)
-            dboper.GetCount_AllPrivateUnreadMsg(function(statuscode, count){
-                if(statuscode==success_statuscode) socket.emit("AllPrivateUnreadMsgCnt", count);
-            });
-        };
-    }
+    // getCount_AllPrivateUnreadMsg (socket){
+    //     return function(username){
+    //         let dboper = new PrivateChatDBOper("", username, url);
+    //         //emit count of all unread msg(public + private)
+    //         dboper.GetCount_AllPrivateUnreadMsg(function(statuscode, count){
+    //             if(statuscode==success_statuscode) socket.emit("AllPrivateUnreadMsgCnt", count);
+    //         });
+    //     };
+    // }
 
     /* Called when indivudual number of private unread message of this username is needed
      */
@@ -133,15 +133,15 @@ class PrivateChatCtrl{
 
     /* Called when indivudual sender of latest private unread message of this username is needed
      */
-    get_IndividualPrivateUnreadMsg (socket){
-        return function(username){
-            let dboper = new PrivateChatDBOper("", username, url);
-            //emit count of all unread msg(public + private)
-            dboper.Get_LatestIndividualUnreadMsg(function(statuscode, results){
-                if(statuscode==success_statuscode) socket.emit("IndividualPrivateUnreadMsg", results);
-            });
-        };
-    }
+    // get_IndividualPrivateUnreadMsg (socket){
+    //     return function(username){
+    //         let dboper = new PrivateChatDBOper("", username, url);
+    //         //emit count of all unread msg(public + private)
+    //         dboper.Get_LatestIndividualUnreadMsg(function(statuscode, results){
+    //             if(statuscode==success_statuscode) socket.emit("IndividualPrivateUnreadMsg", results);
+    //         });
+    //     };
+    // }
 
     /* Maybe DONT NEED!!
      * Called when a user login
@@ -151,14 +151,14 @@ class PrivateChatCtrl{
     UnreadCount (socket, username){
         let dboper = new PrivateChatDBOper("", username, url);
         //emit count of all unread msg(public + private)
-        dboper.GetCount_AllUnreadMsg(function(statuscode, count){
-            if(statuscode==success_statuscode) socket.emit("AllUnreadMsgCnt", count);
-        });
-
-        //emit count of all unread msg(private)
-        dboper.GetCount_AllPrivateUnreadMsg(function(statuscode, count){
-            if(statuscode==success_statuscode) socket.emit("AllPrivateUnreadMsgCnt", count);
-        });
+        // dboper.GetCount_AllUnreadMsg(function(statuscode, count){
+        //     if(statuscode==success_statuscode) socket.emit("AllUnreadMsgCnt", count);
+        // });
+        //
+        // //emit count of all unread msg(private)
+        // dboper.GetCount_AllPrivateUnreadMsg(function(statuscode, count){
+        //     if(statuscode==success_statuscode) socket.emit("AllPrivateUnreadMsgCnt", count);
+        // });
 
         //emit individual count of unread msg(private)
         dboper.GetCount_IndividualUnreadMsg(function(statuscode, results){
@@ -228,11 +228,11 @@ module.exports={
     AddPrivateMessage: privatetrl.AddPrivateMessage,
     LoadPrivateHistoryMessage: privatetrl.LoadPrivateHistoryMessage,
     privateMessageSocket: privatetrl.privateMessageSocket,
-    getCount_AllUnreadMsg: privatetrl.getCount_AllUnreadMsg,
-    getCount_AllPrivateUnreadMsg: privatetrl.getCount_AllPrivateUnreadMsg,
+    //getCount_AllUnreadMsg: privatetrl.getCount_AllUnreadMsg,
+    //getCount_AllPrivateUnreadMsg: privatetrl.getCount_AllPrivateUnreadMsg,
     getCount_IndividualPrivateUnreadMsg: privatetrl.getCount_IndividualPrivateUnreadMsg,
     getCount_IndividualPrivateSender: privatetrl.getCount_IndividualPrivateSender,
-    get_IndividualPrivateUnreadMsg: privatetrl.get_IndividualPrivateUnreadMsg,
+    //get_IndividualPrivateUnreadMsg: privatetrl.get_IndividualPrivateUnreadMsg,
     UnreadCount: privatetrl.UnreadCount,
     MarkedAsRead: privatetrl.MarkedAsRead,
     search: privatetrl.search
