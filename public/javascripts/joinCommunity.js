@@ -11,6 +11,11 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
         $scope.searchStatus = false;
         $scope.searchName = true;
     };
+    $scope.reset = function () {
+        $scope.details1 = $scope.historyList1;
+        console.log("History msg are: "+$scope.historyList1);
+        $scope.details2 = $scope.historyList2;
+    };
     $scope.login = function() {
 
         console.log($scope);
