@@ -12,6 +12,7 @@ let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
 
 class ShareStatusController {
+
     AddShareStatus(req, res){
         //console.log(res)
         console.log("Inside Sharestatuscontroller");

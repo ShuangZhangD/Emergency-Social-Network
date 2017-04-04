@@ -11,10 +11,10 @@ var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
 var app = express();
 
 var success_statuscode = 200;
-module.exports = {
+class PrivateChatCtrl{
     /* Insert a private message into database
      */
-    AddPrivateMessage : function (req, res) {
+    AddPrivateMessage (req, res) {
         var info = req.body;
         var message = info["PrivateMsg"];
         var sender = info["sender"];
@@ -31,12 +31,12 @@ module.exports = {
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }
         })
-    },
+    }
 
     /* Load all the history private msg
      * also update all unread msg between sender and receiver to be read
      */
-    LoadPrivateHistoryMessage : function(req, res) {
+    LoadPrivateHistoryMessage (req, res) {
         var sender = req.param("sender");
         var receiver = req.param("receiver");
 
@@ -48,7 +48,7 @@ module.exports = {
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }
         });
-    },
+    }
 
     /* socket function when private message is sent from A->B:
      * msg emit to A and B
@@ -56,7 +56,7 @@ module.exports = {
      * @param socket: the socket of sender
      * @param ConnectedSockets: all connected sockets
      */
-    privateMessageSocket : function(socket, ConnectedSockets){
+    privateMessageSocket (socket, ConnectedSockets){
         return function(msg) {
             var sender = msg.sender;
             var receiver = msg.receiver;
@@ -108,11 +108,11 @@ module.exports = {
             //}
        // });
         };
-    },
+    }
 
     /* Called when total number of unread message of this username is needed
      */
-    getCount_AllUnreadMsg : function(socket){
+    getCount_AllUnreadMsg (socket){
         return function(username){
             let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
@@ -120,11 +120,11 @@ module.exports = {
                 if(statuscode==success_statuscode) socket.emit('AllUnreadMsgCnt', count)
             });
         }
-    },
+    }
 
     /* Called when total number of private unread message of this username is needed
      */
-    getCount_AllPrivateUnreadMsg : function(socket){
+    getCount_AllPrivateUnreadMsg (socket){
         return function(username){
             let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
@@ -132,11 +132,11 @@ module.exports = {
                 if(statuscode==success_statuscode) socket.emit('AllPrivateUnreadMsgCnt', count)
             });
         }
-    },
+    }
 
     /* Called when indivudual number of private unread message of this username is needed
      */
-    getCount_IndividualPrivateUnreadMsg : function(socket){
+    getCount_IndividualPrivateUnreadMsg (socket){
         return function(username){
             let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
@@ -144,11 +144,11 @@ module.exports = {
                 if(statuscode==success_statuscode) socket.emit('IndividualPrivateUnreadMsgCnt', results)
             });
         }
-    },
+    }
 
     /* Called when indivudual number of private unread message of this username is needed
      */
-    getCount_IndividualPrivateSender : function(req,res){
+    getCount_IndividualPrivateSender (req,res){
             console.log('==== getCount_IndividualPrivateSender called! ======');
 			var username = req.param("receiver");
              console.log(username);
@@ -166,11 +166,11 @@ module.exports = {
                 }
             });
 
-    },
+    }
 
     /* Called when indivudual sender of latest private unread message of this username is needed
      */
-    get_IndividualPrivateUnreadMsg : function(socket){
+    get_IndividualPrivateUnreadMsg (socket){
         return function(username){
             let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
@@ -178,14 +178,14 @@ module.exports = {
                 if(statuscode==success_statuscode) socket.emit('IndividualPrivateUnreadMsg', results)
             });
         }
-    },
+    }
 
     /* Maybe DONT NEED!!
      * Called when a user login
      * Tell frontend the unread message number of this user
      * Use socket.io
      */
-    UnreadCount : function(socket, username){
+    UnreadCount (socket, username){
         let dboper = new PrivateChatDBOper("", username, url);
         //emit count of all unread msg(public + private)
         dboper.GetCount_AllUnreadMsg(function(statuscode, count){
@@ -201,12 +201,12 @@ module.exports = {
         dboper.GetCount_IndividualUnreadMsg(function(statuscode, results){
             if(statuscode==success_statuscode) socket.emit('IndividualPrivateUnreadMsgCnt', results)
         });
-    },
+    }
 
     /*
       For testing, ignore it
      */
-    privateMessageTest : function(req,res){
+    privateMessageTest (req,res){
         // emit msg
         // msg should be in form of {"sender": , "receiver": , "private_msg": }
         var receiver = req.param("receiver");
@@ -224,14 +224,14 @@ module.exports = {
         dboper.GetUserEmergencyStatus(receiver, function(statuscode, status){
             console.log("HAHASTATUS:" + status)
         })
-    },
+    }
 
     /* Called in socket.io when private msg between sender and receiver are read
      * It is supposed to be called when receiver is in private chat page with sender, which means all the message sent
      * should be marked read. Frontend should emit PrivateMsgRead event every time msg sent in this situation.
      * This function can update all msg between sender and receiver to be read
      */
-    MarkedAsRead : function(){
+    MarkedAsRead (){
         return function(userinfo){
             console.dir("++++")
             var sender = userinfo.sender;
@@ -241,12 +241,12 @@ module.exports = {
             let dboper = new PrivateChatDBOper(sender, receiver, url);
             dboper.UpdateReadStatus(function(statuscode, content){})
         }
-    },
+    }
 
     /*
      * User search for serval keywords
      */
-    search : function (req, res) {
+    search (req, res) {
         var user = req.param("user");
         var keywords = req.body;
         let dboper = new PrivateChatDBOper("", user, url);
@@ -266,4 +266,19 @@ module.exports = {
         });
     }
 
+}
+
+let privatetrl = new PrivateChatCtrl();
+module.exports={
+    AddPrivateMessage: privatetrl.AddPrivateMessage,
+    LoadPrivateHistoryMessage: privatetrl.LoadPrivateHistoryMessage,
+    privateMessageSocket: privatetrl.privateMessageSocket,
+    getCount_AllUnreadMsg: privatetrl.getCount_AllUnreadMsg,
+    getCount_AllPrivateUnreadMsg: privatetrl.getCount_AllPrivateUnreadMsg,
+    getCount_IndividualPrivateUnreadMsg: privatetrl.getCount_IndividualPrivateUnreadMsg,
+    getCount_IndividualPrivateSender: privatetrl.getCount_IndividualPrivateSender,
+    get_IndividualPrivateUnreadMsg: privatetrl.get_IndividualPrivateUnreadMsg,
+    UnreadCount: privatetrl.UnreadCount,
+    MarkedAsRead: privatetrl.MarkedAsRead,
+    search: privatetrl.search
 };
