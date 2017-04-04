@@ -11,3 +11,5 @@ workspace.xml
 backups/
 bower.json
 package.json
+shippable/*
+coverage/*
