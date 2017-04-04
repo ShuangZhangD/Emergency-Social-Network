@@ -7,57 +7,52 @@
  *
  */
 
-app.controller('postAnnouncementCtrl', function($window, $scope, $rootScope, $http, mySocket) {
-	$scope.announcementList = [];
+app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $http, mySocket) {
+    $scope.announcementList = [];
     // get all announcement from server while open this app page
-	var getAnnouncement = function() {
+    var getAnnouncement = function() {
         $http({
-			method:'get',
-			url:'/announcement'
+            method:"get",
+            url:"/announcement"
         }).success(function(rep){
-				$scope.announcementList = rep.data;
-
-		});
+            $scope.announcementList = rep.data;
+        });
     };
-	// Call this function after login
-	//getAnnouncement();
-	$rootScope.$on("loginGetAnnouncement", function() {
-        console.log("############### Post Announcement here ");
-		getAnnouncement();
-	});
-	// $scope.announcementList.push({announcement:'test', username:'j & k', timestamp:Date.now()});
-	// receive a new announcement from server vie socket.io
-	mySocket.on('Post Announcement', function(data) {
-		$scope.announcementList.push(data);
+    // Call this function after login
+    //getAnnouncement();
+    $rootScope.$on("loginGetAnnouncement", function() {
+        getAnnouncement();
+    });
+    // $scope.announcementList.push({announcement:"test", username:"j & k", timestamp:Date.now()});
+    // receive a new announcement from server vie socket.io
+    mySocket.on("Post Announcement", function(data) {
+        $scope.announcementList.push(data);
 		// TODO notification of new announcement
         if (data.username != $scope.userClass["username"]) {
             alert("New Announcement (" + data.username + ") : " + data.announcement);
         }
-	});
-	$scope.submitAnnouncement = function() {
-		var announcement_data = {
-                announcement: $scope.announcement_content,
-                username: $scope.userClass['username'],
-                timestamp: Date.now()
+    });
+    $scope.submitAnnouncement = function() {
+        var announcement_data = {
+            announcement: $scope.announcement_content,
+            username: $scope.userClass["username"],
+            timestamp: Date.now()
         };
-		console.log(announcement_data);
-
-		$http({
-			method:'post',
-			url:'/post_announcement',
-			data: announcement_data
-		}).success(function(rep) {
-            mySocket.emit('Post Announcement', announcement_data);
+        $http({
+            method:"post",
+            url:"/post_announcement",
+            data: announcement_data
+        }).success(function(rep) {
+            mySocket.emit("Post Announcement", announcement_data);
             $scope.announcement_content = "";
-			if (rep.success == 1) {
-				console.log('Post Announcement Success!');
-			}
-			else {
-				// TODO error handling
-				console.log("Unexpected error in post ann");
-			}	
-		});
-	};
+            if (rep.success == 1) {
+                console.log("Post Announcement Success!");
+            }
+            else {
+                console.log("Unexpected error in post ann");
+            }
+        });
+    };
 
     var initialAnnounceSearchRes=function(){
         $scope.AnnounceSearchResult = [];
@@ -91,31 +86,22 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $rootScope, $ht
             var index = stop_words.indexOf(SearchKeys[i]);
             if( index != -1){
                 //it is a stop key, remove it
-                SearchKeys.splice(i, 1)
-            }else{
+                SearchKeys.splice(i, 1);
+            } else{
                 i++;
             }
         }
         //if search keys is not empty, search it and get the result msg array suite
         if(SearchKeys.length > 0){
-
-            console.log("Searching announcement, keys: "+SearchKeys);
             var announce_search_results_suite = [];
             var announce_search_results_set = [];
             var history_announce = $scope.announcementList;
-            console.log("History msg are: "+history_announce);
             var count = 0;
-
-            for(var i = history_announce.length-1 ; i >= 0 ; i--){
-
+            for( i = history_announce.length-1 ; i >= 0 ; i--){
                 var announcement = history_announce[i].announcement;
-
                 if(IfKeyWordExist(SearchKeys, announcement)){
-
                     announce_search_results_set.push(history_announce[i]);
-
                     count++;
-
                     if(count % 10 == 0){
                         announce_search_results_suite.push(announce_search_results_set);
                         announce_search_results_set = [];
@@ -129,7 +115,6 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $rootScope, $ht
 
             //if results found, display them
             if(announce_search_results_suite.length > 0){
-                console.log("GET RESULTS ARE "+announce_search_results_suite);
                 $scope.AnnounceSearchResult = announce_search_results_suite[0];
                 announce_search_results_suite.splice(0,1);
                 $scope.announce_search_results_suite = announce_search_results_suite;
@@ -140,8 +125,8 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $rootScope, $ht
             }
 
         }
-        $scope.showList['annoucementSearchResult'] = true;
-        $scope.showList['announcementHistory'] = false;
+        $scope.showList["annoucementSearchResult"] = true;
+        $scope.showList["announcementHistory"] = false;
         $scope.annsearchmsg="";
     };
 
