@@ -5,7 +5,7 @@ var User = require("./User.js");
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 //var url = "mongodb://localhost:27017/test";
 
-var db_err_msg = "Database Error";
+var db_err_msg = "Datab   ase Error";
 var db_err_statuscode = 400;
 var user_not_exist_statuscode = 401;
 var user_not_exist_msg = "Username not Exist";
@@ -200,6 +200,26 @@ class JoinCommunityDBOper {
             }
         });
     }
+
+    RemoveUser(username, url, callback) {
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log("Error:" + err);
+                callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
+            }
+            else {
+                let user = new User(username, "", "", "");
+                user.removeUser(db, function(results, err){
+                    if (err) {
+                        console.log("Error:" + err);
+                    }
+                    else {
+                        callback(success_statuscode, results);
+                    }
+                });
+            }
+        });
+    }
 }
 
 let dboper = new JoinCommunityDBOper();
@@ -210,5 +230,6 @@ module.exports = {
     GetAllUsers: dboper.GetAllUsers,
     Logout: dboper.Logout,
     GetUserEmergencyStatus: dboper.GetUserEmergencyStatus,
-    GetAllUsernameAndEmergencyStatus: dboper.GetAllUsernameAndEmergencyStatus
+    GetAllUsernameAndEmergencyStatus: dboper.GetAllUsernameAndEmergencyStatus,
+    RemoveUser: dboper.RemoveUser
 };

@@ -2,6 +2,20 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
     //$scope.name = "Runoob";
     $scope.statusList = {};
     $scope.logined = false;
+
+    $scope.searchByStatus = function () {
+        $scope.searchStatus = true;
+        $scope.searchName = false;
+    };
+    $scope.searchByName = function () {
+        $scope.searchStatus = false;
+        $scope.searchName = true;
+    };
+    $scope.reset = function () {
+        $scope.details1 = $scope.historyList1;
+        console.log("History msg are: "+$scope.historyList1);
+        $scope.details2 = $scope.historyList2;
+    };
     $scope.login = function() {
 
         console.log($scope);
@@ -135,7 +149,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
         var history_detail2 = $scope.historyList2;
         console.log("History msg are: "+history_detail1);
         // console.log("History msg are: "+$scope.historyList1);
-        for(var i = history_detail1.length-1 ; i >= 0 ; i--){
+        for(var i = 0 ; i <= history_detail1.length-1 ; i++){
 
             var name1 = history_detail1[i];
             console.log("========" + name1);
@@ -145,7 +159,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
                 console.log("directory search result" + directory_search_result1);
             }
         }
-        for(var i = history_detail2.length-1 ; i >= 0 ; i--){
+        for(var i = 0 ; i <= history_detail2.length-1 ; i++){
 
             var name2 = history_detail2[i];
             console.log("========" + name2);
@@ -197,7 +211,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
             var history_detail2 = $scope.historyList2;
             console.log("History msg are: "+history_detail1);
             // console.log("History msg are: "+$scope.historyList1);
-            for(var i = history_detail1.length-1 ; i >= 0 ; i--){
+            for(var i = 0 ; i <= history_detail1.length-1 ; i++){
 
                 var name1 = history_detail1[i];
                 console.log("========" + name1);
@@ -207,7 +221,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
                     console.log("directory search result" + directory_search_result1);
                 }
             }
-            for(var i = history_detail2.length-1 ; i >= 0 ; i--){
+            for(var i = 0 ; i <= history_detail2.length-1 ; i++){
 
                 var name2 = history_detail2[i];
 

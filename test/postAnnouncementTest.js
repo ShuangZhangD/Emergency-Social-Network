@@ -7,7 +7,6 @@
 var expect = require('expect.js');
 var request = require('supertest');
 var express = require('express');
-
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
@@ -22,7 +21,7 @@ let dbconfig = new TestDBConfig();
 var url = dbconfig.getURL();
 //using server not app to listening port 5000
 var server = request.agent("https://quiet-peak-31270.herokuapp.com");
-// var server = request.agent("http://localhost:5000");
+// var server = request.agent(HOST);
 
 suite('Post Announcement Tests', function(){
     this.timeout(15000);

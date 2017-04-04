@@ -1,6 +1,16 @@
 <nav class="navbar navbar-default">
+  <!--<div class="navbar navbar-default navbar-fixed-top my-custom-nav" role="navigation">-->
+
   <div class="container-fluid">
+    <!--<div class="collapse navbar-collapse">-->
+      <!--<ul class="nav navbar-nav">-->
+        <!--<li><a href="#">Item 1</a></li>-->
+        <!--<li><a href="#">Item 2</a></li>-->
+        <!--<li><a href="#">Item 3</a></li>-->
+      <!--</ul>-->
+    <!--</div>-->
     <!-- Brand and toggle get grouped for better mobile display -->
+    <!--<div class="collapse navbar-collapse">-->
     <ul class="nav navbar-nav">
       <li><a href="#" ng-click='showDirectory()' ng-show="logined">Directory<!--span class="sr-only">(current)</span--></a></li>
       <li><a href="#" ng-click='showPublicChat()' ng-show="logined">PublicChat</a></li>
@@ -9,7 +19,7 @@
       <li><a href="#" ng-click='showPrivateChat()' ng-show="logined">PrivateChat (<span ng-show="userClass.hasNewMsg" style="color:red">{{userClass.newMsgNum}}</span><span ng-show="!userClass.hasNewMsg">0</span>) </a></li>
 	  <li><a href="#" ng-click='logout()' ng-show="logined">Logout({{userClass.username}})</a></li>
     </ul>
-
+    <!--</div>-->
     <!-- Collect the nav links, forms, and other content for toggling  //   class="active" -->
     <!--div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
@@ -23,4 +33,5 @@
       </ul>
     </div>
   </div--><!-- /.container-fluid -->
+  </div>
 </nav>

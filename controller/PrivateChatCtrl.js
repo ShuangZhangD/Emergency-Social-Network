@@ -237,3 +237,4 @@ module.exports={
     MarkedAsRead: privatetrl.MarkedAsRead,
     search: privatetrl.search
 };
+
