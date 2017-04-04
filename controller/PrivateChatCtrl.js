@@ -1,14 +1,11 @@
 /**
  * Created by Ling on 2017/3/18.
  */
-'use strict';
-var express = require('express');
-var myParser = require("body-parser");
+"use strict";
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
 var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
-var app = express();
 
 var success_statuscode = 200;
 class PrivateChatCtrl{
@@ -16,11 +13,8 @@ class PrivateChatCtrl{
      */
     AddPrivateMessage (req, res) {
         var info = req.body;
-        var message = info["PrivateMsg"];
         var sender = info["sender"];
         var receiver = info["receiver"];
-        console.log("=========INFO--------: ")
-        console.dir(info);
 
         let dboper = new PrivateChatDBOper(sender, receiver, url);
         dboper.InsertMessage(info, function(statuscode, content){
@@ -28,9 +22,9 @@ class PrivateChatCtrl{
                 res.json({success:1, suc_msg: "Success"});
             }
             else{
-                res.json({success:0, err_type: 1, err_msg:"Database Error"});
+                res.json({success:0, err_type: 1, err_msg:content});
             }
-        })
+        });
     }
 
     /* Load all the history private msg
@@ -61,52 +55,26 @@ class PrivateChatCtrl{
             var sender = msg.sender;
             var receiver = msg.receiver;
             var status = msg.emergency_status;
-            console.log("SENDER IS "+sender)
-                    console.log("RECEIVER IS"+receiver)
-                    console.log("MESSAGE IS" +msg)
-            // emit msg
-            // msg should be in form of {"sender": , "receiver": , "private_msg": }
             msg["timestamp"] = Date.now();
-            //let dboper = new PrivateChatDBOper(sender, receiver);
-            //dboper.GetUserEmergencyStatus(sender, function(statuscode, status) {
-                //if (statuscode == success_statuscode){
-                    msg["EmergencyStatus"] = status;
-
-                    //socket.emit('PrivateChat', msg);
-                    console.log("PRIVATE CHAT NEED TO SEND TO 0001")
-                    //console.log(ConnectedSockets)
-                    console.log("IF FOUND: "+ConnectedSockets.hasOwnProperty(receiver))
-
-                    console.log("SOCKET OF 0002"+ConnectedSockets["0002"])
-                if (ConnectedSockets.hasOwnProperty(receiver)) {
-                    console.log("PRIVATE CHAT NEED TO SEND TO 0002")
-                    ConnectedSockets[receiver].emit('PrivateChat', msg);
-
-                    //emit update notification of unread
-
-                    //emit count of all unread msg(public + private)
-                    let dboper = new PrivateChatDBOper(sender, receiver, url);
-                    dboper.GetCount_AllUnreadMsg(function (statuscode, count) {
-                        if (statuscode == success_statuscode) ConnectedSockets[receiver].emit('AllUnreadMsgCnt', count)
-                    });
-
-                    //emit count of all unread msg(private)
-                    dboper.GetCount_AllPrivateUnreadMsg(function (statuscode, count) {
-                        if (statuscode == success_statuscode) ConnectedSockets[receiver].emit('AllPrivateUnreadMsgCnt', count)
-                    });
-
-                    //emit individual count of unread msg(private)
-                    dboper.GetCount_IndividualUnreadMsg(function (statuscode, results) {
-                        if (statuscode == success_statuscode) ConnectedSockets[receiver].emit('IndividualPrivateUnreadMsgCnt', results)
-                    });
-
-                    //emit individual latest unread msg(private)
-                    /*dboper.Get_LatestIndividualUnreadMsg(function(statuscode, results){
-                        if(statuscode==success_statuscode) ConnectedSockets[receiver].emit('IndividualPrivateUnreadMsg', results)
-                    });*/
-                }
-            //}
-       // });
+            msg["EmergencyStatus"] = status;
+            //socket.emit("PrivateChat", msg);
+            if (ConnectedSockets.hasOwnProperty(receiver)) {
+                ConnectedSockets[receiver].emit("PrivateChat", msg);
+                //emit update notification of unread
+                //emit count of all unread msg(public + private)
+                let dboper = new PrivateChatDBOper(sender, receiver, url);
+                dboper.GetCount_AllUnreadMsg(function (statuscode, count) {
+                    if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("AllUnreadMsgCnt", count);
+                });
+                //emit count of all unread msg(private)
+                dboper.GetCount_AllPrivateUnreadMsg(function (statuscode, count) {
+                    if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("AllPrivateUnreadMsgCnt", count);
+                });
+                //emit individual count of unread msg(private)
+                dboper.GetCount_IndividualUnreadMsg(function (statuscode, results) {
+                    if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("IndividualPrivateUnreadMsgCnt", results);
+                });
+            }
         };
     }
 
@@ -117,9 +85,9 @@ class PrivateChatCtrl{
             let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
             dboper.GetCount_AllUnreadMsg(function(statuscode, count){
-                if(statuscode==success_statuscode) socket.emit('AllUnreadMsgCnt', count)
+                if(statuscode==success_statuscode) socket.emit("AllUnreadMsgCnt", count);
             });
-        }
+        };
     }
 
     /* Called when total number of private unread message of this username is needed
@@ -129,9 +97,9 @@ class PrivateChatCtrl{
             let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
             dboper.GetCount_AllPrivateUnreadMsg(function(statuscode, count){
-                if(statuscode==success_statuscode) socket.emit('AllPrivateUnreadMsgCnt', count)
+                if(statuscode==success_statuscode) socket.emit("AllPrivateUnreadMsgCnt", count);
             });
-        }
+        };
     }
 
     /* Called when indivudual number of private unread message of this username is needed
@@ -141,31 +109,26 @@ class PrivateChatCtrl{
             let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
             dboper.GetCount_IndividualUnreadMsg(function(statuscode, results){
-                if(statuscode==success_statuscode) socket.emit('IndividualPrivateUnreadMsgCnt', results)
+                if(statuscode==success_statuscode) socket.emit("IndividualPrivateUnreadMsgCnt", results);
             });
-        }
+        };
     }
 
     /* Called when indivudual number of private unread message of this username is needed
      */
     getCount_IndividualPrivateSender (req,res){
-            console.log('==== getCount_IndividualPrivateSender called! ======');
-			var username = req.param("receiver");
-             console.log(username);
-			let dboper = new PrivateChatDBOper("", username, url);
-            //emit count of all unread msg(public + private)
-            dboper.GetCount_IndividualPrivateSender(function(statuscode, results){
-                if(statuscode==success_statuscode) {
-					res.json({success:1, data: results});
-					console.log('succ');
-					console.log(results);
-				}
-                else{
-					console.log('err');
-                    res.json({success:0, err_type: 1, err_msg:"Database Error"});
-                }
-            });
-
+        var username = req.param("receiver");
+        let dboper = new PrivateChatDBOper("", username, url);
+        //emit count of all unread msg(public + private)
+        dboper.GetCount_IndividualPrivateSender(function(statuscode, results){
+            if(statuscode==success_statuscode) {
+                res.json({success:1, data: results});
+            }
+            else {
+                console.log("err");
+                res.json({success:0, err_type: 1, err_msg:"Database Error"});
+            }
+        });
     }
 
     /* Called when indivudual sender of latest private unread message of this username is needed
@@ -175,9 +138,9 @@ class PrivateChatCtrl{
             let dboper = new PrivateChatDBOper("", username, url);
             //emit count of all unread msg(public + private)
             dboper.Get_LatestIndividualUnreadMsg(function(statuscode, results){
-                if(statuscode==success_statuscode) socket.emit('IndividualPrivateUnreadMsg', results)
+                if(statuscode==success_statuscode) socket.emit("IndividualPrivateUnreadMsg", results);
             });
-        }
+        };
     }
 
     /* Maybe DONT NEED!!
@@ -189,17 +152,17 @@ class PrivateChatCtrl{
         let dboper = new PrivateChatDBOper("", username, url);
         //emit count of all unread msg(public + private)
         dboper.GetCount_AllUnreadMsg(function(statuscode, count){
-            if(statuscode==success_statuscode) socket.emit('AllUnreadMsgCnt', count)
+            if(statuscode==success_statuscode) socket.emit("AllUnreadMsgCnt", count);
         });
 
         //emit count of all unread msg(private)
         dboper.GetCount_AllPrivateUnreadMsg(function(statuscode, count){
-            if(statuscode==success_statuscode) socket.emit('AllPrivateUnreadMsgCnt', count)
+            if(statuscode==success_statuscode) socket.emit("AllPrivateUnreadMsgCnt", count);
         });
 
         //emit individual count of unread msg(private)
         dboper.GetCount_IndividualUnreadMsg(function(statuscode, results){
-            if(statuscode==success_statuscode) socket.emit('IndividualPrivateUnreadMsgCnt', results)
+            if(statuscode==success_statuscode) socket.emit("IndividualPrivateUnreadMsgCnt", results);
         });
     }
 
@@ -211,19 +174,17 @@ class PrivateChatCtrl{
         // msg should be in form of {"sender": , "receiver": , "private_msg": }
         var receiver = req.param("receiver");
         let dboper = new PrivateChatDBOper("", receiver, url);
-
+        console.log(res);
         //emit individual count of unread msg(private)
         dboper.Get_LatestIndividualUnreadMsg(function (statuscode, results) {
             if (statuscode == success_statuscode) {
-                console.log("RESULT:");
-                console.dir(results)
-                console.dir(results["msg"])
+                console.dir(results);
             }
         });
 
         dboper.GetUserEmergencyStatus(receiver, function(statuscode, status){
-            console.log("HAHASTATUS:" + status)
-        })
+            console.log("STATUS:" + status);
+        });
     }
 
     /* Called in socket.io when private msg between sender and receiver are read
@@ -233,14 +194,11 @@ class PrivateChatCtrl{
      */
     MarkedAsRead (){
         return function(userinfo){
-            console.dir("++++")
             var sender = userinfo.sender;
             var receiver = userinfo.receiver;
-            console.dir(userinfo)
-            console.log("=====IN MARKASREAD====")
             let dboper = new PrivateChatDBOper(sender, receiver, url);
-            dboper.UpdateReadStatus(function(statuscode, content){})
-        }
+            dboper.UpdateReadStatus(function(statuscode, content){console.log(content);});
+        };
     }
 
     /*
@@ -250,17 +208,14 @@ class PrivateChatCtrl{
         var user = req.param("user");
         var keywords = req.body;
         let dboper = new PrivateChatDBOper("", user, url);
-        //var message = info["PrivateMsg"];
-        //console.log(user);
-        //console.log(info);
+
         dboper.SearchMessages(user, keywords, function(statuscode, results) {
             if(statuscode==success_statuscode) {
                 res.json({success:1, data: results});
-                console.log('Search result:');
-                console.log(results);
+
             }
             else{
-                console.log('err');
+                console.log("err");
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }
         });
