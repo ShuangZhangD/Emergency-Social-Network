@@ -2,7 +2,7 @@
  * Created by Jilei and Komala on 4/01/17.
  */
 
-// 'use strict';
+'use strict';
 
 var expect = require('expect.js');
 var request = require('supertest');
