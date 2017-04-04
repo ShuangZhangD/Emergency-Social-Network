@@ -96,14 +96,46 @@ suite('Private Chat Test', function(){
             });
     });
 
+    test('Test Private Chat Search from RESTFul Api', function(done){
+       server.get('/privatechat/search/:user')
+           .send({"user": "test1000lkq"})
+           .expect(200,function(err, res){
+               if(err) return done(err);
+               else {
+                   expect(res.body.success).to.equal(1);
+                   done();
+               }
+           })
+    });
+
+    test('Test Private Chat Search Function in models', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function: hi",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0){
+            expect(statuscode0).to.equal(200);
+            dboper.SearchMessages("keqin", ["chat", "hi"], function(err1, results1){
+                expect(err1).to.equal(200); //TODO test if results content equal or not
+                done();
+            });
+        });
+    });
+
     //to test message number of a particular receiver
     test('test message number of a particular receiver', function(done){
         let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
         var fake0 = {
             "sender": "keqin",
             "receiver": "test1000lkq",
-            "PrivateMsg": "private chat function",
-            "emergency_status": "OK",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
             "timestamp": ""
         }
         dboper.InsertMessage(fake0, function(statuscode0, content0) {
@@ -113,8 +145,9 @@ suite('Private Chat Test', function(){
                 var fake = {
                     "sender": "keqin",
                     "receiver": "test1000lkq",
-                    "PrivateMsg": "private chat function",
-                    "emergency_status": "OK",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
                     "timestamp": ""
                 };
                 dboper.InsertMessage(fake, function (statuscode2, content2) {

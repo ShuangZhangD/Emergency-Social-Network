@@ -100,8 +100,9 @@ class PrivateChatDBOper {
                                 callback(success_statuscode, results);
                                 //let MSG2 = new Message(receiver, sender)
                             }
+                            db.close();
                         });
-                        db.close();
+
                     }
                 });
             }
@@ -302,6 +303,7 @@ class PrivateChatDBOper {
                     else {
                         callback(success_statuscode, results);
                     }
+                    db.close();
                 });
             }
         });
