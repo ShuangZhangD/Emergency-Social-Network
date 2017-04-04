@@ -27,7 +27,7 @@ var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 
 suite('Join Comunity Integration Tests', function(){
     
-    test('Login by RESTful Api', function(done){
+    test('Login by RESTful Api', function(done) {
         server.post('/login')
             .send({"username": "1001", password: "1234"})
             .expect(200, function(err, res){
@@ -58,7 +58,7 @@ suite('Join Comunity Integration Tests', function(){
                     }
 
                 });
-        };
+        });
     });
 
 });
