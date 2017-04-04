@@ -11,6 +11,8 @@ app.controller('initCtrl', function($scope, $http) {
         publicSearchResult: false,
         annoucementSearchResult: false,
     };
+    $scope.searchStatus = true;
+    $scope.searchName =  false;
     $scope.userClass = {
 		username:"",
 		hasNewMsg:false,
