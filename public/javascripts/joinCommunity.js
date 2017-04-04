@@ -101,7 +101,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
     };
 
     $rootScope.userChangedStatus = function(data) {
-        scope.statusList[data.username] = data.emergencystatus;
+        $scope.statusList[data.username] = data.emergencystatus;
     };
 
     $scope.showDirectory = function () {
