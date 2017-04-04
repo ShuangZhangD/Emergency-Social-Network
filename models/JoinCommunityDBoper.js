@@ -171,7 +171,7 @@ class JoinCommunityDBOper {
         });//end of database operation
     }
 
-    GetUserEmergencyStatus (userlist, url, callback){
+  /*  GetUserEmergencyStatus (userlist, url, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) {
                 console.log("Error:" + err);
@@ -197,7 +197,7 @@ class JoinCommunityDBOper {
             }
             db.close();
         });
-    }
+    }*/
 
     GetAllUsernameAndEmergencyStatus(url, callback){
         MongoClient.connect(url, function(err, db) {

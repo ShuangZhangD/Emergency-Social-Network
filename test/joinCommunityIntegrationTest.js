@@ -108,14 +108,14 @@ suite('Join Comunity Integration Tests', function(){
             });
     });
 
-    test("Testing Remove User in Join Community", function(done){
+    test("Remove User from Community", function(done){
         dboper.RemoveUser("testuser", url, function (statuscode1, content1){
             expect(statuscode1).to.equal(200);
             done();
         });
     });
 
-    test('Testing User SignUp in Join Community', function(done){
+    test("New User SignUp", function(done){
         dboper.AddDB("testuser", "testpwd", url, function (statuscode1, content1){
             expect(statuscode1).to.equal(200);
             dboper.Logout("testuser", url, function (statuscode2, content2){
@@ -125,15 +125,29 @@ suite('Join Comunity Integration Tests', function(){
         });
     });
 
-    test('Testing User Login in Join Community', function(done){
-        dboper.Login("testuser", "testpwd", url, function (statuscode1, content1){
-            expect(statuscode1).to.equal(200);
-            dboper.GetAllUsers(url, function(statuscode2, list1, list2){
-                expect(list1.indexOf("testuser")).to.above(-1);
-            });
+    test("Duplicate Username SignUp", function(done){
+        dboper.AddDB("testuser", "testpwd", url, function (statuscode1, content1){
+            expect(statuscode1).to.equal(405);
             done();
         });
     });
 
+    test("Existing User Login and Logout", function(done){
+        dboper.Login("testuser", "testpwd", url, function (statuscode1, content1){
+            expect(statuscode1).to.equal(200);
+            dboper.GetAllUsers(url, function(statuscode2, list1, list2){
+                expect(list1.indexOf("testuser")).to.above(-1);
+                expect(list2.indexOf("testuser")).to.equal(-1);
+                dboper.Logout("testuser", url, function (statuscode3, content2){
+                    expect(statuscode3).to.equal(200);
+                    dboper.GetAllUsers(url, function(statuscode4, list1, list2){
+                        expect(list1.indexOf("testuser")).to.equal(-1);
+                        expect(list2.indexOf("testuser")).to.above(-1);
+                    });
+                });
+            });
+            done();
+        });
+    });
 });
 
