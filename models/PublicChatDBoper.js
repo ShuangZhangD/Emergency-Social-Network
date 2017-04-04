@@ -51,8 +51,8 @@ class PublicChatDBoper {
                     //var jsonString = JSON.stringify(datas);
                     callback(err,datas);
                 }
+                db.close();
             });
-            db.close();
         });
     }
 }

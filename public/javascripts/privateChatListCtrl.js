@@ -153,6 +153,8 @@ app.controller('privateChatListCtrl', function ($window, $scope, $rootScope, $ht
 			});
 		}
         $scope.showList['privateChatSearchResult'] = true;
+        $scope.showList['privateChatTable'] =false;
+        $scope.privatechat_search_area = "";
 	};
 
     $scope.GetMoreSearchResults = function () {

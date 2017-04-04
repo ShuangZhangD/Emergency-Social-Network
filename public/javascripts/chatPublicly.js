@@ -147,6 +147,7 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
             }
         }
         $scope.showList["publicSearchResult"] = true;
+        $scope.showList['publicHistory'] = false;
         $scope.pubsearchmsg="";
     };
 

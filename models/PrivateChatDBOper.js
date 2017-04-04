@@ -102,6 +102,7 @@ class PrivateChatDBOper {
                             }
                             db.close();
                         });
+
                     }
                 });
             }
@@ -134,7 +135,7 @@ class PrivateChatDBOper {
     /* Get how many unread msg of receiver
      * public + private msg
      */
-    GetCount_AllUnreadMsg(callback) {
+    /*GetCount_AllUnreadMsg(callback) {
         var receiver = this.receiver;
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
@@ -149,12 +150,12 @@ class PrivateChatDBOper {
                 db.close();
             }
         });
-    }
+    }*/
 
     /* Get how many unread private msg of receiver
      * only private msg
      */
-    GetCount_AllPrivateUnreadMsg(callback) {
+    /*GetCount_AllPrivateUnreadMsg(callback) {
         var receiver = this.receiver;
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
@@ -169,7 +170,7 @@ class PrivateChatDBOper {
                 db.close();
             }
         });
-    }
+    }*/
 
     /* Get individual count of private msg of receiver
      * return type is an object
@@ -251,7 +252,7 @@ class PrivateChatDBOper {
         });
     }
 
-    Get_LatestIndividualUnreadMsg(callback){
+    /*Get_LatestIndividualUnreadMsg(callback){
         var receiver = this.receiver;
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
@@ -286,7 +287,7 @@ class PrivateChatDBOper {
                 });
             }
         });
-    }
+    }*/
 
     SearchMessages(username, words, callback) {
         MongoClient.connect(this.url, function (err, db) {
@@ -302,6 +303,7 @@ class PrivateChatDBOper {
                     else {
                         callback(success_statuscode, results);
                     }
+                    db.close();
                 });
             }
         });
