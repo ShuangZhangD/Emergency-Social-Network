@@ -252,7 +252,7 @@ class PrivateChatDBOper {
         });
     }
 
-    Get_LatestIndividualUnreadMsg(callback){
+    /*Get_LatestIndividualUnreadMsg(callback){
         var receiver = this.receiver;
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
@@ -287,7 +287,7 @@ class PrivateChatDBOper {
                 });
             }
         });
-    }
+    }*/
 
     SearchMessages(username, words, callback) {
         MongoClient.connect(this.url, function (err, db) {
