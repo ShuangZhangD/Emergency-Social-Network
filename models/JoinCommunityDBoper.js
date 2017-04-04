@@ -10,6 +10,8 @@ var db_err_statuscode = 400;
 var user_not_exist_statuscode = 401;
 var user_not_exist_msg = "Username not Exist";
 var pwd_incorrect_statuscode = 402;
+var signup_username_exist_statuscode = 405;
+var signup_username_exist_msg = "Username has existed!";
 var pwd_incorrect_msg = "Password Incorrect";
 var success_statuscode = 200;
 
@@ -78,6 +80,11 @@ class JoinCommunityDBOper {
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
             let new_user = new User(username, password, "online");
+            new_user.checkUser(db, username, function(result, err) {
+                    if(err){
+                        callback(db_err_statuscode, db_err_msg);
+                    }
+                    if(result.length>0) callback(signup_username_exist_statuscode, signup_username_exist_msg);
             new_user.createUser(db, function(result, err){
                 if(err) {
                     callback(db_err_statuscode, db_err_msg);
@@ -92,10 +99,12 @@ class JoinCommunityDBOper {
                             });
                             callback(success_statuscode, userlist);
                         }
+                        db.close();
                     });
                 }
-                db.close();
+        
             });
+        });
         });//end of database operation
     }
 

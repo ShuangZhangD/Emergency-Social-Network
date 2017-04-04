@@ -11,7 +11,7 @@ var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
-var dboper = require("../models/JoinComunityDBoper.js");
+var dboper = require("../models/JoinCommunityDBoper.js");
 
 var app = express();
 
@@ -28,18 +28,21 @@ var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 suite('Join Comunity Integration Tests', function(){
     
     test('Login by RESTful Api', function(done) {
-        server.post('/login')
-            .send({"username": "1001", password: "1234"})
-            .expect(200, function(err, res){
-                if(err) {
-                    return done(err);
-                }
-                else {
-                    var idx = res.body.data.indexOf("1001");
-                    expect(idx).to.above(-1);
-                    done();
-                }
-
+        server.post('/signup')
+            .send({"username": "test_user_for_rest_api", password: "1234"})
+            .expect(200, function(err, res) {
+                server.post('/login')
+                    .send({"username": "test_user_for_rest_api", password: "1234"})
+                    .expect(200, function(err, res){
+                        if(err) {
+                            return done(err);
+                        }
+                        else {
+                            var idx = res.body.data.indexOf("test_user_for_rest_api");
+                            expect(idx).to.above(-1);
+                            done();
+                        }
+                    });
             });
     });
 
@@ -56,9 +59,53 @@ suite('Join Comunity Integration Tests', function(){
                         expect(idx).to.above(-1);
                         done();
                     }
-
                 });
         });
+    });
+
+    test('Userlist by RESTful Api', function(done) {
+        server.post('/signup')
+            .send({"username": "test_user_for_rest_api", password: "1234"})
+            .expect(200, function(err, res) {
+                server.get('/userlist')
+                    .expect(200, function(err, res){
+                        if(err) {
+                            return done(err);
+                        }
+                        else {
+                            var idx = res.body.data1.indexOf("test_user_for_rest_api");
+                            if (idx < 0) {
+                                idx = res.body.data2.indexOf("test_user_for_rest_api");
+                            }
+                            expect(idx).to.above(-1);
+                            done();
+                        }
+                    });
+            });
+    });
+
+    test('Logout by RESTful Api', function(done) {
+        server.post('/signup')
+            .send({"username": "test_user_for_rest_api", password: "1234"})
+            .expect(200, function(err, res) {
+                server.get('/logout')
+                    .send({"username": "test_user_for_rest_api"})
+                    .expect(200, function(err, res){
+                        server.get('/userlist')
+                            .expect(200, function(err, res){
+                                if(err) {
+                                    return done(err);
+                                }
+                                else {
+                                    console.log(res.body);
+                                    var idx = res.body.data2.indexOf("test_user_for_rest_api");
+                                    expect(idx).to.above(-1);
+                                    done();
+                                }
+                            });
+
+                    });
+            });
     });
 
 });

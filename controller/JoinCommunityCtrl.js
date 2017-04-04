@@ -98,6 +98,8 @@ class JoinCommunityController {
                         res.json({success:0, err_type: 2, err_msg:content});
                     else if(statuscode == 402)
                         res.json({success:0, err_type: 3, err_msg:content});
+                    else if(statuscode == 405)
+                        res.json({success:0, err_type: 4, err_msg:content});
                 }
                 else {
                     var sorted_content = SortUserList(content);
