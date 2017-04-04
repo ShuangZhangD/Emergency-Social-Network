@@ -200,6 +200,26 @@ class JoinCommunityDBOper {
             }
         });
     }
+
+    RemoveUser(username, url, callback) {
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log("Error:" + err);
+                callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
+            }
+            else {
+                let user = new User(username, "", "", "");
+                user.removeUser(db, function(results, err){
+                    if (err) {
+                        console.log("Error:" + err);
+                    }
+                    else {
+                        callback(success_statuscode, results);
+                    }
+                });
+            }
+        });
+    }
 }
 
 let dboper = new JoinCommunityDBOper();
@@ -210,5 +230,6 @@ module.exports = {
     GetAllUsers: dboper.GetAllUsers,
     Logout: dboper.Logout,
     GetUserEmergencyStatus: dboper.GetUserEmergencyStatus,
-    GetAllUsernameAndEmergencyStatus: dboper.GetAllUsernameAndEmergencyStatus
+    GetAllUsernameAndEmergencyStatus: dboper.GetAllUsernameAndEmergencyStatus,
+    RemoveUser: dboper.RemoveUser
 };
