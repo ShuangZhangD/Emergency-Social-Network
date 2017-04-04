@@ -79,32 +79,41 @@ class JoinCommunityDBOper {
                 console.log("Error:"+ err);
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
-            let new_user = new User(username, password, "online");
-            new_user.checkUser(db, username, function(result, err) {
+            else {
+                let new_user = new User(username, password, "online");
+                new_user.checkUser(db, username, function(result, err) {
                     if(err){
                         callback(db_err_statuscode, db_err_msg);
                     }
-                    if(result.length>0) callback(signup_username_exist_statuscode, signup_username_exist_msg);
-            new_user.createUser(db, function(result, err){
-                if(err) {
-                    callback(db_err_statuscode, db_err_msg);
-                }
-                else {
-                    new_user.displayStatusUsers(db, "online", function(results, err) {
-                        if (err) callback(db_err_statuscode, db_err_msg);
-                        else {
-                            var userlist = [];
-                            results.forEach(function (result) {
-                                userlist.push(result.username);
-                            });
-                            callback(success_statuscode, userlist);
+                    else {
+                        if (result.length > 0) {
+                            callback(signup_username_exist_statuscode, signup_username_exist_msg);
+                            db.close();
                         }
-                        db.close();
-                    });
-                }
-        
-            });
-        });
+                        else {
+                            new_user.createUser(db, function(result, err){
+                                if(err) {
+                                    callback(db_err_statuscode, db_err_msg);
+                                }
+                                else {
+                                    new_user.displayStatusUsers(db, "online", function(results, err) {
+                                        if (err) callback(db_err_statuscode, db_err_msg);
+                                        else {
+                                            var userlist = [];
+                                        results.forEach(function (result) {
+                                            userlist.push(result.username);
+                                        });
+                                        callback(success_statuscode, userlist);
+                                        }
+                                    db.close();
+                                    });
+                                }
+                            });
+                        } // if (result>0)
+                    } // if (err)
+                }); // checkUser
+            }
+            
         });//end of database operation
     }
 
