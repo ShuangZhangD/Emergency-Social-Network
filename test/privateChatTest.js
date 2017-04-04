@@ -127,6 +127,25 @@ suite('Private Chat Test', function(){
         });
     });
 
+    test('Test Update Unread Chat Msg in models', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function: hi",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake0, function(statuscode0, content0){
+            expect(statuscode0).to.equal(200);
+            dboper.UpdateReadStatus(function(statuscode1,content1){
+                expect(statuscode1).to.equal(200);
+                done();
+            });
+        });
+    });
+
     //to test message number of a particular receiver
     test('test message number of a particular receiver', function(done){
         let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
@@ -192,6 +211,7 @@ suite('Private Chat Test', function(){
         });
 
     });
+
 
 
     //to test the chat private function
