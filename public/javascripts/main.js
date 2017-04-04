@@ -11,7 +11,9 @@ app.controller("initCtrl", function($scope, $http) {
         publicSearchResult: false,
         annoucementSearchResult: false,
         privateChatSearchResult: false,
-        privateChatTable: false
+        privateChatTable: false,
+        publicHistory: false,
+        announcementHistory: false
     };
     $scope.searchStatus = true;
     $scope.searchName =  false;

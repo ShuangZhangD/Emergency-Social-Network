@@ -141,6 +141,7 @@ app.controller('postAnnouncementCtrl', function($window, $scope, $rootScope, $ht
 
         }
         $scope.showList['annoucementSearchResult'] = true;
+        $scope.showList['announcementHistory'] = false;
         $scope.annsearchmsg="";
     };
 
