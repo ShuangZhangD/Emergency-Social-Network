@@ -19,7 +19,10 @@ var createoper = require("../models/User.js");
 var app = express();
 
 
-var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
+//var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
+var TestDBConfig = require("./TestDBConfig");
+let dbconfig = new TestDBConfig();
+var url = dbconfig.getURL();
 
 //using server not app to listening port 5000
 var server = request.agent("https://quiet-peak-31270.herokuapp.com");
@@ -95,9 +98,9 @@ suite('Share Status Tests', function(){
         let new_user = new createoper(name,"1234", "online");
         new_user.createUser(testDB, function(results0, err0){
             expect(err0).to.equal(null);
-            dboper.Updatesharestatus(name,"OK", function(err, results) {
+            dboper.Updatesharestatus(name,"OK", url, function(err, results) {
                 expect(err).to.equal(null);
-                dboper.Getsharestatus(name,function(err, results1){
+                dboper.Getsharestatus(name, url, function(err, results1){
                     console.log("===========" + results1["emergencystatus"]);
                     expect(results1["emergencystatus"]).to.equal("OK");
                     testDB.collection("USERS").drop();

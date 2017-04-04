@@ -1,9 +1,7 @@
 "use strict";
 var MongoClient = require("mongodb").MongoClient;
 var User = require("./User.js");
-var DBConfig = require("./DBConfig");
-let dbconfig = new DBConfig();
-var url = dbconfig.getURL();
+
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 //var url = "mongodb://localhost:27017/test";
 
@@ -16,7 +14,7 @@ var pwd_incorrect_msg = "Password Incorrect";
 var success_statuscode = 200;
 
 class JoinCommunityDBOper {
-    Login (username, password, callback){
+    Login (username, password, url, callback){
         MongoClient.connect(url, function(err, db) {
             if(err) {
                 console.log("Error:"+ err);
@@ -73,7 +71,7 @@ class JoinCommunityDBOper {
         });//end of database operation
     }
 
-    AddDB (username, password, callback) {
+    AddDB (username, password, url, callback) {
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 console.log("Error:"+ err);
@@ -101,7 +99,7 @@ class JoinCommunityDBOper {
         });//end of database operation
     }
 
-    GetAllUsers (callback){
+    GetAllUsers (url, callback){
         MongoClient.connect(url, function(err, db) {
             if(err){
                 console.log("Error:"+ err);
@@ -135,7 +133,7 @@ class JoinCommunityDBOper {
         });//end of database operation
     }
 
-    Logout (username, callback){
+    Logout (username, url, callback){
         MongoClient.connect(url, function(err, db) {
             if(err){
                 console.log("Error:"+ err);
@@ -155,7 +153,7 @@ class JoinCommunityDBOper {
         });//end of database operation
     }
 
-    GetUserEmergencyStatus (userlist, callback){
+    GetUserEmergencyStatus (userlist, url, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) {
                 console.log("Error:" + err);
@@ -183,7 +181,7 @@ class JoinCommunityDBOper {
         });
     }
 
-    GetAllUsernameAndEmergencyStatus(callback){
+    GetAllUsernameAndEmergencyStatus(url, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) {
                 console.log("Error:" + err);

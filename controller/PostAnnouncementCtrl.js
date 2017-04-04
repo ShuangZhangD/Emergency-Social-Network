@@ -4,6 +4,9 @@
 "use strict";
 
 var dboper = require("../models/PostAnnouncementDBoper.js");
+var DBConfig = require("./DBConfig");
+let dbconfig = new DBConfig();
+var url = dbconfig.getURL();
 
 class PostAnnouncementCtrl {
 
@@ -11,7 +14,7 @@ class PostAnnouncementCtrl {
         var info = req.body;
         var announcement = info["announcement"];
         var username = info["username"];
-        dboper.InsertAnnouncement(username, announcement, Date.now(), function (err, results) {
+        dboper.InsertAnnouncement(username, announcement, Date.now(), url, function (err, results) {
             if (err) {
                 console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
@@ -28,9 +31,9 @@ class PostAnnouncementCtrl {
     }
 
     LoadAnnouncement (req, res){
-        dboper.LoadAnnouncement(function (err, results) {
+        dboper.LoadAnnouncement(url, function (err, results) {
             if (err) {
-                console.log("Error:"+ err);
+                console.log("Error3:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
             }
             else {

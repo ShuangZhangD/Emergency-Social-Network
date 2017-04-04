@@ -16,7 +16,10 @@ var dboper = require("../models/PublicChatDBoper.js");
 var app = express();
 
 
-var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
+//var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
+var TestDBConfig = require("./TestDBConfig");
+let dbconfig = new TestDBConfig();
+var url = dbconfig.getURL();
 
 //using server not app to listening port 5000
 var server = request.agent("https://quiet-peak-31270.herokuapp.com");
@@ -82,8 +85,8 @@ suite('Public Chat Tests', function(){
     });
 
     test('Testing Announcement Function', function(done){
-        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test", "public",Date.now(), "OK",function (err, results1){
-            dboper.LoadPublicMessage(function (err, results2) {
+        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test", "public",Date.now(), "OK",url, function (err, results1){
+            dboper.LoadPublicMessage(url, function (err, results2) {
                expect(results2[results2.length-1]["pubmsg"]).to.equal("testing public chat function in Unit Test");
                done();
             });

@@ -18,7 +18,10 @@ var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
 var app = express();
 
 
-var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
+//var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
+var TestDBConfig = require("./TestDBConfig");
+let dbconfig = new TestDBConfig();
+var url = dbconfig.getURL();
 
 //using server not app to listening port 5000
 var server = request.agent("https://quiet-peak-31270.herokuapp.com");
@@ -95,7 +98,7 @@ suite('Private Chat Test', function(){
 
     //to test message number of a particular receiver
     test('test message number of a particular receiver', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq");
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
         var fake0 = {
             "sender": "keqin",
             "receiver": "test1000lkq",
@@ -133,7 +136,7 @@ suite('Private Chat Test', function(){
 
     //to test unread number
     test('Unread Function Test', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq");
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
         dboper.GetCount_IndividualUnreadMsg(function(statuscode1, results1){
             var fake = {
                 "sender": "keqin",
@@ -160,7 +163,7 @@ suite('Private Chat Test', function(){
 
     //to test the chat private function
     test('Private Chat Function Test', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq");
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
         var fake = {
             "sender": "keqin",
             "receiver": "test1000lkq",

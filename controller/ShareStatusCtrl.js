@@ -1,49 +1,62 @@
 /**
  * Created by keqinli on 3/18/17.
  */
-"use strict";
+'use strict';
+var express = require('express');
+var myParser = require("body-parser");
 
 var dboper = require("../models/ShareStatusDBoper");
+var app = express();
+var DBConfig = require("./DBConfig");
+let dbconfig = new DBConfig();
+var url = dbconfig.getURL();
 
 class ShareStatusController {
+
     AddShareStatus(req, res){
-        var info = req.body;
+        //console.log(res)
+        console.log("Inside Sharestatuscontroller");
+		var info = req.body;
         var username = info["username"];
         var status=info["emergencystatus"];
+		console.log("After inits");
         //update database through ShareStatusDBoper.updatesharestatus
-        dboper.Updatesharestatus(username, status, function (err, results) {
-            if (err) {
-                console.log("Error:"+ err);
+        dboper.Updatesharestatus(username, status, url, function (err, results) {
+            console.log("inside sharestatuscontroller again");
+			if (err) {
+                console.log('Error:'+ err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
-            }
-            else {
-                console.log(results);
-                res.json({success:1, suc_msg: "Success"});
-            }
-        });
+            } else {
+				 res.json({success:1, suc_msg: "Success"});
+            }});
     }
 
     GetShareStatus(req, res){
         var info=req.body;
         var username = info["username"];
+
         username = req.param("username");
-        dboper.Getsharestatus(username, function(err, results){
+
+
+        dboper.Getsharestatus(username, url, function(err, results){
             if(err) {
-                console.log("Error:" +err);
+                console.log('Error:' +err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
-            }
-            else {
+            } else {
                 res.json({success:1, data: results});
             }
+
         });
     }
-
+    //
     UpdateShareStatusSocket(socket){
         return function(data) {
-            socket.emit("Update Share Status", data);
-            socket.broadcast.emit("Update Share Status", data);
+            socket.emit('Update Share Status', data);
+            socket.broadcast.emit('Update Share Status', data);
         };
     }
+
+
 }
 
 let ssc = new ShareStatusController();

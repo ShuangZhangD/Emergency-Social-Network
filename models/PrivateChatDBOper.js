@@ -4,9 +4,9 @@
 "use strict";
 var MongoClient = require("mongodb").MongoClient;
 var User = require("./User.js");
-var DBConfig = require("./DBConfig");
-let dbconfig = new DBConfig();
-var url = dbconfig.getURL();
+//var DBConfig = require("./DBConfig");
+//let dbconfig = new DBConfig();
+//var url = dbconfig.getURL();
 //var url = "mongodb://localhost:27017/test";
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 var Message = require("./Message.js");
@@ -17,14 +17,14 @@ var success_statuscode = 200;
 
 class PrivateChatDBOper {
 
-    constructor(sender, receiver) {
+    constructor(sender, receiver, url) {
         this.sender = sender;
         this.receiver = receiver;
-
+        this.url = url;
     }
 
     GetUserEmergencyStatus(username, callback){
-        MongoClient.connect(url, function (err, db) {
+        MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 console.log("Error:" + err);
                 callback(db_err_statuscode, db_err_msg);
@@ -47,7 +47,7 @@ class PrivateChatDBOper {
     }
 
     InsertMessage(message, callback) {
-        MongoClient.connect(url, function (err, db) {
+        MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 console.log("Error:" + err);
                 callback(db_err_statuscode, db_err_msg);
@@ -80,7 +80,7 @@ class PrivateChatDBOper {
     LoadHistoryMsg(callback) {
         var sender = this.sender;
         var receiver = this.receiver;
-        MongoClient.connect(url, function (err, db) {
+        MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
@@ -100,8 +100,8 @@ class PrivateChatDBOper {
                                 callback(success_statuscode, results);
                                 //let MSG2 = new Message(receiver, sender)
                             }
+                            db.close();
                         });
-                        db.close();
                     }
                 });
             }
@@ -111,7 +111,7 @@ class PrivateChatDBOper {
     UpdateReadStatus(callback){
         var sender = this.sender;
         var receiver = this.receiver;
-        MongoClient.connect(url, function (err, db) {
+        MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
@@ -136,7 +136,7 @@ class PrivateChatDBOper {
      */
     GetCount_AllUnreadMsg(callback) {
         var receiver = this.receiver;
-        MongoClient.connect(url, function (err, db) {
+        MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
@@ -156,7 +156,7 @@ class PrivateChatDBOper {
      */
     GetCount_AllPrivateUnreadMsg(callback) {
         var receiver = this.receiver;
-        MongoClient.connect(url, function (err, db) {
+        MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
@@ -176,7 +176,7 @@ class PrivateChatDBOper {
      */
     GetCount_IndividualUnreadMsg(callback) {
         var receiver = this.receiver;
-        MongoClient.connect(url, function (err, db) {
+        MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
@@ -216,7 +216,7 @@ class PrivateChatDBOper {
      */
     GetCount_IndividualPrivateSender(callback) {
         var receiver = this.receiver;
-        MongoClient.connect(url, function (err, db) {
+        MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
@@ -253,7 +253,7 @@ class PrivateChatDBOper {
 
     Get_LatestIndividualUnreadMsg(callback){
         var receiver = this.receiver;
-        MongoClient.connect(url, function (err, db) {
+        MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
@@ -289,7 +289,7 @@ class PrivateChatDBOper {
     }
 
     SearchMessages(username, words, callback) {
-        MongoClient.connect(url, function (err, db) {
+        MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
