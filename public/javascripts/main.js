@@ -7,7 +7,9 @@ app.controller('initCtrl', function($scope, $http) {
         chatPublicly : false,
 		privateChatList : false,
         privateChatContent: false,
-        shareStatus: false
+        shareStatus: false,
+        publicSearchResult: false,
+        annoucementSearchResult: false,
     };
     $scope.userClass = {
 		username:"",
@@ -21,6 +23,8 @@ app.controller('initCtrl', function($scope, $http) {
     $scope.logined = false;
     $scope.username = '';
     $scope.test = '123';
-
+    $scope.historyList1 = [];
+    $scope.historyList2 = [];
+    $scope.historyStatus = [];
     console.log($scope);
 });

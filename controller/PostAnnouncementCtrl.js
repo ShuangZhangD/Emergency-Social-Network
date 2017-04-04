@@ -1,46 +1,52 @@
 /**
  * Created by shuang on 3/18/17.
  */
-'use strict';
+"use strict";
 
-var express = require('express');
-var myParser = require("body-parser");
 var dboper = require("../models/PostAnnouncementDBoper.js");
-var app = express();
+var DBConfig = require("./DBConfig");
+let dbconfig = new DBConfig();
+var url = dbconfig.getURL();
 
-module.exports = {
+class PostAnnouncementCtrl {
 
-
-    AddAnnouncement : function (req, res) {
+    AddAnnouncement (req, res) {
         var info = req.body;
         var announcement = info["announcement"];
         var username = info["username"];
-        dboper.InsertAnnouncement(username, announcement, Date.now(), function (err, results) {
+        dboper.InsertAnnouncement(username, announcement, Date.now(), url, function (err, results) {
             if (err) {
-                console.log('Error:'+ err);
-                res.json({success:0, err_type: 1, err_msg:"Database Error"});
-            } else {
-                res.json({success:1, suc_msg: "Success"});
-
-            }});
-    },
-
-    AnnouncementSocket : function (socket) {
-        return function(data) {
-            socket.emit('Post Announcement', data);
-            socket.broadcast.emit('Post Announcement', data);
-        };
-    },
-    LoadAnnouncement : function(req, res){
-        dboper.LoadAnnouncement(function (err, results) {
-            if (err) {
-                console.log('Error:'+ err);
+                console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
             } else {
+                res.json({success:1, suc_msg: "Success"});
+            }});
+    }
 
+    AnnouncementSocket (socket) {
+        return function(data) {
+            socket.emit("Post Announcement", data);
+            socket.broadcast.emit("Post Announcement", data);
+        };
+    }
+
+    LoadAnnouncement (req, res){
+        dboper.LoadAnnouncement(url, function (err, results) {
+            if (err) {
+                console.log("Error3:"+ err);
+                res.json({success:0, err_type: 1, err_msg:results});
+            }
+            else {
                 res.json({success:1, data: results});
             }
         });
     }
+}
 
+let pac = new PostAnnouncementCtrl();
+
+module.exports = {
+    AddAnnouncement: pac.AddAnnouncement,
+    AnnouncementSocket: pac.AnnouncementSocket,
+    LoadAnnouncement: pac.LoadAnnouncement
 };

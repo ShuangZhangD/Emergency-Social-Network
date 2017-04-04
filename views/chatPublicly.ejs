@@ -11,11 +11,32 @@
 
 <!--div class="container"  ng-app="chatPubliclyAPP" ng-controller="chatPubliclyCtrl"-->
 <div class="container" ng-controller="chatPubliclyCtrl" ng-show="showList.chatPublicly">
+
+    <div class="container" ng-show="showList.publicSearchResult">
+        <div class="panel panel-default " ng-repeat="msg in PublicSearchResult track by $index">
+            <div class="panel-heading"><span>{{msg.username}} @ </span><span>(Status: {{msg.emergencystatus}}){{msg.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
+            <div class="panel-body"><span class="content">{{msg.pubmsg}}</span><span class="avatar"></span></div>
+        </div>
+
+        <div ng-if="SearchPublicMsgMore">
+            <div style="cursor:pointer" ng-click="GetMorePublicSearchResults()">----More----</div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <div class="form-inline text-center">
+        <input ng-model="pubsearchmsg" id="pubsearchmsg" type="text" class="form-control input-lg" placeholder="Search Public Msg">
+        <button class="btn btn-lg btn-info" type="submit" ng-click="searchPublicMsg()">Search</button>
+        </div>
+    </div>
+
+    <br>
+
     <div class="container">
 
-
             <div class="panel panel-default " ng-repeat="msg in displaymsg track by $index">
-
 
             <div class="panel-heading"><span>{{msg.username}} @ </span><span>(Status: {{msg.emergencystatus}}){{msg.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
             <div class="panel-body"><span class="content">{{msg.pubmsg}}</span><span class="avatar"></span></div>
