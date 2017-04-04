@@ -107,4 +107,4 @@ suite('Share Status Tests', function(){
         });
 
     });
-})
+});
