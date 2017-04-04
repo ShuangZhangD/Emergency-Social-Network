@@ -2,6 +2,15 @@
 <div class="container" ng-controller="postAnnouncementCtrl" ng-show="showList.postAnnouncement">
     <h3> Announcement </h3>
 
+    <div class="input-group">
+        <input ng-model="annsearchmsg" id="annsearchmsg" type="text" class="form-control" placeholder="Search Announcement">
+        <span class="input-group-btn">
+        <button class="btn btn-info" type="submit" ng-click="searchAnnouncement()">Search</button>
+        </span>
+    </div>
+
+    <br>
+
     <div class="container" ng-show="showList.annoucementSearchResult">
         <div class="panel panel-default " ng-repeat="ann in AnnounceSearchResult track by $index">
             <div class="panel-heading"><span>{{ann.username}} @ </span><span>{{ann.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
@@ -9,27 +18,19 @@
         </div>
 
         <div ng-if="SearchAnnounceMore">
-            <div style="cursor:pointer" ng-click="GetMoreSearchResults()">----More----</div>
+            <div style="cursor:pointer" ng-click="GetMoreSearchResults()">----More----</div><br><br>
         </div>
     </div>
 
-    <div class="container">
-        <div class="form-inline text-center">
-            <input ng-model="annsearchmsg" id="annsearchmsg" type="text" class="form-control" placeholder="Search Announcement" autofocus>
-            <button class="btn btn-lg btn-info btn-primary " type="submit" ng-click="searchAnnouncement()">Search</button>
-        </div>
-    </div>
-    <br>
 
-
-    <div class="container">
+    <div class="container" ng-show="showList.announcementHistory">
 
         <div class="panel panel-default" ng-repeat="ann in announcementList track by $index">
             <div class="panel-heading"><span>{{ann.username}} @ </span><span>{{ann.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
             <div class="panel-body"><span class="content">{{ann.announcement}}</span><span class="avatar"></span></div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" ng-show="showList.announcementHistory">
         <div class="form-signin">
             <input ng-model="announcement_content" id="postAnnouncement" type="text" class="form-control" placeholder="Post Announcement" required autofocus>
             <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="submitAnnouncement()">Post Announcement</button>

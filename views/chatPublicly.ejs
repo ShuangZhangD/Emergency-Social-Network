@@ -12,6 +12,16 @@
 <!--div class="container"  ng-app="chatPubliclyAPP" ng-controller="chatPubliclyCtrl"-->
 <div class="container" ng-controller="chatPubliclyCtrl" ng-show="showList.chatPublicly">
 
+
+    <div class="input-group">
+        <input ng-model="pubsearchmsg" id="pubsearchmsg" type="text" class="form-control" placeholder="Search Public Msg">
+        <span class="input-group-btn">
+        <button class="btn btn-info" type="submit" ng-click="searchPublicMsg()">Search</button>
+        </span>
+    </div>
+
+    <br>
+
     <div class="container" ng-show="showList.publicSearchResult">
         <div class="panel panel-default " ng-repeat="msg in PublicSearchResult track by $index">
             <div class="panel-heading"><span>{{msg.username}} @ </span><span>(Status: {{msg.emergencystatus}}){{msg.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
@@ -19,35 +29,26 @@
         </div>
 
         <div ng-if="SearchPublicMsgMore">
-            <div style="cursor:pointer" ng-click="GetMorePublicSearchResults()">----More----</div>
-        </div>
-    </div>
-
-
-
-    <div class="container">
-        <div class="form-inline text-center">
-        <input ng-model="pubsearchmsg" id="pubsearchmsg" type="text" class="form-control input-lg" placeholder="Search Public Msg">
-        <button class="btn btn-lg btn-info" type="submit" ng-click="searchPublicMsg()">Search</button>
+            <div style="cursor:pointer" ng-click="GetMorePublicSearchResults()">----More----</div><br><br>
         </div>
     </div>
 
     <br>
 
-    <div class="container">
+    <div class="container" ng-show="showList.publicHistory">
 
-            <div class="panel panel-default " ng-repeat="msg in displaymsg track by $index">
+        <div class="panel panel-default " ng-repeat="msg in displaymsg track by $index">
 
             <div class="panel-heading"><span>{{msg.username}} @ </span><span>(Status: {{msg.emergencystatus}}){{msg.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
             <div class="panel-body"><span class="content">{{msg.pubmsg}}</span><span class="avatar"></span></div>
 
 
-            </div>
+        </div>
 
 
     </div>
 
-    <div class="container">
+    <div class="container" ng-show="showList.publicHistory">
         <div class="form-signin">
             <input ng-model="pubmsg" id="pubmsg" type="text" class="form-control" placeholder="Send Public Msg" required autofocus>
             <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="postMsg()">Send Msg</button>
