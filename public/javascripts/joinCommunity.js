@@ -236,6 +236,7 @@ app.controller('joinCommunityCtrl', function($window, $scope, $rootScope, $http,
             $scope.showList[item] = false;
         }
 		$scope.showList['privateChatList'] = true;
+		$scope.showList['privateChatTable'] =true;
 	};
 	$scope.showShareStatus = function() {
 		for (var item in $scope.showList) {

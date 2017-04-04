@@ -10,6 +10,8 @@ app.controller('initCtrl', function($scope, $http) {
         shareStatus: false,
         publicSearchResult: false,
         annoucementSearchResult: false,
+        privateChatSearchResult: false,
+        privateChatTable: false
     };
     $scope.userClass = {
 		username:"",
