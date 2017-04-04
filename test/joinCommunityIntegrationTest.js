@@ -26,6 +26,7 @@ var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 // var server = request.agent("http://localhost:5000");
 
 suite('Join Comunity Integration Tests', function(){
+    this.timeout(15000);
     
     test('Login by RESTful Api', function(done) {
         server.post('/signup')
