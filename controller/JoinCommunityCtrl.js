@@ -31,13 +31,13 @@ var SortUserList = function(userlist)
 };
 
 class JoinCommunityController {
-
+/*
     Validate (username, password) {
         if( /\w{3,}/.test(username) && /\w{4,}/.test(password) )
             return true;
         else
             return false;
-    }
+    }*/
 
     SortUserList (userlist) {
         //userlist should be an array of users

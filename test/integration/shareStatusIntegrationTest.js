@@ -13,8 +13,8 @@ var assert = require('assert');
 var express = require('express');
 
 //var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
-var dboper = require("../../models/ShareStatusDBoper");
-var createoper = require("../../models/User.js");
+// var dboper = require("../../models/ShareStatusDBoper");
+// var createoper = require("../../models/User.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 //var app = express();
