@@ -32,10 +32,10 @@ suite('Join Comunity Integration Tests', function(){
     this.timeout(15000);
 
     test('Login by RESTful Api', function(done) {
-        request.post(,'/signup')
+        request.post(HOST+'/signup')
             .send({"username": "test_user_for_rest_api", password: "1234"})
             .expect(200, function(err, res) {
-                server.post('/login')
+                server.post(HOST+'/login')
                     .send({"username": "test_user_for_rest_api", password: "1234"})
                     .expect(200, function(err, res){
                         if(err) {
