@@ -4,7 +4,7 @@
 'use strict';
 
 var expect = require('expect.js');
-var request = require('supertest');
+// var request = require('supertest');
 var express = require('express');
 
 var MongoClient = require('mongodb').MongoClient;
@@ -17,16 +17,17 @@ var PrivateChatDBOper = require("../../models/PrivateChatDBOper.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 var app = express();
-
+var myapp = require('../../app.js');
+var request = require('supertest').agent(myapp.listen());
 
 //var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
 var TestDBConfig = require("../TestDBConfig");
 let dbconfig = new TestDBConfig();
 var url = dbconfig.getURL();
 
-//using server not app to listening port 5000
-var server = request.agent("https://quiet-peak-31270.herokuapp.com");
-// var server = request.agent("http://localhost:5000");
+//using request not app to listening port 5000
+// var request = request.agent("https://quiet-peak-31270.herokuapp.com");
+// var request = request.agent("http://localhost:5000");
 
 suite('Private Chat Test', function(){
     this.timeout(15000);
@@ -59,7 +60,7 @@ suite('Private Chat Test', function(){
 
     test('Getting Private Chat from RESTful Api', function(done){
         //request(app).get('/announcement').expect("Content-type",/json/)
-        server.get('/privatechat/:sender/:receiver')
+        request.get('/privatechat/:sender/:receiver')
             .send({"sender": "keqin", "receiver":"test1000lkq"})
             .expect(200, function(err, res){
                 if(err) return done(err);
@@ -72,7 +73,7 @@ suite('Private Chat Test', function(){
     });
 
     test('Adding Private Message from RESTful Api', function(done){
-        server.post('/privatechat')
+        request.post('/privatechat')
             .send({"PrivateMsg": "Testing Private Message RESTful Api","sender": "keqin", "receiver":"test1000lkq"})
             .expect(200, function(err, res){
                 if(err) return done(err);
@@ -85,7 +86,7 @@ suite('Private Chat Test', function(){
     });
 
     test('Getting Unread Number from RESTful Api', function(done){
-        server.get('/privatechat/:receiver')
+        request.get('/privatechat/:receiver')
             .send({"receiver": "test1000lkq"})
             .expect(200, function(err, res){
                 if(err) return done(err);
@@ -98,7 +99,7 @@ suite('Private Chat Test', function(){
     });
 
     test('Test Private Chat Search from RESTFul Api', function(done){
-       server.get('/privatechat/search/:user')
+       request.get('/privatechat/search/:user')
            .send({"user": "test1000lkq"})
            .expect(200,function(err, res){
                if(err) return done(err);
