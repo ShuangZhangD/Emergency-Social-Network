@@ -13,7 +13,7 @@ var PostAnnouncementCtrl = require("./controller/PostAnnouncementCtrl.js");
 var ShareStatusCtrl = require("./controller/ShareStatusCtrl");
 var ConnectedSockets = {};
 var publicChat = require("./controller/PublicChatCtrl.js");
-var privateChat = require("./controller/PrivateChatCtrl.js");
+var privateChat = require("./controller/PrivateChatSocketCtrl");
 io.on("connection", function(socket) {
 
     socket.on("Public Message", publicChat.publicMessageSocket(socket));
