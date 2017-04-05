@@ -52,7 +52,7 @@ class User {
         });
     }
 
-    // Method to display a user, takes the "USERS" collection as a parameter
+    /*// Method to display a user, takes the "USERS" collection as a parameter
     displayUser(db, callback) {
         this.collection = db.collection("USERS");
         this.collection.find({"username" : this.username}).toArray(function(err, results) {
@@ -65,7 +65,7 @@ class User {
                 callback(results, null);
             }
         });
-    }
+    }*/
 
     // Method to delete a user, takes the "USERS" collection as a parameter
     removeUser(db, callback) {
@@ -113,7 +113,7 @@ class User {
         });
     }
 
-    // Retrieves all the users
+    /*// Retrieves all the users
     displayUsers(db, callback) {
         this.collection = db.collection("USERS");
         //this.collection.find().toArray(function(err, results) {
@@ -127,7 +127,7 @@ class User {
                 callback(results, null);
             }
         });
-    }
+    }*/
 
     // Method to check if a user exists
     checkUser(db, username, callback) {
