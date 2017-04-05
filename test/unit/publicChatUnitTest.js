@@ -81,4 +81,22 @@ suite('Public Chat Unit Tests', function(){
         });
     });
 
+    test('Public Chat SearchMessages erro in db', function(done){
+        //let dboper = new PublicChatDBoper("keqin", "test1000lkq", url);
+        dboper.SearchPublicMessages([""], error_url,function(err, result){
+            expect(err).to.equal(400);
+            done();
+        });
+    });
+
+    test('Test Public Chat Search Function in models', function(done){
+        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test err_url", "public",Date.now(), "OK",url, function (statuscode0, content0){
+            expect(statuscode0).to.equal(null);
+            dboper.SearchPublicMessages(["chat", "hi"], url,function(err1, results1){
+                expect(err1).to.equal(200); //TODO test if results content equal or not
+                done();
+            });
+        });
+    });
+
 });

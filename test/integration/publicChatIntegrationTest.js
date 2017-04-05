@@ -87,4 +87,17 @@ suite('Public Chat Integration Tests', function(){
                 }
             });
     });
+
+    test('Test Public Chat Search from RESTFul Api', function(done){
+        request.post('/publicchat/search')
+            .send(["chat","hi"])
+            .expect(200,function(err, res){
+                if(err) return done(err);
+                else {
+                    expect(res.body.success).to.equal(1);
+                    done();
+                }
+            })
+    });
+
 });
