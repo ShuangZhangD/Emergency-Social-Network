@@ -13,15 +13,15 @@ var assert = require('assert');
 var express = require('express');
 
 //var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
-var dboper = require("../models/ShareStatusDBoper");
-var createoper = require("../models/User.js");
+var dboper = require("../../models/ShareStatusDBoper");
+var createoper = require("../../models/User.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 var app = express();
 
 
 //var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
-var TestDBConfig = require("./TestDBConfig");
+var TestDBConfig = require("../TestDBConfig");
 let dbconfig = new TestDBConfig();
 var url = dbconfig.getURL();
 
@@ -56,40 +56,6 @@ suite('Share Status Tests', function(){
 
         testDB.close();
         done();
-    });
-
-    test('Getting Share Status Through RESTful Api', function(done){
-        //request(app).get('/announcement').expect("Content-type",/json/)
-        server.get('/userstatus/:username')
-            .send({"username": "keqin"})
-            .expect(200, function(err, res){
-                if(err) return done(err);
-                else {
-
-                    expect(res.body.success).to.equal(1);
-
-                    done();
-                }
-
-            });
-
-    });
-
-    test('Changing Share Status Through RESTful Api', function(done){
-        //request(app).get('/announcement').expect("Content-type",/json/)
-        server.post('/userstatus')
-            .send({"username": "keqin", "emergencystatus": "OK"})
-            .expect(200, function(err, res){
-                if(err) return done(err);
-                else {
-                    // console.log("here" + res.body.suc_msg);
-                    expect(res.body.suc_msg).to.equal("Success");
-
-                    done();
-                }
-
-            });
-
     });
 
     //to test the share status if it is consistent
