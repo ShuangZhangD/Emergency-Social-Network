@@ -17,11 +17,13 @@ class PostAnnouncementDBoper {
                 //console.log("Error:"+ err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
-            var collection = db.collection("announcement");
-            //insert into table
-            var data = [{"username": username,"announcement":announcement, "postTime": postTime}];
-            collection.insert(data, callback);
-            db.close();
+            else {
+                var collection = db.collection("announcement");
+                //insert into table
+                var data = [{"username": username, "announcement": announcement, "postTime": postTime}];
+                collection.insert(data, callback);
+                db.close();
+            }
         });
     }
 

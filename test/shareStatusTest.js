@@ -15,6 +15,7 @@ var express = require('express');
 //var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
 var dboper = require("../models/ShareStatusDBoper");
 var createoper = require("../models/User.js");
+var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 var app = express();
 
@@ -110,4 +111,27 @@ suite('Share Status Tests', function(){
         });
 
     });
+
+    test('Share Status Updatesharestatus DB Error', function(done){
+        dboper.Updatesharestatus("","",error_url,function(err, result){
+            expect(err).to.equal(400);
+            done();
+        });
+    });
+
+    test('Share Status Getsharestatus DB Error', function(done){
+        dboper.Getsharestatus("",error_url,function(err, result){
+            expect(err).to.equal(400);
+            done();
+        });
+    });
+
+    test('Share Status User Not Exist', function(done){
+        dboper.Getsharestatus(Date.now(),url,function(err, result){
+            expect(err).to.equal(null);
+            done();
+        });
+    });
+
+
 });
