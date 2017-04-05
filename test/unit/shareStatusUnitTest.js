@@ -62,7 +62,7 @@ suite('Share Status Tests', function(){
     test('Share Status Function Test', function(done){
         //we need creat a user at least
         var name = Date.now();
-        let new_user = new createoper(name,"1234", "online");
+        let new_user = new createoper(name,"1234", "online","OK");
         new_user.createUser(testDB, function(results0, err0){
             expect(err0).to.equal(null);
             dboper.Updatesharestatus(name,"OK", url, function(err, results) {
