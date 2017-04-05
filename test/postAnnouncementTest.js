@@ -75,7 +75,7 @@ suite('Post Announcement Tests', function(){
             .expect(200, function(err,res){
                 if(err) return done(err);
                 else {
-                    console.log(res.body.suc_msg);
+                    //console.log(res.body.suc_msg);
                     //expect
                     expect(res.body.suc_msg).to.equal("Success");
                     done();
@@ -97,6 +97,15 @@ suite('Post Announcement Tests', function(){
             //dboper.LoadAnnouncement(url, function (err, results2) {
                 expect(err).to.equal(400);
                 done();
+            //});
+        });
+    });
+
+    test('Testing Load Announcement Function DB Error', function(done){
+        dboper.LoadAnnouncement(error_url, function(err,result){
+            //dboper.LoadAnnouncement(url, function (err, results2) {
+            expect(err).to.equal(400);
+            done();
             //});
         });
     });

@@ -36,11 +36,11 @@ class PostAnnouncementDBoper {
             }
             var collection = db.collection("announcement");
             collection.find({}).toArray(function(err, results){
-                if(err)
-                {
-                    //console.log("Error2:"+ err);
-                    callback(err, "Database error");
-                }else {
+                // if(err)
+                // {
+                //     //console.log("Error2:"+ err);
+                //     callback(err, "Database error");
+                // }else {
                     var datas = [];
                     results.forEach(function(result){
                         var data = {};
@@ -50,7 +50,7 @@ class PostAnnouncementDBoper {
                         datas.push(data);
                     });
                     callback(err,datas);
-                }
+                //}
                 db.close();
             });
         });
