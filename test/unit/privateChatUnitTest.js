@@ -13,14 +13,14 @@ var express = require('express');
 
 //var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
 //var PrivateChatCtrl = require('../controller/PrivateChatCtrl.js');
-var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
+var PrivateChatDBOper = require("../../models/PrivateChatDBOper.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 var app = express();
 
 
 //var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';
-var TestDBConfig = require("./TestDBConfig");
+var TestDBConfig = require("../TestDBConfig");
 let dbconfig = new TestDBConfig();
 var url = dbconfig.getURL();
 
@@ -55,58 +55,6 @@ suite('Private Chat Test', function(){
         //testDB.collection("USERS").drop();
         testDB.close();
         done();
-    });
-
-    test('Getting Private Chat from RESTful Api', function(done){
-        //request(app).get('/announcement').expect("Content-type",/json/)
-        server.get('/privatechat/:sender/:receiver')
-            .send({"sender": "keqin", "receiver":"test1000lkq"})
-            .expect(200, function(err, res){
-                if(err) return done(err);
-                else {
-                    expect(res.body.success).to.equal(1);
-                    done();
-                }
-
-            });
-    });
-
-    test('Adding Private Message from RESTful Api', function(done){
-        server.post('/privatechat')
-            .send({"PrivateMsg": "Testing Private Message RESTful Api","sender": "keqin", "receiver":"test1000lkq"})
-            .expect(200, function(err, res){
-                if(err) return done(err);
-                else {
-                    expect(res.body.suc_msg).to.equal("Success");
-                    done();
-                }
-
-            });
-    });
-
-    test('Getting Unread Number from RESTful Api', function(done){
-        server.get('/privatechat/:receiver')
-            .send({"receiver": "test1000lkq"})
-            .expect(200, function(err, res){
-                if(err) return done(err);
-                else {
-                    expect(res.body.success).to.equal(1);
-                    done();
-                }
-
-            });
-    });
-
-    test('Test Private Chat Search from RESTFul Api', function(done){
-       server.get('/privatechat/search/:user')
-           .send({"user": "test1000lkq"})
-           .expect(200,function(err, res){
-               if(err) return done(err);
-               else {
-                   expect(res.body.success).to.equal(1);
-                   done();
-               }
-           })
     });
 
     test('Test Private Chat Search Function in models', function(done){
@@ -254,7 +202,7 @@ suite('Private Chat Test', function(){
         dboper.InsertMessage(fake, function(err, result){
             expect(err).to.equal(400);
             done();
-        })
+        });
     });
 
     test('Private Chat Load History Msg DB Error', function(done){
@@ -262,7 +210,7 @@ suite('Private Chat Test', function(){
         dboper.LoadHistoryMsg(function(err, result){
             expect(err).to.equal(400);
             done();
-        })
+        });
     });
 
     test('Private Chat Update Read Statue DB Error', function(done){
@@ -270,7 +218,7 @@ suite('Private Chat Test', function(){
         dboper.UpdateReadStatus(function(err, result){
             expect(err).to.equal(400);
             done();
-        })
+        });
     });
 
     test('Private Chat GetCount_IndividualUnreadMsg DB Error', function(done){
@@ -278,7 +226,7 @@ suite('Private Chat Test', function(){
         dboper.GetCount_IndividualUnreadMsg(function(err, result){
             expect(err).to.equal(400);
             done();
-        })
+        });
     });
 
     test('Private Chat GetCount_IndividualPrivateSender DB Error', function(done){
@@ -286,7 +234,7 @@ suite('Private Chat Test', function(){
         dboper. GetCount_IndividualPrivateSender(function(err, result){
             expect(err).to.equal(400);
             done();
-        })
+        });
     });
 
     test('Private Chat SearchMessages DB Error', function(done){
@@ -294,9 +242,8 @@ suite('Private Chat Test', function(){
         dboper. SearchMessages("","",function(err, result){
             expect(err).to.equal(400);
             done();
-        })
+        });
     });
 
 
-})
-
+});
