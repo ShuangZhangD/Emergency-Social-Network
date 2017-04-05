@@ -21,6 +21,7 @@ var app = express();
 var DBConfig = require("../controller/DBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
+var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 //using server not app to listening port 5000
 var server = request.agent("https://quiet-peak-31270.herokuapp.com");
@@ -28,7 +29,7 @@ var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 
 suite('Join Comunity Integration Tests', function(){
     this.timeout(15000);
-    
+
     test('Login by RESTful Api', function(done) {
         server.post('/signup')
             .send({"username": "test_user_for_rest_api", password: "1234"})
@@ -169,5 +170,25 @@ suite('Join Comunity Integration Tests', function(){
             done();
         });
     });
-});
 
+    test("Error while Logging In", function(done) {
+        dboper.Login("testuser", "testpwd", error_url, function(statuscode, content) {
+            expect(statuscode).to.equal(400);
+            done();
+        });
+    });
+
+    test("Error when Creating New User", function(done) {
+        dboper.AddDB("testuser", "testpwd", error_url, function (statuscode, content) {
+            expect(statuscode).to.equal(400);
+            done();
+        });
+    });
+
+    test("Error when logging out", function(done) {
+        dboper.Logout("testuser", error_url, function(statuscode, content) {
+            expect(statuscode).to.equal(400);
+            done();
+        });
+    });
+});
