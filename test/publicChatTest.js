@@ -12,6 +12,7 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
 var dboper = require("../models/PublicChatDBoper.js");
+var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 var app = express();
 
@@ -84,11 +85,28 @@ suite('Public Chat Tests', function(){
             });
     });
 
-    test('Testing Announcement Function', function(done){
+    test('Testing Public Chat Function', function(done){
         dboper.InsertMessage("keqin", "","testing public chat function in Unit Test", "public",Date.now(), "OK",url, function (err, results1){
             dboper.LoadPublicMessage(url, function (err, results2) {
                expect(results2[results2.length-1]["pubmsg"]).to.equal("testing public chat function in Unit Test");
                done();
+            });
+        });
+    });
+
+    test('Testing Public Chat Function with err_url', function(done){
+        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test err_url", "public",Date.now(), "OK",error_url, function (err, results1){
+            expect(err).to.equal(400);
+            done();
+        });
+    });
+
+    test('Testing Public Load Function with err_url', function(done){
+        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test err_url", "public",Date.now(), "OK",url, function (err, results1){
+            expect(err).to.equal(null);
+            dboper.LoadPublicMessage(error_url, function (err, results2) {
+                expect(err).to.equal(400);
+                done();
             });
         });
     });
