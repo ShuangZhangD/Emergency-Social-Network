@@ -11,14 +11,14 @@ var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
-var dboper = require("../models/JoinCommunityDBoper.js");
-var dboper2 = require("../models/ShareStatusDBoper.js");
+var dboper = require("../../models/JoinCommunityDBoper.js");
+var dboper2 = require("../../models/ShareStatusDBoper.js");
 
 var app = express();
 
 
 //var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
-var DBConfig = require("./TestDBConfig");
+var DBConfig = require("../TestDBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
@@ -27,7 +27,7 @@ var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 // var server = request.agent("http://localhost:5000");
 
-suite('Join Comunity Integration Tests', function(){
+suite('Join Comunity Unit Tests', function(){
     this.timeout(15000);
 
     test("Remove User from Community", function(done){
