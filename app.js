@@ -12,15 +12,16 @@ var http = require("http");
 var app = express();
 // app.set("port", (process.env.PORT || 5000));
 var server = http.createServer(app);
-var io = require("socket.io").listen(server);
-server.listen(process.env.PORT || 5000);
+// var io = require("socket.io").listen(server);
+var io;
+// server.listen(process.env.PORT || 5000);
 var JoinCommunityCtrlLoginCommunityRouter = require("./routes/JoinCommunityCtrlLoginCommunityRouter");
 var JoinCommunityCtrl = require("./controller/JoinCommunityCtrl");
 var PublicChatCtrl = require("./controller/PublicChatCtrl.js");
 var PrivateChatCtrl = require("./controller/PrivateChatCtrl.js");
 var PostAnnouncementCtrl = require("./controller/PostAnnouncementCtrl.js");
 var ShareStatusCtrl = require("./controller/ShareStatusCtrl");
-
+var sockets = require("./socket.js");
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -79,7 +80,26 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render("error");
 });
+// var server;
 
+
+exports.start = function(cb) {
+    server = app.listen(process.env.PORT || 5000, function() {
+        io = sockets(server);
+        if (cb) {
+            cb();
+        }
+    });
+};
+
+exports.close = function(cb) {
+    if (io) io.close();
+    if (server) server.close(cb);
+};
+// when app.js is launched directly
+if (module.id === require.main.id) {
+    exports.start();
+}
 module.exports = app;
 //
 // var ConnectedSockets = {};
