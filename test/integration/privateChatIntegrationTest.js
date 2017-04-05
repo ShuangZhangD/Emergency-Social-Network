@@ -13,7 +13,7 @@ var express = require('express');
 
 //var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
 //var PrivateChatCtrl = require('../controller/PrivateChatCtrl.js');
-var PrivateChatDBOper = require("../../models/PrivateChatDBOper.js");
+// var PrivateChatDBOper = require("../../models/PrivateChatDBOper.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 var app = express();

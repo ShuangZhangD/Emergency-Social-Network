@@ -15,7 +15,7 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
 var dboper = require("../../models/JoinCommunityDBoper.js");
-var dboper2 = require("../../models/ShareStatusDBoper.js");
+// var dboper2 = require("../../models/ShareStatusDBoper.js");
 
 //var app = express();
 

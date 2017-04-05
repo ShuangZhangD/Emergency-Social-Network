@@ -11,7 +11,7 @@ var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
-var dboper = require("../../models/PublicChatDBoper.js");
+// var dboper = require("../../models/PublicChatDBoper.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 //var app = express();
