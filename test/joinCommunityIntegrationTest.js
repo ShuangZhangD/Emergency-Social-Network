@@ -12,6 +12,7 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
 var dboper = require("../models/JoinCommunityDBoper.js");
+var dboper2 = require("../models/ShareStatusDBoper.js");
 
 var app = express();
 
@@ -146,6 +147,25 @@ suite('Join Comunity Integration Tests', function(){
                     });
                 });
             });
+            done();
+        });
+    });
+
+    test("Username and EmergencyStatus in Directory", function(done) {
+        dboper.Login("testuser", "testpwd", url, function (statuscode1, content1){
+            expect(statuscode1).to.equal(200);
+            dboper2.Updatesharestatus("testuser", "Help", url, function(statuscode2, content2) {
+                dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode3, content3) {
+                    expect(statuscode3).to.equal(200);
+                });
+            });
+            done();
+        });
+    });
+
+    test("Password Incorrect Login", function(done){
+        dboper.Login("testuser", "wrongpwd", url, function (statuscode, content){
+            expect(statuscode).to.equal(402);
             done();
         });
     });
