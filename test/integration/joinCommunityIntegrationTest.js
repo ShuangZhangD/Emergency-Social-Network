@@ -5,7 +5,7 @@
 'use strict';
 
 var expect = require('expect.js');
-var request = require('supertest');
+var request = require('superagent');
 var express = require('express');
 var app = require("../../app");
 
@@ -28,6 +28,7 @@ var PORT = process.env.PORT | 3000;
 // var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 var server = app.listen(PORT);
 var HOST = 'http://localhost:' + PORT;
+
 suite('Join Comunity Integration Tests', function(){
     this.timeout(15000);
 
