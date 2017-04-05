@@ -10,7 +10,6 @@ class User {
         this.password = password;
         this.status   = status;
         this.emergencystatus = EmergencyStatus;
-        console.log("No error load user");
     }
 
     // Method to create a new user, takes the "USERS" collection as a parameter
