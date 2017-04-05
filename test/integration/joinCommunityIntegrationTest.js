@@ -7,6 +7,7 @@
 var expect = require('expect.js');
 var request = require('supertest');
 var express = require('express');
+var app = require("../../app");
 
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -14,7 +15,7 @@ var express = require('express');
 var dboper = require("../../models/JoinCommunityDBoper.js");
 var dboper2 = require("../../models/ShareStatusDBoper.js");
 
-var app = express();
+//var app = express();
 
 
 //var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
@@ -24,8 +25,8 @@ var url = dbconfig.getURL();
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 //using server not app to listening port 5000
-var server = request.agent("https://quiet-peak-31270.herokuapp.com");
-// var server = request.agent("http://localhost:5000");
+// var server = request.agent("https://quiet-peak-31270.herokuapp.com");
+var server = app.listen(process.env.PORT | 3000);
 
 suite('Join Comunity Integration Tests', function(){
     this.timeout(15000);

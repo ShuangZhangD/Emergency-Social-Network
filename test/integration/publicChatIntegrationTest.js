@@ -14,7 +14,8 @@ var express = require('express');
 var dboper = require("../../models/PublicChatDBoper.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
-var app = express();
+//var app = express();
+var app = require("../../app");
 
 
 //var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';

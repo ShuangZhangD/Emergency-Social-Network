@@ -1,3 +1,4 @@
+
 /**
  * Created by keqinli on 3/20/17.
  */
@@ -12,7 +13,8 @@ var assert = require('assert');
 var express = require('express');
 var dboper = require("../../models/PostAnnouncementDBoper.js");
 
-var app = express();
+//var app = express();
+var app = require("../../app");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 
