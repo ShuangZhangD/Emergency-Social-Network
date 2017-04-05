@@ -43,12 +43,27 @@ class PublicChatCtrl{
         });
     }
 
+    searchPublicMessages (req, res) {
+        var keywords = req.body;
+        //let dboper = new PublicChatDBoper("", url);
+
+        dboper.SearchPublicMessages(keywords, function(statuscode, results) {
+            if(statuscode==success_statuscode) {
+                res.json({success:1, data: results});
+            }
+            else{
+                // console.log("err");
+                res.json({success:0, err_type: 1, err_msg:"Database Error"});
+            }
+        });
+    }
+
 }
 
 let pubtrl = new PublicChatCtrl();
 module.exports={
     AddPublicMessage: pubtrl.AddPublicMessage,
     publicMessageSocket: pubtrl.publicMessageSocket,
-    LoadPublicMessage: pubtrl.LoadPublicMessage
+    LoadPublicMessage: pubtrl.LoadPublicMessage,
+    searchPublicMessages: pubtrl.searchPublicMessages
 };
-

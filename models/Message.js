@@ -203,7 +203,7 @@ class Message {
             searchTerm=searchTerm+"|"+word;
         });
         var regExWord = new RegExp(".*" + searchTerm + ".*");
-        this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message":  regExWord}).toArray(function(err, results) {
+        this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message":  regExWord, "type":"private"}).toArray(function(err, results) {
             console.log(err);
                 results.forEach(function (result) {
                     var data = {};
@@ -216,6 +216,28 @@ class Message {
                 });
                 callback(datas, null);
 
+        });
+    }
+
+    getAllPublicMessagesForSearch(db, words, callback) {
+        this.collection = db.collection("MESSAGES");
+        var datas=[];
+        var searchTerm = words[0];
+        words.forEach(function(word) {
+            searchTerm=searchTerm+"|"+word;
+        });
+        var regExWord = new RegExp(".*" + searchTerm + ".*");
+        this.collection.find({ "message":  regExWord, "type":"public"}).toArray(function(err, results) {
+            console.log(err);
+                results.forEach(function (result) {
+                    var data = {};
+                    data["sender"] = result.sender;
+                    data["message"] = result.message;
+                    data["timestamp"] = result.postTime;
+                    data["emergency_status"] = result.emergencystatus;
+                    datas.push(data);
+                });
+                callback(datas, null);
         });
     }
 }

@@ -55,11 +55,32 @@ class PublicChatDBoper {
             });
         });
     }
+
+    SearchPublicMessages(words, callback) {
+        MongoClient.connect(this.url, function (err, db) {
+            if (err) {
+                callback(db_err_statuscode, db_err_msg);
+            }// DB Error. Here error of connecting to db
+            else {
+                let MSG = new Message("", "", "", "", "", "", "");
+                MSG.getAllPublicMessagesForSearch(db, words, function (results, err) {
+                    // if (err) {
+                    //     callback(db_err_statuscode, db_err_msg);
+                    // }
+                    // else {
+                        callback(success_statuscode, results);
+                    //}
+                    db.close();
+                });
+            }
+        });
+    }
 }
 
 let publicchatdboper = new PublicChatDBoper();
 
 module.exports = {
     InsertMessage: publicchatdboper.InsertMessage,
-    LoadPublicMessage: publicchatdboper.LoadPublicMessage
+    LoadPublicMessage: publicchatdboper.LoadPublicMessage,
+    SearchMessages: publicchatdboper.SearchMessages
 };
