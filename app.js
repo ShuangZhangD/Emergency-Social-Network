@@ -14,7 +14,8 @@ var app = express();
 var server = http.createServer(app);
 var io = require("socket.io").listen(server);
 server.listen(process.env.PORT || 5000);
-var JoinCommunityCtrl = require("./controller/JoinCommunityCtrl.js");
+var JoinCommunityCtrlLoginCommunityRouter = require("./routes/JoinCommunityCtrlLoginCommunityRouter");
+var JoinCommunityCtrl = require("./controller/JoinCommunityCtrl");
 var PublicChatCtrl = require("./controller/PublicChatCtrl.js");
 var PrivateChatCtrl = require("./controller/PrivateChatCtrl.js");
 var PostAnnouncementCtrl = require("./controller/PostAnnouncementCtrl.js");
@@ -41,7 +42,7 @@ app.use("/chatPublicly",chatPubliclyRouter);
 
 
 
-app.post("/login", JoinCommunityCtrl.LoginCommunity);
+app.use("/login", JoinCommunityCtrlLoginCommunityRouter);
 app.post("/signup", JoinCommunityCtrl.AddUser);
 app.get("/userlist", JoinCommunityCtrl.ListUser);
 app.post("/logout", JoinCommunityCtrl.Logout);
@@ -122,3 +123,5 @@ io.on("connection", function(socket) {
         }
     });
 });
+
+module.exports = app;

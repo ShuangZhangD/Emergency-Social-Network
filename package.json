@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js mongodb://root:1234@ds137730.mlab.com:37730/esnsv7",
+    "start": "grunt",
     "postinstall": "bower install"
   },
   "dependencies": {
@@ -15,6 +15,7 @@
     "expect.js": "^0.3.1",
     "express": "^4.10.2",
     "grunt-mocha-istanbul": "^5.0.2",
+    "grunt-nodemon": "^0.4.2",
     "istanbul": "^0.4.5",
     "md5": "^2.2.1",
     "mocha": "^3.2.0",
@@ -24,6 +25,7 @@
     "socket.io": "^1.7.2"
   },
   "devDependencies": {
+    "angular-mocks": "^1.6.4",
     "eslint": "^3.19.0",
     "grunt": "^1.0.1",
     "grunt-mocha-test": "^0.13.2",

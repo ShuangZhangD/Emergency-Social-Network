@@ -11,14 +11,14 @@ var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var express = require('express');
-var dboper = require("../models/PublicChatDBoper.js");
+var dboper = require("../../models/PublicChatDBoper.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 var app = express();
 
 
 //var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
-var TestDBConfig = require("./TestDBConfig");
+var TestDBConfig = require("../TestDBConfig");
 let dbconfig = new TestDBConfig();
 var url = dbconfig.getURL();
 
@@ -26,7 +26,7 @@ var url = dbconfig.getURL();
 var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 // var server = request.agent("http://localhost:5000");
 
-suite('Public Chat Tests', function(){
+suite('Public Chat Unit Tests', function(){
     this.timeout(15000);
     var testDB = {};
 
@@ -53,36 +53,6 @@ suite('Public Chat Tests', function(){
         //testDB.collection("USERS").drop();
         testDB.close();
         done();
-    });
-
-    test('Getting Public Chat Through RESTful Api', function(done){
-        server.get('/public')
-            .expect(200, function(err, res){
-            if(err) return done(err);
-            else {
-                // for(var i=0; i<res.body.data.length; i++){
-                //     console.log(res.body.data[i]["announcement"]);
-                // }
-
-                done();
-            }
-                //done();
-        });
-
-    });
-
-    test('Public Chat Through RESTful Api', function(done){
-        server.post('/public')
-            .send({"username": "keqin", "pubmsg": "hello from Test", "emergencystatus": "OK","timeStamp": Date.now()})
-            .expect(200, function(err,res){
-                if(err) return done(err);
-                else {
-                    console.log(res.body.suc_msg);
-                    //expect
-                    expect(res.body.suc_msg).to.equal("Success");
-                    done();
-                }
-            });
     });
 
     test('Testing Public Chat Function', function(done){
