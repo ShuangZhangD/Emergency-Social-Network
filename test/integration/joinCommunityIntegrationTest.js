@@ -52,6 +52,56 @@ suite('Join Comunity Integration Tests', function(){
             });
     });
 
+
+    test('Login invalid username by RESTful Api', function(done) {
+                request.post('/login')
+                    .send({"username": "1", password: "1234"})
+                    .expect(200, function(err, res){
+                        if(err) {
+                            return done(err);
+                        }
+                        else {
+                            done();
+                        }
+                    });
+    });
+
+    test('Login invalid password by RESTful Api', function(done) {
+                request.post('/login')
+                    .send({"username": "1001", password: "1"})
+                    .expect(200, function(err, res){
+                        if(err) {
+                            return done(err);
+                        }
+                        else {
+                            done();
+                        }
+                    });
+    });
+
+
+    test('Login fail by RESTful Api', function(done) {
+        request.post('/signup')
+            .send({"username": "test_user_for_rest_api", password: "1234"})
+            .expect(200, function(err, res) {
+                request.post('/login')
+                    .send({"username": "test_user_for_rest_api", password: "4321"})
+                    .expect(200, function(err, res){
+                        if(err) {
+                            return done(err);
+                        }
+                        else {
+                            var idx = res.body.success;
+                            console.log('Wrong password');
+                            console.log(idx);
+                            //expect(idx).to.above(-1);
+                            done();
+                        }
+                    });
+            });
+    });
+
+
     test('Signup by RESTful Api', function(done){
         dboper.RemoveUser("test_user_for_rest_api", url, function(success_statuscode, results) {
             request.post('/signup')
@@ -68,6 +118,36 @@ suite('Join Comunity Integration Tests', function(){
                 });
         });
     });
+
+
+    test('Signup invalid username by RESTful Api', function(done){
+            request.post('/signup')
+                .send({"username": "about", password: "1234"})
+                .expect(200, function(err, res){
+                    if(err) {
+                        return done(err);
+                    }
+                    else {
+                        done();
+                    }
+                });
+    });
+
+
+
+    test('Signup again by RESTful Api', function(done){
+      request.post('/signup')
+          .send({"username": "test_user_for_rest_api", password: "1234"})
+          .expect(200, function(err, res) {
+              request.post('/signup')
+                  .send({"username": "test_user_for_rest_api", password: "1234"})
+                  .expect(200, function(err, res) {
+                    console.log(res.body.success);
+                      done();
+                  });
+          });
+    });
+
 
     test('Userlist by RESTful Api', function(done) {
         request.post('/signup')
