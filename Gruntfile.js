@@ -18,6 +18,7 @@ module.exports = function(grunt){
                 src: ['test/**/*.js']
             }
         },
+
         mocha_istanbul: {
             coverage: {
                 src: 'test', // a folder works nicely

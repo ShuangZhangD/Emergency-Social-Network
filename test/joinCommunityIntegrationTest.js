@@ -5,7 +5,7 @@
 'use strict';
 
 var expect = require('expect.js');
-var request = require('supertest');
+//var request = require('supertest');
 var express = require('express');
 
 var MongoClient = require('mongodb').MongoClient;
@@ -24,17 +24,20 @@ var url = dbconfig.getURL();
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 //using server not app to listening port 5000
-var server = request.agent("https://quiet-peak-31270.herokuapp.com");
+
+var myapp = require('../app.js');
+var request = require('supertest').agent(myapp.listen());
+//var server = request.agent("http://localhost:5000");
 // var server = request.agent("http://localhost:5000");
 
 suite('Join Comunity Integration Tests', function(){
     this.timeout(15000);
 
     test('Login by RESTful Api', function(done) {
-        server.post('/signup')
+        request.post('/signup')
             .send({"username": "test_user_for_rest_api", password: "1234"})
             .expect(200, function(err, res) {
-                server.post('/login')
+                request.post('/login')
                     .send({"username": "test_user_for_rest_api", password: "1234"})
                     .expect(200, function(err, res){
                         if(err) {
@@ -51,7 +54,7 @@ suite('Join Comunity Integration Tests', function(){
 
     test('Signup by RESTful Api', function(done){
         dboper.RemoveUser("test_user_for_rest_api", url, function(success_statuscode, results) {
-            server.post('/signup')
+            request.post('/signup')
                 .send({"username": "test_user_for_rest_api", password: "1234"})
                 .expect(200, function(err, res){
                     if(err) {
@@ -67,10 +70,10 @@ suite('Join Comunity Integration Tests', function(){
     });
 
     test('Userlist by RESTful Api', function(done) {
-        server.post('/signup')
+        request.post('/signup')
             .send({"username": "test_user_for_rest_api", password: "1234"})
             .expect(200, function(err, res) {
-                server.get('/userlist')
+                request.get('/userlist')
                     .expect(200, function(err, res){
                         if(err) {
                             return done(err);
@@ -88,13 +91,13 @@ suite('Join Comunity Integration Tests', function(){
     });
 
     test('Logout by RESTful Api', function(done) {
-        server.post('/signup')
+        request.post('/signup')
             .send({"username": "test_user_for_rest_api", password: "1234"})
             .expect(200, function(err, res) {
-                server.post('/logout')
+                request.post('/logout')
                     .send({"username": "test_user_for_rest_api"})
                     .expect(200, function(err, res){
-                        server.get('/userlist')
+                        request.get('/userlist')
                             .expect(200, function(err, res){
                                 if(err) {
                                     return done(err);
