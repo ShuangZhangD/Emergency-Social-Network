@@ -32,7 +32,7 @@ suite('Join Comunity Integration Tests', function(){
     this.timeout(15000);
 
     test('Login by RESTful Api', function(done) {
-        server.post('/signup')
+        request.post('/signup')
             .send({"username": "test_user_for_rest_api", password: "1234"})
             .expect(200, function(err, res) {
                 server.post('/login')
@@ -52,7 +52,7 @@ suite('Join Comunity Integration Tests', function(){
 
     test('Signup by RESTful Api', function(done){
         dboper.RemoveUser("test_user_for_rest_api", url, function(success_statuscode, results) {
-            server.post('/signup')
+            request.post('/signup')
                 .send({"username": "test_user_for_rest_api", password: "1234"})
                 .expect(200, function(err, res){
                     if(err) {
@@ -68,10 +68,10 @@ suite('Join Comunity Integration Tests', function(){
     });
 
     test('Userlist by RESTful Api', function(done) {
-        server.post('/signup')
+        request.post('/signup')
             .send({"username": "test_user_for_rest_api", password: "1234"})
             .expect(200, function(err, res) {
-                server.get('/userlist')
+                request.get('/userlist')
                     .expect(200, function(err, res){
                         if(err) {
                             return done(err);
@@ -89,13 +89,13 @@ suite('Join Comunity Integration Tests', function(){
     });
 
     test('Logout by RESTful Api', function(done) {
-        server.post('/signup')
+        request.post('/signup')
             .send({"username": "test_user_for_rest_api", password: "1234"})
             .expect(200, function(err, res) {
-                server.post('/logout')
+                request.post('/logout')
                     .send({"username": "test_user_for_rest_api"})
                     .expect(200, function(err, res){
-                        server.get('/userlist')
+                        request.get('/userlist')
                             .expect(200, function(err, res){
                                 if(err) {
                                     return done(err);
