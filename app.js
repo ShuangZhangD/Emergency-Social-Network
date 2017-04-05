@@ -47,7 +47,8 @@ app.use("/login", JoinCommunityCtrlLoginCommunityRouter);
 app.post("/signup", JoinCommunityCtrl.AddUser);
 app.get("/userlist", JoinCommunityCtrl.ListUser);
 app.post("/logout", JoinCommunityCtrl.Logout);
-
+app.post("/userlist/searchname", JoinCommunityCtrl.SearchUserByName);
+app.post("/userlist/searchstatus", JoinCommunityCtrl.SearchUserByStatus);
 
 app.get("/public", PublicChatCtrl.LoadPublicMessage);
 app.post("/public", PublicChatCtrl.AddPublicMessage);
