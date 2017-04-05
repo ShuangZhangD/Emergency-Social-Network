@@ -101,7 +101,6 @@ suite('Share Status Tests', function(){
             dboper.Updatesharestatus(name,"OK", url, function(err, results) {
                 expect(err).to.equal(null);
                 dboper.Getsharestatus(name, url, function(err, results1){
-                    console.log("===========" + results1["emergencystatus"]);
                     expect(results1["emergencystatus"]).to.equal("OK");
                     testDB.collection("USERS").drop();
                     done();
