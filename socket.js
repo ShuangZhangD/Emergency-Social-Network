@@ -1,11 +1,9 @@
 /**
  * Created by shuang on 4/5/17.
  */
-var express = require("express");
-var app = express();
-var server = http.createServer(app);
-var io = require("socket.io").listen(server);
-server.listen(process.env.PORT || 5000);
+'use strict';
+
+var io = require('socket.io');
 var JoinCommunityCtrl = require("./controller/JoinCommunityCtrl");
 var PublicChatCtrl = require("./controller/PublicChatCtrl.js");
 var PrivateChatCtrl = require("./controller/PrivateChatCtrl.js");
@@ -14,7 +12,7 @@ var ShareStatusCtrl = require("./controller/ShareStatusCtrl");
 var ConnectedSockets = {};
 var publicChat = require("./controller/PublicChatCtrl.js");
 var privateChat = require("./controller/PrivateChatSocketCtrl");
-io.on("connection", function(socket) {
+function socketConnection(socket) {
 
     socket.on("Public Message", publicChat.publicMessageSocket(socket));
 
@@ -51,4 +49,11 @@ io.on("connection", function(socket) {
             delete ConnectedSockets[username];
         }
     });
-});
+};
+
+
+module.exports = function init(server) {
+    io = io(server);
+    io.sockets.on('connection', socketConnection);
+    return io;
+};
