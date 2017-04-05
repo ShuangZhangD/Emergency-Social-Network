@@ -23,16 +23,16 @@ var DBConfig = require("../../controller/DBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
-
+var PORT = process.env.PORT | 3000;
 //using server not app to listening port 5000
 // var server = request.agent("https://quiet-peak-31270.herokuapp.com");
-var server = app.listen(process.env.PORT | 3000);
-
+var server = app.listen(PORT);
+var HOST = 'http://localhost:' + PORT;
 suite('Join Comunity Integration Tests', function(){
     this.timeout(15000);
 
     test('Login by RESTful Api', function(done) {
-        request.post('/signup')
+        request.post(,'/signup')
             .send({"username": "test_user_for_rest_api", password: "1234"})
             .expect(200, function(err, res) {
                 server.post('/login')
