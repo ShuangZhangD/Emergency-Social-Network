@@ -128,25 +128,35 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["directory"] = true;
     };
     $scope.getStatus = function (value) {
-        var directory_search_result1 = [];
-        var directory_search_result2 = [];
-        var history_detail1 = $scope.historyList1;
-        var history_detail2 = $scope.historyList2;
-        for(var i = 0 ; i <= history_detail1.length-1 ; i++){
+      console.log("value" + value);
+      $http({
+          method : "post",
+          url : "/userlist/searchstatus/",
+          data: {value:value}
+      }).success(function(req){
+        // var history_detail1 = $scope.historyList1;
+        // var history_detail2 = $scope.historyList2;
+        // // console.log("History msg are: "+$scope.historyList1);
+        // for(i = 0 ; i <= history_detail1.length-1 ; i++){
+        //     var name1 = history_detail1[i];
+        //     if(IfKeyWordExist(SearchKeys, name1)){
+        //         directory_search_result1.push(history_detail1[i]);
+        //     }
+        // }
+        // for(i = 0 ; i <= history_detail2.length-1 ; i++){
+        //     var name2 = history_detail2[i];
+        //     if(IfKeyWordExist(SearchKeys, name2)){
+        //         directory_search_result2.push(history_detail2[i]);
+        //     }
+        // }
+        console.log("In search");
+        console.log(req.data1);
+        $scope.details1 = req.data1;
+        $scope.details2 = req.data2;
 
-            var name1 = history_detail1[i];
-            if($scope.statusList[name1] == value){
-                directory_search_result1.push(history_detail1[i]);
-            }
-        }
-        for(i = 0 ; i <= history_detail2.length-1 ; i++){
-            var name2 = history_detail2[i];
-            if($scope.statusList[name2] == value){
-                directory_search_result2.push(history_detail2[i]);
-            }
-        }
-        $scope.details1 = directory_search_result1;
-        $scope.details2 = directory_search_result2;
+    // $scope.showList["annoucementSearchResult"] = true;
+    // $scope.namesearchmsg="";
+    });
 
     };
 
@@ -179,27 +189,35 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         }
         //if search keys is not empty, search it and get the result msg array suite
         if(SearchKeys.length > 0){
+          $http({
+              method : "post",
+              url : "/userlist/searchname/",
+              data: SearchKeys
+          }).success(function(req){
+            // var history_detail1 = $scope.historyList1;
+            // var history_detail2 = $scope.historyList2;
+            // // console.log("History msg are: "+$scope.historyList1);
+            // for(i = 0 ; i <= history_detail1.length-1 ; i++){
+            //     var name1 = history_detail1[i];
+            //     if(IfKeyWordExist(SearchKeys, name1)){
+            //         directory_search_result1.push(history_detail1[i]);
+            //     }
+            // }
+            // for(i = 0 ; i <= history_detail2.length-1 ; i++){
+            //     var name2 = history_detail2[i];
+            //     if(IfKeyWordExist(SearchKeys, name2)){
+            //         directory_search_result2.push(history_detail2[i]);
+            //     }
+            // }
+            console.log("In search");
+            console.log(req.data1);
+            $scope.details1 = req.data1;
+            $scope.details2 = req.data2;
 
-            var history_detail1 = $scope.historyList1;
-            var history_detail2 = $scope.historyList2;
-            // console.log("History msg are: "+$scope.historyList1);
-            for(i = 0 ; i <= history_detail1.length-1 ; i++){
-                var name1 = history_detail1[i];
-                if(IfKeyWordExist(SearchKeys, name1)){
-                    directory_search_result1.push(history_detail1[i]);
-                }
-            }
-            for(i = 0 ; i <= history_detail2.length-1 ; i++){
-                var name2 = history_detail2[i];
-                if(IfKeyWordExist(SearchKeys, name2)){
-                    directory_search_result2.push(history_detail2[i]);
-                }
-            }
-            $scope.details1 = directory_search_result1;
-            $scope.details2 = directory_search_result2;
-        }
         // $scope.showList["annoucementSearchResult"] = true;
         $scope.namesearchmsg="";
+        });
+      }
     };
     $scope.showAnnouncement = function () {
         for (var item in $scope.showList) {
