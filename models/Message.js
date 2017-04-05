@@ -29,13 +29,9 @@ class Message {
             "emergencystatus": this.EmergencyStatus,
             "ReadStatus": this.ReadStatus
         }, function (err, results) {
-            if (err) {
-                //console.log("Error inserting the message " + err);
-                callback(null, err);
-            }
-            else {
+            console.log(err);
                 callback(results, null);
-            }
+
         });
     }
 
@@ -61,13 +57,8 @@ class Message {
             "sender": this.sender,
             "receiver": this.receiver
         }, {$set: {"ReadStatus": "read"}}, function (err, results) {
-            if (err) {
-                //console.log("Error updating read status" + err);
-                callback(null, err);
-            }
-            else {
+            console.log(err);
                 callback(results, null);
-            }
         });
     }
 
@@ -79,10 +70,7 @@ class Message {
             "receiver": { $in: [this.sender, this.receiver] },
             "type": "private"
         }).toArray(function (err, results) {
-            if (err) {
-                //console.log("Error when loading private history msg:" + err);
-                callback(null, err);
-            } else {
+            console.log(err);
                 var datas = [];
                 results.forEach(function (result) {
                     var data = {};
@@ -95,7 +83,7 @@ class Message {
                 });
                 //var jsonString = JSON.stringify(datas);
                 callback(datas, null);
-            }
+
         });
     }
 
@@ -141,8 +129,7 @@ class Message {
             "type" : "private",
             "ReadStatus": "unread"
         }).toArray(function (err, results) {
-            if(err) callback(null, err);
-            else callback(results.length, null);
+           callback(results.length, null);
         });
     }
 
@@ -153,10 +140,8 @@ class Message {
             "receiver":this.receiver,
             "ReadStatus": "unread"
         }, function (err, results) {
-            if(err) callback(null, err);
-            else {
-                callback(results, null);
-            }
+            console.log(err);
+            callback(results, null);
         });
     }
 
@@ -170,8 +155,7 @@ class Message {
             "type" : "private"
         }, function (err, results) {*/
         this.collection.aggregate([{$match: {"type":"private", $or: [{"receiver":receiver}, {"sender":receiver}]}}, {$group: {"_id": {sender: "$sender",receiver: "$receiver"} }}], function (err, results) {
-            if(err) callback(null, err);
-            else {
+            console.log(err);
                 var userlist = [];
                 results.forEach(function(result){
                     var sendername = result["_id"]["sender"];
@@ -186,7 +170,6 @@ class Message {
                 //var loc_receiver = results.indexOf(receiver)
                 //if(loc_receiver != -1)results.splice(loc_receiver,1)
                 callback(userlist,null);
-            }
         });
     }
 
@@ -221,11 +204,7 @@ class Message {
         });
         var regExWord = new RegExp(".*" + searchTerm + ".*");
         this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message":  regExWord}).toArray(function(err, results) {
-            if(err) {
-                //console.log("Error when retrieving messages for search terms");
-                callback(null, err);
-            }
-            else {
+            console.log(err);
                 results.forEach(function (result) {
                     var data = {};
                     data["sender"] = result.sender;
@@ -236,7 +215,7 @@ class Message {
                     datas.push(data);
                 });
                 callback(datas, null);
-            }
+
         });
     }
 }

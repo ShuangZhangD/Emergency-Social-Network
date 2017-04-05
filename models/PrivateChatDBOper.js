@@ -60,14 +60,14 @@ class PrivateChatDBOper {
                 var time = message.timestamp;
                 let MSG = new Message(sender, receiver, "private", msg, time, status, "unread");
                 MSG.insertMessage(db, function (msgres, err) {
-                    if (err) {
+                    /*if (err) {
                         //console.log("Error:" + err);
                         callback(db_err_statuscode, db_err_msg);
                     }// DB Error
-                    else {
+                    else {*/
                         callback(success_statuscode, null);
-                    }
-                });
+                //     }
+                 });
                 db.close();
             }
         });
@@ -88,22 +88,22 @@ class PrivateChatDBOper {
                 //set all <sender,receiver> private messages to be read
                 let MSG = new Message(sender, receiver, "", "", "", "", "");
                 MSG.updateReadStatus(db, function (result, err) {
-                    if (err) {
-                        //console.log("Error:" + err);
-                        callback(db_err_statuscode, db_err_msg);
-                    }// DB Error
-                    else {
+                    // if (err) {
+                    //     //console.log("Error:" + err);
+                    //     callback(db_err_statuscode, db_err_msg);
+                    // }// DB Error
+                    // else {
                         //load all private messages between sender and receiver
                         MSG.loadPrivateHistoryMsg(db, function (results, err) {
-                            if (err) callback(db_err_statuscode, db_err_msg);
-                            else {
+                            // if (err) callback(db_err_statuscode, db_err_msg);
+                            // else {
                                 callback(success_statuscode, results);
                                 //let MSG2 = new Message(receiver, sender)
-                            }
+                            //}
                             db.close();
                         });
 
-                    }
+                    //}
                 });
             }
         });
@@ -119,14 +119,14 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message(sender, receiver, "", "", "", "", "");
                 MSG.updateReadStatus(db, function (result, err) {
-                    if (err) {
-                        //console.log("Error:" + err);
-                        callback(db_err_statuscode, db_err_msg);
-                    }// DB Error
-                    else {
+                    // if (err) {
+                    //     //console.log("Error:" + err);
+                    //     callback(db_err_statuscode, db_err_msg);
+                    // }// DB Error
+                    // else {
                         callback(success_statuscode, result);
                         db.close();
-                    }
+                    //}
                 });
             }
         });
@@ -184,16 +184,16 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message("", receiver, "", "", "", "", "");
                 MSG.getUnreadMsgSenderList(db, function (senderlist, err) {
-                    if (err) callback(db_err_statuscode, db_err_msg);
-                    else {
+                    // if (err) callback(db_err_statuscode, db_err_msg);
+                    // else {
                         var results = [];
                         if(senderlist.length == 0)callback(success_statuscode, results);
                         for(var i = 0 ; i < senderlist.length;i++){
                             (function (i) {
                                 var sender = senderlist[i];
                                 MSG.getCount_PrivateUnreadMsg(db, sender, receiver, function (count, err) {
-                                    if (err) callback(db_err_statuscode, db_err_msg);
-                                    else {
+                                    // if (err) callback(db_err_statuscode, db_err_msg);
+                                    // else {
                                         var result = {};
                                         result["sender"] = sender;
                                         result["count"] = count;
@@ -201,11 +201,11 @@ class PrivateChatDBOper {
                                         if(i == senderlist.length-1){
                                             callback(success_statuscode, results);
                                         }
-                                    }
+                                    //}
                                 });
                             })(i);
                         }
-                    }
+                    //}
                     db.close();
                 });
             }
@@ -224,16 +224,16 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message("", receiver, "", "", "", "", "");
                 MSG.getPrivateMsgSenderList(db, function (senderlist, err) {
-                    if (err) callback(db_err_statuscode, db_err_msg);
-                    else {
+                    // if (err) callback(db_err_statuscode, db_err_msg);
+                    // else {
                         var results = [];
                         if(senderlist.length == 0)callback(success_statuscode, results);
                         for(var i = 0 ; i < senderlist.length;i++){
                             (function (i) {
                                 var sender = senderlist[i];
                                 MSG.getCount_PrivateUnreadMsg(db, sender, receiver, function (count, err) {
-                                    if (err) callback(db_err_statuscode, db_err_msg);
-                                    else {
+                                    // if (err) callback(db_err_statuscode, db_err_msg);
+                                    // else {
                                         var result = {};
                                         result["sender"] = sender;
                                         result["count"] = count;
@@ -241,11 +241,11 @@ class PrivateChatDBOper {
                                         if(i == senderlist.length-1){
                                             callback(success_statuscode, results);
                                         }
-                                    }
+                                    //}
                                 });
                             })(i);
                         }
-                    }
+                    //}
                     db.close();
                 });
             }
@@ -297,12 +297,12 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message("", "", "", "", "", "", "");
                 MSG.getAllMessagesForSearch(db, username, words, function (results, err) {
-                    if (err) {
-                        callback(db_err_statuscode, db_err_msg);
-                    }
-                    else {
+                    // if (err) {
+                    //     callback(db_err_statuscode, db_err_msg);
+                    // }
+                    // else {
                         callback(success_statuscode, results);
-                    }
+                    //}
                     db.close();
                 });
             }

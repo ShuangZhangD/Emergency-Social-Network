@@ -14,6 +14,7 @@ var express = require('express');
 //var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
 //var PrivateChatCtrl = require('../controller/PrivateChatCtrl.js');
 var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
+var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 var app = express();
 
@@ -239,6 +240,61 @@ suite('Private Chat Test', function(){
 
         //done();
 
+    });
+
+    test('Private Chat Insert Msg DB Error', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "PrivateMsg": "private chat function",
+            "emergency_status": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake, function(err, result){
+            expect(err).to.equal(400);
+            done();
+        })
+    });
+
+    test('Private Chat Load History Msg DB Error', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
+        dboper.LoadHistoryMsg(function(err, result){
+            expect(err).to.equal(400);
+            done();
+        })
+    });
+
+    test('Private Chat Update Read Statue DB Error', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
+        dboper.UpdateReadStatus(function(err, result){
+            expect(err).to.equal(400);
+            done();
+        })
+    });
+
+    test('Private Chat GetCount_IndividualUnreadMsg DB Error', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
+        dboper.GetCount_IndividualUnreadMsg(function(err, result){
+            expect(err).to.equal(400);
+            done();
+        })
+    });
+
+    test('Private Chat GetCount_IndividualPrivateSender DB Error', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
+        dboper. GetCount_IndividualPrivateSender(function(err, result){
+            expect(err).to.equal(400);
+            done();
+        })
+    });
+
+    test('Private Chat SearchMessages DB Error', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
+        dboper. SearchMessages("","",function(err, result){
+            expect(err).to.equal(400);
+            done();
+        })
     });
 
 

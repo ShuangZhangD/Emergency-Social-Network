@@ -13,6 +13,7 @@ var express = require('express');
 var dboper = require("../models/PostAnnouncementDBoper.js");
 
 var app = express();
+var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 
 //var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
@@ -74,7 +75,7 @@ suite('Post Announcement Tests', function(){
             .expect(200, function(err,res){
                 if(err) return done(err);
                 else {
-                    console.log(res.body.suc_msg);
+                    //console.log(res.body.suc_msg);
                     //expect
                     expect(res.body.suc_msg).to.equal("Success");
                     done();
@@ -88,6 +89,24 @@ suite('Post Announcement Tests', function(){
                expect(results2[results2.length-1]["announcement"]).to.equal("testing announcement function in Unit Test");
                done();
             });
+        });
+    });
+
+    test('Testing Announcement Function DB Error', function(done){
+        dboper.InsertAnnouncement("keqin", "testing announcement function in Unit Test", Date.now(), error_url, function(err,result){
+            //dboper.LoadAnnouncement(url, function (err, results2) {
+                expect(err).to.equal(400);
+                done();
+            //});
+        });
+    });
+
+    test('Testing Load Announcement Function DB Error', function(done){
+        dboper.LoadAnnouncement(error_url, function(err,result){
+            //dboper.LoadAnnouncement(url, function (err, results2) {
+            expect(err).to.equal(400);
+            done();
+            //});
         });
     });
 

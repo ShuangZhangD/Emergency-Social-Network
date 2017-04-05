@@ -17,11 +17,13 @@ class PostAnnouncementDBoper {
                 //console.log("Error:"+ err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
-            var collection = db.collection("announcement");
-            //insert into table
-            var data = [{"username": username,"announcement":announcement, "postTime": postTime}];
-            collection.insert(data, callback);
-            db.close();
+            else {
+                var collection = db.collection("announcement");
+                //insert into table
+                var data = [{"username": username, "announcement": announcement, "postTime": postTime}];
+                collection.insert(data, callback);
+                db.close();
+            }
         });
     }
 
@@ -34,11 +36,11 @@ class PostAnnouncementDBoper {
             }
             var collection = db.collection("announcement");
             collection.find({}).toArray(function(err, results){
-                if(err)
-                {
-                    //console.log("Error2:"+ err);
-                    callback(err, "Database error");
-                }else {
+                // if(err)
+                // {
+                //     //console.log("Error2:"+ err);
+                //     callback(err, "Database error");
+                // }else {
                     var datas = [];
                     results.forEach(function(result){
                         var data = {};
@@ -48,7 +50,7 @@ class PostAnnouncementDBoper {
                         datas.push(data);
                     });
                     callback(err,datas);
-                }
+                //}
                 db.close();
             });
         });
