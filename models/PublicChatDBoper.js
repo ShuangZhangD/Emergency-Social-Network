@@ -4,7 +4,10 @@
 "use strict";
 
 var MongoClient = require("mongodb").MongoClient;
-
+var Message = require("./Message.js");
+var db_err_msg = "Database Error";
+var db_err_statuscode = 400;
+var success_statuscode = 200;
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 
 var db_err_msg = "Database Error";
@@ -56,8 +59,8 @@ class PublicChatDBoper {
         });
     }
 
-    SearchPublicMessages(words, callback) {
-        MongoClient.connect(this.url, function (err, db) {
+    SearchPublicMessages(words, url, callback) {
+        MongoClient.connect(url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
@@ -82,5 +85,5 @@ let publicchatdboper = new PublicChatDBoper();
 module.exports = {
     InsertMessage: publicchatdboper.InsertMessage,
     LoadPublicMessage: publicchatdboper.LoadPublicMessage,
-    SearchMessages: publicchatdboper.SearchMessages
+    SearchPublicMessages: publicchatdboper.SearchPublicMessages
 };

@@ -231,10 +231,10 @@ class Message {
             console.log(err);
                 results.forEach(function (result) {
                     var data = {};
-                    data["sender"] = result.sender;
-                    data["message"] = result.message;
+                    data["username"] = result.sender;
+                    data["pubmsg"] = result.message;
                     data["timestamp"] = result.postTime;
-                    data["emergency_status"] = result.emergencystatus;
+                    data["emergencystatus"] = result.emergencystatus;
                     datas.push(data);
                 });
                 callback(datas, null);

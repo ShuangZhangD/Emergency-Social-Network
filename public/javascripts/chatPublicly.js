@@ -114,20 +114,26 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
         }
         //if search keys is not empty, search it and get the result msg array suite
         if(SearchKeys.length > 0){
+          $http({
+              method : "post",
+              url : "/publicchat/search/",
+              data: SearchKeys
+          }).success(function(req){
             var public_search_results_suite = [];
             var public_search_results_set = [];
-            var history_public_msg = $scope.displaymsg;
+            var history_public_msg = req.data;
             var count = 0;
             for(i = history_public_msg.length-1 ; i >= 0 ; i--){
                 var pub_msg = history_public_msg[i].pubmsg;
-                if(IfKeyWordExist(SearchKeys, pub_msg)){
+                //if(IfKeyWordExist(SearchKeys, pub_msg)){
                     public_search_results_set.push(history_public_msg[i]);
                     count++;
                     if(count % 10 == 0){
                         public_search_results_suite.push(public_search_results_set);
                         public_search_results_set = [];
                     }
-                }
+                //}
+
             }
 
             if(public_search_results_set.length > 0){
@@ -145,6 +151,7 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
                     $scope.SearchPublicMsgMore = true;
                 }
             }
+            });
         }
         $scope.showList["publicSearchResult"] = true;
         $scope.showList['publicHistory'] = false;

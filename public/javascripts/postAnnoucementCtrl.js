@@ -93,20 +93,25 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
         }
         //if search keys is not empty, search it and get the result msg array suite
         if(SearchKeys.length > 0){
+          $http({
+              method : "post",
+              url : "/announcement/search/",
+              data: SearchKeys
+          }).success(function(req){
             var announce_search_results_suite = [];
             var announce_search_results_set = [];
-            var history_announce = $scope.announcementList;
+            var history_announce = req.data;
             var count = 0;
             for( i = history_announce.length-1 ; i >= 0 ; i--){
                 var announcement = history_announce[i].announcement;
-                if(IfKeyWordExist(SearchKeys, announcement)){
+              //  if(IfKeyWordExist(SearchKeys, announcement)){
                     announce_search_results_set.push(history_announce[i]);
                     count++;
                     if(count % 10 == 0){
                         announce_search_results_suite.push(announce_search_results_set);
                         announce_search_results_set = [];
                     }
-                }
+                //}
             }
 
             if(announce_search_results_set.length > 0){
@@ -123,7 +128,7 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
                     $scope.SearchAnnounceMore = true;
                 }
             }
-
+          });
         }
         $scope.showList["annoucementSearchResult"] = true;
         $scope.showList["announcementHistory"] = false;

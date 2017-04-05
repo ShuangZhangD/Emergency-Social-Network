@@ -51,9 +51,11 @@ app.post("/logout", JoinCommunityCtrl.Logout);
 
 app.get("/public", PublicChatCtrl.LoadPublicMessage);
 app.post("/public", PublicChatCtrl.AddPublicMessage);
+app.post("/publicchat/search", PublicChatCtrl.searchPublicMessages);
 
 app.get("/announcement", PostAnnouncementCtrl.LoadAnnouncement);
 app.post("/post_announcement", PostAnnouncementCtrl.AddAnnouncement);
+app.post("/announcement/search", PostAnnouncementCtrl.searchPublicAnn);
 
 app.post("/userstatus", ShareStatusCtrl.AddShareStatus);
 app.get("/userstatus/:username", ShareStatusCtrl.GetShareStatus);
@@ -62,6 +64,7 @@ app.get("/privatechat/:sender/:receiver", PrivateChatCtrl.LoadPrivateHistoryMess
 app.post("/privatechat", PrivateChatCtrl.AddPrivateMessage);
 app.get("/privatechat/:receiver", PrivateChatCtrl.getCount_IndividualPrivateSender);
 app.post("/privatechat/search/:user", PrivateChatCtrl.search);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -7,6 +7,9 @@ var dboper = require("../models/PublicChatDBoper.js");
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
+var db_err_msg = "Database Error";
+var db_err_statuscode = 400;
+var success_statuscode = 200;
 
 class PublicChatCtrl{
 
@@ -47,7 +50,7 @@ class PublicChatCtrl{
         var keywords = req.body;
         //let dboper = new PublicChatDBoper("", url);
 
-        dboper.SearchPublicMessages(keywords, function(statuscode, results) {
+        dboper.SearchPublicMessages(keywords, url, function(statuscode, results) {
             if(statuscode==success_statuscode) {
                 res.json({success:1, data: results});
             }

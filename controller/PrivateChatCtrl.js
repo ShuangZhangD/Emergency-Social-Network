@@ -31,8 +31,8 @@ class PrivateChatCtrl{
      * also update all unread msg between sender and receiver to be read
      */
     LoadPrivateHistoryMessage (req, res) {
-        var sender = req.param.sender;
-        var receiver = req.param.receiver;
+        var sender = req.params.sender;
+        var receiver = req.params.receiver;
 
         let dboper = new PrivateChatDBOper(sender, receiver, url);
         dboper.LoadHistoryMsg(function(statuscode, content){
@@ -73,7 +73,7 @@ class PrivateChatCtrl{
     /* Called when indivudual number of private unread message of this username is needed
      */
     getCount_IndividualPrivateSender (req,res){
-        var username = req.param.receiver;
+        var username = req.params.receiver;
         let dboper = new PrivateChatDBOper("", username, url);
         //emit count of all unread msg(public + private)
         dboper.GetCount_IndividualPrivateSender(function(statuscode, results){
@@ -126,7 +126,7 @@ class PrivateChatCtrl{
      * User search for serval keywords
      */
     search (req, res) {
-        var user = req.param.user;
+        var user = req.params.user;
         var keywords = req.body;
         let dboper = new PrivateChatDBOper("", user, url);
 
@@ -154,4 +154,3 @@ module.exports={
     //get_IndividualPrivateUnreadMsg: privatetrl.get_IndividualPrivateUnreadMsg,
     search: privatetrl.search
 };
-

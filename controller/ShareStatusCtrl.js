@@ -29,7 +29,7 @@ class ShareStatusController {
     GetShareStatus(req, res){
         var info=req.body;
         var username = info["username"];
-        username = req.param.username;
+        username = req.params.username;
         dboper.Getsharestatus(username, url, function(err, results){
             if(err) {
                 // console.log("Error:" +err);
@@ -56,4 +56,3 @@ module.exports = {
     GetShareStatus : ssc.GetShareStatus,
     UpdateShareStatusSocket : ssc.UpdateShareStatusSocket
 };
-

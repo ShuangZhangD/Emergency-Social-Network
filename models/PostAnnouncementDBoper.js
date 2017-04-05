@@ -4,7 +4,9 @@
 "use strict";
 
 var MongoClient = require("mongodb").MongoClient;
-
+var db_err_msg = "Database Error";
+var db_err_statuscode = 400;
+var success_statuscode = 200;
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 
 var db_err_msg = "Database Error";
@@ -55,11 +57,53 @@ class PostAnnouncementDBoper {
             });
         });
     }
+
+    SearchPublicAnn(words, url, callback) {
+        MongoClient.connect(url, function (err, db) {
+            if (err) {
+                callback(db_err_statuscode, db_err_msg);
+            }// DB Error. Here error of connecting to db
+            else {
+              var collection = db.collection("announcement");
+              var datas=[];
+              var searchTerm = words[0];
+              words.forEach(function(word) {
+                  searchTerm=searchTerm+"|"+word;
+              });
+              var regExWord = new RegExp(".*" + searchTerm + ".*");
+              collection.find({ "announcement":  regExWord}).toArray(function(err, results) {
+
+                //  console.log(err);
+                      results.forEach(function (result) {
+                            //  console.log(result);
+                          var data = {};
+                          data["username"] = result.username;
+                          data["announcement"] = result.announcement;
+                          data["timestamp"] = result.postTime;
+                          datas.push(data);
+                          console.log(data);
+                      });
+                      callback(success_statuscode, datas);
+                    });
+                    // if (err) {
+                    //     callback(db_err_statuscode, db_err_msg);
+                    // }
+                    // else {
+                    console.log("datassfdsdfsdfsdfsdf");
+                    console.log(datas);
+
+                    //}
+                    db.close();
+
+            }
+        });
+    }
 }
 
 let postddoper = new PostAnnouncementDBoper();
 
 module.exports = {
     InsertAnnouncement: postddoper.InsertAnnouncement,
-    LoadAnnouncement: postddoper.LoadAnnouncement
+    LoadAnnouncement: postddoper.LoadAnnouncement,
+    SearchPublicAnn: postddoper.SearchPublicAnn
 };
