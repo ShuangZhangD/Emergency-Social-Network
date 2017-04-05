@@ -19,7 +19,7 @@ class JoinCommunityDBOper {
     Login (username, password, url, callback){
         MongoClient.connect(url, function(err, db) {
             if(err) {
-                console.log("Error:"+ err);
+                //console.log("Error:"+ err);
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
             else {
@@ -76,7 +76,7 @@ class JoinCommunityDBOper {
     AddDB (username, password, url, callback) {
         MongoClient.connect(url, function (err, db) {
             if (err) {
-                console.log("Error:"+ err);
+                //console.log("Error:"+ err);
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
             else {
@@ -113,14 +113,14 @@ class JoinCommunityDBOper {
                     //} // if (err)
                 }); // checkUser
             }
-            
+
         });//end of database operation
     }
 
     GetAllUsers (url, callback){
         MongoClient.connect(url, function(err, db) {
             if(err){
-                console.log("Error:"+ err);
+                //console.log("Error:"+ err);
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
             //insert information into database
@@ -154,7 +154,7 @@ class JoinCommunityDBOper {
     Logout (username, url, callback){
         MongoClient.connect(url, function(err, db) {
             if(err){
-                console.log("Error:"+ err);
+                //console.log("Error:"+ err);
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
             let new_user = new User("username", "", "offline");
@@ -202,7 +202,7 @@ class JoinCommunityDBOper {
     GetAllUsernameAndEmergencyStatus(url, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) {
-                console.log("Error:" + err);
+                //console.log("Error:" + err);
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
             else {
@@ -222,7 +222,7 @@ class JoinCommunityDBOper {
     RemoveUser(username, url, callback) {
         MongoClient.connect(url, function(err, db) {
             if (err) {
-                console.log("Error:" + err);
+                //console.log("Error:" + err);
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
             else {
