@@ -81,7 +81,7 @@ class PrivateChatCtrl{
                 res.json({success:1, data: results});
             }
             else {
-                console.log("err");
+                // console.log("err");
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }
         });
@@ -136,7 +136,7 @@ class PrivateChatCtrl{
 
             }
             else{
-                console.log("err");
+                // console.log("err");
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }
         });

@@ -17,7 +17,7 @@ class PublicChatCtrl{
         var emergencystatus = info["emergencystatus"];
         dboper.InsertMessage(sender, "", message, "public", Date.now(),emergencystatus, url, function (err, results) {
             if (err) {
-                console.log("Error:"+ err);
+                // console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
             } else {
                 res.json({success:1, suc_msg: "Success"});
@@ -34,7 +34,7 @@ class PublicChatCtrl{
     LoadPublicMessage (req, res){
         dboper.LoadPublicMessage(url, function (err, results) {
             if (err) {
-                console.log("Error:"+ err);
+                // console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
             } else {
 
