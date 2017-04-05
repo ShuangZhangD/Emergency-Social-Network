@@ -99,8 +99,8 @@ suite('Private Chat Test', function(){
     });
 
     test('Test Private Chat Search from RESTFul Api', function(done){
-       request.get('/privatechat/search/:user')
-           .send({"user": "test1000lkq"})
+       request.post('/privatechat/search/'+ "test1000lkq")
+           .send(["chat","hi"])
            .expect(200,function(err, res){
                if(err) return done(err);
                else {
