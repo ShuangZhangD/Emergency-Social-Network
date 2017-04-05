@@ -80,4 +80,22 @@ suite('Post Announcement Unit Tests', function(){
         });
     });
 
+    test('Announcement  Search  erro in db', function(done){
+        //let dboper = new PublicChatDBoper("keqin", "test1000lkq", url);
+        dboper.SearchPublicAnn([""], error_url,function(err, result){
+            expect(err).to.equal(400);
+            done();
+        });
+    });
+
+    test('Test Public Chat Search Function in models', function(done){
+        dboper.InsertAnnouncement("keqin", "testing announcement function in Unit Test", Date.now(), url, function(err0,content0){
+            expect(err0).to.equal(null);
+            dboper.SearchPublicAnn(["chat", "hi"], url,function(err1, results1){
+                expect(err1).to.equal(200); //TODO test if results content equal or not
+                done();
+            });
+        });
+    });
+
 });

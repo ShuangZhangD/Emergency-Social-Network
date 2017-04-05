@@ -85,4 +85,16 @@ suite('Post Announcement Integation Tests', function(){
                 }
             });
     });
+
+    test('Test Post Announcement  Search from RESTFul Api', function(done){
+        request.post('/announcement/search')
+            .send(["chat","hi"])
+            .expect(200,function(err, res){
+                if(err) return done(err);
+                else {
+                    expect(res.body.success).to.equal(1);
+                    done();
+                }
+            })
+    });
 });
