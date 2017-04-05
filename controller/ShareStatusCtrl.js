@@ -17,7 +17,7 @@ class ShareStatusController {
         //update database through ShareStatusDBoper.updatesharestatus
         dboper.Updatesharestatus(username, status, url, function (err, results) {
             if (err) {
-                console.log("Error:"+ err);
+                // console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
             }
             else {
@@ -32,7 +32,7 @@ class ShareStatusController {
         username = req.param.username;
         dboper.Getsharestatus(username, url, function(err, results){
             if(err) {
-                console.log("Error:" +err);
+                // console.log("Error:" +err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }
             else {
