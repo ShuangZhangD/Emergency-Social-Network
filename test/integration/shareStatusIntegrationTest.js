@@ -5,7 +5,7 @@
 'use strict';
 
 var expect = require('expect.js');
-var request = require('supertest');
+//var request = require('supertest');
 var express = require('express');
 
 var MongoClient = require('mongodb').MongoClient;
@@ -13,19 +13,23 @@ var assert = require('assert');
 var express = require('express');
 
 //var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
-var dboper = require("../models/ShareStatusDBoper");
-var createoper = require("../models/User.js");
+// var dboper = require("../../models/ShareStatusDBoper");
+// var createoper = require("../../models/User.js");
+var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
-var app = express();
+//var app = express();
+//var app = require("../../app");
+var myapp = require('../../app.js');
+var request = require('supertest').agent(myapp.listen());
 
 
 //var url = 'mongodb://root:1234@ds137730.mlab.com:37730/esnsv7';//url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
-var TestDBConfig = require("./TestDBConfig");
+var TestDBConfig = require("../TestDBConfig");
 let dbconfig = new TestDBConfig();
 var url = dbconfig.getURL();
 
 //using server not app to listening port 5000
-var server = request.agent("https://quiet-peak-31270.herokuapp.com");
+//var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 // var server = request.agent("http://localhost:5000");
 
 suite('Share Status Tests', function(){
@@ -59,7 +63,7 @@ suite('Share Status Tests', function(){
 
     test('Getting Share Status Through RESTful Api', function(done){
         //request(app).get('/announcement').expect("Content-type",/json/)
-        server.get('/userstatus/:username')
+        request.get('/userstatus/:username')
             .send({"username": "keqin"})
             .expect(200, function(err, res){
                 if(err) return done(err);
@@ -76,7 +80,7 @@ suite('Share Status Tests', function(){
 
     test('Changing Share Status Through RESTful Api', function(done){
         //request(app).get('/announcement').expect("Content-type",/json/)
-        server.post('/userstatus')
+        request.post('/userstatus')
             .send({"username": "keqin", "emergencystatus": "OK"})
             .expect(200, function(err, res){
                 if(err) return done(err);
@@ -90,24 +94,4 @@ suite('Share Status Tests', function(){
             });
 
     });
-
-    //to test the share status if it is consistent
-    test('Share Status Function Test', function(done){
-        //we need creat a user at least
-        var name = Date.now();
-        let new_user = new createoper(name,"1234", "online");
-        new_user.createUser(testDB, function(results0, err0){
-            expect(err0).to.equal(null);
-            dboper.Updatesharestatus(name,"OK", url, function(err, results) {
-                expect(err).to.equal(null);
-                dboper.Getsharestatus(name, url, function(err, results1){
-                    console.log("===========" + results1["emergencystatus"]);
-                    expect(results1["emergencystatus"]).to.equal("OK");
-                    testDB.collection("USERS").drop();
-                    done();
-                });
-            });
-        });
-
-    });
-})
+});

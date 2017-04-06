@@ -6,6 +6,11 @@ module.exports = function(grunt){
 
     //Project Configuration
     grunt.initConfig({
+        nodemon: {
+            dev: {
+                script: 'app.js'
+            }
+        },
         pkg: grunt.file.readJSON('package.json'),
         mochaTest: {
             local: {
@@ -18,14 +23,20 @@ module.exports = function(grunt){
                 src: ['test/**/*.js']
             }
         },
+
         mocha_istanbul: {
             coverage: {
-                src: 'test', // a folder works nicely
+                src: 'test/unit/*.js', // a folder works nicely
+                options: {
+                    mochaOptions: ['--ui', 'tdd'] // any extra options for mocha
+                }
             }
         }
 
     });
-
+    // load nodemon
+    grunt.loadNpmTasks('grunt-nodemon');
+    grunt.registerTask('default', ['nodemon']);
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-mocha-istanbul');
     grunt.registerTask('coverage', ['mocha_istanbul']);

@@ -30,14 +30,22 @@ var SortUserList = function(userlist)
     return userlist.sort();
 };
 
-class JoinCommunityController {
+var IfKeyWordExist = function (key_words, msg){
+    for(var i = 0 ; i < key_words.length ; i++){
+        if(msg != null && msg.includes(key_words[i]))
+            return true;
+    }
+    return false;
+};
 
+class JoinCommunityController {
+/*
     Validate (username, password) {
         if( /\w{3,}/.test(username) && /\w{4,}/.test(password) )
             return true;
         else
             return false;
-    }
+    }*/
 
     SortUserList (userlist) {
         //userlist should be an array of users
@@ -98,6 +106,8 @@ class JoinCommunityController {
                         res.json({success:0, err_type: 2, err_msg:content});
                     else if(statuscode == 402)
                         res.json({success:0, err_type: 3, err_msg:content});
+                    else if(statuscode == 405)
+                        res.json({success:0, err_type: 4, err_msg:content});
                 }
                 else {
                     var sorted_content = SortUserList(content);
@@ -146,6 +156,90 @@ class JoinCommunityController {
             }
         });
     }
+    /*IfKeyWordExist(key_words, msg){
+        for(var i = 0 ; i < key_words.length ; i++){
+            if(msg != null && msg.includes(key_words[i]))
+                return true;
+        }
+        return false;
+    }*/
+
+    SearchUserByName (req, res){
+        var keywords = req.body;
+        dboper.GetAllUsers(url, function(statuscode, content1, content2){
+            if(statuscode != 200){
+                res.json({success:0, err_type: 1, err_msg:content1});
+            }
+            else{
+                var directory_search_result1 = [];
+                var directory_search_result2 = [];
+                for(var i = 0 ; i <= content1.length-1 ; i++){
+                    var name1 = content1[i];
+                    if(IfKeyWordExist(keywords, name1)){
+                        directory_search_result1.push(content1[i]);
+                    }
+                }
+                for(i = 0 ; i <= content2.length-1 ; i++){
+                    var name2 = content2[i];
+                    if(IfKeyWordExist(keywords, name2)){
+                        directory_search_result2.push(content2[i]);
+                    }
+                }
+
+                var sorted_content1 = SortUserList(directory_search_result1);
+                var sorted_content2 = SortUserList(directory_search_result2);
+                console.log("directory_search_result1" + directory_search_result1);
+                console.log("search user by name" + sorted_content1);
+                dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode, user_status) {
+                    if(statuscode == 200)
+                        res.json({"success":1, "data1":sorted_content1, "data2":sorted_content2, "status":user_status});
+                    else res.json({success:0, err_type: 1, err_msg:content1});
+                });
+            }
+        });
+    }
+
+    SearchUserByStatus (req, res){
+        console.log("in controller");
+        var keywords = req.body.value;
+
+        console.log(keywords);
+
+        dboper.GetAllUsers(url, function(statuscode, content1, content2){
+            if(statuscode != 200){
+                res.json({success:0, err_type: 1, err_msg:content1});
+            }
+            else{
+              // var directory_search_result1 = [];
+              // var directory_search_result2 = [];
+
+                var sorted_content1 = SortUserList(content1);
+                var sorted_content2 = SortUserList(content2);
+                //console.log("directory_search_result1" + directory_search_result1);
+                //console.log("search user by name" + sorted_content1);
+                dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode, user_status) {
+                    var directory_search_result1 = [];
+                    var directory_search_result2 = [];
+                    for(var i = 0 ; i <= sorted_content1.length-1 ; i++){
+
+                        var name1 = sorted_content1[i];
+                        if(user_status[name1] == keywords){
+                            directory_search_result1.push(sorted_content1[i]);
+                        }
+                    }
+                    for(i = 0 ; i <= sorted_content2.length-1 ; i++){
+                        var name2 = sorted_content2[i];
+                        if(user_status[name2] == keywords){
+                            directory_search_result2.push(sorted_content2[i]);
+                        }
+                    }
+                    if(statuscode == 200)
+                        res.json({"success":1, "data1":directory_search_result1, "data2":directory_search_result2, "status":user_status});
+                    else res.json({success:0, err_type: 1, err_msg:content1});
+                });
+            }
+        });
+    }
 }
 
 let jcc = new JoinCommunityController();
@@ -154,5 +248,7 @@ module.exports = {
     LoginCommunity: jcc.LoginCommunity,
     AddUser: jcc.AddUser,
     ListUser: jcc.ListUser,
-    Logout: jcc.Logout
+    Logout: jcc.Logout,
+    SearchUserByName: jcc.SearchUserByName,
+    SearchUserByStatus: jcc.SearchUserByStatus
 };

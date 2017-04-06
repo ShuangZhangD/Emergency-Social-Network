@@ -3,13 +3,13 @@
   <head>
     <title>Emergency Social Network</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/stylesheets/joinCommunity.css" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/DisplayDirectory.css">
     <link rel="stylesheet" href="/stylesheets/ShareStatus.css">
   </head>
   <body ng-app="ESN-APP" ng-controller="initCtrl">
-    
+
     <div ng-controller="joinCommunityCtrl">
         <%- include('navbarSimple') %>
         <%- include('joinCommunity') %>
@@ -18,24 +18,25 @@
 
     <%- include('chatPublicly') %>
     <%- include('postAnnouncement') %>
-	<%- include('privateChatList') %>
-	<%- include('privateChatContent') %>
-	<%- include('shareStatus') %>
+ <%- include('privateChatList') %>
+ <%- include('privateChatContent') %>
+ <%- include('shareStatus') %>
 
     <!--script src="/javascripts/angular.min.js"></script-->
 
     <script src="angular/angular.js"></script>
+    <!-- <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script> -->
     <script src="angular-socket-io/socket.min.js"></script>
     <script src="angular-socket-io/socket.js"></script>
     <script src="socket.io-client/dist/socket.io.js"></script>
 
     <script src="/javascripts/main.js"></script>
-    <script src="/javascripts/joinCommunityBoundary.js"></script>
     <script src="/javascripts/joinCommunity.js"></script>
     <script src="/javascripts/chatPublicly.js"></script>
     <script src="/javascripts/postAnnoucementCtrl.js"></script>
     <script src="/javascripts/privateChatListCtrl.js"></script>
     <script src="/javascripts/privateChatContentCtrl.js"></script>
- 	<script src="/javascripts/shareStatusCtrl.js"></script>
+  <script src="/javascripts/shareStatusCtrl.js"></script>
    </body>
 </html>

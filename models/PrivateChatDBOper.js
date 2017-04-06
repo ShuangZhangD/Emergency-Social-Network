@@ -3,7 +3,7 @@
  */
 "use strict";
 var MongoClient = require("mongodb").MongoClient;
-var User = require("./User.js");
+//var User = require("./User.js");
 //var DBConfig = require("./DBConfig");
 //let dbconfig = new DBConfig();
 //var url = dbconfig.getURL();
@@ -23,33 +23,10 @@ class PrivateChatDBOper {
         this.url = url;
     }
 
-    GetUserEmergencyStatus(username, callback){
-        MongoClient.connect(this.url, function (err, db) {
-            if (err) {
-                console.log("Error:" + err);
-                callback(db_err_statuscode, db_err_msg);
-            }// DB Error. Here error of connecting to db
-            else {
-                //get sender emergency status
-                let user = new User(username, "", "");
-                user.getEmergencyStatus(db, function (status, err) {
-                    if (err) {
-                        console.log("Error:" + err);
-                        callback(db_err_statuscode, db_err_msg);
-                    }// DB Error
-                    else {
-                        callback(success_statuscode, status);
-                    }
-                });
-                db.close();
-            }
-        });
-    }
-
     InsertMessage(message, callback) {
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
-                console.log("Error:" + err);
+                //console.log("Error:" + err);
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
             else {
@@ -60,13 +37,8 @@ class PrivateChatDBOper {
                 var time = message.timestamp;
                 let MSG = new Message(sender, receiver, "private", msg, time, status, "unread");
                 MSG.insertMessage(db, function (msgres, err) {
-                    if (err) {
-                        console.log("Error:" + err);
-                        callback(db_err_statuscode, db_err_msg);
-                    }// DB Error
-                    else {
-                        callback(success_statuscode, null);
-                    }
+                    console.log(err);
+                    callback(success_statuscode, null);
                 });
                 db.close();
             }
@@ -88,21 +60,13 @@ class PrivateChatDBOper {
                 //set all <sender,receiver> private messages to be read
                 let MSG = new Message(sender, receiver, "", "", "", "", "");
                 MSG.updateReadStatus(db, function (result, err) {
-                    if (err) {
-                        console.log("Error:" + err);
-                        callback(db_err_statuscode, db_err_msg);
-                    }// DB Error
-                    else {
-                        //load all private messages between sender and receiver
-                        MSG.loadPrivateHistoryMsg(db, function (results, err) {
-                            if (err) callback(db_err_statuscode, db_err_msg);
-                            else {
-                                callback(success_statuscode, results);
-                                //let MSG2 = new Message(receiver, sender)
-                            }
-                            db.close();
-                        });
-                    }
+                    console.log(err);
+                    //load all private messages between sender and receiver
+                    MSG.loadPrivateHistoryMsg(db, function (results, err) {
+                        console.log(err);
+                        callback(success_statuscode, results);
+                        db.close();
+                    });
                 });
             }
         });
@@ -118,55 +82,10 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message(sender, receiver, "", "", "", "", "");
                 MSG.updateReadStatus(db, function (result, err) {
-                    if (err) {
-                        console.log("Error:" + err);
-                        callback(db_err_statuscode, db_err_msg);
-                    }// DB Error
-                    else {
-                        callback(success_statuscode, result);
-                        db.close();
-                    }
+                    console.log(err);
+                    callback(success_statuscode, result);
+                    db.close();
                 });
-            }
-        });
-    }
-
-    /* Get how many unread msg of receiver
-     * public + private msg
-     */
-    GetCount_AllUnreadMsg(callback) {
-        var receiver = this.receiver;
-        MongoClient.connect(this.url, function (err, db) {
-            if (err) {
-                callback(db_err_statuscode, db_err_msg);
-            }// DB Error. Here error of connecting to db
-            else {
-                let MSG = new Message("", receiver, "", "", "", "", "");
-                MSG.getCount_AllUnreadMsg(db, function (count, err) {
-                    if (err) callback(db_err_statuscode, db_err_msg);
-                    else callback(success_statuscode, count);
-                });
-                db.close();
-            }
-        });
-    }
-
-    /* Get how many unread private msg of receiver
-     * only private msg
-     */
-    GetCount_AllPrivateUnreadMsg(callback) {
-        var receiver = this.receiver;
-        MongoClient.connect(this.url, function (err, db) {
-            if (err) {
-                callback(db_err_statuscode, db_err_msg);
-            }// DB Error. Here error of connecting to db
-            else {
-                let MSG = new Message("", receiver, "", "", "", "", "");
-                MSG.getCount_AllPrivateUnreadMsg(db, function (count, err) {
-                    if (err) callback(db_err_statuscode, db_err_msg);
-                    else callback(success_statuscode, count);
-                });
-                db.close();
             }
         });
     }
@@ -183,27 +102,23 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message("", receiver, "", "", "", "", "");
                 MSG.getUnreadMsgSenderList(db, function (senderlist, err) {
-                    if (err) callback(db_err_statuscode, db_err_msg);
-                    else {
-                        var results = [];
-                        if(senderlist.length == 0)callback(success_statuscode, results);
-                        for(var i = 0 ; i < senderlist.length;i++){
-                            (function (i) {
-                                var sender = senderlist[i];
-                                MSG.getCount_PrivateUnreadMsg(db, sender, receiver, function (count, err) {
-                                    if (err) callback(db_err_statuscode, db_err_msg);
-                                    else {
-                                        var result = {};
-                                        result["sender"] = sender;
-                                        result["count"] = count;
-                                        results.push(result);
-                                        if(i == senderlist.length-1){
-                                            callback(success_statuscode, results);
-                                        }
-                                    }
-                                });
-                            })(i);
-                        }
+                    console.log(err);
+                    var results = [];
+                    if(senderlist.length == 0)callback(success_statuscode, results);
+                    for(var i = 0 ; i < senderlist.length;i++){
+                        (function (i) {
+                            var sender = senderlist[i];
+                            MSG.getCount_PrivateUnreadMsg(db, sender, receiver, function (count, err) {
+                                console.log(err);
+                                var result = {};
+                                result["sender"] = sender;
+                                result["count"] = count;
+                                results.push(result);
+                                if(i == senderlist.length-1){
+                                    callback(success_statuscode, results);
+                                }
+                            });
+                        })(i);
                     }
                     db.close();
                 });
@@ -223,64 +138,23 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message("", receiver, "", "", "", "", "");
                 MSG.getPrivateMsgSenderList(db, function (senderlist, err) {
-                    if (err) callback(db_err_statuscode, db_err_msg);
-                    else {
-                        var results = [];
-                        if(senderlist.length == 0)callback(success_statuscode, results);
-                        for(var i = 0 ; i < senderlist.length;i++){
-                            (function (i) {
-                                var sender = senderlist[i];
-                                MSG.getCount_PrivateUnreadMsg(db, sender, receiver, function (count, err) {
-                                    if (err) callback(db_err_statuscode, db_err_msg);
-                                    else {
-                                        var result = {};
-                                        result["sender"] = sender;
-                                        result["count"] = count;
-                                        results.push(result);
-                                        if(i == senderlist.length-1){
-                                            callback(success_statuscode, results);
-                                        }
-                                    }
-                                });
-                            })(i);
-                        }
-                    }
-                    db.close();
-                });
-            }
-        });
-    }
-
-    Get_LatestIndividualUnreadMsg(callback){
-        var receiver = this.receiver;
-        MongoClient.connect(this.url, function (err, db) {
-            if (err) {
-                callback(db_err_statuscode, db_err_msg);
-            }// DB Error. Here error of connecting to db
-            else {
-                let MSG = new Message("", receiver, "", "", "", "", "");
-                MSG.getUnreadMsgSenderList(db, function (senderlist, err) {
-                    if (err) callback(db_err_statuscode, db_err_msg);
-                    else {
-                        var results = [];
-                        if(senderlist.length == 0)callback(success_statuscode, results);
-                        for(var i = 0 ; i < senderlist.length;i++){
-                            (function (i) {
-                                var sender = senderlist[i];
-                                MSG.get_LatestPrivateUnreadMsg(db, sender, receiver, function (msg, err) {
-                                    if (err) callback(db_err_statuscode, db_err_msg);
-                                    else {
-                                        var result = {};
-                                        result["sender"] = sender;
-                                        result["msg"] = msg;
-                                        results.push(result);
-                                        if(i == senderlist.length-1){
-                                            callback(success_statuscode, results);
-                                        }
-                                    }
-                                });
-                            })(i);
-                        }
+                    console.log(err);
+                    var results = [];
+                    if(senderlist.length == 0)callback(success_statuscode, results);
+                    for(var i = 0 ; i < senderlist.length;i++){
+                        (function (i) {
+                            var sender = senderlist[i];
+                            MSG.getCount_PrivateUnreadMsg(db, sender, receiver, function (count, err) {
+                                console.log(err);
+                                var result = {};
+                                result["sender"] = sender;
+                                result["count"] = count;
+                                results.push(result);
+                                if(i == senderlist.length-1){
+                                    callback(success_statuscode, results);
+                                }
+                            });
+                        })(i);
                     }
                     db.close();
                 });
@@ -296,12 +170,9 @@ class PrivateChatDBOper {
             else {
                 let MSG = new Message("", "", "", "", "", "", "");
                 MSG.getAllMessagesForSearch(db, username, words, function (results, err) {
-                    if (err) {
-                        callback(db_err_statuscode, db_err_msg);
-                    }
-                    else {
-                        callback(success_statuscode, results);
-                    }
+                    console.log(err);
+                    callback(success_statuscode, results);
+                    db.close();
                 });
             }
         });

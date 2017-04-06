@@ -2,17 +2,16 @@
  * Created by keqinli on 2/26/17.
  */
 
-app.factory('mySocket', function($rootScope) {
+app.factory("mySocket", function($rootScope) {
 
     var socket = io();
     return {
         on: function(eventname, callback) {
             socket.on(eventname, function() {
-
                 var args = arguments;
                 $rootScope.$apply(function() {
                     callback.apply(socket, args);
-                })
+                });
             });
         },
         emit: function(eventname, data, callback) {
@@ -23,74 +22,49 @@ app.factory('mySocket', function($rootScope) {
                         callback.apply(socket, args);
                     }
                 });
-            })
+            });
         }
-    }
+    };
 });
 
-app.controller('chatPubliclyCtrl', function($window, $scope, $http, mySocket) {
+app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
     //$scope.name = "Runoob";
     var getMessage=function(){
         $http({
-            method:'get',
-            url:'/public',
+            method:"get",
+            url:"/public",
             //data:{pubmsg:$scope.pubmsg, username:$scope.username}
         }).success(function(rep){
             console.log(rep);
             $scope.displaymsg = rep.data;
-            //alert('Get Msg Success!');
+            //alert("Get Msg Success!");
         });
 
     };
     getMessage();
     //$scope.displaymsg = [];
-    mySocket.on('Public Message', function(data) {
-        console.log(data);
+    mySocket.on("Public Message", function(data) {
         $scope.displaymsg.push(data);
-
     });
     $scope.postMsg = function() {
-        //$scope.username = $window.localStorage.getItem("username");
-        /*
-        console.log($scope);
-        console.log($scope.username);
-        console.log($scope.logined);
-        console.log($scope.showList.login);
-        console.log($scope.showList);
-        console.log($scope.test);
-        console.log($scope.userClass);
-        */
         $http({
-            method:'post',
-            url:'/public',
-            data:{pubmsg:$scope.pubmsg, username:$scope.userClass['username'], timeStamp:Date.now(), emergencystatus:$scope.userClass['status']}
+            method:"post",
+            url:"/public",
+            data:{pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timeStamp:Date.now(), emergencystatus:$scope.userClass["status"]}
         }).success(function(rep){
             console.log(rep);
-            var data = {pubmsg:$scope.pubmsg, username:$scope.userClass['username'], timestamp:Date.now(),emergencystatus:$scope.userClass['status']};
+            var data = {pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timestamp:Date.now(),emergencystatus:$scope.userClass["status"]};
             //$scope.displaymsg.push(data); //add
-            mySocket.emit('Public Message', data);
+            mySocket.emit("Public Message", data);
             $scope.pubmsg = "";
             if (rep.success == 1) {
-                // post success
-                // TODO update in directory
-                // alert('Post Msg Success!');
-                console.log('Post Msg Success!');
+                console.log("Post Msg Success!");
             }
             else {
                 // login failed
                 if (rep.err_type == 1) {
-                    // data base error
+                    console.log("Error in DB");
                 }
-                // else if (rep.err_type == 2) {
-                //     // Username not Exist
-                //     addUser($scope, $http);
-                // }
-                // else if (rep.err_type == 3) {
-                //     // Password Incorrect
-                // }
-                // else if (rep.err_type == 4) {
-                //     // username or password invalid
-                // }
                 else {
                     console.log("Unexpected");
                 }
@@ -98,7 +72,6 @@ app.controller('chatPubliclyCtrl', function($window, $scope, $http, mySocket) {
         }).error(function (rep) {
             console.log(rep);
         });
-
     };
 
     var initialPublicSearchRes=function(){
@@ -133,36 +106,36 @@ app.controller('chatPubliclyCtrl', function($window, $scope, $http, mySocket) {
             var index = stop_words.indexOf(SearchKeys[i]);
             if( index != -1){
                 //it is a stop key, remove it
-                SearchKeys.splice(i, 1)
-            }else{
+                SearchKeys.splice(i, 1);
+            }
+            else {
                 i++;
             }
         }
         //if search keys is not empty, search it and get the result msg array suite
-        if(SearchKeys.length > 0){
-
-            console.log("Searching public msg, keys: "+SearchKeys);
+        // if(SearchKeys.length > 0){
+          $http({
+              method : "post",
+              url : "/publicchat/search/",
+              data: SearchKeys
+          }).success(function(req){
             var public_search_results_suite = [];
             var public_search_results_set = [];
-            var history_public_msg = $scope.displaymsg;
-            console.log("History msg are: "+history_public_msg);
+            var history_public_msg = req.data;
             var count = 0;
-
-            for(var i = history_public_msg.length-1 ; i >= 0 ; i--){
-
+              if(history_public_msg.length === 0)
+                  alert("There are no matches");
+            for(i = history_public_msg.length-1 ; i >= 0 ; i--){
                 var pub_msg = history_public_msg[i].pubmsg;
-
-                if(IfKeyWordExist(SearchKeys, pub_msg)){
-
+                //if(IfKeyWordExist(SearchKeys, pub_msg)){
                     public_search_results_set.push(history_public_msg[i]);
-
                     count++;
-
                     if(count % 10 == 0){
                         public_search_results_suite.push(public_search_results_set);
                         public_search_results_set = [];
                     }
-                }
+                //}
+
             }
 
             if(public_search_results_set.length > 0){
@@ -180,22 +153,21 @@ app.controller('chatPubliclyCtrl', function($window, $scope, $http, mySocket) {
                     $scope.SearchPublicMsgMore = true;
                 }
             }
-
-        }
-        $scope.showList['publicSearchResult'] = true;
+            });
+        // }
+        $scope.showList["publicSearchResult"] = true;
+        $scope.showList['publicHistory'] = false;
         $scope.pubsearchmsg="";
     };
-
 
     $scope.GetMorePublicSearchResults = function () {
         var more_results = $scope.public_search_results_suite[0];
         $scope.PublicSearchResult = $scope.PublicSearchResult.concat(more_results);
-
         $scope.public_search_results_suite.splice(0,1);
-
         if($scope.public_search_results_suite.length > 0){
             $scope.SearchPublicMsgMore = true;
-        }else{
+        }
+        else {
             $scope.SearchPublicMsgMore = false;
         }
     };

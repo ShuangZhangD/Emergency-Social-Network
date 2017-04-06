@@ -29,28 +29,9 @@ class Message {
             "emergencystatus": this.EmergencyStatus,
             "ReadStatus": this.ReadStatus
         }, function (err, results) {
-            if (err) {
-                console.log("Error inserting the message " + err);
-                callback(null, err);
-            }
-            else {
-                callback(results, null);
-            }
-        });
-    }
+            console.log(err);
+            callback(results, null);
 
-
-    // Method to display all the messages
-    displayMessages(db, callback) {
-        this.collection = db.collection("MESSAGES");
-        this.collection.find().toArray(function (err, results) {
-            if (err) {
-                console.dir("Error inserting the message " + err);
-                callback(null, err);
-            }
-            else {
-                callback(results, null);
-            }
         });
     }
 
@@ -61,13 +42,8 @@ class Message {
             "sender": this.sender,
             "receiver": this.receiver
         }, {$set: {"ReadStatus": "read"}}, function (err, results) {
-            if (err) {
-                console.log("Error updating read status" + err);
-                callback(null, err);
-            }
-            else {
-                callback(results, null);
-            }
+            console.log(err);
+            callback(results, null);
         });
     }
 
@@ -79,56 +55,19 @@ class Message {
             "receiver": { $in: [this.sender, this.receiver] },
             "type": "private"
         }).toArray(function (err, results) {
-            if (err) {
-                console.log("Error when loading private history msg:" + err);
-                callback(null, err);
-            } else {
-                var datas = [];
-                results.forEach(function (result) {
-                    var data = {};
-                    data["sender"] = result.sender;
-                    data["receiver"] = result.receiver;
-                    data["private_msg"] = result.message;
-                    data["timestamp"] = result.postTime;
-                    data["emergency_status"] = result.emergencystatus;
-                    datas.push(data);
-                });
-                //var jsonString = JSON.stringify(datas);
-                callback(datas, null);
-            }
-        });
-    }
-
-    //get how many unread msg of receiver
-    getCount_AllUnreadMsg(db, callback){
-        this.collection = db.collection("MESSAGES");
-        this.collection.find({
-            "receiver": this.receiver,
-            "ReadStatus": "unread"
-        }).toArray(function (err, results) {
-            if(err) {
-                callback(null, err);
-            }
-            else {
-                callback(results.length, null);
-            }
-        });
-    }
-
-    //get how many private unread msg of receiver
-    getCount_AllPrivateUnreadMsg(db, callback){
-        this.collection = db.collection("MESSAGES");
-        this.collection.find({
-            "receiver": this.receiver,
-            "type" : "private",
-            "ReadStatus": "unread"
-        }).toArray(function (err, results) {
-            if(err) {
-                callback(null, err);
-            }
-            else {
-                callback(results.length, null);
-            }
+            console.log(err);
+            var datas = [];
+            results.forEach(function (result) {
+                var data = {};
+                data["sender"] = result.sender;
+                data["receiver"] = result.receiver;
+                data["private_msg"] = result.message;
+                data["timestamp"] = result.postTime;
+                data["emergency_status"] = result.emergencystatus;
+                datas.push(data);
+            });
+            //var jsonString = JSON.stringify(datas);
+            callback(datas, null);
         });
     }
 
@@ -141,8 +80,7 @@ class Message {
             "type" : "private",
             "ReadStatus": "unread"
         }).toArray(function (err, results) {
-            if(err) callback(null, err);
-            else callback(results.length, null);
+            callback(results.length, null);
         });
     }
 
@@ -153,10 +91,8 @@ class Message {
             "receiver":this.receiver,
             "ReadStatus": "unread"
         }, function (err, results) {
-            if(err) callback(null, err);
-            else {
-                callback(results, null);
-            }
+            console.log(err);
+            callback(results, null);
         });
     }
 
@@ -164,51 +100,20 @@ class Message {
     getPrivateMsgSenderList(db, callback){
         var receiver = this.receiver;
         this.collection = db.collection("MESSAGES");
-        /*this.collection.distinct("sender",{
-            //"receiver":this.receiver,
-            $or: [{"receiver":this.receiver}, {"sender":this.receiver}],
-            "type" : "private"
-        }, function (err, results) {*/
         this.collection.aggregate([{$match: {"type":"private", $or: [{"receiver":receiver}, {"sender":receiver}]}}, {$group: {"_id": {sender: "$sender",receiver: "$receiver"} }}], function (err, results) {
-            if(err) callback(null, err);
-            else {
-                var userlist = [];
-                results.forEach(function(result){
-                    var sendername = result["_id"]["sender"];
-                    if(userlist.indexOf(sendername) == -1 && sendername != receiver){
-                        userlist.push(sendername);
-                    }
-                    var receivername = result["_id"]["receiver"];
-                    if(userlist.indexOf(receivername) == -1 && receivername != receiver){
-                        userlist.push(receivername);
-                    }
-                });
-                //var loc_receiver = results.indexOf(receiver)
-                //if(loc_receiver != -1)results.splice(loc_receiver,1)
-                callback(userlist,null);
-            }
-        });
-    }
-
-    get_LatestPrivateUnreadMsg(db, sender, receiver, callback){
-        this.collection = db.collection("MESSAGES");
-        this.collection.find({
-            "sender" : sender,
-            "receiver": receiver,
-            "type" : "private",
-            "ReadStatus": "unread"
-        }).limit(1).sort({$natural:-1}).toArray(function (err, result) {
-            if(err) callback(null, err);
-            else {
-                var data = {};
-                data["sender"] = result[0].sender;
-                data["receiver"] = result[0].receiver;
-                data["private_msg"] = result[0].message;
-                data["timestamp"] = result[0].postTime;
-                data["emergency_status"] = result[0].EmergencyStatus;
-
-                callback(data, null);
-            }
+            console.log(err);
+            var userlist = [];
+            results.forEach(function(result){
+                var sendername = result["_id"]["sender"];
+                if(userlist.indexOf(sendername) == -1 && sendername != receiver){
+                    userlist.push(sendername);
+                }
+                var receivername = result["_id"]["receiver"];
+                if(userlist.indexOf(receivername) == -1 && receivername != receiver){
+                    userlist.push(receivername);
+                }
+            });
+            callback(userlist,null);
         });
     }
 
@@ -220,23 +125,40 @@ class Message {
             searchTerm=searchTerm+"|"+word;
         });
         var regExWord = new RegExp(".*" + searchTerm + ".*");
-        this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message":  regExWord}).toArray(function(err, results) {
-            if(err) {
-                console.log("Error when retrieving messages for search terms");
-                callback(null, err);
-            }
-            else {
-                results.forEach(function (result) {
-                    var data = {};
-                    data["sender"] = result.sender;
-                    data["receiver"] = result.receiver;
-                    data["message"] = result.message;
-                    data["timestamp"] = result.postTime;
-                    data["emergency_status"] = result.emergencystatus;
-                    datas.push(data);
-                });
-                callback(datas, null);
-            }
+        this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message":  regExWord, "type":"private"}).toArray(function(err, results) {
+            console.log(err);
+            results.forEach(function (result) {
+                var data = {};
+                data["sender"] = result.sender;
+                data["receiver"] = result.receiver;
+                data["message"] = result.message;
+                data["timestamp"] = result.postTime;
+                data["emergency_status"] = result.emergencystatus;
+                datas.push(data);
+            });
+            callback(datas, null);
+        });
+    }
+
+    getAllPublicMessagesForSearch(db, words, callback) {
+        this.collection = db.collection("MESSAGES");
+        var datas=[];
+        var searchTerm = words[0];
+        words.forEach(function(word) {
+            searchTerm=searchTerm+"|"+word;
+        });
+        var regExWord = new RegExp(".*" + searchTerm + ".*");
+        this.collection.find({ "message":  regExWord, "type":"public"}).toArray(function(err, results) {
+            console.log(err);
+            results.forEach(function (result) {
+                var data = {};
+                data["username"] = result.sender;
+                data["pubmsg"] = result.message;
+                data["timestamp"] = result.postTime;
+                data["emergencystatus"] = result.emergencystatus;
+                datas.push(data);
+            });
+            callback(datas, null);
         });
     }
 }
