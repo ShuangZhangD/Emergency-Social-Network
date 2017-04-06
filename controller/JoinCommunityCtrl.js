@@ -171,20 +171,20 @@ class JoinCommunityController {
                 res.json({success:0, err_type: 1, err_msg:content1});
             }
             else{
-              var directory_search_result1 = [];
-              var directory_search_result2 = [];
-              for(var i = 0 ; i <= content1.length-1 ; i++){
-                  var name1 = content1[i];
-                  if(IfKeyWordExist(keywords, name1)){
-                      directory_search_result1.push(content1[i]);
-                  }
-              }
-              for(i = 0 ; i <= content2.length-1 ; i++){
-                  var name2 = content2[i];
-                  if(IfKeyWordExist(keywords, name2)){
-                      directory_search_result2.push(content2[i]);
-                  }
-              }
+                var directory_search_result1 = [];
+                var directory_search_result2 = [];
+                for(var i = 0 ; i <= content1.length-1 ; i++){
+                    var name1 = content1[i];
+                    if(IfKeyWordExist(keywords, name1)){
+                        directory_search_result1.push(content1[i]);
+                    }
+                }
+                for(i = 0 ; i <= content2.length-1 ; i++){
+                    var name2 = content2[i];
+                    if(IfKeyWordExist(keywords, name2)){
+                        directory_search_result2.push(content2[i]);
+                    }
+                }
 
                 var sorted_content1 = SortUserList(directory_search_result1);
                 var sorted_content2 = SortUserList(directory_search_result2);

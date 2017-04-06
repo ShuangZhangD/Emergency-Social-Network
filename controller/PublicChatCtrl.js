@@ -7,8 +7,8 @@ var dboper = require("../models/PublicChatDBoper.js");
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
-var db_err_msg = "Database Error";
-var db_err_statuscode = 400;
+//var db_err_msg = "Database Error";
+//var db_err_statuscode = 400;
 var success_statuscode = 200;
 
 class PublicChatCtrl{
