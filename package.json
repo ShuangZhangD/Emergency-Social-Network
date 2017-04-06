@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "grunt",
+    "start": "npm start",
     "postinstall": "bower install"
   },
   "dependencies": {
