@@ -12,16 +12,16 @@ var http = require("http");
 var app = express();
 // app.set("port", (process.env.PORT || 5000));
 var server = http.createServer(app);
-// var io = require("socket.io").listen(server);
-var io;
-// server.listen(process.env.PORT || 5000);
+var io = require("socket.io").listen(server);
+// var io;
+server.listen(process.env.PORT || 5000);
 var JoinCommunityCtrlLoginCommunityRouter = require("./routes/JoinCommunityCtrlLoginCommunityRouter");
 var JoinCommunityCtrl = require("./controller/JoinCommunityCtrl");
 var PublicChatCtrl = require("./controller/PublicChatCtrl.js");
 var PrivateChatCtrl = require("./controller/PrivateChatCtrl.js");
 var PostAnnouncementCtrl = require("./controller/PostAnnouncementCtrl.js");
 var ShareStatusCtrl = require("./controller/ShareStatusCtrl");
-var sockets = require("./socket.js");
+// var sockets = require("./socket.js");
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -87,65 +87,65 @@ app.use(function(err, req, res, next) {
 // var server;
 
 
-exports.start = function(cb) {
-    server = app.listen(process.env.PORT || 5000, function() {
-        io = sockets(server);
-        if (cb) {
-            cb();
-        }
-    });
-};
-
-exports.close = function(cb) {
-    if (io) io.close();
-    if (server) server.close(cb);
-};
-// when app.js is launched directly
-if (module.id === require.main.id) {
-    exports.start();
-}
-module.exports = app;
-//
-// var ConnectedSockets = {};
-// var publicChat = require("./controller/PublicChatCtrl.js");
-// var privateChat2 = require("./controller/PrivateChatSocketCtrl");
-// io.on("connection", function(socket) {
-//
-//     socket.on("Public Message", publicChat.publicMessageSocket(socket));
-//
-//     socket.on("Post Announcement", PostAnnouncementCtrl.AnnouncementSocket(socket));
-//     socket.on("Update Share Status", ShareStatusCtrl.UpdateShareStatusSocket(socket)); //for directory updating status
-//
-//     //when a private message is sent
-//     socket.on("Private Message", privateChat2.privateMessageSocket(socket, ConnectedSockets));
-//
-//     //when total number of unread(private+public) message is needed
-//     //socket.on("GetCount AllUnreadMsg", privateChat.getCount_AllUnreadMsg(socket));
-//
-//     //when total number of private unread message is needed
-//     //socket.on("GetCount AllPrivateUnreadMsg", privateChat.getCount_AllPrivateUnreadMsg(socket));
-//
-//     //when individual number of unread message is needed
-//     socket.on("GetCount IndividualUnreadMsg", privateChat2.getCount_IndividualPrivateUnreadMsg(socket));
-//
-//     //when individual latest msg of unread message is needed
-//    // socket.on("GetMsg IndividualLatestUnreadMsg", privateChat.get_IndividualPrivateUnreadMsg(socket));
-//
-//     //set the private msg of sender and receiver to be read
-//     socket.on("PrivateMsgRead", privateChat2.MarkedAsRead());
-//
-//     socket.on("userJoinCommunity", function(username){
-//         socket.broadcast.emit("userJoined",username);
-//         ConnectedSockets[username] = socket;
-//         //privateChat.UnreadCount(socket, username);
-//     });
-//
-//     socket.on("left", function(username){
-//         socket.broadcast.emit("userleft");
-//         if(ConnectedSockets.hasOwnProperty(username)) {
-//             delete ConnectedSockets[username];
+// exports.start = function(cb) {
+//     server = app.listen(process.env.PORT || 5000, function() {
+//         io = sockets(server);
+//         if (cb) {
+//             cb();
 //         }
 //     });
-// });
+// };
 //
+// exports.close = function(cb) {
+//     if (io) io.close();
+//     if (server) server.close(cb);
+// };
+// // when app.js is launched directly
+// if (module.id === require.main.id) {
+//     exports.start();
+// }
+module.exports = app;
+//
+var ConnectedSockets = {};
+var publicChat = require("./controller/PublicChatCtrl.js");
+var privateChat2 = require("./controller/PrivateChatSocketCtrl");
+io.on("connection", function(socket) {
+
+    socket.on("Public Message", publicChat.publicMessageSocket(socket));
+
+    socket.on("Post Announcement", PostAnnouncementCtrl.AnnouncementSocket(socket));
+    socket.on("Update Share Status", ShareStatusCtrl.UpdateShareStatusSocket(socket)); //for directory updating status
+
+    //when a private message is sent
+    socket.on("Private Message", privateChat2.privateMessageSocket(socket, ConnectedSockets));
+
+    //when total number of unread(private+public) message is needed
+    //socket.on("GetCount AllUnreadMsg", privateChat.getCount_AllUnreadMsg(socket));
+
+    //when total number of private unread message is needed
+    //socket.on("GetCount AllPrivateUnreadMsg", privateChat.getCount_AllPrivateUnreadMsg(socket));
+
+    //when individual number of unread message is needed
+    socket.on("GetCount IndividualUnreadMsg", privateChat2.getCount_IndividualPrivateUnreadMsg(socket));
+
+    //when individual latest msg of unread message is needed
+   // socket.on("GetMsg IndividualLatestUnreadMsg", privateChat.get_IndividualPrivateUnreadMsg(socket));
+
+    //set the private msg of sender and receiver to be read
+    socket.on("PrivateMsgRead", privateChat2.MarkedAsRead());
+
+    socket.on("userJoinCommunity", function(username){
+        socket.broadcast.emit("userJoined",username);
+        ConnectedSockets[username] = socket;
+        //privateChat.UnreadCount(socket, username);
+    });
+
+    socket.on("left", function(username){
+        socket.broadcast.emit("userleft");
+        if(ConnectedSockets.hasOwnProperty(username)) {
+            delete ConnectedSockets[username];
+        }
+    });
+});
+
 // module.exports = app;
