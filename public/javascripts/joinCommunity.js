@@ -126,6 +126,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             $scope.showList[item] = false;
         }
         $scope.showList["directory"] = true;
+        console.log("Debug-01");
     };
     $scope.getStatus = function (value) {
       console.log("value" + value);
@@ -151,8 +152,8 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         // }
         console.log("In search");
         console.log(req.data1);
-          // if(req.data1.length ===0 && req.data2.length ===0)
-          //     alert("There are no matches");
+          if(req.data1.length ===0 && req.data2.length ===0)
+              alert("There are no matches");
         $scope.details1 = req.data1;
         $scope.details2 = req.data2;
 
