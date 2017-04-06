@@ -10,8 +10,6 @@ var db_err_statuscode = 400;
 var success_statuscode = 200;
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 
-var db_err_msg = "Database Error";
-
 class PublicChatDBoper {
 
     InsertMessage (sender, receiver, message, type, postTime,emergencystatus, url, callback) {
@@ -67,12 +65,8 @@ class PublicChatDBoper {
             else {
                 let MSG = new Message("", "", "", "", "", "", "");
                 MSG.getAllPublicMessagesForSearch(db, words, function (results, err) {
-                    // if (err) {
-                    //     callback(db_err_statuscode, db_err_msg);
-                    // }
-                    // else {
-                        callback(success_statuscode, results);
-                    //}
+                    console.log(err);
+                    callback(success_statuscode, results);
                     db.close();
                 });
             }
