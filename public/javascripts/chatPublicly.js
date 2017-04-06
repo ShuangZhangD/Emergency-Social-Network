@@ -113,7 +113,7 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
             }
         }
         //if search keys is not empty, search it and get the result msg array suite
-        if(SearchKeys.length > 0){
+        // if(SearchKeys.length > 0){
           $http({
               method : "post",
               url : "/publicchat/search/",
@@ -154,7 +154,7 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
                 }
             }
             });
-        }
+        // }
         $scope.showList["publicSearchResult"] = true;
         $scope.showList['publicHistory'] = false;
         $scope.pubsearchmsg="";

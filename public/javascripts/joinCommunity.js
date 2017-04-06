@@ -191,7 +191,10 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             }
         }
         //if search keys is not empty, search it and get the result msg array suite
-        if(SearchKeys.length > 0){
+        /*if(SearchKeys.length == 0) {
+          alert("No results for search criteria.");
+        }
+        if(SearchKeys.length > 0){*/
           $http({
               method : "post",
               url : "/userlist/searchname/",
@@ -222,7 +225,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         // $scope.showList["annoucementSearchResult"] = true;
         $scope.namesearchmsg="";
         });
-      }
+      //}
     };
     $scope.showAnnouncement = function () {
         for (var item in $scope.showList) {

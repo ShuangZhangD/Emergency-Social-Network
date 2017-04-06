@@ -92,7 +92,7 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
             }
         }
         //if search keys is not empty, search it and get the result msg array suite
-        if(SearchKeys.length > 0){
+         //if(SearchKeys.length > 0){
           $http({
               method : "post",
               url : "/announcement/search/",
@@ -131,7 +131,7 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
                 }
             }
           });
-        }
+        //}
         $scope.showList["annoucementSearchResult"] = true;
         $scope.showList["announcementHistory"] = false;
         $scope.annsearchmsg="";

@@ -110,7 +110,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
                 i++;
             }
         }
-        if(SearchKeys.length > 0){
+        // if(SearchKeys.length > 0){
             $http({
                 method : "post",
                 url : "/privatechat/search/" +$scope.userClass["username"],
@@ -142,7 +142,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
                         $scope.searchPrivateChatMore = true;
                 }
             });
-        }
+        // }
         $scope.showList["privateChatSearchResult"] = true;
         $scope.showList["privateChatTable"] =false;
         $scope.privatechat_search_area = "";
