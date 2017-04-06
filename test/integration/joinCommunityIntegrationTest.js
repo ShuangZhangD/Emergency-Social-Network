@@ -192,4 +192,50 @@ suite('Join Comunity Integration Tests', function(){
                     });
             });
     });
+
+    test('Search Name with RESTful Api', function(done) {
+        request.post('/signup')
+            .send({"username": "test_user_for_rest_api", password: "1234"})
+            .expect(200, function(err, res) {
+                request.post('/login')
+                    .send({"username": "test_user_for_rest_api", password: "1234"})
+                    .expect(200, function(err, res){
+                        if(err) {
+                            return done(err);
+                        }
+                        else {
+                            request.post('/userlist/searchname')
+                                .send(["test_user_for_rest_api"])
+                                .expect(200,function(err,res){
+                                    expect(res.body.success).to.equal(1);
+                                    done();
+                                })
+
+                        }
+                    });
+            });
+    });
+
+    test('Search EmergencyStatus with RESTful Api', function(done) {
+        request.post('/signup')
+            .send({"username": "test_user_for_rest_api", password: "1234"})
+            .expect(200, function(err, res) {
+                request.post('/login')
+                    .send({"username": "test_user_for_rest_api", password: "1234"})
+                    .expect(200, function(err, res){
+                        if(err) {
+                            return done(err);
+                        }
+                        else {
+                            request.post('/userlist/searchstatus')
+                                .send(["test_user_for_rest_api"])
+                                .expect(200,function(err,res){
+                                    expect(res.body.success).to.equal(1);
+                                    done();
+                                })
+                        }
+                    });
+            });
+    });
+
 });

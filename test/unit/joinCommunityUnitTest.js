@@ -132,4 +132,5 @@ suite('Join Comunity Unit Tests', function(){
             done();
         });
     });
+
 });
