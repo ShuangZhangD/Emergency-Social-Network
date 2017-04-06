@@ -55,37 +55,24 @@ class PostAnnouncementDBoper {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
             else {
-              var collection = db.collection("announcement");
-              var datas=[];
-              var searchTerm = words[0];
-              words.forEach(function(word) {
-                  searchTerm=searchTerm+"|"+word;
-              });
-              var regExWord = new RegExp(".*" + searchTerm + ".*");
-              collection.find({ "announcement":  regExWord}).toArray(function(err, results) {
-
-                //  console.log(err);
-                      results.forEach(function (result) {
-                            //  console.log(result);
-                          var data = {};
-                          data["username"] = result.username;
-                          data["announcement"] = result.announcement;
-                          data["timestamp"] = result.postTime;
-                          datas.push(data);
-                          console.log(data);
-                      });
-                      callback(success_statuscode, datas);
+                var collection = db.collection("announcement");
+                var datas=[];
+                var searchTerm = words[0];
+                words.forEach(function(word) {
+                    searchTerm=searchTerm+"|"+word;
+                });
+                var regExWord = new RegExp(".*" + searchTerm + ".*");
+                collection.find({ "announcement":  regExWord}).toArray(function(err, results) {
+                    results.forEach(function (result) {
+                        var data = {};
+                        data["username"] = result.username;
+                        data["announcement"] = result.announcement;
+                        data["timestamp"] = result.postTime;
+                        datas.push(data);
                     });
-                    // if (err) {
-                    //     callback(db_err_statuscode, db_err_msg);
-                    // }
-                    // else {
-                    console.log("datassfdsdfsdfsdfsdf");
-                    console.log(datas);
-
-                    //}
-                    db.close();
-
+                    callback(success_statuscode, datas);
+                });
+                db.close();
             }
         });
     }
