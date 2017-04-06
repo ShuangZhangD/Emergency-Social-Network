@@ -102,6 +102,8 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
             var announce_search_results_set = [];
             var history_announce = req.data;
             var count = 0;
+              if(history_announce.length === 0)
+                  alert("There are no matches");
             for( i = history_announce.length-1 ; i >= 0 ; i--){
                 var announcement = history_announce[i].announcement;
               //  if(IfKeyWordExist(SearchKeys, announcement)){

@@ -151,6 +151,8 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         // }
         console.log("In search");
         console.log(req.data1);
+          // if(req.data1.length ===0 && req.data2.length ===0)
+          //     alert("There are no matches");
         $scope.details1 = req.data1;
         $scope.details2 = req.data2;
 
@@ -211,6 +213,8 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             // }
             console.log("In search");
             console.log(req.data1);
+            if(req.data1.length ===0 && req.data2.length ===0)
+                  alert("There are no matches");
             $scope.details1 = req.data1;
             $scope.details2 = req.data2;
 

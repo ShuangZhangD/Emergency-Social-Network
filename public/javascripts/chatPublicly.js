@@ -123,6 +123,8 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
             var public_search_results_set = [];
             var history_public_msg = req.data;
             var count = 0;
+              if(history_public_msg.length === 0)
+                  alert("There are no matches");
             for(i = history_public_msg.length-1 ; i >= 0 ; i--){
                 var pub_msg = history_public_msg[i].pubmsg;
                 //if(IfKeyWordExist(SearchKeys, pub_msg)){
