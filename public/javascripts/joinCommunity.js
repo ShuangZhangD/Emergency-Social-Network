@@ -129,12 +129,12 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         console.log("Debug-01");
     };
     $scope.getStatus = function (value) {
-      console.log("value" + value);
-      $http({
-          method : "post",
-          url : "/userlist/searchstatus/",
-          data: {value:value}
-      }).success(function(req){
+        console.log("value" + value);
+        $http({
+            method : "post",
+            url : "/userlist/searchstatus/",
+            data: {value:value}
+        }).success(function(req){
         // var history_detail1 = $scope.historyList1;
         // var history_detail2 = $scope.historyList2;
         // // console.log("History msg are: "+$scope.historyList1);
@@ -150,31 +150,32 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         //         directory_search_result2.push(history_detail2[i]);
         //     }
         // }
-        console.log("In search");
-        console.log(req.data1);
-          if(req.data1.length ===0 && req.data2.length ===0)
-              alert("There are no matches");
-        $scope.details1 = req.data1;
-        $scope.details2 = req.data2;
+            console.log("In search");
+            console.log(req.data1);
+            if(req.data1.length ===0 && req.data2.length ===0)
+                alert("There are no matches");
+            $scope.details1 = req.data1;
+            $scope.details2 = req.data2;
 
     // $scope.showList["annoucementSearchResult"] = true;
     // $scope.namesearchmsg="";
-    });
+        });
 
     };
 
     /** Check if one keyword of key_words exist in msg
-     */
+
     var IfKeyWordExist=function(key_words, msg){
         for(var i = 0 ; i < key_words.length ; i++){
             if(msg != null && msg.includes(key_words[i]))
                 return true;
         }
         return false;
-    };
+    };*/
+
     $scope.searchDirectory = function() {
-        var directory_search_result1 = [];
-        var directory_search_result2 = [];
+        //var directory_search_result1 = [];
+        //var directory_search_result2 = [];
         //filter stop words
         var DirectorySearchMsg = $scope.namesearchmsg;
         var SearchKeys = DirectorySearchMsg.split(" ");
@@ -195,11 +196,11 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
           alert("No results for search criteria.");
         }
         if(SearchKeys.length > 0){*/
-          $http({
-              method : "post",
-              url : "/userlist/searchname/",
-              data: SearchKeys
-          }).success(function(req){
+        $http({
+            method : "post",
+            url : "/userlist/searchname/",
+            data: SearchKeys
+        }).success(function(req){
             // var history_detail1 = $scope.historyList1;
             // var history_detail2 = $scope.historyList2;
             // // console.log("History msg are: "+$scope.historyList1);
@@ -218,12 +219,12 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             console.log("In search");
             console.log(req.data1);
             if(req.data1.length ===0 && req.data2.length ===0)
-                  alert("There are no matches");
+                alert("There are no matches");
             $scope.details1 = req.data1;
             $scope.details2 = req.data2;
 
-        // $scope.showList["annoucementSearchResult"] = true;
-        $scope.namesearchmsg="";
+            // $scope.showList["annoucementSearchResult"] = true;
+            $scope.namesearchmsg="";
         });
       //}
     };
@@ -383,7 +384,7 @@ function check_usr(username){
     return true;
 }
 
-function check_pwd(password) {
+/*function check_pwd(password) {
     if (!password) {
         return false;
     }
@@ -393,7 +394,7 @@ function check_pwd(password) {
         return false;
     }
     return true;
-}
+}*/
 
 
 /*

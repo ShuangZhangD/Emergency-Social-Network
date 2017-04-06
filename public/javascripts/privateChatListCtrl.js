@@ -111,37 +111,37 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
             }
         }
         // if(SearchKeys.length > 0){
-            $http({
-                method : "post",
-                url : "/privatechat/search/" +$scope.userClass["username"],
-                data: SearchKeys
-            }).success(function(req){
-                var all_history_privatechat = req.data;  //data: [[],[],...]
-                var history_privatechat_suite = [];
-                var history_privatechat_set = [];
-                var count = 0;
-                if(all_history_privatechat.length === 0)
-                    alert("There are no matches");
-                for(var i=all_history_privatechat.length-1; i>=0; i--){
-                    count++;
-                    history_privatechat_set.push(all_history_privatechat[i]);
-                    if(count % 10 ==0) {
-                        history_privatechat_suite.push(history_privatechat_set);
-                        history_privatechat_set = [];
-                    }
-                }
-                if(history_privatechat_set.length >0){
+        $http({
+            method : "post",
+            url : "/privatechat/search/" +$scope.userClass["username"],
+            data: SearchKeys
+        }).success(function(req){
+            var all_history_privatechat = req.data;  //data: [[],[],...]
+            var history_privatechat_suite = [];
+            var history_privatechat_set = [];
+            var count = 0;
+            if(all_history_privatechat.length === 0)
+                alert("There are no matches");
+            for(var i=all_history_privatechat.length-1; i>=0; i--){
+                count++;
+                history_privatechat_set.push(all_history_privatechat[i]);
+                if(count % 10 ==0) {
                     history_privatechat_suite.push(history_privatechat_set);
                     history_privatechat_set = [];
                 }
-                if(history_privatechat_suite.length >0){
-                    $scope.privatechat_search_results = history_privatechat_suite[0];
-                    history_privatechat_suite.splice(0,1);
-                    $scope.privatechat_search_results_suite =history_privatechat_suite;
-                    if(history_privatechat_suite.length > 0)
-                        $scope.searchPrivateChatMore = true;
-                }
-            });
+            }
+            if(history_privatechat_set.length >0){
+                history_privatechat_suite.push(history_privatechat_set);
+                history_privatechat_set = [];
+            }
+            if(history_privatechat_suite.length >0){
+                $scope.privatechat_search_results = history_privatechat_suite[0];
+                history_privatechat_suite.splice(0,1);
+                $scope.privatechat_search_results_suite =history_privatechat_suite;
+                if(history_privatechat_suite.length > 0)
+                    $scope.searchPrivateChatMore = true;
+            }
+        });
         // }
         $scope.showList["privateChatSearchResult"] = true;
         $scope.showList["privateChatTable"] =false;
