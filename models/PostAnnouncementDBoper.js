@@ -9,8 +9,6 @@ var db_err_statuscode = 400;
 var success_statuscode = 200;
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 
-var db_err_msg = "Database Error";
-
 class PostAnnouncementDBoper {
     InsertAnnouncement (username, announcement, postTime, url, callback) {
         //connect to database
@@ -33,26 +31,19 @@ class PostAnnouncementDBoper {
         MongoClient.connect(url, function(err, db) {
             //console.log("Load Announcement connect to "+ url);
             if (err) {
-                //console.log("Error1:" + err);
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             var collection = db.collection("announcement");
             collection.find({}).toArray(function(err, results){
-                // if(err)
-                // {
-                //     //console.log("Error2:"+ err);
-                //     callback(err, "Database error");
-                // }else {
-                    var datas = [];
-                    results.forEach(function(result){
-                        var data = {};
-                        data["username"] = result.username;
-                        data["announcement"] = result.announcement;
-                        data["timestamp"] = result.postTime;
-                        datas.push(data);
-                    });
-                    callback(err,datas);
-                //}
+                var datas = [];
+                results.forEach(function(result){
+                    var data = {};
+                    data["username"] = result.username;
+                    data["announcement"] = result.announcement;
+                    data["timestamp"] = result.postTime;
+                    datas.push(data);
+                });
+                callback(err,datas);
                 db.close();
             });
         });

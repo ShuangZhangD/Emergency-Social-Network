@@ -26,46 +26,31 @@ class JoinCommunityDBOper {
                 //check if the user exist
                 let new_user = new User(username, password, "online", "");
                 new_user.checkUser(db, username, function(result, err) {
-                    // if(err){
-                    //     callback(db_err_statuscode, db_err_msg);
-                    // }
-                    //if username not exist
                     if(result.length == 0){
                         //console.log("username not exist");
+                        console.log(err);
                         callback(user_not_exist_statuscode, user_not_exist_msg);
                     }
                     //if username exist
                     else {
                         new_user.checkPassword(db, username, password, function(pwdres, err){
-                            // if (err) {
-                            //     callback(db_err_statuscode, db_err_msg);//DB error
-                            // }
-                            // else {
-                                if (pwdres.length == 0) {
-                                    //password incorrect
-                                    callback(pwd_incorrect_statuscode, pwd_incorrect_msg);//Password Incorrect Error
-                                }
-                                else {
-                                    new_user.updateStatus(db, username, "online", function(updateres, err) {
-                                        // if(err) {
-                                        //     callback(db_err_statuscode, db_err_msg);
-                                        // }
+                            console.log(err);
+                            if (pwdres.length == 0) {
+                                //password incorrect
+                                callback(pwd_incorrect_statuscode, pwd_incorrect_msg);//Password Incorrect Error
+                            }
+                            else {
+                                new_user.updateStatus(db, username, "online", function(updateres, err) {console.log(err);});
+                                new_user.displayStatusUsers(db, "online", function(results, err) {
+                                    console.log(err);
+                                    var userlist = [];
+                                    results.forEach(function(result) {
+                                        userlist.push(result.username);
                                     });
-                                    new_user.displayStatusUsers(db, "online", function(results, err) {
-                                        // if(err) {
-                                        //     callback(db_err_statuscode, db_err_msg);
-                                        // }
-                                        // else {
-                                            var userlist = [];
-                                            results.forEach(function(result) {
-                                                userlist.push(result.username);
-                                            });
-                                            callback(success_statuscode, userlist);
-                                        //}
-                                    });
-                                }
-                                db.close();
-                           // }
+                                    callback(success_statuscode, userlist);
+                                });
+                            }
+                            db.close();
                         });
                     }
                 });
@@ -76,44 +61,32 @@ class JoinCommunityDBOper {
     AddDB (username, password, url, callback) {
         MongoClient.connect(url, function (err, db) {
             if (err) {
-                //console.log("Error:"+ err);
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
             else {
                 let new_user = new User(username, password, "online");
                 new_user.checkUser(db, username, function(result, err) {
-                    // if(err){
-                    //     callback(db_err_statuscode, db_err_msg);
-                    // }
-                    // else {
-                        if (result.length > 0) {
-                            callback(signup_username_exist_statuscode, signup_username_exist_msg);
-                            db.close();
-                        }
-                        else {
-                            new_user.createUser(db, function(result, err){
-                                // if(err) {
-                                //     callback(db_err_statuscode, db_err_msg);
-                                // }
-                                // else {
-                                    new_user.displayStatusUsers(db, "online", function(results, err) {
-                                        // if (err) callback(db_err_statuscode, db_err_msg);
-                                        // else {
-                                            var userlist = [];
-                                        results.forEach(function (result) {
-                                            userlist.push(result.username);
-                                        });
-                                        callback(success_statuscode, userlist);
-                                        //}
-                                    db.close();
-                                    });
-                                //}
+                    console.log(err);
+                    if (result.length > 0) {
+                        callback(signup_username_exist_statuscode, signup_username_exist_msg);
+                        db.close();
+                    }
+                    else {
+                        new_user.createUser(db, function(result, err){
+                            console.log(err);
+                            new_user.displayStatusUsers(db, "online", function(results, err) {
+                                console.log(err);
+                                var userlist = [];
+                                results.forEach(function (result) {
+                                    userlist.push(result.username);
+                                });
+                                callback(success_statuscode, userlist);
+                                db.close();
                             });
-                        } // if (result>0)
-                    //} // if (err)
+                        });
+                    } // if (result>0)
                 }); // checkUser
             }
-
         });//end of database operation
     }
 
@@ -126,27 +99,21 @@ class JoinCommunityDBOper {
             //insert information into database
             let new_user = new User("", "", "");
             new_user.displayStatusUsers(db, "online", function(results, err) {
-                // if (err) callback(db_err_statuscode, db_err_msg, null);
-                // else {
-                    var userlist1 = [];
-                    results.forEach(function (result) {
-                        userlist1.push(result.username);
-                    });
+                console.log(err);
+                var userlist1 = [];
+                results.forEach(function (result) {
+                    userlist1.push(result.username);
+                });
 
-                    new_user.displayStatusUsers(db, "offline", function(results, err) {
-                        // if (err) {
-                        //     callback(db_err_statuscode, db_err_msg, null);
-                        // }
-                        // else {
-                            var userlist2 = [];
-                            results.forEach(function (result) {
-                                userlist2.push(result.username);
-                            });
-                            callback(success_statuscode, userlist1, userlist2);
-                        //}
-                        db.close();
+                new_user.displayStatusUsers(db, "offline", function(results, err) {
+                    console.log(err);
+                    var userlist2 = [];
+                    results.forEach(function (result) {
+                        userlist2.push(result.username);
                     });
-                //}
+                    callback(success_statuscode, userlist1, userlist2);
+                    db.close();
+                });
             });
         });//end of database operation
     }
@@ -160,44 +127,12 @@ class JoinCommunityDBOper {
             let new_user = new User("username", "", "offline");
 
             new_user.updateStatus(db, username, "offline", function(result, err){
-                // if(err) {
-                //     callback(db_err_statuscode, db_err_msg);
-                // }
-                // else {
-                    callback(success_statuscode, result);
-                //}
+                console.log(err);
+                callback(success_statuscode, result);
             });
             db.close();
         });//end of database operation
     }
-
-  /*  GetUserEmergencyStatus (userlist, url, callback){
-        MongoClient.connect(url, function(err, db) {
-            if (err) {
-                console.log("Error:" + err);
-                callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
-            }
-            var user_status = {};
-            for(var i = 0 ; i < userlist.length;i++){
-                (function (i) {
-                    var username = userlist[i];
-                    let new_user = new User(username, "", "");
-                    new_user.getEmergencyStatus(db, function (status, err) {
-                        if (err) {
-                            callback(db_err_statuscode, db_err_msg);
-                        }
-                        else {
-                            user_status[username] = status;
-                            if(i == userlist.length - 1){
-                                callback(success_statuscode, user_status);
-                            }
-                        }
-                    });
-                })(i);
-            }
-            db.close();
-        });
-    }*/
 
     GetAllUsernameAndEmergencyStatus(url, callback){
         MongoClient.connect(url, function(err, db) {
@@ -208,12 +143,8 @@ class JoinCommunityDBOper {
             else {
                 let new_user = new User("", "", "", "");
                 new_user.getAllUsernameAndEmergencyStatus(db, function(results, err){
-                    // if (err) {
-                    //     console.log("Error:" + err);
-                    // }
-                    // else {
-                        callback(success_statuscode, results);
-                    //}
+                    console.log(err);
+                    callback(success_statuscode, results);
                 });
             }
         });
@@ -228,12 +159,8 @@ class JoinCommunityDBOper {
             else {
                 let user = new User(username, "", "", "");
                 user.removeUser(db, function(results, err){
-                    // if (err) {
-                    //     console.log("Error:" + err);
-                    // }
-                    // else {
-                        callback(success_statuscode, results);
-                    //}
+                    console.log(err);
+                    callback(success_statuscode, results);
                 });
             }
         });
