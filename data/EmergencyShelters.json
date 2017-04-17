@@ -1,0 +1,34 @@
+{
+    "cityList" : [
+        {
+            "name" : "Mountain View",
+            "location" : [37.4037987, -122.1513076],
+            "shelter" : []
+        },
+        {
+            "name" : "Palo Alto",
+            "location" : [37.4256293, -122.2053906],
+            "shelter" : []
+        },
+        {
+            "name" : "Sunnyvale",
+            "location" : [37.3895838, -122.0941616],
+            "shelter" : []
+        },
+        {
+            "name" : "Santa Clara",
+            "location" : [37.3708698, -122.0375932],
+            "shelter" : []
+        },
+        {
+            "name" : "San Jose",
+            "location" : [37.2966853,-122.0976068],
+            "shelter" : []
+        },
+        {
+            "name" : "San Mateo",
+            "location" : [37.5516176,-122.3856707],
+            "shelter" : []
+        }
+    ]
+}
