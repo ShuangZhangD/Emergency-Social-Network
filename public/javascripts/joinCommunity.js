@@ -100,6 +100,14 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["publicHistory"] = true;
     };
 
+    $scope.showShelter = function () {
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList["shelter"] = true;
+        $rootScope.$emit("openMap");
+    };
+
     $rootScope.userChangedStatus = function(data) {
         $scope.statusList[data.username] = data.emergencystatus;
     };

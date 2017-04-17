@@ -7,6 +7,7 @@ var bodyParser = require("body-parser");
 
 var index = require("./routes/index");
 var users = require("./routes/users");
+var testmap = require("./routes/testmap");
 var chatPubliclyRouter = require("./routes/chatPubliclyRouter");
 var http = require("http");
 var app = express();
@@ -21,6 +22,11 @@ var PublicChatCtrl = require("./controller/PublicChatCtrl.js");
 var PrivateChatCtrl = require("./controller/PrivateChatCtrl.js");
 var PostAnnouncementCtrl = require("./controller/PostAnnouncementCtrl.js");
 var ShareStatusCtrl = require("./controller/ShareStatusCtrl");
+var EmergencyShelterCtrl = require("./controller/EmergencyShelterCtrl.js");
+
+// init data
+EmergencyShelterCtrl.initData();
+
 // var sockets = require("./socket.js");
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -41,7 +47,7 @@ app.use("/", index);
 app.use("/users", users);
 app.use("/chatPublicly",chatPubliclyRouter);
 
-
+app.use("/testmap", testmap);
 
 app.use("/login", JoinCommunityCtrlLoginCommunityRouter);
 app.post("/signup", JoinCommunityCtrl.AddUser);
