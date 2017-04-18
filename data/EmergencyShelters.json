@@ -2,8 +2,19 @@
     "cityList" : [
         {
             "name" : "Mountain View",
-            "location" : [37.4037987, -122.1513076],
-            "shelter" : []
+            "location" : [37.410406, -122.05967899999999],
+            "shelter" : [
+                {
+                    "name": "Nasa Research Park",
+                    "location" : [37.410406, -122.05967899999999],
+                    "address" : "Moffett Field, CA 94035"
+                },
+                {
+                    "name": "Mountain View Downtown",
+                    "location" : [37.4008179,-122.0857112],
+                    "address" : "500 Castro St, CA 94041"
+                }
+            ]
         },
         {
             "name" : "Palo Alto",
