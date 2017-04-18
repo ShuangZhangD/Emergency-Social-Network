@@ -26,7 +26,7 @@ module.exports = function(grunt){
 
         mocha_istanbul: {
             coverage: {
-                src: 'test/**/emergency**.js', // a folder works nicely
+                src: 'test/**/emergency**Unit**.js', // a folder works nicely
                 options: {
                     mochaOptions: ['--ui', 'tdd'] // any extra options for mocha
                 }

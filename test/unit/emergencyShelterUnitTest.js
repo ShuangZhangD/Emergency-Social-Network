@@ -1,5 +1,5 @@
 /**
- * Created by Jilei and Komala on 4/01/17.
+ * Created by Jilei on 4/18/17.
  */
 
 'use strict';
@@ -163,7 +163,7 @@ suite('Emergency Shelter Unit Tests', function(){
     test("Normal Location", function(done){
         let location = new MyLocation([37.410406, -122.05967899999999]);
         location.findCity(function (err, results) {
-            expect(result.length).to.above(0);
+            expect(results.length).to.above(0);
             done();
         });
     });
@@ -172,7 +172,7 @@ suite('Emergency Shelter Unit Tests', function(){
         let location = new MyLocation([37.410406, -122.05967899999999]);
         location.location = "1";
         location.findCity(function (err, results) {
-            expect(result).to.equal("Err 2");
+            expect(results).to.equal("Err 2");
             done();
         });
     });

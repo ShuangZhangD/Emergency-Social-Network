@@ -1,0 +1,3 @@
+Description,HTTP Verb,Partial URI,Request Data,Successful Response Format,error response format
+Get Emegrency Shelters by Location,GET,/shelter_by_location/:latitude/:longitude,,"{success:1, data:<city>}","{success:0, data:""""}"
+Get Emegrency Shelters by Search City Name,GET,/shelter_search/:keywords,,"{success:1, data:[<city>,ÿ]}","{success:0, data:""""}"
