@@ -52,8 +52,8 @@ suite('Emergency Shelter Integration Tests', function(){
     this.timeout(15000);
 
     test('Get Emergency Shelter by Location by RESTful Api', function(done) {
-        let city1 = new City(mountain_view);
-        city1.initDB();
+        //let city1 = new City(mountain_view);
+        //city1.initDB();
         request.get('/shelter_by_location/37.410406/-122.05967899999999')
             .expect(200, function(err, res) {
                 //console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -64,8 +64,8 @@ suite('Emergency Shelter Integration Tests', function(){
     });
 
     test('Get Emergency Shelter by Search City by RESTful Api', function(done) {
-        let city1 = new City(mountain_view);
-        city1.initDB();
+        //let city1 = new City(mountain_view);
+        //city1.initDB();
         request.get('/shelter_search/San')
             .expect(200, function(err, res) {
                 //console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
