@@ -10,6 +10,7 @@ var success_statuscode = 200;
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 
 class PostAnnouncementDBoper {
+
     InsertAnnouncement (username, announcement, postTime, url, callback) {
         //connect to database
         MongoClient.connect(url, function (err, db) {

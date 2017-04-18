@@ -14,6 +14,8 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.details1 = $scope.historyList1;
         $scope.details2 = $scope.historyList2;
     };
+
+
     $scope.login = function() {
         if (check_usr($scope.username)) {
             // check_pwd($scope.password);
@@ -251,6 +253,13 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["shareStatus"] = true;
     };
 
+
+    $scope.showGroup = function() {
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList["groupList"] = true;
+    };
     mySocket.on("userJoined",function(username){
         if ($scope.logined) {
             $http({
