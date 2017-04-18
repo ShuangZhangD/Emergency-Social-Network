@@ -107,7 +107,7 @@ class GroupChatCtrl{
         });
     }
 
-    privateMessageSocket (socket, ConnectedSockets){
+    groupMessageSocket (socket, ConnectedSockets){
         return function(msg) {
             var sender = msg.sender;
             var receiver = msg.receiver;
@@ -116,19 +116,18 @@ class GroupChatCtrl{
             msg["EmergencyStatus"] = status;
             //socket.emit("PrivateChat", msg);
             if (ConnectedSockets.hasOwnProperty(receiver)) {
-                ConnectedSockets[receiver].emit("PrivateChat", msg);
-                //emit update notification of unread
-                //emit count of all unread msg(public + private)
-                let dboper = new PrivateChatDBOper(sender, receiver, url);
-                //emit individual count of unread msg(private)
-                dboper.GetCount_IndividualUnreadMsg(function (statuscode, results) {
-                    if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("IndividualPrivateUnreadMsgCnt", results);
-                });
+                ConnectedSockets[receiver].emit("GroupChat", msg);
             }
         };
     }
 
 
+
+    createGroupSocket (socket, ConnectedSockets){
+        return function(data) {
+            socket.broadcast.emit("Create Group", data);
+        };
+    }
 }
 
 let groupChatCtrl = new GroupChatCtrl();
@@ -139,5 +138,7 @@ module.exports={
     leaveGroup: groupChatCtrl.leaveGroup,
     createGroup: groupChatCtrl.createGroup,
     AddGroupMessage: groupChatCtrl.AddGroupMessage,
-    LoadGroupHistoryMessage: groupChatCtrl.LoadGroupHistoryMessage
+    LoadGroupHistoryMessage: groupChatCtrl.LoadGroupHistoryMessage,
+    groupMessageSocket:groupChatCtrl.groupMessageSocket,
+    createGroupSocket:groupChatCtrl.createGroupSocket
 };

@@ -18,7 +18,6 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
             url:"/groupchat"
         }).success(function(rep){
             $scope.allGroupList = rep.data;
-            $scope.updateNewMsgNum();
         });
     };
     var getMyGroupList = function() {
@@ -27,7 +26,6 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
             url:"/groupchat/" + $scope.userClass["username"]
         }).success(function(rep){
             $scope.myGroupList = rep.data;
-            $scope.updateNewMsgNum();
         });
     };
 
@@ -41,12 +39,15 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
             url:"/group/join",
             data: group_data
         }).success(function(rep) {
-            mySocket.emit("Join Group", group_data);
             if (rep.success == 1) {
-                console.log("Post Announcement Success!");
+                console.log("Join Group Success!");
+                var group_data1 = {
+                    group: group,
+                };
+                $scope.myGroupList.push(group_data1);
             }
             else {
-                console.log("Unexpected error in post ann");
+                console.log("Unexpected error in join group");
             }
         });
     };
@@ -63,10 +64,18 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
         }).success(function(rep) {
             mySocket.emit("Leave Group", group_data);
             if (rep.success == 1) {
-                console.log("Post Announcement Success!");
+                console.log("Leave Group Success!");
+                for(var i = 0; i < $scope.myGroupList.length ; ){
+                    var index = group.indexOf($scope.myGroupList["group"]);
+                    if( index != -1){
+                        $scope.myGroupList.splice(i, 1);
+                    } else{
+                        i++;
+                    }
+                }
             }
             else {
-                console.log("Unexpected error in post ann");
+                console.log("Unexpected error in leave group");
             }
         });
     };
@@ -81,12 +90,17 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
             url:"/group/create",
             data: group_data
         }).success(function(rep) {
-            mySocket.emit("Create Group", group_data);
             if (rep.success == 1) {
-                console.log("Post Announcement Success!");
+                console.log("Create Group Success!");
+                var group_data1 = {
+                    group: group,
+                };
+                mySocket.emit("Create Group", group_data1);
+                $scope.myGroupList.push(group_data1);
+
             }
             else {
-                console.log("Unexpected error in post ann");
+                console.log("Unexpected error in create group");
             }
         });
     };
@@ -132,7 +146,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
     // For Test
 
 
-    $scope.postPrivateMsg = function () {
+    $scope.postGroupMsg = function () {
         var time = new Date();
         var msg_data = {
             groupMsg : $scope.group_msg,
@@ -158,24 +172,22 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
                 $scope.group_msg = "";
                 $scope.groupMsgs.push(msg_data_2);
                 // socket.io
-                mySocket.emit("Private Message", msg_data_2);
+                mySocket.emit("Group Message", msg_data_2);
             }
             else {
-                console.log("Unexpected error in post private msg.");
+                console.log("Unexpected error in post group msg.");
             }
         });
     };
 
     // TODO socket.io
-    mySocket.on("PrivateChat", function(data) {
-        if ($scope.showList.privateChatContent && $scope.userClass["privateChatSender"] == data.sender) {
-            $scope.privateMsgs.push(data);
-            $scope.newMsgs.push(data);
-            mySocket.emit("PrivateMsgRead", {sender: data.sender, receiver: data.receiver});
-        }
-        else {
-            $rootScope.updateNewMsgNumByData(data);
+    mySocket.on("GroupChat", function(data) {
+        if ($scope.showList.groupChatContent && $scope.userClass["groupChatSender"] == data.receiver) {
+            $scope.groupMsgs.push(data);
         }
     });
 
+    mySocket.on("Create Group", function(data) {
+            $scope.allGroupList.push(data);
+    });
 });

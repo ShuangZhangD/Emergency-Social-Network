@@ -128,6 +128,8 @@ io.on("connection", function(socket) {
 
     //when a private message is sent
     socket.on("Private Message", privateChat2.privateMessageSocket(socket, ConnectedSockets));
+    socket.on("Group Message", GroupChatCtrl.groupMessageSocket(socket, ConnectedSockets));
+    socket.on("Create Group", GroupChatCtrl.createGroupSocket(socket, ConnectedSockets));
 
     //when total number of unread(private+public) message is needed
     //socket.on("GetCount AllUnreadMsg", privateChat.getCount_AllUnreadMsg(socket));
