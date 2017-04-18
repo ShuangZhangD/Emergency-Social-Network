@@ -21,6 +21,7 @@ var MyLocation = require("../../models/MyLocation.js");
 var DBConfig = require("../TestDBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
+dbconfig.setURL(url);
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 //using server not app to listening port 5000
@@ -57,6 +58,12 @@ var mountain_view_2 = {
 
 suite('Emergency Shelter Unit Tests', function(){
     this.timeout(15000);
+    
+    test("DB Config", function(done){
+        dbconfig.setURL(url);
+        expect(dbconfig.getURL()).to.equal(url);
+        done();
+    });
 
     test("Creat City", function(done){
         // test constructor()
@@ -171,66 +178,4 @@ suite('Emergency Shelter Unit Tests', function(){
     });
 
 
-/*
-    test("Username and EmergencyStatus in Directory", function(done) {
-        dboper.Login("testuser", "testpwd", url, function (statuscode1, content1){
-            expect(statuscode1).to.equal(200);
-            dboper2.Updatesharestatus("testuser", "Help", url, function(statuscode2, content2) {
-                dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode3, content3) {
-                    expect(statuscode3).to.equal(200);
-                });
-            });
-            done();
-        });
-    });
-
-    test("Password Incorrect Login", function(done){
-        dboper.Login("testuser", "wrongpwd", url, function (statuscode, content){
-            expect(statuscode).to.equal(402);
-            done();
-        });
-    });
-
-    test("Error while Logging In", function(done) {
-        dboper.Login("testuser", "testpwd", error_url, function(statuscode, content) {
-            expect(statuscode).to.equal(400);
-            done();
-        });
-    });
-
-    test("Error when Creating New User", function(done) {
-        dboper.AddDB("testuser", "testpwd", error_url, function (statuscode, content) {
-            expect(statuscode).to.equal(400);
-            done();
-        });
-    });
-
-    test("Error when logging out", function(done) {
-        dboper.Logout("testuser", error_url, function(statuscode, content) {
-            expect(statuscode).to.equal(400);
-            done();
-        });
-    });
-
-    test("DB Error GetAllUsers", function(done) {
-        dboper.GetAllUsers(error_url, function(statuscode, content) {
-            expect(statuscode).to.equal(400);
-            done();
-        });
-    });
-
-    test("DB Error GetAllUsernameAndEmergencyStatus", function(done) {
-        dboper.GetAllUsernameAndEmergencyStatus(error_url, function(statuscode, content) {
-            expect(statuscode).to.equal(400);
-            done();
-        });
-    });
-
-    test("DB Error GetAllUsers", function(done) {
-        dboper.RemoveUser("",error_url, function(statuscode, content) {
-            expect(statuscode).to.equal(400);
-            done();
-        });
-    });
-*/
 });
