@@ -39,10 +39,6 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
         }
     }
 
-    $scope.search = function () {
-        alert($scope.shelter_search_area);
-    }
-
     $scope.map = null;
     $scope.mapAvaible = false;
 
@@ -54,9 +50,9 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
       // }
     //});
 
-    $scope.city = {
+    $scope.locationResult = {
         "name" : "",
-
+        "shelter" : []
     };
 
     $rootScope.$on("openMap", function () {
@@ -66,10 +62,14 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
           $scope.mapAvaible = true;
       }
       */
+        $scope.searchResult = [];
+
         $scope.location = GoogleMap["location"];
-        $scope.mapAvaible = GoogleMap["success"] && $scope.location;
-        if (!$scope.location) {
+        $scope.mapAvaible = GoogleMap["success"] && $scope.location.valid;
+        if (!$scope.location.valid) {
             $scope.notification = "Cannot get your location";
+            console.log($scope.location);
+            console.log(GoogleMap);
         }
         else {
             $http({
@@ -77,13 +77,12 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
                 url:"/shelter_by_location/" + $scope.location.latitude + "/" + $scope.location.longitude
             }).success(function(res){
                 if (res.success == 1) {
-                    $scope.city = res.data;
+                    $scope.locationResult = res.data;
                     if ($scope.mapAvaible) {
-                        drawMarkerList();
+                        drawMarkerListByLocation($scope.location, res.data.shelter);
                     }
                 }
                 else {
-                    // login failed
                     if (rep.err_type == 1) {
                         console.log("Error in DB");
                     }
@@ -98,10 +97,6 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
                 console.log(res);
             });
         }
-        
-
-
-
         /*
         window.setTimeout(function () {
             //document.getElementById("map").style.height = "70%";
@@ -113,20 +108,108 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
     });
 
 
-});
 
-var drawMarkerList = function() {
-    var pos = {lat: 37.410388499999996, lng: -122.0597295, tag : "Location "};
-    var data  = [];
-    for (var i = 0; i < 5; i++) {
-        var p = {lat: 37.410388499999996 + 0.001 * i, lng: -122.0597295 + 0.001 * i, tag: "Location " + i};
-        data.push(p);
+    $scope.searchResult = [];
+    $scope.search = function () {
+        //$scope.shelter_search_areaalert($scope.shelter_search_area);
+        var keywordList = $scope.shelter_search_area.match(/\S+/g) || [];
+        if (keywordList.length <= 0 || keywordList.length > 5) {
+            alert("Keyword number should limit 1 to 5!");
+            return;
+        }
+
+        $http({
+            method:"get",
+            url:"/shelter_search/" + encodeURIComponent($scope.shelter_search_area)
+        }).success(function(res){
+            console.log(res);
+            if (res.success == 1) {
+                $scope.searchResult = parseSearchResult(getFirst3(res.data));
+                console.log($scope.searchResult);
+                // if ($scope.mapAvaible && $scope.locationResult.length > 0) {
+                //     drawMarkerListBySearch($scope.location, $scope.locationResult);
+                // }
+                if ($scope.searchResult.length <= 0) {
+                    alert("Cannot find city which name contains '" + $scope.shelter_search_area + "', please search again.");
+                }
+            }
+            else {
+                if (rep.err_type == 1) {
+                    console.log("Error in DB");
+                }
+                else {
+                    console.log("Unexpected error, please try again.");
+                }
+            }
+        }).error(function (res) {
+            console.log(res);
+        });
     }
 
 
+
+
+});
+
+
+var getFirst3 = function(data) {
+    if (data.length <= 3) {
+        return data;
+    }
+    var new_data = [];
+    for (var i = 0; i < 3; i++) {
+        new_data.push(data[i]);
+    }
+    return new_data;
+}
+
+var parseSearchResult = function(data) {
+    var new_data = [];
+    data.forEach(function (city) {
+        city.shelter.forEach(function (shelter) {
+            var item = {
+                "city" : city.name,
+                "name" : shelter.name,
+                "address" : shelter.address
+            };
+            new_data.push(item);
+        });
+    });
+    return new_data;
+}
+
+
+var drawMarkerListBySearch = function(location, cityList) {
+    var pos = {lat: 37.410388499999996, lng: -122.0597295, tag : "Location "};
+    var data  = [];
+    cityList.forEach(function (city) {
+        city.shelter.forEach(function (shelter) {
+            var p = {lat: shelter.location[0], lng: shelter.location[1], tag: shelter.name + ",  " + city.name + ",  " + shelter.address};
+            data.push(p);
+        });
+    });
+    
+    drawMarkerList(location, data);
+}
+
+
+
+var drawMarkerListByLocation = function(location, shelterList) {
+    var pos = {lat: 37.410388499999996, lng: -122.0597295, tag : "Location "};
+    var data  = [];
+    shelterList.forEach(function (shelter) {
+        var p = {lat: shelter.location[0], lng: shelter.location[1], tag: shelter.name + ",  " + shelter.address};
+        data.push(p);
+    });
+    drawMarkerList(location, data);
+}
+
+var drawMarkerList = function(location, data) {
+
     var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 16,
-          center: new google.maps.LatLng(37.410388499999996, -122.0597295),
+          zoom: 13,
+          //center: new google.maps.LatLng(37.410388499999996, -122.0597295),
+          center: new google.maps.LatLng(location.latitude, location.longitude),
           mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 

@@ -5,8 +5,13 @@
             "location" : [37.410406, -122.05967899999999],
             "shelter" : [
                 {
-                    "name": "Nasa Research Park",
+                    "name": "CMU-SV",
                     "location" : [37.410406, -122.05967899999999],
+                    "address" : "Moffett Field, CA 94035"
+                },
+                {
+                    "name": "Nasa Research Park",
+                    "location" : [37.411406, -122.04977899999999],
                     "address" : "Moffett Field, CA 94035"
                 },
                 {
@@ -19,17 +24,35 @@
         {
             "name" : "Palo Alto",
             "location" : [37.4256293, -122.2053906],
-            "shelter" : []
+            "shelter" : [
+                {
+                    "name": "Stanford",
+                    "location" : [37.4338034,-122.1768446],
+                    "address" : "660 Stanford Shopping Center, CA 94304"
+                }
+            ]
         },
         {
             "name" : "Sunnyvale",
             "location" : [37.3895838, -122.0941616],
-            "shelter" : []
+            "shelter" : [
+                {
+                    "name": "Washington Park",
+                    "location" : [37.3763784,-122.0443864],
+                    "address" : "840 W Washington Ave, CA 94086"
+                }
+            ]
         },
         {
             "name" : "Santa Clara",
             "location" : [37.3708698, -122.0375932],
-            "shelter" : []
+            "shelter" : [
+                {
+                    "name": "Santa Clara University",
+                    "location" : [37.3562547,-121.9765802],
+                    "address" : "500 El Camino Real, CA 95053"
+                }
+            ]
         },
         {
             "name" : "San Jose",
@@ -39,7 +62,13 @@
         {
             "name" : "San Mateo",
             "location" : [37.5516176,-122.3856707],
-            "shelter" : []
+            "shelter" : [
+                {
+                    "name": "Poplar Creek Golf Course",
+                    "location" : [37.5705323,-122.3362322],
+                    "address" : "1700 Coyote Point Dr,CA 94401"
+                }
+            ]
         }
     ]
 }

@@ -73,7 +73,7 @@ app.get("/privatechat/:receiver", PrivateChatCtrl.getCount_IndividualPrivateSend
 app.post("/privatechat/search/:user", PrivateChatCtrl.search);
 
 app.get("/shelter_by_location/:latitude/:longitude", EmergencyShelterCtrl.getResultByLocation);
-
+app.get("/shelter_search/:keywords", EmergencyShelterCtrl.search);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

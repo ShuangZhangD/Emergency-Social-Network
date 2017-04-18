@@ -13,16 +13,36 @@
 
         <div id="location_container" ng-show="location.valid">
             <h3> Current location:</h3>
-            {{ city.name }}({{ location.latitude }}, {{ location.longitude }})
+            {{ locationResult.name }}({{ location.latitude }}, {{ location.longitude }})
         </div>
         <br/>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Shelter Name</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="slt in locationResult.shelter">
+                    <td>
+                        {{ slt.name }}
+                    </td>
+                    <td>
+                        {{ slt.address }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
         <!--div class="container" style="width: 100%; height: 700;">
             
         </div-->
         <!--div id="shelterMap" style="width: 100%; height: 100%;" ng-show="mapAvaible"></div-->
         <div ng-show="!mapAvaible">
-            <h3>{{notification}}, please search for emergency shelters.</h3>
+            <h4>{{notification}}, please search for emergency shelters.</h4>
         </div>
         <!--div id="map" class="map" style="width: 100%; height: 100%;" ng-show="mapAvaible"><div id="popup"></div></div-->
         <!--div id="mapdiv" style="width: 90%; height: 90%; margin-left: auto; margin-right: auto;" ng-show="mapAvaible"></div-->
@@ -40,6 +60,31 @@
                 </span>
             </div>
         </div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>City</th>
+                    <th>Shelter Name</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="slt in searchResult">
+                    <td>
+                        {{ slt.city }}
+                    </td>
+                    <td>
+                        {{ slt.name }}
+                    </td>
+                    <td>
+                        {{ slt.address }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
 
 

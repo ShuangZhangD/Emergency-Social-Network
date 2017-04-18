@@ -43,6 +43,27 @@ class EmergencyShelterCtrl {
 
     }
 
+    search(req, res) {
+        var keywords = req.params.keywords;
+        console.log(keywords);
+        var keywordList = keywords.match(/\S+/g) || [];
+        if (keywordList.length <= 0 || keywordList.length > 5) {
+            res.json({success:0, err_type: 2, err_msg:"keywords limit 1 to 5"});
+            return;
+        }
+        let city = new City(null);
+        city.search(keywordList, function(success, err_type, result) {
+            if (success == 1){
+                res.json({success:1, data: result});
+            }
+            else {
+                res.json({success:0, err_type: err_type, err_msg: result});
+            }
+        });
+
+        
+    }
+
 }
 
 
