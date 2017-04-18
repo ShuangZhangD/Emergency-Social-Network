@@ -74,6 +74,8 @@ app.post("/groupchat/join", GroupChatCtrl.joinGroup);
 app.post("/groupchat/leave", GroupChatCtrl.leaveGroup);
 app.post("/groupchat/create", GroupChatCtrl.createGroup);
 
+app.get("/groupchat/message/:group", GroupChatCtrl.LoadGroupHistoryMessage);
+app.post("/groupchat/message", GroupChatCtrl.AddGroupMessage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

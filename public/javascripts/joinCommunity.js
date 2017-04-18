@@ -351,6 +351,7 @@ function addUser($scope, $rootScope, $http, tmpUsername, mySocket) {
                 $rootScope.$emit("loginGetAnnouncement");
                 $rootScope.$emit("loginGetPrivateChatList");
                 $rootScope.$emit("loginGetShareStatus");
+                $rootScope.$emit("loginGetGroupList");
             }
             else {
                 // sign up failed

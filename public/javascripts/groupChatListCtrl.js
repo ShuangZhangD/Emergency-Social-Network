@@ -1,6 +1,9 @@
 
 app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http, mySocket) {
-    $scope.privateSenderList = [];
+
+    $scope.allGroupList = [];
+    $scope.myGroupList = [];
+
     $scope.showAllGroup = function () {
         $scope.allGroupTable = true;
         $scope.myGroupTable = false;
@@ -89,7 +92,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
     };
     // Call this function after login
     //getPrivateSenderList();
-    $rootScope.$on("loginGetPrivateChatList", function() {
+    $rootScope.$on("loginGetGroupList", function() {
         getAllGroupList();
         getMyGroupList();
     });
@@ -98,89 +101,62 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
 
     // TODO socket.io
 // Open Private Chat Content Page of a sender.
-    $scope.openMsg = function (sender, isFromDirectory) {
-        for (var i = 0; i < $scope.privateSenderList.length; i++) {
-            if ($scope.privateSenderList[i].sender == sender) {
-                $scope.userClass["newMsgOfSender"] = $scope.privateSenderList[i].count;
-                $scope.privateSenderList[i].count = 0;
-                if (isFromDirectory || $scope.userClass["newMsgOfSender"] == 0) {
-                    $scope.userClass["displayHistory"] = true;
-                }
-                else {
-                    $scope.userClass["displayHistory"] = false;
-                }
-            }
-        }
-        $scope.updateNewMsgNum();
-        $scope.userClass["privateChatSender"] = sender;
-        $rootScope.$emit("openPrivateChatContent");
+    $scope.openMsg = function (group) {
+
+        $scope.userClass["groupChatSender"] = group;
+        $rootScope.$emit("openGroupChatContent");
 
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
-        $scope.showList["privateChatContent"] = true;
+        $scope.showList["groupChatContent"] = true;
     };
 
-    $rootScope.$on("openPrivateChat", function() {
-        $scope.openMsg($scope.userClass["privateChatSender"], true);
-    });
 
-
-    $scope.privateMsgs = [];
-    $scope.newMsgs = [];
-    var getPrivateMsgs = function() {
-        $scope.privateMsgs = [];
-        $scope.newMsgs = [];
+    $scope.groupMsgs = [];
+    var getGroupMsgs = function() {
+        $scope.groupMsgs = [];
         $http({
             method:"get",
-            url:"/privatechat/" + $scope.userClass["privateChatSender"] + "/" + $scope.userClass["username"]  // TODO helen define this API
+            url:"/groupchat/message/" + $scope.userClass["groupChatSender"]
         }).success(function(rep) {
-            $scope.privateMsgs = rep.data;
-            $scope.newMsgs = [];
-            if ($scope.userClass["newMsgOfSender"] > 0) {
-                for (var i = $scope.userClass["newMsgOfSender"]; i > 0; i--) {
-                    $scope.newMsgs.push($scope.privateMsgs[$scope.privateMsgs.length - i]);
-                }
-            }
+            $scope.groupMsgs = rep.data;
         });
     };
     // Call this function after login
     //getPrivateSenderList();
-    $rootScope.$on("openPrivateChatContent", function() {
-        $scope.privateChatSender = $scope.userClass["privateChatSender"];
-        getPrivateMsgs();
+    $rootScope.$on("openGroupChatContent", function() {
+        $scope.groupChatSender = $scope.userClass["groupChatSender"];
+        getGroupMsgs();
     });
     // For Test
-    //$scope.privateMsgs = [{"sender":"a", "receiver": "b", "private_msg":"hello", "timestamp": 1111,"emergency_status": "OK"}];
-    $scope.showHistoryMsg = function () {
-        $scope.userClass["displayHistory"] = true;
-    };
+
 
     $scope.postPrivateMsg = function () {
         var time = new Date();
         var msg_data = {
-            PrivateMsg : $scope.private_msg,
+            groupMsg : $scope.group_msg,
             sender : $scope.userClass["username"],
-            receiver : $scope.userClass["privateChatSender"],
+            receiver : $scope.groupChatSender,
             emergency_status : $scope.userClass["status"],
             timestamp : time
         };
         $http({
             method : "post",
-            url : "/privatechat",
+            url : "/groupchat/message",
             data : msg_data
         }).success(function (rep) {
             // TODO socket.io
             if (rep.success == 1) {
                 var msg_data_2 = {
                     sender : $scope.userClass["username"],
-                    receiver : $scope.userClass["privateChatSender"],
-                    private_msg : $scope.private_msg,
+                    receiver : $scope.groupChatSender,
+                    group_msg : $scope.group_msg,
                     emergency_status : $scope.userClass["status"],
                     timestamp : time
                 };
-                $scope.private_msg = "";
-                $scope.privateMsgs.push(msg_data_2);
+                $scope.group_msg = "";
+                $scope.groupMsgs.push(msg_data_2);
                 // socket.io
                 mySocket.emit("Private Message", msg_data_2);
             }

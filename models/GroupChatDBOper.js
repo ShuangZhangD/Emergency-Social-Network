@@ -127,10 +127,10 @@ class GroupChatDBOper {
             else {
                 var sender = message.sender;
                 var receiver = message.receiver;
-                var msg = message.PrivateMsg;
+                var msg = message.groupMsg;
                 var status = message.emergency_status;
                 var time = message.timestamp;
-                let MSG = new Message(sender, receiver, "private", msg, time, status, "unread");
+                let MSG = new Message(sender, receiver, "group", msg, time, status, "unread");
                 MSG.insertMessage(db, function (msgres, err) {
                     console.log(err);
                     callback(success_statuscode, null);
@@ -144,25 +144,21 @@ class GroupChatDBOper {
      * Load all private history message
      * Also update all unread private msg to be read
      */
-    LoadHistoryMsg(callback) {
-        var sender = this.sender;
-        var receiver = this.receiver;
+    LoadHistoryMsg(message,callback) {
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
             else {
                 //set all <sender,receiver> private messages to be read
-                let MSG = new Message(sender, receiver, "", "", "", "", "");
-                MSG.updateReadStatus(db, function (result, err) {
+                let MSG = new Message("", this.group, "group", "", "", "", "");
                     console.log(err);
                     //load all private messages between sender and receiver
-                    MSG.loadPrivateHistoryMsg(db, function (results, err) {
+                    MSG.loadGroupHistoryMsg(db, function (results, err) {
                         console.log(err);
                         callback(success_statuscode, results);
                         db.close();
                     });
-                });
             }
         });
     }

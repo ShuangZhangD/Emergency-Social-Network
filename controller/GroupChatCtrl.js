@@ -79,7 +79,7 @@ class GroupChatCtrl{
         var sender = info["sender"];
         var receiver = info["receiver"];
 
-        let dboper = new PrivateChatDBOper(sender, receiver, url);
+        let dboper = new GroupChatDBOper(sender, receiver, url);
         dboper.InsertMessage(info, function(statuscode, content){
             if(statuscode == success_statuscode){
                 res.json({success:1, suc_msg: "Success"});
@@ -94,11 +94,11 @@ class GroupChatCtrl{
      * also update all unread msg between sender and receiver to be read
      */
     LoadGroupHistoryMessage (req, res) {
-        var sender = req.params.sender;
-        var receiver = req.params.receiver;
+        var info = req.body;
+        var group = req.params.group;
 
-        let dboper = new PrivateChatDBOper(sender, receiver, url);
-        dboper.LoadHistoryMsg(function(statuscode, content){
+        let dboper = new GroupChatDBOper(group, "", url);
+        dboper.LoadHistoryMsg(info,function(statuscode, content){
             if(statuscode == success_statuscode){
                 res.json({success:1, data: content});
             }else{
@@ -107,6 +107,26 @@ class GroupChatCtrl{
         });
     }
 
+    privateMessageSocket (socket, ConnectedSockets){
+        return function(msg) {
+            var sender = msg.sender;
+            var receiver = msg.receiver;
+            var status = msg.emergency_status;
+            msg["timestamp"] = Date.now();
+            msg["EmergencyStatus"] = status;
+            //socket.emit("PrivateChat", msg);
+            if (ConnectedSockets.hasOwnProperty(receiver)) {
+                ConnectedSockets[receiver].emit("PrivateChat", msg);
+                //emit update notification of unread
+                //emit count of all unread msg(public + private)
+                let dboper = new PrivateChatDBOper(sender, receiver, url);
+                //emit individual count of unread msg(private)
+                dboper.GetCount_IndividualUnreadMsg(function (statuscode, results) {
+                    if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("IndividualPrivateUnreadMsgCnt", results);
+                });
+            }
+        };
+    }
 
 
 }
