@@ -166,6 +166,14 @@ var getFirst3 = function(data) {
 var parseSearchResult = function(data) {
     var new_data = [];
     data.forEach(function (city) {
+        if (city.shelter.length <= 0) {
+            var item = {
+                "city" : city.name,
+                "name" : "No shelter",
+                "address" : "Please go to nearby city"
+            };
+            new_data.push(item);
+        }
         city.shelter.forEach(function (shelter) {
             var item = {
                 "city" : city.name,
