@@ -20,13 +20,13 @@ module.exports = function(grunt){
                     clearRequireCache:false,
                     ui: 'tdd'
                 },
-                src: ['test/**/*.js']
+                src: ['test/**/emergency**.js']
             }
         },
 
         mocha_istanbul: {
             coverage: {
-                src: 'test/**/*.js', // a folder works nicely
+                src: 'test/**/emergency**.js', // a folder works nicely
                 options: {
                     mochaOptions: ['--ui', 'tdd'] // any extra options for mocha
                 }

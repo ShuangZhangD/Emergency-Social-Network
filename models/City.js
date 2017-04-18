@@ -11,14 +11,16 @@ class City {
 
     constructor(json) {
         if (json == null) {
-            // TODO
+            this.name = "";
+            this.location = "";
+            this.shelter = [];
+            this.json = "";
         }
         else {
             this.name = json.name;
             this.location = json.location;
             this.shelter = json.shelter;
             this.json = json;
-            this.collection = null;
         }
     }
 
