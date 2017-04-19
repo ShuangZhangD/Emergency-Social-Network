@@ -50,6 +50,8 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
       // }
     //});
 
+    $scope.showNotification = true;
+
     $scope.locationResult = {
         "name" : "",
         "shelter" : []
@@ -67,6 +69,7 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
         $scope.location = GoogleMap["location"];
         $scope.mapAvaible = GoogleMap["success"] && $scope.location.valid;
         if (!$scope.location.valid) {
+            // flow A3: no-location, map / no-map. 
             $scope.notification = "Cannot get your location";
             console.log($scope.location);
             console.log(GoogleMap);
@@ -77,17 +80,29 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
                 url:"/shelter_by_location/" + $scope.location.latitude + "/" + $scope.location.longitude
             }).success(function(res){
                 if (res.success == 1) {
+                    if (GoogleMap["success"]) {
+                        // basic flow: location-city, map
+                        $scope.showNotification = false;
+                    }
+                    else {
+                        // flow A4: location-city, no-map
+                        $scope.notification = "Map is not avaible";
+                    }
                     $scope.locationResult = res.data;
                     if ($scope.mapAvaible) {
                         drawMarkerListByLocation($scope.location, res.data.shelter);
                     }
                 }
                 else {
-                    if (rep.err_type == 1) {
+                    if (res.err_type == 1) {
                         console.log("Error in DB");
+                        $scope.notification = "No emergency shelters near your current location";
                     }
-                    else if (rep.err_type == 2) {
-                        console.log("City not found.");
+                    else if (res.err_type == 2 || res.err_type == 3) {
+                        // flow A1: location-no-city, map
+                        // flow A2: location-no-city, no-map
+                        console.log("City not found or no nearby city.");
+                        $scope.notification = "No emergency shelters near your current location";
                     }
                     else {
                         console.log("Unexpected error, please try again.");

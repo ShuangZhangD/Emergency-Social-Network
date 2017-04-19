@@ -8,6 +8,8 @@ var bodyParser = require("body-parser");
 var index = require("./routes/index");
 var users = require("./routes/users");
 var testmap = require("./routes/testmap");
+var test_no_city_map = require("./routes/test_no_city_map");
+var test_no_city_no_map = require("./routes/test_no_city_no_map");
 var chatPubliclyRouter = require("./routes/chatPubliclyRouter");
 var http = require("http");
 var app = express();
@@ -48,6 +50,8 @@ app.use("/users", users);
 app.use("/chatPublicly",chatPubliclyRouter);
 
 app.use("/testmap", testmap);
+app.use("/test_no_city_no_map", test_no_city_no_map);
+app.use("/test_no_city_map", test_no_city_map);
 
 app.use("/login", JoinCommunityCtrlLoginCommunityRouter);
 app.post("/signup", JoinCommunityCtrl.AddUser);
