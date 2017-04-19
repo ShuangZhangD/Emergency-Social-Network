@@ -24,7 +24,7 @@ class GroupChatDBOper {
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
             var collection = db.collection("GROUPS");
-            collection.distinct("group").toArray(function(err, results){
+            collection.distinct("group",function(err, results){
                 var datas = [];
                 results.forEach(function(result){
                     var data = {};
@@ -38,13 +38,14 @@ class GroupChatDBOper {
     }
 
     getMyGroupList (callback) {
+        var username = this.username;
         MongoClient.connect(this.url, function(err, db) {
             //console.log("Load Announcement connect to "+ url);
             if (err) {
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             var collection = db.collection("GROUPS");
-            collection.find({"username": this.username},{group:1}).toArray(function(err, results){
+            collection.find({"username": username},{group:1}).toArray(function(err, results){
                 var datas = [];
                 results.forEach(function(result){
                     var data = {};
@@ -145,13 +146,14 @@ class GroupChatDBOper {
      * Also update all unread private msg to be read
      */
     LoadHistoryMsg(message,callback) {
+        var group = this.group;
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
             else {
                 //set all <sender,receiver> private messages to be read
-                let MSG = new Message("", this.group, "group", "", "", "", "");
+                let MSG = new Message("", group, "group", "", "", "", "");
                     console.log(err);
                     //load all private messages between sender and receiver
                     MSG.loadGroupHistoryMsg(db, function (results, err) {

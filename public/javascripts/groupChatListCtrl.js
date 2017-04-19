@@ -36,7 +36,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
         };
         $http({
             method:"post",
-            url:"/group/join",
+            url:"/groupchat/join",
             data: group_data
         }).success(function(rep) {
             if (rep.success == 1) {
@@ -59,7 +59,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
         };
         $http({
             method:"post",
-            url:"/group/leave",
+            url:"/groupchat/leave",
             data: group_data
         }).success(function(rep) {
             mySocket.emit("Leave Group", group_data);
@@ -85,18 +85,20 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
             group: $scope.newgroup,
             username: $scope.userClass["username"],
         };
+        console.log("+++++++++"+$scope.newgroup);
         $http({
             method:"post",
-            url:"/group/create",
+            url:"/groupchat/create",
             data: group_data
         }).success(function(rep) {
             if (rep.success == 1) {
                 console.log("Create Group Success!");
                 var group_data1 = {
-                    group: group,
+                    group: $scope.newgroup,
                 };
                 mySocket.emit("Create Group", group_data1);
                 $scope.myGroupList.push(group_data1);
+                $scope.allGroupList.push(group_data1);
 
             }
             else {
@@ -106,10 +108,11 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
     };
     // Call this function after login
     //getPrivateSenderList();
-    $rootScope.$on("loginGetGroupList", function() {
+    // $rootScope.$on("loginGetGroupList", function() {
         getAllGroupList();
         getMyGroupList();
-    });
+        console.log("======"+$scope.allGroupList);
+    // });
     // For Test
     //$scope.privateSenderList = [{"sender":"helen","count":0},{"sender":"ivy","count":3}];
 

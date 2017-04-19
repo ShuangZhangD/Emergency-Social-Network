@@ -32,12 +32,12 @@ class GroupChatCtrl{
         var username = info["username"];
 
         let dboper = new GroupChatDBOper(group, username, url);
-        dboper.joinGroup(function(statuscode, content){
-            if(statuscode == success_statuscode){
-                res.json({success:1, suc_msg: "Success"});
+        dboper.joinGroup(function(err, content){
+            if(err){
+                res.json({success:0, err_type: 1, err_msg:content});
             }
             else{
-                res.json({success:0, err_type: 1, err_msg:content});
+                res.json({success:1, suc_msg: "Success"});
             }
         });
     }
@@ -48,12 +48,12 @@ class GroupChatCtrl{
         var username = info["username"];
 
         let dboper = new GroupChatDBOper(group, username, url);
-        dboper.leaveGroup(function(statuscode, content){
-            if(statuscode == success_statuscode){
-                res.json({success:1, suc_msg: "Success"});
+        dboper.leaveGroup(function(err, content){
+            if(err){
+                res.json({success:0, err_type: 1, err_msg:content});
             }
             else{
-                res.json({success:0, err_type: 1, err_msg:content});
+                res.json({success:1, suc_msg: "Success"});
             }
         });
     }
@@ -64,12 +64,12 @@ class GroupChatCtrl{
         var username = info["username"];
 
         let dboper = new GroupChatDBOper(group, username, url);
-        dboper.createGroup(function(statuscode, content){
-            if(statuscode == success_statuscode){
-                res.json({success:1, suc_msg: "Success"});
+        dboper.createGroup(function(err, content){
+            if(err){
+                res.json({success:0, err_type: 1, err_msg:content});
             }
             else{
-                res.json({success:0, err_type: 1, err_msg:content});
+                res.json({success:1, suc_msg: "Success"});
             }
         });
     }
