@@ -8,7 +8,7 @@ GoogleMap["location"] = {
     longitude: 116.11726
 };
 
-function loadMapError(err) {
+function loadMapError() {
     console.log("Load Map error");
     GoogleMap["success"] = false;
     getLocation(function (location) {

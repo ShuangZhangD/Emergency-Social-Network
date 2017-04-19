@@ -149,7 +149,7 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
                 }
             }
             else {
-                if (rep.err_type == 1) {
+                if (res.err_type == 1) {
                     console.log("Error in DB");
                 }
                 else {

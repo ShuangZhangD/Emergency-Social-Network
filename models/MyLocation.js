@@ -16,10 +16,9 @@ class MyLocation {
 
     findCity(callback) {
         var location = this.location;
-        var myLocation = this;
         MongoClient.connect(dbconfig.getURL(), function(err, db) {
             var collection = db.collection("city");
-            collection.ensureIndex( { "location": "2d"} )
+            collection.ensureIndex( { "location": "2d"} );
             collection.find( {"location": { $near: location } } ).toArray(function(err, results){
                 if(err) {
                     console.log(location);

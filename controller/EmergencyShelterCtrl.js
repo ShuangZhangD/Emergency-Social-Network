@@ -3,9 +3,6 @@
  */
 "use strict";
 
-var DBConfig = require("./DBConfig");
-let dbconfig = new DBConfig();
-var MongoClient = require("mongodb").MongoClient;
 var City = require("../models/City.js");
 var MyLocation = require("../models/MyLocation.js");
 
