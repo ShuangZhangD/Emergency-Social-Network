@@ -56,6 +56,8 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
                 };
                 $scope.myGroupList.push(group_data1);
                 alert("Successfully Join Group");
+                $scope.allGroupTable = false;
+                $scope.myGroupTable = true;
             }
             else {
                 console.log("Unexpected error in join group");

@@ -111,7 +111,7 @@ class GroupChatDBOper {
             else {
                 var collection = db.collection("GROUPS");
                 //insert into table
-                var data = [{"group": group,"username": username}];
+                var data = [{"group": group,"username": username}, {"group": group,"username": ""}];
                 collection.insert(data, callback);
                 db.close();
             }
