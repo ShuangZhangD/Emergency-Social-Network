@@ -13,7 +13,7 @@ var express = require('express');
 
 //var ShareStatusCtrl = require('../controller/ShareStatusCtrl');
 //var PrivateChatCtrl = require('../controller/PrivateChatCtrl.js');
-var PrivateChatDBOper = require("../../models/PrivateChatDBOper.js");
+var GroupChatDBOper = require("../../models/GroupChatDBOper.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 
 var app = express();
@@ -25,10 +25,10 @@ let dbconfig = new TestDBConfig();
 var url = dbconfig.getURL();
 
 //using server not app to listening port 5000
-var server = request.agent("https://quiet-peak-31270.herokuapp.com");
+// var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 // var server = request.agent("http://localhost:5000");
 
-suite('Private Chat Test', function(){
+suite('Group Chat Test', function(){
     this.timeout(15000);
 
     var testDB = {};
@@ -50,29 +50,15 @@ suite('Private Chat Test', function(){
 
     //after all tests, close mongodb
     suiteTeardown('Close DB for Test', function(done){
-        //testDB.collection("MESSAGES").drop();
-        //testDB.collection("announcement").drop();
-        //testDB.collection("USERS").drop();
         testDB.close();
         done();
     });
 
-    test('Test Private Chat Search Function in models', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
-        var fake0 = {
-            "sender": "keqin",
-            "receiver": "test1000lkq",
-            "message": "private chat function: hi",
-            "type": "private",
-            "emergencystatus": "OK",
-            "timestamp": ""
-        }
-        dboper.InsertMessage(fake0, function(statuscode0, content0){
-            expect(statuscode0).to.equal(200);
-            dboper.SearchMessages("keqin", ["chat", "hi"], function(err1, results1){
-                expect(err1).to.equal(200); //TODO test if results content equal or not
-                done();
-            });
+    test('Test Get All Group List in models', function(done){
+        let dboper = new GroupChatDBOper("","", url);
+        dboper.getAllGroupList(function(statuscode, content){
+            console.log("get all groups"+content);
+            res.json({data: content});
         });
     });
 
@@ -165,7 +151,7 @@ suite('Private Chat Test', function(){
 
     //to test the chat private function
     test('Private Chat Function Test', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        let dboper = new PrivateChatDBOper("keqin", "testgroup", url);
         var fake = {
             "sender": "keqin",
             "receiver": "test1000lkq",
