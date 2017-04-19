@@ -54,182 +54,166 @@ suite('Group Chat Test', function(){
         done();
     });
 
-    test('Test Get All Group List in models', function(done){
-        let dboper = new GroupChatDBOper("","", url);
-        dboper.getAllGroupList(function(statuscode, content){
-            console.log("get all groups"+content);
-            res.json({data: content});
+    test('Group Chat Get All Group', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        dboper.createGroup(function(err, content){
+            dboper.getAllGroupList(function(statuscode, content){
+                expect(err).to.equal(null);
+                expect(content[content.length-1]).to.equal("testgroup");
+                done();
+            });
         });
     });
-
-    test('Test Update Unread Chat Msg in models', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
-        var fake0 = {
-            "sender": "keqin",
-            "receiver": "test1000lkq",
-            "message": "private chat function: hi",
-            "type": "private",
-            "emergencystatus": "OK",
-            "timestamp": ""
-        };
-        dboper.InsertMessage(fake0, function(statuscode0, content0){
-            expect(statuscode0).to.equal(200);
-            dboper.UpdateReadStatus(function(statuscode1,content1){
-                expect(statuscode1).to.equal(200);
+    test('Group Chat Get My Group', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        dboper.createGroup(function(err, content){
+            dboper.getMyGroupList(function(statuscode, content){
+                expect(err).to.equal(null);
+                expect(content[content.length-1]["group"]).to.equal("testgroup");
+                done();
+            });
+        });
+    });
+    test('Group Chat Join Group', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        dboper.createGroup(function(err, content){
+            dboper.joinGroup(function(err, content){
+                expect(err).to.equal(null);
                 done();
             });
         });
     });
 
-    //to test message number of a particular receiver
-    test('test message number of a particular receiver', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
-        var fake0 = {
-            "sender": "keqin",
-            "receiver": "test1000lkq",
-            "message": "private chat function",
-            "type": "private",
-            "emergencystatus": "OK",
-            "timestamp": ""
-        }
-        dboper.InsertMessage(fake0, function(statuscode0, content0) {
-            expect(statuscode0).to.equal(200);
-            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
-                expect(statuscode1).to.equal(200);
-                var fake = {
-                    "sender": "keqin",
-                    "receiver": "test1000lkq",
-                    "message": "private chat function",
-                    "type": "private",
-                    "emergencystatus": "OK",
-                    "timestamp": ""
-                };
-                dboper.InsertMessage(fake, function (statuscode2, content2) {
-                    expect(statuscode2).to.equal(200);
-                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
-                        expect(statuscode3).to.equal(200);
-                        for (var i = 0; i < results3.length; i++) {
-                            if (results3[i]["sender"] === "keqin") {
-                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
-                            }
-                        }
-                        done();
-                    });
-                });
+    test('Group Chat Leave Group', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        dboper.createGroup(function(err, content){
+            dboper.leaveGroup(function(err, content){
+                expect(err).to.equal(null);
+                done();
             });
         });
-
     });
 
-    //to test unread number
-    test('Unread Function Test', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
-        dboper.GetCount_IndividualUnreadMsg(function(statuscode1, results1){
-            var fake = {
-                "sender": "keqin",
-                "receiver": "test1000lkq",
-                "PrivateMsg": "private chat function",
-                "emergency_status": "OK",
-                "timestamp": ""
-            }
-            dboper.InsertMessage(fake, function(statuscode2, content2) {
-                expect(statuscode2).to.equal(200);
-                dboper.GetCount_IndividualUnreadMsg(function(statuscode3, results3){
-                    for(var i=0; i<results3.length; i++){
-                        if(results3[i]["sender"] === "keqin"){
-                            expect(results3[i]["count"]).to.equal(results1[i]["count"]+1);
-                        }
-                    }
-                    done();
-                });
-            });
+    test('Group Chat Create Group', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        dboper.createGroup(function(err, content){
+            expect(err).to.equal(null);
+            done();
         });
-
     });
 
-
-
-    //to test the chat private function
-    test('Private Chat Function Test', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "testgroup", url);
+    test('Group Chat Post Group Message', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
         var fake = {
             "sender": "keqin",
-            "receiver": "test1000lkq",
-            "PrivateMsg": "private chat function",
-            "emergency_status": "OK",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
             "timestamp": ""
-        }
+        };
+        dboper.InsertMessage(fake,function(statuscode, content){
+            expect(statuscode).to.equal(200);
+            done();
+        });
+    });
+
+    test('Group Chat Get Group Message', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
         dboper.InsertMessage(fake, function(statuscode, content){
             expect(statuscode).to.equal(200);
 
-            dboper.LoadHistoryMsg(function(statuscode, content){
+            dboper.LoadHistoryMsg(fake,function(statuscode, content){
                 //expect(data.body.data).to.equal("OK");
                 expect(statuscode).to.equal(200);
 
-                expect(content[content.length-1]["private_msg"]).to.equal("private chat function");
                 //console.log(content[content.length-1]["private_msg"]);
                 done();
             });
         });
-
-        //done();
-
     });
 
-    test('Private Chat Insert Msg DB Error', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
+
+    test('Group Chat Get All Group DB Error', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", error_url);
+        dboper.getAllGroupList(function(err, content){
+            expect(err).to.equal(400);
+            done();
+        });
+    });
+
+    test('Group Chat Get My Group DB Error', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", error_url);
+        dboper.getMyGroupList(function(err, content){
+            expect(err).to.equal(400);
+            done();
+        });
+    });
+    test('Group Chat Join Group DB Error', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", error_url);
+        dboper.joinGroup(function(err, content){
+            expect(err).to.equal(400);
+            done();
+        });
+    });
+
+    test('Group Chat Leave Group DB Error', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", error_url);
+        dboper.leaveGroup(function(err, content){
+            expect(err).to.equal(400);
+            done();
+        });
+    });
+
+    test('Group Chat Create Group DB Error', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", error_url);
+        dboper.createGroup(function(err, content){
+            expect(err).to.equal(400);
+            done();
+        });
+    });
+
+    test('Group Chat Post Group Message DB Error', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", error_url);
         var fake = {
             "sender": "keqin",
-            "receiver": "test1000lkq",
-            "PrivateMsg": "private chat function",
-            "emergency_status": "OK",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
             "timestamp": ""
         };
-        dboper.InsertMessage(fake, function(err, result){
-            expect(err).to.equal(400);
+        dboper.InsertMessage(fake,function(statuscode, content){
+            expect(statuscode).to.equal(400);
             done();
         });
     });
 
-    test('Private Chat Load History Msg DB Error', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
-        dboper.LoadHistoryMsg(function(err, result){
-            expect(err).to.equal(400);
+    test('Group Chat Get Group Message DB Error', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", error_url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.LoadHistoryMsg(fake,function(statuscode, content){
+
+            expect(statuscode).to.equal(400);
             done();
         });
     });
 
-    test('Private Chat Update Read Statue DB Error', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
-        dboper.UpdateReadStatus(function(err, result){
-            expect(err).to.equal(400);
-            done();
-        });
-    });
-
-    test('Private Chat GetCount_IndividualUnreadMsg DB Error', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
-        dboper.GetCount_IndividualUnreadMsg(function(err, result){
-            expect(err).to.equal(400);
-            done();
-        });
-    });
-
-    test('Private Chat GetCount_IndividualPrivateSender DB Error', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
-        dboper. GetCount_IndividualPrivateSender(function(err, result){
-            expect(err).to.equal(400);
-            done();
-        });
-    });
-
-    test('Private Chat SearchMessages DB Error', function(done){
-        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", error_url);
-        dboper. SearchMessages("","",function(err, result){
-            expect(err).to.equal(400);
-            done();
-        });
-    });
 
 
 });
