@@ -8,7 +8,7 @@
         </div>
     </div><br>
     <div class="container" ng-show="allGroupTable">
-        <h3> Group List </h3>
+        <h3>All Group List </h3>
         <div class="container" >
         <table class="table">
             <thead>
@@ -21,12 +21,12 @@
                     </th>
                 </tr>
             </thead>
-            <tr ng-repeat="group in allGroupList track by $index">
+            <tr ng-repeat="allgroup in allGroupList track by $index">
                 <td>
-                    {{group.group}}
+                    {{allgroup}}
                 </td>
                 <td>
-                    <button ng-click="joinGroup(group.group)">Join</button>
+                    <button ng-click="joinGroup(allgroup)">Join</button>
                 </td>
             </tr>
         </table>

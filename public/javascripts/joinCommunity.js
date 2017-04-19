@@ -40,6 +40,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     $rootScope.$emit("loginGetAnnouncement");
                     $rootScope.$emit("loginGetPrivateChatList");
                     $rootScope.$emit("loginGetShareStatus");
+                    $rootScope.$emit("loginGetGroupList");
                 }
                 else {
                     // login failed
@@ -258,6 +259,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
+        $rootScope.$emit("loginGetGroupList");
         $scope.showList["groupList"] = true;
     };
     mySocket.on("userJoined",function(username){

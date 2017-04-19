@@ -14,6 +14,7 @@ class GroupChatCtrl{
     getAllGroupList (req, res) {
         let dboper = new GroupChatDBOper("","", url);
         dboper.getAllGroupList(function(statuscode, content){
+            console.log("get all groups"+content);
             res.json({data: content});
         });
     }
@@ -49,12 +50,12 @@ class GroupChatCtrl{
 
         let dboper = new GroupChatDBOper(group, username, url);
         dboper.leaveGroup(function(err, content){
-            if(err){
-                res.json({success:0, err_type: 1, err_msg:content});
-            }
-            else{
+            // if(err){
+            //     res.json({success:0, err_type: 1, err_msg:content});
+            // }
+            // else{
                 res.json({success:1, suc_msg: "Success"});
-            }
+            // }
         });
     }
 
@@ -109,15 +110,16 @@ class GroupChatCtrl{
 
     groupMessageSocket (socket, ConnectedSockets){
         return function(msg) {
-            var sender = msg.sender;
-            var receiver = msg.receiver;
-            var status = msg.emergency_status;
-            msg["timestamp"] = Date.now();
-            msg["EmergencyStatus"] = status;
+            // var sender = msg.sender;
+            // var receiver = msg.receiver;
+            // var status = msg.emergency_status;
+            // msg["timestamp"] = Date.now();
+            // msg["EmergencyStatus"] = status;
             //socket.emit("PrivateChat", msg);
-            if (ConnectedSockets.hasOwnProperty(receiver)) {
-                ConnectedSockets[receiver].emit("GroupChat", msg);
-            }
+            // if (ConnectedSockets.hasOwnProperty(sender)) {
+            //     ConnectedSockets[sender].emit("GroupChat", msg);
+            // }
+            socket.broadcast.emit("GroupChat", msg);
         };
     }
 

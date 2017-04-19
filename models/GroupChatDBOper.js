@@ -25,13 +25,13 @@ class GroupChatDBOper {
             }
             var collection = db.collection("GROUPS");
             collection.distinct("group",function(err, results){
-                var datas = [];
-                results.forEach(function(result){
-                    var data = {};
-                    data["group"] = result.group;
-                    datas.push(data);
-                });
-                callback(err,datas);
+                // var datas = [];
+                // results.forEach(function(result){
+                //     var data = {};
+                //     data["group"] = result.group;
+                //     datas.push(data);
+                // });
+                callback(err,results);
                 db.close();
             });
         });
@@ -91,8 +91,8 @@ class GroupChatDBOper {
             else {
                 var collection = db.collection("GROUPS");
                 //insert into table
-                var data = [{"group": group,"username": username}];
-                collection.insert(data, callback);
+                // var data = [{"group": group,"username": username}];
+                collection.remove({"group": group,"username": username}, callback);
                 db.close();
             }
         });

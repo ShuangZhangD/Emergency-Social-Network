@@ -30,6 +30,16 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
     };
 
     $scope.joinGroup = function(group) {
+        var exist = {};
+        for(var i = 0; i<$scope.myGroupList.length; i++){
+            if($scope.myGroupList[i].group == group){
+                exist = 1;
+            }
+
+        }
+        if(exist !== 1){
+            var add = confirm("Do you want to join the group?");
+        if(add){
         var group_data = {
             group: group,
             username: $scope.userClass["username"],
@@ -45,14 +55,23 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
                     group: group,
                 };
                 $scope.myGroupList.push(group_data1);
+                alert("Successfully Join Group");
             }
             else {
                 console.log("Unexpected error in join group");
             }
         });
+        }else{
+            console.log("Not join group");
+        }
+        }else{
+           alert("Already in the group");
+        }
     };
 
     $scope.leaveGroup = function(group) {
+        var add = confirm("Do you want to leave the group?");
+        if(add){
         var group_data = {
             group: group,
             username: $scope.userClass["username"],
@@ -62,25 +81,27 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
             url:"/groupchat/leave",
             data: group_data
         }).success(function(rep) {
-            mySocket.emit("Leave Group", group_data);
+            // mySocket.emit("Leave Group", group_data);
             if (rep.success == 1) {
                 console.log("Leave Group Success!");
-                for(var i = 0; i < $scope.myGroupList.length ; ){
-                    var index = group.indexOf($scope.myGroupList["group"]);
-                    if( index != -1){
-                        $scope.myGroupList.splice(i, 1);
-                    } else{
-                        i++;
-                    }
-                }
+                getMyGroupList();
+                alert("Successfully Leave Group");
             }
             else {
                 console.log("Unexpected error in leave group");
             }
         });
+        }else{
+            console.log("Not leave group");
+        }
     };
 
     $scope.createGroup = function() {
+        if($scope.newgroup == null){
+            alert("Group name can not be empty!");
+        }else{
+        var add = confirm("Do you want to create the group?");
+        if(add){
         var group_data = {
             group: $scope.newgroup,
             username: $scope.userClass["username"],
@@ -96,23 +117,28 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
                 var group_data1 = {
                     group: $scope.newgroup,
                 };
-                mySocket.emit("Create Group", group_data1);
+                mySocket.emit("Create Group", $scope.newgroup);
                 $scope.myGroupList.push(group_data1);
-                $scope.allGroupList.push(group_data1);
-
+                $scope.allGroupList.push($scope.newgroup);
+                $scope.newgroup = "";
+                alert("Successfully Create Group");
             }
             else {
                 console.log("Unexpected error in create group");
             }
         });
+        }else{
+            console.log("Not create group");
+        }
+        }
     };
     // Call this function after login
     //getPrivateSenderList();
-    // $rootScope.$on("loginGetGroupList", function() {
+    $rootScope.$on("loginGetGroupList", function() {
         getAllGroupList();
         getMyGroupList();
-        console.log("======"+$scope.allGroupList);
-    // });
+        console.log("======"+$scope.myGroupList);
+    });
     // For Test
     //$scope.privateSenderList = [{"sender":"helen","count":0},{"sender":"ivy","count":3}];
 
