@@ -78,8 +78,11 @@ suite('Group Chat Test', function(){
         let dboper = new GroupChatDBOper("testgroup","shuang", url);
         dboper.createGroup(function(err, content){
             dboper.joinGroup(function(err, content){
-                expect(err).to.equal(null);
-                done();
+                dboper.getMyGroupList(function(statuscode, content){
+                    expect(err).to.equal(null);
+                    expect(content[content.length-1]["group"]).to.equal("testgroup");
+                    done();
+                });
             });
         });
     });

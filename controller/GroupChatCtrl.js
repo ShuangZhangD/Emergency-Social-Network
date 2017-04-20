@@ -15,7 +15,7 @@ class GroupChatCtrl{
         let dboper = new GroupChatDBOper("","", url);
         dboper.getAllGroupList(function(statuscode, content){
             console.log("get all groups"+content);
-            res.json({data: content});
+            res.json({success:1,data: content});
         });
     }
 
@@ -23,7 +23,7 @@ class GroupChatCtrl{
         var username = req.params.username;
         let dboper = new GroupChatDBOper("",username, url);
         dboper.getMyGroupList(function(statuscode, content){
-            res.json({data: content});
+            res.json({success:1,data: content});
         });
     }
 
