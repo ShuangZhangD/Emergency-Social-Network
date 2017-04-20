@@ -34,6 +34,7 @@ class City {
         return true;
     }
 
+    // TODO add callback
     initDB() {
         var city = this;
         MongoClient.connect(dbconfig.getURL(), function(err, db) {
