@@ -99,9 +99,19 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
     };
 
     $scope.createGroup = function() {
+
+        var exist = 0;
+        for(var i = 0; i<$scope.allGroupList.length; i++){
+            if($scope.allGroupList[i] == $scope.newgroup){
+                exist = 1;
+            }
+        }
+
         if($scope.newgroup == null){
             alert("Group name can not be empty!");
-        }else{
+        }else if(exist == 1){
+            alert("Group name already exist!");
+        } else{
         var add = confirm("Do you want to create the group?");
         if(add){
         var group_data = {
