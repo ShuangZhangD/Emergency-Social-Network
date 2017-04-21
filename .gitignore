@@ -9,7 +9,5 @@ bower_components/
 .idea/
 workspace.xml
 backups/
-bower.json
-package.json
 shippable/*
 coverage/*
