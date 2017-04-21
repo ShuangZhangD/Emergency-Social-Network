@@ -28,7 +28,7 @@ var GroupChatCtrl = require("./controller/GroupChatCtrl.js");
 var EmergencyShelterCtrl = require("./controller/EmergencyShelterCtrl.js");
 
 // init data
-// EmergencyShelterCtrl.initData();
+EmergencyShelterCtrl.initData();
 
 // var sockets = require("./socket.js");
 // view engine setup
