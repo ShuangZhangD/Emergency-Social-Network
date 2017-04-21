@@ -14,6 +14,8 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.details1 = $scope.historyList1;
         $scope.details2 = $scope.historyList2;
     };
+
+
     $scope.login = function() {
         if (check_usr($scope.username)) {
             // check_pwd($scope.password);
@@ -38,6 +40,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     $rootScope.$emit("loginGetAnnouncement");
                     $rootScope.$emit("loginGetPrivateChatList");
                     $rootScope.$emit("loginGetShareStatus");
+                    $rootScope.$emit("loginGetGroupList");
                 }
                 else {
                     // login failed
@@ -98,6 +101,14 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["chatPublicly"] = true;
         $scope.showList["publicSearchResult"] = false;
         $scope.showList["publicHistory"] = true;
+    };
+
+    $scope.showShelter = function () {
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList["shelter"] = true;
+        $rootScope.$emit("openMap");
     };
 
     $rootScope.userChangedStatus = function(data) {
@@ -251,6 +262,14 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["shareStatus"] = true;
     };
 
+
+    $scope.showGroup = function() {
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $rootScope.$emit("loginGetGroupList");
+        $scope.showList["groupList"] = true;
+    };
     mySocket.on("userJoined",function(username){
         if ($scope.logined) {
             $http({
@@ -342,6 +361,7 @@ function addUser($scope, $rootScope, $http, tmpUsername, mySocket) {
                 $rootScope.$emit("loginGetAnnouncement");
                 $rootScope.$emit("loginGetPrivateChatList");
                 $rootScope.$emit("loginGetShareStatus");
+                $rootScope.$emit("loginGetGroupList");
             }
             else {
                 // sign up failed

@@ -1,0 +1,17 @@
+<div class="container" ng-controller="groupChatListCtrl" ng-show="showList.groupChatContent">
+    <h3>Group Name: {{groupChatSender}}</h3>
+    <div class="container">
+        <div class="panel panel-default " ng-repeat="msg in groupMsgs track by $index">
+            <div class="panel-heading"><span>{{msg.sender}} @ </span><span>(Status: {{msg.emergency_status}}){{msg.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
+            <div class="panel-body"><span class="content">{{msg.group_msg}}</span><span class="avatar"></span></div>
+            </div>
+    </div>
+
+    <div class="container">
+        <div class="form-signin">
+            <input ng-model="group_msg" id="group_msg" type="text" class="form-control" placeholder="Send Group Msg" required autofocus>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="postGroupMsg()">Send Group Msg</button>
+        </div>
+    </div>
+
+</div>

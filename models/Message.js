@@ -70,7 +70,27 @@ class Message {
             callback(datas, null);
         });
     }
-
+    loadGroupHistoryMsg(db, callback) {
+        this.collection = db.collection("MESSAGES");
+        this.collection.find({
+            "receiver": this.receiver ,
+            "type": "group"
+        }).toArray(function (err, results) {
+            console.log(err);
+            var datas = [];
+            results.forEach(function (result) {
+                var data = {};
+                data["sender"] = result.sender;
+                data["receiver"] = result.receiver;
+                data["group_msg"] = result.message;
+                data["timestamp"] = result.postTime;
+                data["emergency_status"] = result.emergencystatus;
+                datas.push(data);
+            });
+            //var jsonString = JSON.stringify(datas);
+            callback(datas, null);
+        });
+    }
     //get how many private unread msg between sender and receiver
     getCount_PrivateUnreadMsg(db, sender, receiver, callback){
         this.collection = db.collection("MESSAGES");

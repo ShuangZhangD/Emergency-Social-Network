@@ -1,0 +1,73 @@
+<div class="container" ng-controller="groupChatListCtrl" ng-show="showList.groupList">
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" type="submit" ng-click="showAllGroup()" class="btn btn-default">Show All Group</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" type="submit" ng-click="showMyGroup()" class="btn btn-default">Show My Group</button>
+        </div>
+    </div><br>
+    <div class="container" ng-show="allGroupTable">
+        <h3>All Group List </h3>
+        <div class="container" >
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Groups
+                    </th>
+                    <th>
+                        Join the Group
+                    </th>
+                </tr>
+            </thead>
+            <tr ng-repeat="allgroup in allGroupList track by $index">
+                <td>
+                    {{allgroup}}
+                </td>
+                <td>
+                    <button ng-click="joinGroup(allgroup)">Join</button>
+                </td>
+            </tr>
+        </table>
+        </div>
+    </div>
+    <div class="container"ng-show="myGroupTable">
+        <h3>My Group List </h3>
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        Groups
+                    </th>
+                    <th>
+                        Chat Page
+                    </th>
+                    <th>
+                        Leave the Group
+                    </th>
+                </tr>
+                </thead>
+                <tr ng-repeat="group in myGroupList track by $index">
+                    <td>
+                        {{group.group}}
+                    </td>
+                    <td>
+                        <button ng-click="openMsg(group.group)">Open</button>
+                    </td>
+                    <td>
+                        <button ng-click="leaveGroup(group.group)">Leave</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="container">
+            <div class="form-signin">
+                <input ng-model="newgroup" id="newgroup" type="text" class="form-control" placeholder="Create A Group" required autofocus>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="createGroup()">Create A Group</button>
+            </div>
+        </div>
+    </div>
+
+</div>

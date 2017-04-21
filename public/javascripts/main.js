@@ -8,13 +8,18 @@ app.controller("initCtrl", function($scope, $http) {
         privateChatList : false,
         privateChatContent: false,
         shareStatus: false,
+        shelter: false,
         publicSearchResult: false,
         annoucementSearchResult: false,
         privateChatSearchResult: false,
         privateChatTable: false,
         publicHistory: false,
-        announcementHistory: false
+        announcementHistory: false,
+        groupList:false,
+        groupChatContent:false
     };
+    $scope.myGroupTable=false;
+    $scope.allGroupTable=true;
     $scope.searchStatus = true;
     $scope.searchName =  false;
     $scope.userClass = {

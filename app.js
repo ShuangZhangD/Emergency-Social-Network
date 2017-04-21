@@ -7,6 +7,9 @@ var bodyParser = require("body-parser");
 
 var index = require("./routes/index");
 var users = require("./routes/users");
+var testmap = require("./routes/testmap");
+var test_no_city_map = require("./routes/test_no_city_map");
+var test_no_city_no_map = require("./routes/test_no_city_no_map");
 var chatPubliclyRouter = require("./routes/chatPubliclyRouter");
 var http = require("http");
 var app = express();
@@ -21,6 +24,12 @@ var PublicChatCtrl = require("./controller/PublicChatCtrl.js");
 var PrivateChatCtrl = require("./controller/PrivateChatCtrl.js");
 var PostAnnouncementCtrl = require("./controller/PostAnnouncementCtrl.js");
 var ShareStatusCtrl = require("./controller/ShareStatusCtrl");
+var GroupChatCtrl = require("./controller/GroupChatCtrl.js");
+var EmergencyShelterCtrl = require("./controller/EmergencyShelterCtrl.js");
+
+// init data
+EmergencyShelterCtrl.initData();
+
 // var sockets = require("./socket.js");
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -41,6 +50,9 @@ app.use("/", index);
 app.use("/users", users);
 app.use("/chatPublicly",chatPubliclyRouter);
 
+app.use("/testmap", testmap);
+app.use("/test_no_city_no_map", test_no_city_no_map);
+app.use("/test_no_city_map", test_no_city_map);
 
 
 app.use("/login", JoinCommunityCtrlLoginCommunityRouter);
@@ -66,6 +78,16 @@ app.post("/privatechat", PrivateChatCtrl.AddPrivateMessage);
 app.get("/privatechat/:receiver", PrivateChatCtrl.getCount_IndividualPrivateSender);
 app.post("/privatechat/search/:user", PrivateChatCtrl.search);
 
+app.get("/shelter_by_location/:latitude/:longitude", EmergencyShelterCtrl.getResultByLocation);
+app.get("/shelter_search/:keywords", EmergencyShelterCtrl.search);
+app.get("/groupchat", GroupChatCtrl.getAllGroupList);
+app.get("/groupchat/:username", GroupChatCtrl.getMyGroupList);
+app.post("/groupchat/join", GroupChatCtrl.joinGroup);
+app.post("/groupchat/leave", GroupChatCtrl.leaveGroup);
+app.post("/groupchat/create", GroupChatCtrl.createGroup);
+
+app.get("/groupchat/message/:group", GroupChatCtrl.LoadGroupHistoryMessage);
+app.post("/groupchat/message", GroupChatCtrl.AddGroupMessage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -118,6 +140,8 @@ io.on("connection", function(socket) {
 
     //when a private message is sent
     socket.on("Private Message", privateChat2.privateMessageSocket(socket, ConnectedSockets));
+    socket.on("Group Message", GroupChatCtrl.groupMessageSocket(socket, ConnectedSockets));
+    socket.on("Create Group", GroupChatCtrl.createGroupSocket(socket, ConnectedSockets));
 
     //when total number of unread(private+public) message is needed
     //socket.on("GetCount AllUnreadMsg", privateChat.getCount_AllUnreadMsg(socket));

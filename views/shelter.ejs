@@ -1,0 +1,88 @@
+<div ng-controller="shelterCtrl" ng-show="showList.shelter" style="width: 100%; height: 100%;">
+
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" type="submit" ng-click="showMapSearch('Map')" class="btn btn-default">Map</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" type="submit" ng-click="showMapSearch('Search')" class="btn btn-default">Search</button>
+        </div>
+    </div><br>
+
+    <div id="map_container" style="width: 100%; height: 100%;" ng-show="showMap">
+
+        <div id="location_container" ng-show="location.valid">
+            <h3> Current location:</h3>
+            {{ locationResult.name }}({{ location.latitude }}, {{ location.longitude }})
+        </div>
+        <br/>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Shelter Name</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="slt in locationResult.shelter">
+                    <td>
+                        {{ slt.name }}
+                    </td>
+                    <td>
+                        {{ slt.address }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+        <div ng-show="showNotification">
+            <h4>{{notification}}, please search for emergency shelters.</h4>
+        </div>
+       
+
+        <div id="map" style="width: 90%; height: 70%; margin-left: auto; margin-right: auto;"></div>
+    </div>
+
+
+    <div id="search_container" style="width: 100%; height: 100%;" ng-show="!showMap">
+        <div class="container">
+            <div class="input-group">
+                <input ng-model="shelter_search_area" id="shelter_search_area" type="text" class="form-control" placeholder="Search City Name" >
+                <span class="input-group-btn">
+                    <button class="btn btn-info" type="submit" ng-click="search()">Search</button>
+                </span>
+            </div>
+        </div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>City</th>
+                    <th>Shelter Name</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="slt in searchResult">
+                    <td>
+                        {{ slt.city }}
+                    </td>
+                    <td>
+                        {{ slt.name }}
+                    </td>
+                    <td>
+                        {{ slt.address }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+</div>

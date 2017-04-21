@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang='en' style="height: 100%;">
+  <head>
+    <title>Emergency Social Network</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/joinCommunity.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/DisplayDirectory.css">
+    <link rel="stylesheet" href="/stylesheets/ShareStatus.css">
+  </head>
+  <body ng-app="ESN-APP" ng-controller="initCtrl" style="height: 100%;">
+
+    <div ng-controller="joinCommunityCtrl">
+        <%- include('navbarSimple') %>
+        <%- include('joinCommunity') %>
+        <%- include('displayDirectory') %>
+    </div>
+
+    <%- include('chatPublicly') %>
+    <%- include('postAnnouncement') %>
+    <%- include('privateChatList') %>
+    <%- include('privateChatContent') %>
+    <%- include('shareStatus') %>
+    <%- include('shelter') %>
+
+
+    <script src="angular/angular.js"></script>
+    <script src="angular-socket-io/socket.min.js"></script>
+    <script src="angular-socket-io/socket.js"></script>
+    <script src="socket.io-client/dist/socket.io.js"></script>
+    
+    <script type="text/javascript" src="http://www.openlayers.cn/olapi/OpenLayers.js"></script>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.0.1/css/ol.css" type="text/css">
+    <!--script src="https://openlayers.org/en/v4.0.1/build/ol.js"></script-->
+
+    <script src="/javascripts/main.js"></script>
+    <script src="/javascripts/joinCommunity.js"></script>
+    <script src="/javascripts/chatPublicly.js"></script>
+    <script src="/javascripts/postAnnoucementCtrl.js"></script>
+    <script src="/javascripts/privateChatListCtrl.js"></script>
+    <script src="/javascripts/privateChatContentCtrl.js"></script>
+    <script src="/javascripts/shareStatusCtrl.js"></script>
+    <script src="/javascripts/shelterCtrl.js"></script>
+    <script src="/javascripts/googleMap.js"></script>
+
+    <script src="https://FAKESOURCE.maps.googleapis.com/maps/api/js?key=AIzaSyDdcFltjf6v5RqvWOiYwChQ-G2cjNZ-pyg&callback=initMap"
+    async defer onerror="loadMapError()"></script>
+
+
+   </body>
+</html>
