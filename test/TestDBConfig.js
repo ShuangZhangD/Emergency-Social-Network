@@ -5,8 +5,8 @@
 class TestDBConfig{
 
     constructor(){
-        //this.url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
-        this.url = "mongodb://localhost:27017/esnsv7";
+        this.url = 'mongodb://root:1234@ds135690.mlab.com:35690/esntest';
+        // this.url = "mongodb://localhost:27017/esnsv7";
         //this.url=process.argv[2];
     }
 
