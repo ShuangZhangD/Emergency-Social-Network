@@ -13,3 +13,4 @@ bower.json
 package.json
 shippable/*
 coverage/*
+StaticAnalysis/*
