@@ -110,15 +110,6 @@ class GroupChatCtrl{
 
     groupMessageSocket (socket, ConnectedSockets){
         return function(msg) {
-            // var sender = msg.sender;
-            // var receiver = msg.receiver;
-            // var status = msg.emergency_status;
-            // msg["timestamp"] = Date.now();
-            // msg["EmergencyStatus"] = status;
-            //socket.emit("PrivateChat", msg);
-            // if (ConnectedSockets.hasOwnProperty(sender)) {
-            //     ConnectedSockets[sender].emit("GroupChat", msg);
-            // }
             socket.broadcast.emit("GroupChat", msg);
         };
     }
