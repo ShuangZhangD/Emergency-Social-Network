@@ -8,6 +8,7 @@ app.controller("initCtrl", function($scope, $http) {
         privateChatList : false,
         privateChatContent: false,
         shareStatus: false,
+        shelter: false,
         publicSearchResult: false,
         annoucementSearchResult: false,
         privateChatSearchResult: false,

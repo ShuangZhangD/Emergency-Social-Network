@@ -9,8 +9,10 @@
       <li><a href="#" ng-click='showAnnouncement()' ng-show="logined">Announcements</a ></li>
       <li><a href="#" ng-click='showShareStatus()' ng-show="logined">Share Status</a ></li>
       <li><a href="#" ng-click='showPrivateChat()' ng-show="logined">PrivateChat (<span ng-show="userClass.hasNewMsg" style="color:red">{{userClass.newMsgNum}}</span><span ng-show="!userClass.hasNewMsg">0</span>) </a ></li>
-      <li><a href="#" ng-click='showGroup()' ng-show="logined">Group</a ></li>
-      <li><a href="#" ng-click='logout()' ng-show="logined">Logout({{userClass.username}})</a ></li>
+        <li><a href="#" ng-click='showGroup()' ng-show="logined">Group</a ></li>
+        <li><a href="#" ng-click='showShelter()' ng-show="logined">Emergency Shelters</a ></li>
+
+        <li><a href="#" ng-click='logout()' ng-show="logined">Logout({{userClass.username}})</a ></li>
     </ul>
 
   </div>
