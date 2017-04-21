@@ -1,4 +1,4 @@
-var app = angular.module("ESN-APP", []);
+var app = angular.module("ESN-APP", ['ngSidebarJS']);
 // to init variables in $scope
 app.controller("initCtrl", function($scope, $http) {
     $scope.showList = {

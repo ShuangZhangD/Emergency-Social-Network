@@ -1,23 +1,39 @@
-<nav class="navbar navbar-default">
-  <!--<div class="navbar navbar-default navbar-fixed-top my-custom-nav" role="navigation">-->
+<!--<nav class="navbar navbar-default">-->
+  <!--&lt;!&ndash;<div class="navbar navbar-default navbar-fixed-top my-custom-nav" role="navigation">&ndash;&gt;-->
 
-  <div class="container-fluid">
+  <!--<div class="container-fluid">-->
 
-    <ul class="nav navbar-nav">
-      <li><a href="#" ng-click='showDirectory()' ng-show="logined">Directory<!--span class="sr-only">(current)</span--></a ></li>
-      <li><a href="#" ng-click='showPublicChat()' ng-show="logined">PublicChat</a ></li>
-      <li><a href="#" ng-click='showAnnouncement()' ng-show="logined">Announcements</a ></li>
-      <li><a href="#" ng-click='showShareStatus()' ng-show="logined">Share Status</a ></li>
-      <li><a href="#" ng-click='showPrivateChat()' ng-show="logined">PrivateChat (<span ng-show="userClass.hasNewMsg" style="color:red">{{userClass.newMsgNum}}</span><span ng-show="!userClass.hasNewMsg">0</span>) </a ></li>
-        <li><a href="#" ng-click='showGroup()' ng-show="logined">Group</a ></li>
-        <li><a href="#" ng-click='showShelter()' ng-show="logined">Emergency Shelters</a ></li>
+    <!--<ul class="nav navbar-nav">-->
+      <!--<li><a href="#" ng-click='showDirectory()' ng-show="logined">Directory&lt;!&ndash;span class="sr-only">(current)</span&ndash;&gt;</a ></li>-->
+      <!--<li><a href="#" ng-click='showPublicChat()' ng-show="logined">PublicChat</a ></li>-->
+      <!--<li><a href="#" ng-click='showAnnouncement()' ng-show="logined">Announcements</a ></li>-->
+      <!--<li><a href="#" ng-click='showShareStatus()' ng-show="logined">Share Status</a ></li>-->
+      <!--<li><a href="#" ng-click='showPrivateChat()' ng-show="logined">PrivateChat (<span ng-show="userClass.hasNewMsg" style="color:red">{{userClass.newMsgNum}}</span><span ng-show="!userClass.hasNewMsg">0</span>) </a ></li>-->
+        <!--<li><a href="#" ng-click='showGroup()' ng-show="logined">Group</a ></li>-->
+        <!--<li><a href="#" ng-click='showShelter()' ng-show="logined">Emergency Shelters</a ></li>-->
 
-        <li><a href="#" ng-click='logout()' ng-show="logined">Logout({{userClass.username}})</a ></li>
-    </ul>
+        <!--<li><a href="#" ng-click='logout()' ng-show="logined">Logout({{userClass.username}})</a ></li>-->
+    <!--</ul>-->
 
-  </div>
-</nav>
-
+  <!--</div>-->
+<!--</nav>-->
+<header ng-show="logined">
+  <div class="icon hamburger-icon" sidebarjs-toggle></div>
+  <h1>ESN</h1>
+</header>
+<sidebarjs>
+  <h3>ESN</h3>
+  <nav>
+      <a sidebarjs-toggle href="#" ng-click='showDirectory()' ng-show="logined">Directory</a>
+      <a sidebarjs-toggle href="#" ng-click='showPublicChat()' ng-show="logined">PublicChat</a>
+      <a sidebarjs-toggle href="#" ng-click='showAnnouncement()' ng-show="logined">Announcements</a>
+      <a sidebarjs-toggle href="#" ng-click='showShareStatus()' ng-show="logined">Share Status</a>
+      <a sidebarjs-toggle href="#" ng-click='showPrivateChat()' ng-show="logined">PrivateChat (<span ng-show="userClass.hasNewMsg" style="color:red">{{userClass.newMsgNum}}</span><span ng-show="!userClass.hasNewMsg">0</span>) </a>
+      <a sidebarjs-toggle href="#" ng-click='showGroup()' ng-show="logined">Group</a>
+      <a sidebarjs-toggle href="#" ng-click='showShelter()' ng-show="logined">Emergency Shelters</a>
+      <a sidebarjs-toggle href="#" ng-click='logout()' ng-show="logined">Logout({{userClass.username}})</a>
+  </nav>
+</sidebarjs>
 <!--<nav class = "navbar navbar-default" ng-show="logined" role = "navigation">-->
 
   <!--<div class = "navbar-header">-->
