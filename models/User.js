@@ -5,11 +5,13 @@
 class User {
 
     // Constructor for initializing values for a new user
-    constructor(username, password, status, EmergencyStatus) {
+    constructor(username, password, status, EmergencyStatus, AccountStatus, PrivilegeLevel) {
         this.username = username;
         this.password = password;
         this.status   = status;
         this.emergencystatus = EmergencyStatus;
+        this.accountstatus = AccountStatus;
+        this.privilegelevel = PrivilegeLevel;
     }
 
     // Method to create a new user, takes the "USERS" collection as a parameter
@@ -19,7 +21,9 @@ class User {
             "username"  : this.username,
             "password"  : this.password,
             "status"    : this.status,
-            "emergencystatus" : "Undefined"
+            "emergencystatus" : "Undefined",
+            "accountstatus" : "Active",
+            "privilegelevel" : "Citizen"
         }, function(err, results) {
             callback(results, null);
         });
@@ -75,6 +79,7 @@ class User {
             callback(userstatuslist, null);
         });
     }
+
 }
 
 module.exports = User;

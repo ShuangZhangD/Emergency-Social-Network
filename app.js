@@ -26,6 +26,7 @@ var PostAnnouncementCtrl = require("./controller/PostAnnouncementCtrl.js");
 var ShareStatusCtrl = require("./controller/ShareStatusCtrl");
 var GroupChatCtrl = require("./controller/GroupChatCtrl.js");
 var EmergencyShelterCtrl = require("./controller/EmergencyShelterCtrl.js");
+var ProfileManagementCtrl = require("./controller/ProfileManagementCtrl.js");
 
 // init data
 EmergencyShelterCtrl.initData();
@@ -88,6 +89,9 @@ app.post("/groupchat/create", GroupChatCtrl.createGroup);
 
 app.get("/groupchat/message/:group", GroupChatCtrl.LoadGroupHistoryMessage);
 app.post("/groupchat/message", GroupChatCtrl.AddGroupMessage);
+
+app.get("/profile/:profileusername", ProfileManagementCtrl.getProfile);
+app.post("/profile", ProfileManagementCtrl.updateProfile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
