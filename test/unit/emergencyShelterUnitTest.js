@@ -56,6 +56,12 @@ var mountain_view_2 = {
     "shelter" : []
 };
 
+var mountain_view_3 = {
+    "name" : "Mountain Mock",
+    "location" : [37.410400, -122.05967899999999],
+    "shelter" : []
+};
+
 suite('Emergency Shelter Unit Tests', function(){
     this.timeout(15000);
     
@@ -96,10 +102,15 @@ suite('Emergency Shelter Unit Tests', function(){
         MongoClient.connect(dbconfig.getURL(), function(err, db) {
             expect(err).to.equal(null);
             var collection = db.collection("city");
-            collection.remove({"name": city1.name}, function(err, results){
+            collection.remove({"name": city1.name}, function (err, results) {
                 expect(err).to.equal(null);
-                city1.initDB();
-                done();
+                city1.initDB(url, function (args) {
+                    collection.find({"name": city1.name}).toArray(function (err, results) {
+                        expect(err).to.equal(null);
+                        expect(results.length).to.above(0);
+                        done();
+                    });
+                });
             });
         });
     });
@@ -107,44 +118,65 @@ suite('Emergency Shelter Unit Tests', function(){
     test("Init DB Exist Same City", function(done){
         // initDB
         let city1 = new City(mountain_view);
-        city1.initDB();
-        let city2 = new City(mountain_view);
-        city2.initDB();
-        expect(city1.compareTo(city2)).to.equal(true);
-        done();
+        city1.initDB(url, function (args) {
+            let city2 = new City(mountain_view);
+            city2.initDB(url, function (args) {
+                MongoClient.connect(dbconfig.getURL(), function(err, db) {
+                    var collection = db.collection("city");
+                    collection.find({"name": city1.name}).toArray(function (err, results) {
+                        expect(results.length).to.equal(1);
+                        done();
+                    });
+                });
+            });
+        });
     });
 
     test("Init DB Exist Non-Same City", function(done){
         // initDB
         let city1 = new City(mountain_view);
-        city1.initDB();
-        let city2 = new City(mountain_view_2);
-        city2.initDB();
-        expect(city1.compareTo(city2)).to.equal(false);
-        done();
+        city1.initDB(url, function (args) {
+            let city2 = new City(mountain_view_2);
+            city2.initDB(url, function (args) {
+                MongoClient.connect(dbconfig.getURL(), function(err, db) {
+                    var collection = db.collection("city");
+                    collection.find({"name": city1.name}).toArray(function (err, results) {
+                        expect(results[0].shelter.length).to.equal(0);
+                        done();
+                    });
+                });
+            });
+        });
     });
 
     test("Search Exist Non-Empty City", function(done){
-        let city = new City(null);
-        city.search(["Mountain", "View"], function (success, err_type, result) {
-            expect(success).to.equal(1);
-            expect(result.length).to.equal(1);
-            done();
+        let city1 = new City(mountain_view);
+        city1.initDB(url, function (args) {
+            city1.search(url, ["Mountain", "View"], function (success, err_type, result) {
+                expect(success).to.equal(1);
+                expect(result.length).to.above(0);
+                done();
+            });
         });
     });
 
     test("Search Exist Empty City", function(done){
-        let city = new City(null);
-        city.search(["San", "Jose"], function (success, err_type, result) {
-            expect(success).to.equal(1);
-            expect(result.length).to.above(1);
-            done();
+        let city1 = new City(mountain_view_2);
+        city1.initDB(url, function (args) {
+            let city2 = new City(mountain_view_3);
+            city2.initDB(url, function (args) {
+                city2.search(url, ["Mountain", "View", "Mock"], function (success, err_type, result) {
+                    expect(success).to.equal(1);
+                    expect(result.length).to.above(1);
+                    done();
+                });
+            });
         });
     });
 
     test("Search Non-Exist City", function(done){
         let city = new City(null);
-        city.search(["Jiaxing", "Pinghu"], function (success, err_type, result) {
+        city.search(url, ["Jiaxing", "Pinghu"], function (success, err_type, result) {
             expect(success).to.equal(1);
             expect(result.length).to.equal(0);
             done();
@@ -152,17 +184,22 @@ suite('Emergency Shelter Unit Tests', function(){
     });
 
     test("Search Many Cities", function(done){
-        let city = new City(null);
-        city.search(["San"], function (success, err_type, result) {
-            expect(success).to.equal(1);
-            expect(result.length).to.above(1);
-            done();
+        let city1 = new City(mountain_view_2);
+        city1.initDB(url, function (args) {
+            let city2 = new City(mountain_view_3);
+            city2.initDB(url, function (args) {
+                city2.search(url, ["Mountain"], function (success, err_type, result) {
+                    expect(success).to.equal(1);
+                    expect(result.length).to.above(1);
+                    done();
+                });
+            });
         });
     });
 
     test("Normal Location", function(done){
         let location = new MyLocation([37.410406, -122.05967899999999]);
-        location.findCity(function (err, results) {
+        location.findCity(url, function (err, results) {
             expect(results.length).to.above(0);
             done();
         });
@@ -171,7 +208,7 @@ suite('Emergency Shelter Unit Tests', function(){
     test("Eroor Location", function(done){
         let location = new MyLocation([37.410406, -122.05967899999999]);
         location.location = "1";
-        location.findCity(function (err, results) {
+        location.findCity(url, function (err, results) {
             expect(results).to.equal("Err 2");
             done();
         });

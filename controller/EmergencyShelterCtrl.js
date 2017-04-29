@@ -3,6 +3,9 @@
  */
 "use strict";
 
+var DBConfig = require("../controller/DBConfig");
+let dbconfig = new DBConfig();
+
 var City = require("../models/City.js");
 var MyLocation = require("../models/MyLocation.js");
 
@@ -12,11 +15,11 @@ class EmergencyShelterCtrl {
         //
     }
 
-    initData() {
+    initData(callback) {
         var jsonFile = require("../data/EmergencyShelters.json");
         jsonFile.cityList.forEach(function(json) {
             let city = new City(json);
-            city.initDB();
+            city.initDB(dbconfig.getURL(), callback);
         });
         console.log("Emergency Shelter Information Updated!");
     }
@@ -25,7 +28,7 @@ class EmergencyShelterCtrl {
         var latitude = parseFloat(req.params.latitude);
         var longitude = parseFloat(req.params.longitude);
         let location = new MyLocation([latitude, longitude]);
-        location.findCity(function (err, result) {
+        location.findCity(dbconfig.getURL(), function (err, result) {
             if(err){
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }else{
@@ -56,7 +59,7 @@ class EmergencyShelterCtrl {
             return;
         }
         let city = new City(null);
-        city.search(keywordList, function(success, err_type, result) {
+        city.search(dbconfig.getURL(), keywordList, function(success, err_type, result) {
             if (success == 1){
                 res.json({success:1, data: result});
             }

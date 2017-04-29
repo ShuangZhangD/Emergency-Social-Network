@@ -3,8 +3,8 @@
  */
 "use strict";
 
-var DBConfig = require("../controller/DBConfig");
-let dbconfig = new DBConfig();
+//var DBConfig = require("../controller/DBConfig");
+//let dbconfig = new DBConfig();
 var MongoClient = require("mongodb").MongoClient;
 
 class MyLocation {
@@ -14,9 +14,9 @@ class MyLocation {
         //this.city = findCity(location);
     }
 
-    findCity(callback) {
+    findCity(url, callback) {
         var location = this.location;
-        MongoClient.connect(dbconfig.getURL(), function(err, db) {
+        MongoClient.connect(url, function(err, db) {
             var collection = db.collection("city");
             collection.ensureIndex( { "location": "2d"} );
             collection.find( {"location": { $near: location } } ).toArray(function(err, results){

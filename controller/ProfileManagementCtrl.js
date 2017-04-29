@@ -54,6 +54,10 @@ class ProfileManagementController {
         });
     }
 
+    checkDefaultAdmin(callback) {
+        
+    }
+
 }
 
 let pmc = new ProfileManagementController();
