@@ -178,8 +178,12 @@ io.on("connection", function(socket) {
     });
 
     socket.on("Name Change", privateChat2.ReceiverUsernameChange(socket));
+    socket.on("Name Change", publicChat.changeUsernameSocket(socket));
+    socket.on("Name Change", PostAnnouncementCtrl.changeUsernameSocket(socket));
 
     socket.on("Accountstatus Change", privateChat2.ReceiverAccountstatusChange(socket));
+    socket.on("Accountstatus Change", publicChat.changeAccountStatusSocket(socket));
+    socket.on("Accountstatus Change", PostAnnouncementCtrl.changeAccountStatusSocket(socket));
 });
 
 // module.exports = app;

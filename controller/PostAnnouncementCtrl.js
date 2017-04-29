@@ -33,6 +33,19 @@ class PostAnnouncementCtrl {
         };
     }
 
+    changeUsernameSocket (socket) {
+        return function(params) {
+            //socket.emit("Public Message", data);
+            socket.broadcast.emit("Username Changed In Announcement", params);
+        };
+    }
+
+    changeAccountStatusSocket (socket) {
+        return function(params) {
+            socket.broadcast.emit("AccountStatus Changed In Announcement", params);
+        };
+    }
+
     LoadAnnouncement (req, res){
         dboper.LoadAnnouncement(url, function (err, results) {
             if (err) {
@@ -67,5 +80,7 @@ module.exports = {
     AddAnnouncement: pac.AddAnnouncement,
     AnnouncementSocket: pac.AnnouncementSocket,
     LoadAnnouncement: pac.LoadAnnouncement,
-    searchPublicAnn: pac.searchPublicAnn
+    searchPublicAnn: pac.searchPublicAnn,
+    changeUsernameSocket: pubtrl.changeUsernameSocket,
+    changeAccountStatusSocket: pubtrl.changeAccountStatusSocket
 };

@@ -32,6 +32,22 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
             alert("New Announcement (" + data.username + ") : " + data.announcement);
         }
     });
+
+    //socket on if others' username is changed
+    mySocket.on("Username Changed In Announcement", function(params) {
+        //$scope.displaymsg.push(params);
+        if(params.profileusername != $scope.userClass["username"]){
+            getAnnouncement();
+        }
+    });
+
+    mySocket.on("AccountStatus Changed In Public Chat", function(params) {
+        //$scope.displaymsg.push(params);
+        if(params.profileusername != $scope.userClass["username"]){
+            getAnnouncement();
+        }
+    });
+
     $scope.submitAnnouncement = function() {
         var announcement_data = {
             announcement: $scope.announcement_content,
