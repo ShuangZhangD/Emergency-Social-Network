@@ -30,7 +30,8 @@ var ProfileManagementCtrl = require("./controller/ProfileManagementCtrl.js");
 
 // init data
 EmergencyShelterCtrl.initData(function (args) {});
-ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
+//TODO uncomment it back
+//ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
 
 // var sockets = require("./socket.js");
 // view engine setup
@@ -182,6 +183,10 @@ io.on("connection", function(socket) {
             delete ConnectedSockets[username];
         }
     });
+
+    socket.on("Name Change", privateChat2.ReceiverUsernameChange(socket));
+
+    socket.on("Accountstatus Change", privateChat2.ReceiverAccountstatusChange(socket));
 });
 
 // module.exports = app;

@@ -27,6 +27,7 @@ class Message {
             "message": this.message,
             "postTime": this.postTime,
             "emergencystatus": this.EmergencyStatus,
+            "accountstatus" : "Active",
             "ReadStatus": this.ReadStatus
         }, function (err, results) {
             console.log(err);
@@ -53,6 +54,7 @@ class Message {
         this.collection.find({
             "sender": { $in: [this.sender, this.receiver] },
             "receiver": { $in: [this.sender, this.receiver] },
+            "accountstatus" : "Active",
             "type": "private"
         }).toArray(function (err, results) {
             console.log(err);
@@ -98,6 +100,7 @@ class Message {
             "sender" : sender,
             "receiver": receiver,
             "type" : "private",
+            "accountstatus" : "Active",
             "ReadStatus": "unread"
         }).toArray(function (err, results) {
             callback(results.length, null);
@@ -109,6 +112,7 @@ class Message {
         this.collection = db.collection("MESSAGES");
         this.collection.distinct("sender",{
             "receiver":this.receiver,
+            "accountstatus" : "Active",
             "ReadStatus": "unread"
         }, function (err, results) {
             console.log(err);
@@ -120,7 +124,7 @@ class Message {
     getPrivateMsgSenderList(db, callback){
         var receiver = this.receiver;
         this.collection = db.collection("MESSAGES");
-        this.collection.aggregate([{$match: {"type":"private", $or: [{"receiver":receiver}, {"sender":receiver}]}}, {$group: {"_id": {sender: "$sender",receiver: "$receiver"} }}], function (err, results) {
+        this.collection.aggregate([{$match: {"accountstatus" : "Active", "type":"private", $or: [{"receiver":receiver}, {"sender":receiver}]}}, {$group: {"_id": {sender: "$sender",receiver: "$receiver"} }}], function (err, results) {
             console.log(err);
             var userlist = [];
             results.forEach(function(result){

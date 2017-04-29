@@ -80,4 +80,34 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
             $rootScope.updateNewMsgNumByData(data);
         }
     });
+
+    mySocket.on("receiver username changed", function (param) {
+        var changed_part = param.profileusername;
+        if(changed_part == $scope.userClass["privateChatSender"]){
+            $rootScope.$emit("loginGetPrivateChatList");
+            for (var item in $scope.showList) {
+                $scope.showList[item] = false;
+            }
+            $scope.showList["privateChatList"] = true;
+            $scope.showList["privateChatTable"] =true;
+
+            $scope.userClass["privateChatSender"] = param.newusername;
+
+            alert(param.profileusername+" has changed the username to "+param.newusername);
+        }
+    });
+
+    mySocket.on("receiver Accountstatus changed", function (param) {
+        var changed_part = param.profileusername;
+        if(changed_part == $scope.userClass["privateChatSender"]){
+            $rootScope.$emit("loginGetPrivateChatList");
+            for (var item in $scope.showList) {
+                $scope.showList[item] = false;
+            }
+            $scope.showList["privateChatList"] = true;
+            $scope.showList["privateChatTable"] =true;
+
+            alert(param.profileusername+" has changed the Accountstatus");
+        }
+    });
 });

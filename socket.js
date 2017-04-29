@@ -49,6 +49,8 @@ function socketConnection(socket) {
             delete ConnectedSockets[username];
         }
     });
+
+    socket.on("Name Change", privateChat.ReceiverUsernameChange(socket));
 };
 
 
