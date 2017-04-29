@@ -163,7 +163,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
 
     mySocket.on("receiver username changed", function (param) {
         var changed_part = param.profileusername;
-        if(changed_part != $scope.userClass["username"]){
+        if(changed_part != $scope.userClass["username"] && $scope.showList["privateChatList"]){
             getPrivateSenderList();
             alert("someone changes the name");
         }
@@ -171,7 +171,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
 
     mySocket.on("receiver Accountstatus changed", function (param) {
         var changed_part = param.profileusername;
-        if(changed_part != $scope.userClass["username"]){
+        if(changed_part != $scope.userClass["username"] && $scope.showList["privateChatList"]){
             getPrivateSenderList();
             alert("someone account status changes");
         }
