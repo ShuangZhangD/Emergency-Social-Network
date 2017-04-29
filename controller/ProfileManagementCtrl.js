@@ -54,5 +54,6 @@ let pmc = new ProfileManagementController();
 
 module.exports = {
     updateProfile : pmc.updateProfile,
-    getProfile : pmc.getProfile
+    getProfile : pmc.getProfile,
+    checkDefaultAdmin : pmc.checkDefaultAdmin
 };
