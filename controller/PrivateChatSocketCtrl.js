@@ -153,6 +153,17 @@ class PrivateChatSocketCtrl{
         };
     }
 
+    ReceiverUsernameChange(socket){
+        return function(param){
+            socket.broadcast.emit("receiver username changed", param);
+        };
+    }
+
+    ReceiverAccountstatusChange(socket){
+        return function(param){
+            socket.broadcast.emit("receiver Accountstatus changed", param);
+        };
+    }
 }
 
 let privatetrl = new PrivateChatSocketCtrl();
@@ -167,7 +178,9 @@ module.exports={
     //get_IndividualPrivateUnreadMsg: privatetrl.get_IndividualPrivateUnreadMsg,
     UnreadCount: privatetrl.UnreadCount,
     MarkedAsRead: privatetrl.MarkedAsRead,
-    search: privatetrl.search
+    search: privatetrl.search,
+    ReceiverUsernameChange: privatetrl.ReceiverUsernameChange,
+    ReceiverAccountstatusChange:privatetrl.ReceiverAccountstatusChange
 };
 
 
