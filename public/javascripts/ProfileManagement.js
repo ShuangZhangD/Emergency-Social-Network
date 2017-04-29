@@ -10,6 +10,7 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
                 $scope.password = rep.data.password;
                 $scope.accountstatus = rep.data.accountstatus;
                 $scope.privilegelevel = rep.data.privilegelevel;
+
             }
             else {
                 console.log("Error in retrieving data");
@@ -36,7 +37,6 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
             accountstatus:$scope.accountstatus,
             privilegelevel:$scope.privilegelevel
         };
-
         $http({
             method:"post",
             url:"/profile",
@@ -44,10 +44,11 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
         }).success(function(rep) {
             if (rep.success == 1) {
                 alert("Updated your profile!");
+                $scope.profile["profileusername"] = $scope.newusername;
             }
             else {
-                console.log("Unexpected error in updating profile");
-                alert("Error in updating profile");
+                console.log("Error in updating profile");
+                alert("Username already in use, please choose a different username.");
             }
         });
     };
