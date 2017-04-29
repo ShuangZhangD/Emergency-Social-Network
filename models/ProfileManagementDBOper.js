@@ -26,7 +26,7 @@ class ProfileManagementDBoper{
             else {
                 let new_user = new User(newusername, password, "online", "");
                 new_user.checkUser(db, newusername, function(result, err) {
-                    if(result.length == 0){
+                    if(result.length == 0 || newusername == profileusername){
                         var usercollection = db.collection("USERS");
                         usercollection.update({"username": profileusername}, {$set :{"accountstatus":accountstatus, "privilegelevel": privilegelevel, "password" : password, "username": newusername}},callback);
                         db.close();
