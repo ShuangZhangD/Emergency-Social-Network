@@ -1,5 +1,6 @@
 "use strict";
 var MongoClient = require("mongodb").MongoClient;
+var md5 = require("md5");
 
 //var url = "mongodb://localhost:27017/test";
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
@@ -12,7 +13,7 @@ class ProfileManagementDBoper{
         //connect to database
         var accountstatus = data["accountstatus"];
         var privilegelevel = data["privilegelevel"];
-        var password = data["password"];
+        var password = md5(data["password"]);
         var newusername = data["newusername"];
         MongoClient.connect(url, function (err, db) {
             //console.log("Connected to "+url+" Successfully");
