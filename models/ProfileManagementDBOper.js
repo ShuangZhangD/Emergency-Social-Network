@@ -18,9 +18,6 @@ class ProfileManagementDBoper{
         var password = data["newpassword"];
         var profilepassword = data["profilepassword"];
         var newusername = data["newusername"];
-        console.log("printing passwords below");
-        console.log(profilepassword);
-        console.log(password);
         if(profilepassword != password) {
             // Need to compute hash only if password is changed
             password = md5(password);
