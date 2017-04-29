@@ -1,0 +1,45 @@
+<form ng-submit="submit()" class="container" ng-controller="ProfileManagementCtrl" ng-show="showList.profileManagement">
+	<div class="container">
+        <h5><center><b>User Profile</b></center></h5>
+      	<table class="table">
+                  <tr>
+                      <td>
+                          Username
+                      </td>
+                      <td>
+                          <input type="text" id="username" ng-model="newusername"></input>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          Password
+                      </td>
+                      <td>
+                          <input type="password" id="password" ng-model="password"></input>
+                      </td>
+                  </tr>
+              	  <tr>
+                      <td>
+                          Account Status
+                      </td>
+                      <td>
+                          <input type="text" id="accountstatus" ng-model="accountstatus"></input>
+              		    </td>
+                  </tr>
+                  <tr>
+                        <td>
+                            Privilege Level
+                        </td>
+                        <td>
+                            <input type="text" id="privilegelevel" ng-model="privilegelevel"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                          <td colspan="2">
+                              <center><input type="submit" id="submit" value="Submit" ng-click="updateProfileDetails();"/></center>
+                          </td>
+                    </tr>
+        </table>
+    </div>
+</form>
+</br></br>

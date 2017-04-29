@@ -16,7 +16,8 @@ app.controller("initCtrl", function($scope, $http) {
         publicHistory: false,
         announcementHistory: false,
         groupList:false,
-        groupChatContent:false
+        groupChatContent:false,
+        profileManagement:false
     };
     $scope.myGroupTable=false;
     $scope.allGroupTable=true;
@@ -29,7 +30,15 @@ app.controller("initCtrl", function($scope, $http) {
         privateChatSender: "",
         newMsgOfSender: 0,
         displayHistory: false,
-        status: "TEST"
+        status: "TEST",
+        profileManagement: "false"
+    };
+    $scope.profile = {
+        profileusername : "",
+        newusername : "",
+        password : "",
+        accountstatus : "",
+        privilegelevel : ""
     };
     $scope.logined = false;
     $scope.username = "";

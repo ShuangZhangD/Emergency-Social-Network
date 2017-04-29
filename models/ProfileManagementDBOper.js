@@ -40,7 +40,7 @@ class ProfileManagementDBoper{
                 var data={};
                 usercollection.find({"username": profileusername}).toArray(function(err, results){
                       results.forEach(function(result){
-                          data["profileusername"] = result.username;
+                          data["newusername"] = result.username;
                           data["password"] = result.password;
                           data["accountstatus"] = result.accountstatus;
                           data["privilegelevel"] = result.privilegelevel;

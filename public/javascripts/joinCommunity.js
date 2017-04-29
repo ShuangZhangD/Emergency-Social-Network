@@ -339,6 +339,17 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             alert("Only in WeChat you can chat with yourself! Not here!");
         }
     };
+
+    $scope.showProfile = function (profileusername) {
+        if (profileusername != $scope.userClass["username"]) {
+            $scope.profile["profileusername"] = profileusername;
+            $scope.profile["newusername"] = profileusername;
+            $rootScope.$emit("openProfile");
+        }
+        else {
+            alert("You cannot update your own data");
+        }
+    };
 });
 
 function addUser($scope, $rootScope, $http, tmpUsername, mySocket) {
