@@ -81,9 +81,9 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
     $scope.updateProfileDetails = function() {
 
         console.log($scope.privilegelevel);
-        if(!check_usr($scope.newusername) || !check_pwd($scope.newpassword)) {
-            alert($scope.newusername);
-            alert($scope.newpassword);
+        if(!check_usr($scope.newusername) || (($scope.newpassword!= $scope.profile["profilepassword"]) && (!check_pwd($scope.newpassword)))) {
+            //alert($scope.newusername);
+            //alert($scope.newpassword);
             alert("Username or password not according to rules");
             return;
         }
