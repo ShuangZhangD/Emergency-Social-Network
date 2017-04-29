@@ -1,6 +1,6 @@
-<form ng-submit="submit()" class="container" ng-controller="ProfileManagementCtrl" ng-show="showList.profileManagement">
-	<div class="container">
-        <h5><center><b>User Profile</b></center></h5>
+<div class="container" ng-controller="ProfileManagementCtrl" ng-show="showList.profileManagement">
+
+    <h5><center><b>{{profile["profileusername"]}} User Profile</b></center></h5>
       	<table class="table">
                   <tr>
                       <td>
@@ -23,7 +23,10 @@
                           Account Status
                       </td>
                       <td>
-                          <input type="text" id="accountstatus" ng-model="accountstatus"></input>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-primary"><input type="radio" ng-model="accountstatus" value="Active"> Active </label>
+                            <label class="btn btn-primary"><input type="radio" ng-model="accountstatus" value="Inactive"> Inactive </label>
+                        </div>
               		    </td>
                   </tr>
                   <tr>
@@ -31,15 +34,23 @@
                             Privilege Level
                         </td>
                         <td>
-                            <input type="text" id="privilegelevel" ng-model="privilegelevel"></input>
+                          <!-- <div class="btn-group" data-toggle="buttons">
+                              <label class="btn btn-primary"><input type="radio" class="radio" name="citizen" id="citizen" value="1" ng-model="privilegelevel">Citizen</label>
+                              <label class="btn btn-primary"><input type="radio" class="radio" name="coordinator" id="coordinator" value="2" ng-model="privilegelevel">Coordinator</label>
+                              <label class="btn btn-primary"><input type="radio" class="radio" name="admin" id="admin" value="3" ng-model="privilegelevel">Admin</label>
+                          </div> -->
+                          <div class="btn-group" data-toggle="buttons">
+                              <label class="btn btn-primary"><input type="radio" ng-model="privilegelevel" value="Citizen"> Citizen </label>
+                              <label class="btn btn-primary"><input type="radio" ng-model="privilegelevel" value="Coordinator"> Coordinator </label>
+                              <label class="btn btn-primary"><input type="radio" ng-model="privilegelevel" value="Administator"> Administrator </label>
+                          </div>
                         </td>
                     </tr>
                     <tr>
                           <td colspan="2">
-                              <center><input type="submit" class="btn btn-lg btn-primary btn-block" id="submit" value="Submit" ng-click="updateProfileDetails();"/></center>
+                              <center><button class="btn btn-info" type="submit" ng-click="updateProfileDetails();">Submit</button></center>
                           </td>
                     </tr>
         </table>
-    </div>
-</form>
+</div>
 </br></br>

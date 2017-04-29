@@ -30,6 +30,7 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
     });
 
     $scope.updateProfileDetails = function() {
+        console.log($scope.privilegelevel);
         var params = {
             profileusername:$scope.profile["profileusername"],
             newusername:$scope.newusername,
