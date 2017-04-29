@@ -34,6 +34,14 @@ class PublicChatCtrl{
             socket.broadcast.emit("Public Message", data);
         };
     }
+
+    changeUsernameSocket (socket) {
+        return function(data) {
+            socket.emit("Public Message", data);
+            socket.broadcast.emit("Public Message", data);
+        };
+    }
+
     LoadPublicMessage (req, res){
         dboper.LoadPublicMessage(url, function (err, results) {
             if (err) {
