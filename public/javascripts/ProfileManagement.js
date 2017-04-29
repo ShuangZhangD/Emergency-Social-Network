@@ -20,7 +20,10 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
             }
         });
     };
+
     var updateName = function(params) {
+        console.log("begin Name change!");
+
         $http({
             method:"post",
             url:"/updatename",
@@ -28,15 +31,8 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
             //data: {username: $scope.userClass["username"]}
         }).success(function(rep){
             if (rep.success == 1) {
+                console.log("Name change success!");
                 mySocket.emit("Name Change", params);
-                // $scope.newusername = rep.data.newusername;
-                // $scope.newpassword = rep.data.newpassword;
-                // $scope.accountstatus = rep.data.accountstatus;
-                // $scope.privilegelevel = rep.data.privilegelevel;
-                // $scope.profile["profilepassword"] = rep.data.newpassword;
-                // $scope.profile["profileaccountstatus"] = rep.data.accountstatus;
-                // $scope.profile["profileprivilegelevel"] = rep.data.privilegelevel;
-
             }
             else {
                 console.log("Error in retrieving data");
@@ -53,14 +49,6 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
         }).success(function(rep){
             if (rep.success == 1) {
                 mySocket.emit("Accountstatus Change", params);
-                // $scope.newusername = rep.data.newusername;
-                // $scope.newpassword = rep.data.newpassword;
-                // $scope.accountstatus = rep.data.accountstatus;
-                // $scope.privilegelevel = rep.data.privilegelevel;
-                // $scope.profile["profilepassword"] = rep.data.newpassword;
-                // $scope.profile["profileaccountstatus"] = rep.data.accountstatus;
-                // $scope.profile["profileprivilegelevel"] = rep.data.privilegelevel;
-
             }
             else {
                 console.log("Error in retrieving data");
@@ -103,7 +91,10 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
         }).success(function(rep) {
             if (rep.success == 1) {
                 alert("Updated the profile!");
+                alert("old username"+$scope.profile["profileusername"]);
+                alert("new username"+$scope.newusername);
                 if($scope.profile["profileusername"] != $scope.newusername){
+                    alert("Updated Name!");
                     updateName(params);
                 }
                 if($scope.profile["profilepassword"] != $scope.newpassword){

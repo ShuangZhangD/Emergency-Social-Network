@@ -46,7 +46,7 @@ class ProfileManagementController {
         var info = req.body;
         // console.log(req);
         var profileusername = info["profileusername"];
-
+        console.log("going to call");
         dboper.updateName(profileusername, info, url, function (err, results) {
             if (err) {
                 // console.log("Error:"+ err);
