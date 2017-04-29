@@ -160,4 +160,20 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
             $scope.searchPrivateChatMore = false;
         }
     };
+
+    mySocket.on("receiver username changed", function (param) {
+        var changed_part = param.profileusername;
+        if(changed_part != $scope.userClass["username"]){
+            getPrivateSenderList();
+            alert("someone changes the name");
+        }
+    });
+
+    mySocket.on("receiver Accountstatus changed", function (param) {
+        var changed_part = param.profileusername;
+        if(changed_part != $scope.userClass["username"]){
+            getPrivateSenderList();
+            alert("someone account status changes");
+        }
+    });
 });

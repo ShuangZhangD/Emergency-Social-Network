@@ -22,6 +22,40 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
         });
     };
 
+    var updateName = function(params) {
+        console.log("begin Name change!");
+
+        $http({
+            method:"post",
+            url:"/updatename",
+            data: params
+            //data: {username: $scope.userClass["username"]}
+        }).success(function(rep){
+            if (rep.success == 1) {
+                console.log("Name change success!");
+                mySocket.emit("Name Change", params);
+            }
+            else {
+                console.log("Error in retrieving data");
+            }
+        });
+    };
+
+    var updateAccountStatus = function(params) {
+        $http({
+            method:"post",
+            url:"/updateaccountstatus",
+            data: params
+            //data: {username: $scope.userClass["username"]}
+        }).success(function(rep){
+            if (rep.success == 1) {
+                mySocket.emit("Accountstatus Change", params);
+            }
+            else {
+                console.log("Error in retrieving data");
+            }
+        });
+    };
     $rootScope.$on("openProfile", function() {
         console.log("In openprofile");
         for (var item in $scope.showList) {
@@ -36,9 +70,9 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
     $scope.updateProfileDetails = function() {
 
         console.log($scope.privilegelevel);
-        if(!check_usr($scope.newusername) || !check_pwd($scope.newpassword)) {
-            alert($scope.newusername);
-            alert($scope.newpassword);
+        if(!check_usr($scope.newusername) || (($scope.newpassword!= $scope.profile["profilepassword"]) && (!check_pwd($scope.newpassword)))) {
+            //alert($scope.newusername);
+            //alert($scope.newpassword);
             alert("Username or password not according to rules");
             return;
         }
@@ -58,14 +92,17 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
         }).success(function(rep) {
             if (rep.success == 1) {
                 alert("Updated the profile!");
+                alert("old username"+$scope.profile["profileusername"]);
+                alert("new username"+$scope.newusername);
                 if($scope.profile["profileusername"] != $scope.newusername){
-                    mySocket.emit("Name Change", params);
+                    alert("Updated Name!");
+                    updateName(params);
                 }
                 if($scope.profile["profilepassword"] != $scope.newpassword){
                     mySocket.emit("Password Change", params);
                 }
                 if($scope.profile["profileaccountstatus"] != $scope.accountstatus){
-                    mySocket.emit("Accountstatus Change", params);
+                    updateAccountStatus(params);
                 }
                 if($scope.profile["profileprivilegelevel"] != $scope.privilegelevel){
                     mySocket.emit("Privilegelevel Change", params);
@@ -78,6 +115,8 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
             }
         });
     };
+
+
 });
 
 function check_usr(username){

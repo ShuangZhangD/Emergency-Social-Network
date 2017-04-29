@@ -240,6 +240,36 @@ class JoinCommunityController {
             }
         });
     }
+
+    updateNameSocket (socket) {
+        return function(data) {
+            socket.emit("Name Change", data);
+            socket.broadcast.emit("Name Change", data);
+        };
+    }
+    updatePasswordSocket (socket) {
+        return function(data) {
+            socket.emit("Password Change", data);
+            socket.broadcast.emit("Password Change", data);
+        };
+    }
+    updateAccountstatusSocket (socket) {
+        return function(data) {
+            socket.emit("Post Announcement", data);
+            socket.broadcast.emit("Accountstatus Change", data);
+        };
+    }
+    updatePrivilegelevelSocket (socket) {
+        return function(data) {
+            socket.emit("Privilegelevel Change", data);
+            socket.broadcast.emit("Privilegelevel Change", data);
+        };
+    }
+
+
+
+
+
 }
 
 let jcc = new JoinCommunityController();
@@ -250,5 +280,9 @@ module.exports = {
     ListUser: jcc.ListUser,
     Logout: jcc.Logout,
     SearchUserByName: jcc.SearchUserByName,
-    SearchUserByStatus: jcc.SearchUserByStatus
+    SearchUserByStatus: jcc.SearchUserByStatus,
+    updateNameSocket: jcc.updateNameSocket,
+    updatePasswordSocket: jcc.updatePasswordSocket,
+    updateAccountstatusSocket: jcc.updateAccountstatusSocket,
+    updatePrivilegelevelSocket: jcc.updatePrivilegelevelSocket
 };

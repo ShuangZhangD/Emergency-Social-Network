@@ -94,6 +94,8 @@ app.post("/groupchat/message", GroupChatCtrl.AddGroupMessage);
 
 app.get("/profile/:profileusername", ProfileManagementCtrl.getProfile);
 app.post("/profile", ProfileManagementCtrl.updateProfile);
+app.post("/updatename", ProfileManagementCtrl.updateName);
+app.post("/updateaccountstatus", ProfileManagementCtrl.updateAccountStatus);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -148,6 +150,11 @@ io.on("connection", function(socket) {
     socket.on("Private Message", privateChat2.privateMessageSocket(socket, ConnectedSockets));
     socket.on("Group Message", GroupChatCtrl.groupMessageSocket(socket, ConnectedSockets));
     socket.on("Create Group", GroupChatCtrl.createGroupSocket(socket, ConnectedSockets));
+    socket.on("Name Change", JoinCommunityCtrl.updateNameSocket(socket));
+    socket.on("Password Change", JoinCommunityCtrl.updatePasswordSocket(socket));
+    socket.on("Accountstatus Change", JoinCommunityCtrl.updateAccountstatusSocket(socket));
+    socket.on("Privilegelevel Change", JoinCommunityCtrl.updatePrivilegelevelSocket(socket));
+
 
     //when total number of unread(private+public) message is needed
     //socket.on("GetCount AllUnreadMsg", privateChat.getCount_AllUnreadMsg(socket));
