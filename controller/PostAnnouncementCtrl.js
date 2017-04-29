@@ -81,6 +81,6 @@ module.exports = {
     AnnouncementSocket: pac.AnnouncementSocket,
     LoadAnnouncement: pac.LoadAnnouncement,
     searchPublicAnn: pac.searchPublicAnn,
-    changeUsernameSocket: pubtrl.changeUsernameSocket,
-    changeAccountStatusSocket: pubtrl.changeAccountStatusSocket
+    changeUsernameSocket: pac.changeUsernameSocket,
+    changeAccountStatusSocket: pac.changeAccountStatusSocket
 };
