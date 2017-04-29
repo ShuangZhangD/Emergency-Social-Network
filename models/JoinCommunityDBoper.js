@@ -40,6 +40,7 @@ class JoinCommunityDBOper {
                                 callback(pwd_incorrect_statuscode, pwd_incorrect_msg);//Password Incorrect Error
                             }
                             else {
+                                var privilegelevel = pwdres[0].privilegelevel;
                                 new_user.updateStatus(db, username, "online", function(updateres, err) {console.log(err);});
                                 new_user.displayStatusUsers(db, "online", function(results, err) {
                                     console.log(err);
@@ -47,7 +48,7 @@ class JoinCommunityDBOper {
                                     results.forEach(function(result) {
                                         userlist.push(result.username);
                                     });
-                                    callback(success_statuscode, userlist);
+                                    callback(success_statuscode, {userlist: userlist, privilegelevel: privilegelevel});
                                 });
                             }
                             db.close();

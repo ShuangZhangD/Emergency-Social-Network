@@ -31,6 +31,7 @@ app.controller("initCtrl", function($scope, $http) {
         newMsgOfSender: 0,
         displayHistory: false,
         status: "TEST",
+        privilegelevel: "Citizen",
         profileManagement: "false"
     };
     $scope.profile = {

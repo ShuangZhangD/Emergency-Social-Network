@@ -7,10 +7,10 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
         }).success(function(rep){
             if(rep.data) {
                 $scope.newusername = rep.data.newusername;
-                $scope.password = rep.data.password;
+                $scope.newpassword = rep.data.newpassword;
                 $scope.accountstatus = rep.data.accountstatus;
                 $scope.privilegelevel = rep.data.privilegelevel;
-                $scope.profile["profilepassword"] = rep.data.password;
+                $scope.profile["profilepassword"] = rep.data.newpassword;
                 $scope.profile["profileaccountstatus"] = rep.data.accountstatus;
                 $scope.profile["profileprivilegelevel"] = rep.data.privilegelevel;
 
@@ -38,7 +38,8 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
         var params = {
             profileusername:$scope.profile["profileusername"],
             newusername:$scope.newusername,
-            password:$scope.password,
+            profilepassword:$scope.profile["profilepassword"],
+            newpassword:$scope.newpassword,
             accountstatus:$scope.accountstatus,
             privilegelevel:$scope.privilegelevel
         };
@@ -49,11 +50,11 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
             data: params
         }).success(function(rep) {
             if (rep.success == 1) {
-                alert("Updated your profile!");
+                alert("Updated the profile!");
                 if($scope.profile["profileusername"] != $scope.newusername){
                     mySocket.emit("Name Change", params);
                 }
-                if($scope.profile["profilepassword"] != $scope.password){
+                if($scope.profile["profilepassword"] != $scope.newpassword){
                     mySocket.emit("Password Change", params);
                 }
                 if($scope.profile["profileaccountstatus"] != $scope.accountstatus){

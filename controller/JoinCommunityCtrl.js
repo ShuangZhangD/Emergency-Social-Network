@@ -74,8 +74,8 @@ class JoinCommunityController {
                         res.json({success:0, err_type: 3, err_msg:content});
                 }
                 else{
-                    var sorted_content = SortUserList(content);
-                    res.json({"success":1, "data":sorted_content});
+                    var sorted_content = SortUserList(content.userlist);
+                    res.json({"success":1, "data":sorted_content, "privilegelevel": content.privilegelevel});
                     io.on("connection", function()
                     {
                         //broadcast to every users of this user"s join

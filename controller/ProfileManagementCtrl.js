@@ -12,8 +12,6 @@ class ProfileManagementController {
         var info = req.body;
         // console.log(req);
         var profileusername = info["profileusername"];
-        console.log("printing profileusername in ProfileManagementCtrl below");
-        console.log(profileusername);
 
         dboper.updateProfileForUser(profileusername, info, url, function (err, results) {
             if (err) {
@@ -45,7 +43,7 @@ class ProfileManagementController {
     }
 
     checkDefaultAdmin(callback) {
-        
+
     }
 
 }
@@ -54,5 +52,6 @@ let pmc = new ProfileManagementController();
 
 module.exports = {
     updateProfile : pmc.updateProfile,
-    getProfile : pmc.getProfile
+    getProfile : pmc.getProfile,
+    checkDefaultAdmin : pmc.checkDefaultAdmin
 };

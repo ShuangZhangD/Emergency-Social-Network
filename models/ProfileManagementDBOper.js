@@ -15,8 +15,13 @@ class ProfileManagementDBoper{
         //connect to database
         var accountstatus = data["accountstatus"];
         var privilegelevel = data["privilegelevel"];
-        var password = md5(data["password"]);
+        var password = data["newpassword"];
+        var profilepassword = data["profilepassword"];
         var newusername = data["newusername"];
+        if(profilepassword != password) {
+            // Need to compute hash only if password is changed
+            password = md5(password);
+        }
         MongoClient.connect(url, function (err, db) {
             //console.log("Connected to "+url+" Successfully");
             if (err) {
@@ -52,7 +57,7 @@ class ProfileManagementDBoper{
                 usercollection.find({"username": profileusername}).toArray(function(err, results){
                       results.forEach(function(result){
                           data["newusername"] = result.username;
-                          data["password"] = result.password;
+                          data["newpassword"] = result.password;
                           data["accountstatus"] = result.accountstatus;
                           data["privilegelevel"] = result.privilegelevel;
                       });

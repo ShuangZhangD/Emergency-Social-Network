@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="container" ng-show="showList.announcementHistory">
-        <div class="form-signin">
+        <div class="form-signin" ng-show="userClass.privilegelevel != 'Citizen'">
             <input ng-model="announcement_content" id="postAnnouncement" type="text" class="form-control" placeholder="Post Announcement" required autofocus>
             <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="submitAnnouncement()">Post Announcement</button>
         </div>
