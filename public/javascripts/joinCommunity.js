@@ -96,6 +96,29 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["login"] = true;
 
     };
+
+    var logout = function () {
+        if ($scope.logined) {
+            $http({
+                method:"post",
+                url:"/logout",
+                data:{username:$scope.username}
+            }).success(function(rep){
+                // logout
+                console.log(rep);
+                $scope.logined = false;
+                $scope.directoryShow = false;
+                $scope.loginShow = true;
+            });
+            mySocket.emit("left");
+        }
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList["login"] = true;
+
+    };
+
     $scope.showPublicChat = function () {
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
@@ -141,6 +164,27 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["directory"] = true;
         console.log("Debug-01");
     };
+
+    var showDirectory = function () {
+        if ($scope.logined) {
+            $http({
+                method:"get",
+                url:"/userlist"
+            }).then(function successCallback(response) {
+                $scope.details1 = response.data.data1;
+                $scope.details2 = response.data.data2;
+                $scope.statusList = response.data.status;
+                $scope.historyList1 = $scope.details1;
+                $scope.historyList2 = $scope.details2;
+                $scope.historyStatus = $scope.statusList;
+                console.log(response);
+            }, function errorCallback(response) {
+                console.log(response);
+                console.log("Error in displaying the directory");
+            });
+        }
+    };
+
     $scope.getStatus = function (value) {
         console.log("value" + value);
         $http({
@@ -331,6 +375,35 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["login"] = true;
     });
 
+    mySocket.on("Name Change", function(data) {
+        if(data["profileusername"] == $scope.userClass["username"]){
+            logout();
+        }else{
+            showDirectory();
+        }
+    });
+
+    mySocket.on("Password Change", function(data) {
+        if(data["profileusername"] == $scope.userClass["username"]){
+            logout();
+        }
+    });
+
+    mySocket.on("Accountstatus Change", function(data) {
+        if(data["profileusername"] == $scope.userClass["username"]){
+            logout();
+        }else{
+            showDirectory();
+        }
+    });
+
+    mySocket.on("Privilegelevel Change", function(data) {
+        if(data["profileusername"] == $scope.userClass["username"]){
+            logout();
+        }
+    });
+
+
     // in directory, open private chat
     $scope.openPrivateChat = function (sender) {
         if (sender != $scope.userClass["username"]) {
@@ -450,3 +523,5 @@ function displayDirectory($scope, $http) {
         console.log("Error in displaying the directory");
     });
 }
+
+
