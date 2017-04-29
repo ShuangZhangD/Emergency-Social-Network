@@ -50,7 +50,7 @@
               {{ statusList[user]}}
           </td>
 		<td><button ng-click="openPrivateChat(user)">Chat</button></td>
-    <td><button ng-click="showProfile(user)">Profile</button></td>
+    <td><button ng-click="showProfile(user)" ng-show="userClass.privilegelevel == 'Administrator'">Profile</button></td>
       </tr>
         <tr ng-repeat="user in details2">
             <td>
@@ -60,7 +60,8 @@
                 {{ statusList[user]}}
             </td>
 			<td><button ng-click="openPrivateChat(user)">Chat</button></td>
-      <td><button ng-click="showProfile(user)">Profile</button></td>
+      <td><button ng-click="showProfile(user)" ng-show="userClass.privilegelevel == 'Administrator'">Profile</button></td>
         </tr>
     </table>
+    <!--h5 ng-show="userClass.privilegelevel == 'Citizen'">123</h5-->
 </div>

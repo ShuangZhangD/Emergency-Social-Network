@@ -27,8 +27,10 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             }).success(function(rep){
                 if (rep.success == 1) {
                     // login success
+                    console.log(rep);
                     alert("Login success!");
                     $scope.userClass["username"] = tmpUsername;
+                    $scope.userClass["privilegelevel"] = rep.privilegelevel;
                     $scope.test = "456";
                     $scope.logined = true;
                     $scope.showList.login = false;
