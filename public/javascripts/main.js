@@ -35,10 +35,9 @@ app.controller("initCtrl", function($scope, $http) {
     };
     $scope.profile = {
         profileusername : "",
-        newusername : "",
-        password : "",
-        accountstatus : "",
-        privilegelevel : ""
+        profilepassword : "",
+        profileaccountstatus : "",
+        profileprivilegelevel : ""
     };
     $scope.logined = false;
     $scope.username = "";

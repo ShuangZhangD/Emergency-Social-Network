@@ -10,6 +10,10 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
                 $scope.password = rep.data.password;
                 $scope.accountstatus = rep.data.accountstatus;
                 $scope.privilegelevel = rep.data.privilegelevel;
+                $scope.profile["profilepassword"] = rep.data.password;
+                $scope.profile["profileaccountstatus"] = rep.data.accountstatus;
+                $scope.profile["profileprivilegelevel"] = rep.data.privilegelevel;
+
             }
             else {
                 console.log("Error in retrieving data");
@@ -29,6 +33,7 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
     });
 
     $scope.updateProfileDetails = function() {
+
         var params = {
             profileusername:$scope.profile["profileusername"],
             newusername:$scope.newusername,
@@ -44,6 +49,18 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
         }).success(function(rep) {
             if (rep.success == 1) {
                 alert("Updated your profile!");
+                if($scope.profile["profileusername"] != $scope.newusername){
+                    mySocket.emit("Name Change", params);
+                }
+                if($scope.profile["profilepassword"] != $scope.password){
+                    mySocket.emit("Password Change", params);
+                }
+                if($scope.profile["profileaccountstatus"] != $scope.accountstatus){
+                    mySocket.emit("Accountstatus Change", params);
+                }
+                if($scope.profile["profileprivilegelevel"] != $scope.privilegelevel){
+                    mySocket.emit("Privilegelevel Change", params);
+                }
             }
             else {
                 console.log("Unexpected error in updating profile");
