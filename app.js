@@ -29,7 +29,8 @@ var EmergencyShelterCtrl = require("./controller/EmergencyShelterCtrl.js");
 var ProfileManagementCtrl = require("./controller/ProfileManagementCtrl.js");
 
 // init data
-EmergencyShelterCtrl.initData();
+EmergencyShelterCtrl.initData(function (args) {});
+ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
 
 // var sockets = require("./socket.js");
 // view engine setup

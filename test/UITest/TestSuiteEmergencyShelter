@@ -8,7 +8,15 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
-<tr><td><a href="SuiteEmergencyShelter">SuiteEmergencyShelter</a></td></tr>
+<tr><td><a href="TestShelterGetByLocation">TestShelterGetByLocation</a></td></tr>
+<tr><td><a href="TestShelterShowMap">TestShelterShowMap</a></td></tr>
+<tr><td><a href="TestShelterSearchNonEmptyCity">TestShelterSearchNonEmptyCity</a></td></tr>
+<tr><td><a href="TestShelterSearchEmptyCity">TestShelterSearchEmptyCity</a></td></tr>
+<tr><td><a href="TestShelterSearchManyCity">TestShelterSearchManyCity</a></td></tr>
+<tr><td><a href="TestShelterSearchNotExistCity">TestShelterSearchNotExistCity</a></td></tr>
+<tr><td><a href="TestShelterMapNotAvailable">TestShelterMapNotAvailable</a></td></tr>
+<tr><td><a href="TestShelterNoCityMap">TestShelterNoCityMap</a></td></tr>
+<tr><td><a href="TestShelterNoCityNoMap">TestShelterNoCityNoMap</a></td></tr>
 </tbody></table>
 </body>
 </html>

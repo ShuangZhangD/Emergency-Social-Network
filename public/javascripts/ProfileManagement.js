@@ -34,6 +34,7 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
 
     $scope.updateProfileDetails = function() {
 
+        console.log($scope.privilegelevel);
         var params = {
             profileusername:$scope.profile["profileusername"],
             newusername:$scope.newusername,
@@ -61,10 +62,11 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
                 if($scope.profile["profileprivilegelevel"] != $scope.privilegelevel){
                     mySocket.emit("Privilegelevel Change", params);
                 }
+                $scope.profile["profileusername"] = $scope.newusername;
             }
             else {
-                console.log("Unexpected error in updating profile");
-                alert("Error in updating profile");
+                console.log("Error in updating profile");
+                alert("Username already in use, please choose a different username.");
             }
         });
     };
