@@ -92,7 +92,6 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
             $scope.showList["privateChatTable"] =true;
 
             $scope.userClass["privateChatSender"] = param.newusername;
-            console.log("change username privatechatsender is "+$scope.userClass["privateChatSender"]);
 
             alert(param.profileusername+" has changed the username to "+param.newusername);
         }
