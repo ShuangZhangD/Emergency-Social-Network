@@ -1,10 +1,10 @@
 <div ng-controller="shelterCtrl" ng-show="showList.shelter" style="width: 100%; height: 100%;">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
-            <button type="button" type="submit" ng-click="showMapSearch('Map')" class="btn btn-default">Map</button>
+            <button type="button" type="submit" ng-click="showMapSearch('Map')" class="btn btn-default"><i class="material-icons">near_me</i>  Map</button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" type="submit" ng-click="showMapSearch('Search')" class="btn btn-default">Search</button>
+            <button type="button" type="submit" ng-click="showMapSearch('Search')" class="btn btn-default"><i class="material-icons">search</i>  Search</button>
         </div>
     </div><br>
 
@@ -48,12 +48,16 @@
 
     <div id="search_container" style="width: 100%; height: 100%;" ng-show="!showMap">
         <div class="container">
-            <div class="input-group">
-                <input ng-model="shelter_search_area" id="shelter_search_area" type="text" class="form-control" placeholder="Search City Name" >
-                <span class="input-group-btn">
-                    <button class="btn btn-info" type="submit" ng-click="search()">Search</button>
-                </span>
-            </div>
+            <!--<div class="input-group">-->
+                <!--<input ng-model="shelter_search_area" id="shelter_search_area" type="text" class="form-control" placeholder="Search City Name" >-->
+                <!--<span class="input-group-btn">-->
+                    <!--<button class="btn btn-info" type="submit" ng-click="search()">Search</button>-->
+                <!--</span>-->
+            <!--</div>-->
+            <center>
+                <input style="border: 1px solid #ccc; height:30px; width:90%" ng-model="shelter_search_area" size="30" id="shelter_search_area" type="text" placeholder="Search City Name">
+                <button type="button" ng-click="search()" class="btn btn-circle"><i class="glyphicon glyphicon-search"></i></button>
+            </center>
         </div>
 
 

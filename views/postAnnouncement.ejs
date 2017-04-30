@@ -3,8 +3,10 @@
     <h3> Announcement </h3>
 
     <div class="container">
-        <input ng-model="annsearchmsg" id="annsearchmsg" type="text" class="form-control" placeholder="Search Announcement">
-        <button class="btn btn-info btn-block" type="submit" ng-click="searchAnnouncement()">Search</button>
+        <center>
+            <input style="border: 1px solid #ccc; height:30px; width:90%" ng-model="annsearchmsg" size="30" id="annsearchmsg" type="text" placeholder="Search Announcement">
+            <button type="button" ng-click="searchAnnouncement()" class="btn btn-circle"><i class="glyphicon glyphicon-search"></i></button>
+        </center>
     </div>
 
     <br>
@@ -16,7 +18,9 @@
         </div>
 
         <div ng-if="SearchAnnounceMore">
-            <div style="cursor:pointer" ng-click="GetMoreSearchResults()">----More----</div><br><br>
+            <center>
+                <button type="button" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-chevron-down" ng-click="GetMoreSearchResults()"></i></button>
+            </center>
         </div>
     </div>
 
