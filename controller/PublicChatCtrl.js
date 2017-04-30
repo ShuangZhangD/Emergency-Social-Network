@@ -18,8 +18,8 @@ class PublicChatCtrl{
         var message = info["pubmsg"];
         var sender = info["username"];
         var emergencystatus = info["emergencystatus"];
-        var accountstatus = info["accountstatus"];
-        dboper.InsertMessage(sender, "", message, "public", Date.now(),emergencystatus, accountstatus,url, function (err, results) {
+        var senderaccountstatus = info["senderaccountstatus"];
+        dboper.InsertMessage(sender, "", message, "public", Date.now(),emergencystatus, senderaccountstatus, "",url, function (err, results) {
             if (err) {
                 // console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});

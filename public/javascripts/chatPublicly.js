@@ -32,7 +32,7 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
     var getMessage=function(){
         $http({
             method:"get",
-            url:"/public",
+            url:"/public"
             //data:{pubmsg:$scope.pubmsg, username:$scope.username}
         }).success(function(rep){
             console.log(rep);
@@ -66,7 +66,7 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
         $http({
             method:"post",
             url:"/public",
-            data:{pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timeStamp:Date.now(), emergencystatus:$scope.userClass["status"],accountstatus:"Active"}
+            data:{pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timeStamp:Date.now(), emergencystatus:$scope.userClass["status"],senderaccountstatus:"Active"}
         }).success(function(rep){
             console.log(rep);
             var data = {pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timestamp:Date.now(),emergencystatus:$scope.userClass["status"]};
