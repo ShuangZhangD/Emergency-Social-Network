@@ -2,12 +2,8 @@
     <div class="container">
         <h3> Private Chat List </h3>
         <div class="container">
-            <div class="input-group">
-                <input ng-model="privatechat_search_area" id="privatechat_search_area" type="text" class="form-control" placeholder="Search Private Chat Contents" >
-                <span class="input-group-btn">
-<button class="btn btn-info" type="submit" ng-click="searchPrivateChat()">Search</button>
-                </span>
-            </div>
+            <input ng-model="privatechat_search_area" id="privatechat_search_area" type="text" class="form-control" placeholder="Search Private Chat Contents" >
+            <button class="btn btn-info btn-block" type="submit" ng-click="searchPrivateChat()">Search</button>
         </div>
 
         <div class="container" ng-show="showList.privateChatSearchResult">

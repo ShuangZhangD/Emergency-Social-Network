@@ -1,5 +1,6 @@
 "use strict";
 
+var esnAdmin = require("../models/ESNAdmin");
 var dboper = require("../models/ProfileManagementDBoper");
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
@@ -78,7 +79,7 @@ class ProfileManagementController {
     }
 
     checkDefaultAdmin(callback) {
-
+        esnAdmin.init(url, callback);
     }
 
 }

@@ -50,10 +50,10 @@
 		<center>
 		<h5>Your current status is: <span>{{currentstatus.emergencystatus}}</span>
 		<br/> Choose your status: </h5>
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary ok"><input type="radio" name="status" id="OK" value="OK" ng-click="setStatus('OK')">OK</label>
-            <label class="btn btn-primary help"><input type="radio" name="status" id="Help" value="Help" ng-click="setStatus('Help')">Help</label>
-            <label class="btn btn-primary emergency"><input type="radio" name="status" id="Emergency" value="Emergency" ng-click="setStatus('Emergency')">Emergency</label>
+        <div class="btn-group btn-group-justified" data-toggle="buttons">
+            <label class="btn btn-success"><input type="radio" name="status" id="OK" value="OK" ng-click="setStatus('OK')">OK</label>
+            <label class="btn btn-warning"><input type="radio" name="status" id="Help" value="Help" ng-click="setStatus('Help')">Help</label>
+            <label class="btn btn-danger"><input type="radio" name="status" id="Emergency" value="Emergency" ng-click="setStatus('Emergency')">Emergency</label>
         </div>
         </center>
 </div></div>

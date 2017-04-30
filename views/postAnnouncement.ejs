@@ -2,11 +2,9 @@
 <div class="container" ng-controller="postAnnouncementCtrl" ng-show="showList.postAnnouncement">
     <h3> Announcement </h3>
 
-    <div class="input-group">
+    <div class="container">
         <input ng-model="annsearchmsg" id="annsearchmsg" type="text" class="form-control" placeholder="Search Announcement">
-        <span class="input-group-btn">
-        <button class="btn btn-info" type="submit" ng-click="searchAnnouncement()">Search</button>
-        </span>
+        <button class="btn btn-info btn-block" type="submit" ng-click="searchAnnouncement()">Search</button>
     </div>
 
     <br>
