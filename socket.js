@@ -50,7 +50,7 @@ function socketConnection(socket) {
         }
     });
 
-    socket.on("Name Change", privateChat.ReceiverUsernameChange(socket));
+    // socket.on("Name Change", privateChat.ReceiverUsernameChange(socket));
 };
 
 
