@@ -32,8 +32,7 @@ app.controller("OwnProfileManagementCtrl", function($window, $scope, $rootScope,
             emergencycontact:$scope.emergencycontact,
             contactemail:$scope.contactemail
         };
-        alert($scope.contactemail);
-        alert($scope.email);
+      
         if ((($scope.email == undefined) || ($scope.email == "") || (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.com)+$/.test($scope.email))) && (($scope.contactemail == undefined) || ($scope.contactemail=="") || (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.com)+$/.test($scope.contactemail)))) {
             console.log("Valid emails");
         }
