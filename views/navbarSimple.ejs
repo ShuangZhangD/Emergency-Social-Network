@@ -19,7 +19,7 @@
 <!--</nav>-->
 <header ng-show="logined">
   <div class="icon hamburger-icon" sidebarjs-toggle></div>
-  <h1>ESN</h1>
+    <h1><span style="padding-left:80px">Emergency Social Network</span><span ng-show="userClass.hasNewMsg" ng-click='showPrivateChat()' class="glyphicon glyphicon-bell" aria-hidden="true" style="padding-left:40px"></span><span ng-show="userClass.hasNewMsg" style="color:red">({{userClass.newMsgNum}})</span></h1>
 </header>
 <sidebarjs>
   <h3>ESN</h3>

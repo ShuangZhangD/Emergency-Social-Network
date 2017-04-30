@@ -81,7 +81,7 @@ class User {
     }
     getAllUsernameAndEmergencyStatus(db, callback){
         this.collection = db.collection("USERS");
-        this.collection.find({username:1, emergencystatus:1}).toArray(function(err, results) {
+        this.collection.find().toArray(function(err, results) {
             var userstatuslist = {};
             results.forEach(function (result) {
                 userstatuslist[result.username] = result.emergencystatus;
@@ -92,9 +92,10 @@ class User {
 
     getAllUsernameAndAccountstatus(db, callback){
         this.collection = db.collection("USERS");
-        this.collection.find({username:1, accountstatus:1}).toArray(function(err, results) {
+        this.collection.find().toArray(function(err, results) {
             var userstatuslist = {};
             results.forEach(function (result) {
+                console.log("getting username "+result.username+" account status "+result.accountstatus);
                 userstatuslist[result.username] = result.accountstatus;
             });
             callback(userstatuslist, null);

@@ -136,8 +136,9 @@ class JoinCommunityDBOper {
             new_user.updateStatus(db, username, "offline", function(result, err){
                 console.log(err);
                 callback(success_statuscode, result);
+                db.close();
             });
-            db.close();
+
         });//end of database operation
     }
 
@@ -152,7 +153,9 @@ class JoinCommunityDBOper {
                 new_user.getAllUsernameAndEmergencyStatus(db, function(results, err){
                     console.log(err);
                     callback(success_statuscode, results);
+                    db.close();
                 });
+
             }
         });
     }
@@ -169,6 +172,7 @@ class JoinCommunityDBOper {
                     console.log(err);
                     callback(success_statuscode, results);
                 });
+                db.close();
             }
         });
     }
@@ -185,6 +189,7 @@ class JoinCommunityDBOper {
                     console.log(err);
                     callback(success_statuscode, results);
                 });
+                db.close();
             }
         });
     }

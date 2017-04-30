@@ -1,5 +1,6 @@
 "use strict";
 
+var esnAdmin = require("../models/ESNAdmin");
 var dboper = require("../models/ProfileManagementDBoper");
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
@@ -60,7 +61,7 @@ class ProfileManagementController {
     }
 
     updateAccountStatus(req, res){
-        console.log("In updateAccountStatus in ProfileManagementCtrl");
+        console.log("999======In updateAccountStatus in ProfileManagementCtrl");
         var info = req.body;
         // console.log(req);
         var profileusername = info["profileusername"];
@@ -77,6 +78,7 @@ class ProfileManagementController {
         });
     }
     checkDefaultAdmin(callback) {
+        esnAdmin.init(url, callback);
     }
 }
 

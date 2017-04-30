@@ -32,7 +32,7 @@ var OwnProfileManagementCtrl = require("./controller/OwnProfileManagementCtrl.js
 // init data
 EmergencyShelterCtrl.initData(function (args) {});
 //TODO uncomment it back
-//ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
+ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
 
 // var sockets = require("./socket.js");
 // view engine setup

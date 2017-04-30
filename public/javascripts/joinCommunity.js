@@ -14,6 +14,104 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.details1 = $scope.historyList1;
         $scope.details2 = $scope.historyList2;
     };
+    var showDirectory = function () {
+        if ($scope.logined) {
+            $http({
+                method:"get",
+                url:"/userlist"
+            }).then(function successCallback(response) {
+                $scope.accountstatus = response.data.accountstatus;
+                console.log("===here");
+                console.dir(response.data.accountstatus);
+
+                if($scope.userClass["privilegelevel"] == "Citizen" || $scope.userClass["privilegelevel"] == "Coordinator"){
+                    var directory_account_result1 = [];
+                    var directory_account_result2 = [];
+                    for(var i = 0 ; i <= response.data.data1.length-1 ; i++){
+                        var name1 = response.data.data1[i];
+                        if($scope.accountstatus[name1] == "Active"){
+                            console.log("online active+++++++++++"+directory_account_result1);
+
+                            directory_account_result1.push(response.data.data1[i]);
+                        }
+                    }
+
+                    for(i = 0 ; i <= response.data.data2.length-1 ; i++){
+                        var name2 = response.data.data2[i];
+                        if($scope.accountstatus[name2] == "Active"){
+                            directory_account_result2.push(response.data.data2[i]);
+                        }
+                    }
+                    console.log("online active"+directory_account_result1);
+
+                    $scope.details1 = directory_account_result1;
+                    $scope.details2 = directory_account_result2;
+                    $scope.statusList = response.data.status;
+
+                } else{
+                    $scope.details1 = response.data.data1;
+                    $scope.details2 = response.data.data2;
+                    $scope.statusList = response.data.status;
+                }
+
+
+                $scope.historyList1 = $scope.details1;
+                $scope.historyList2 = $scope.details2;
+                $scope.historyStatus = $scope.statusList;
+                $scope.historyaccountstatus = response.data.accountstatus;
+
+                console.log(response);
+            }, function errorCallback(response) {
+                console.log(response);
+                console.log("Error in displaying the directory");
+            });
+        }
+    };
+    var addUser = function(tmpUsername) {
+        var add = confirm("User does not exist, do you want to sign up?");
+        if (add) {
+            $http({
+                method:"post",
+                url:"/signup",
+                data:{username:$scope.username, password:$scope.password}
+            }).success(function(rep){
+                if (rep.success == 1) {
+                    // sign up success
+                    alert("Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
+                    $scope.userClass["username"] = tmpUsername;
+                    $scope.logined = true;
+                    $scope.showList.login = false;
+                    $scope.showList.directory = true;
+                    showDirectory();
+                    // displayDirectory($scope, $http);
+                    mySocket.emit("userJoinCommunity", tmpUsername);
+                    // After logged in, get announcements, private chats, etc.
+                    $rootScope.$emit("loginGetAnnouncement");
+                    $rootScope.$emit("loginGetPrivateChatList");
+                    $rootScope.$emit("loginGetShareStatus");
+                    $rootScope.$emit("loginGetGroupList");
+                }
+                else {
+                    // sign up failed
+                    if (rep.err_type == 1) {
+                        // data base error
+                    }
+                    else if (rep.err_type == 4) {
+                        // username or password invalid
+                        alert("Password invalid!");
+                    }
+                    else {
+                        console.log("Unexpected");
+                    }
+                }
+            }).error(function (rep) {
+                console.log(rep);
+            });
+        }
+        else {
+            console.log("Unexpected error in joinCommunity.js");
+        }
+    };
 
 
     $scope.login = function() {
@@ -34,7 +132,9 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     $scope.test = "456";
                     $scope.logined = true;
                     $scope.showList.login = false;
-                    displayDirectory($scope, $http);
+                    $scope.showList.directory = true;
+                    showDirectory();
+                    // displayDirectory($scope, $http);
                     //socket !!!
                     mySocket.emit("userJoinCommunity", tmpUsername);
 
@@ -52,7 +152,8 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     }
                     else if (rep.err_type == 2) {
                         // Username not Exist
-                        addUser($scope, $rootScope, $http, tmpUsername,mySocket);
+                        addUser(tmpUsername);
+                        // addUser($scope, $rootScope, $http, tmpUsername,mySocket);
                     }
                     else if (rep.err_type == 3) {
                         // Password Incorrect
@@ -127,25 +228,6 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.statusList[data.username] = data.emergencystatus;
     };
 
-    var showDirectory = function () {
-        if ($scope.logined) {
-            $http({
-                method:"get",
-                url:"/userlist"
-            }).then(function successCallback(response) {
-                $scope.details1 = response.data.data1;
-                $scope.details2 = response.data.data2;
-                $scope.statusList = response.data.status;
-                $scope.historyList1 = $scope.details1;
-                $scope.historyList2 = $scope.details2;
-                $scope.historyStatus = $scope.statusList;
-                console.log(response);
-            }, function errorCallback(response) {
-                console.log(response);
-                console.log("Error in displaying the directory");
-            });
-        }
-    };
 
     $scope.showDirectory = function () {
         showDirectory();
@@ -333,50 +415,51 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
     };
 });
 
-function addUser($scope, $rootScope, $http, tmpUsername, mySocket) {
-    var add = confirm("User does not exist, do you want to sign up?");
-    if (add) {
-        $http({
-            method:"post",
-            url:"/signup",
-            data:{username:$scope.username, password:$scope.password}
-        }).success(function(rep){
-            if (rep.success == 1) {
-                // sign up success
-                alert("Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
-                $scope.userClass["username"] = tmpUsername;
-                $scope.logined = true;
-                $scope.showList.login = false;
-                displayDirectory($scope, $http);
-                mySocket.emit("userJoinCommunity", tmpUsername);
-                // After logged in, get announcements, private chats, etc.
-                $rootScope.$emit("loginGetAnnouncement");
-                $rootScope.$emit("loginGetPrivateChatList");
-                $rootScope.$emit("loginGetShareStatus");
-                $rootScope.$emit("loginGetGroupList");
-                $rootScope.$emit("loginGetProfile");
-            }
-            else {
-                // sign up failed
-                if (rep.err_type == 1) {
-                    // data base error
-                }
-                else if (rep.err_type == 4) {
-                    // username or password invalid
-                    alert("Password invalid!");
-                }
-                else {
-                    console.log("Unexpected");
-                }
-            }
-        }).error(function (rep) {
-            console.log(rep);
-        });
-    }
-    else {
-        console.log("Unexpected error in joinCommunity.js");
-    }
-}
+// function addUser($scope, $rootScope, $http, tmpUsername, mySocket) {
+//     var add = confirm("User does not exist, do you want to sign up?");
+//     if (add) {
+//         $http({
+//             method:"post",
+//             url:"/signup",
+//             data:{username:$scope.username, password:$scope.password}
+//         }).success(function(rep){
+//             if (rep.success == 1) {
+//                 // sign up success
+//                 alert("Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
+//                 $scope.userClass["username"] = tmpUsername;
+//                 $scope.logined = true;
+//                 $scope.showList.login = false;
+//                 $scope.showList.directory = true;
+//                 showDirectory();
+//                 // displayDirectory($scope, $http);
+//                 mySocket.emit("userJoinCommunity", tmpUsername);
+//                 // After logged in, get announcements, private chats, etc.
+//                 $rootScope.$emit("loginGetAnnouncement");
+//                 $rootScope.$emit("loginGetPrivateChatList");
+//                 $rootScope.$emit("loginGetShareStatus");
+//                 $rootScope.$emit("loginGetGroupList");
+//             }
+//             else {
+//                 // sign up failed
+//                 if (rep.err_type == 1) {
+//                     // data base error
+//                 }
+//                 else if (rep.err_type == 4) {
+//                     // username or password invalid
+//                     alert("Password invalid!");
+//                 }
+//                 else {
+//                     console.log("Unexpected");
+//                 }
+//             }
+//         }).error(function (rep) {
+//             console.log(rep);
+//         });
+//     }
+//     else {
+//         console.log("Unexpected error in joinCommunity.js");
+//     }
+// }
 
 function check_usr(username){
     if(!username) {
@@ -402,20 +485,22 @@ function check_usr(username){
 /*
     Komala write this function
 */
-function displayDirectory($scope, $http) {
-    $scope.showList.directory = true;
-    $http({
-        method:"get",
-        url:"/userlist"
-    }).then(function successCallback(response) {
-        $scope.details1 = response.data.data1;
-        $scope.details2 = response.data.data2;
-        $scope.statusList = response.data.status;
-        $scope.historyList1 = $scope.details1;
-        $scope.historyList2 = $scope.details2;
-        $scope.historyStatus = $scope.statusList;
-    }, function errorCallback(response) {
-        console.log(response);
-        console.log("Error in displaying the directory");
-    });
-}
+// function displayDirectory($scope, $http) {
+//     $scope.showList.directory = true;
+//     $http({
+//         method:"get",
+//         url:"/userlist"
+//     }).then(function successCallback(response) {
+//         $scope.details1 = response.data.data1;
+//         $scope.details2 = response.data.data2;
+//         $scope.statusList = response.data.status;
+//         $scope.historyList1 = $scope.details1;
+//         $scope.historyList2 = $scope.details2;
+//         $scope.historyStatus = $scope.statusList;
+//     }, function errorCallback(response) {
+//         console.log(response);
+//         console.log("Error in displaying the directory");
+//     });
+// }
+
+
