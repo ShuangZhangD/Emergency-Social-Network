@@ -39,21 +39,21 @@
         </tr>
       </thead>
       <tr ng-repeat="user in details1">
-        <td col span="1" style="width: 45%;">
+        <td>
             Online {{user}}
         </td>
-          <td col span="1" style="width: 65%;">
-              <img ng-show="statusList[user] == 'OK'" src="/images/Okay.png" height="15%" width="15%"/><img ng-show="statusList[user] == 'Help'" src="/images/Warning.png" height="15%" width="15%"/><img ng-show="statusList[user] == 'Emergency'" src="/images/Emergency.png" height="7%" width="15%"/>
+          <td>
+              <button ng-show="statusList[user] == 'OK'" type="button" class="btn btn-success btn-circle"><i class="glyphicon glyphicon-ok"></i></button><button ng-show="statusList[user] == 'Help'" type="button" class="btn btn-warning btn-circle"><i class="glyphicon glyphicon-exclamation-sign"></i></button><button ng-show="statusList[user] == 'Emergency'" type="button" class="btn btn-danger btn-circle"><i class="glyphicon glyphicon-remove"></i></button>
           </td>
-		<td col span="1" style="width: 20%;"><button ng-click="openPrivateChat(user)">Chat</button></td>
-        <td col span="1" style="width: 20%;"><button ng-click="showProfile(user)" ng-show="userClass.privilegelevel == 'Administrator'">Profile</button></td>
+		<td><button ng-click="openPrivateChat(user)">Chat</button></td>
+        <td><button ng-click="showProfile(user)" ng-show="userClass.privilegelevel == 'Administrator'">Profile</button></td>
       </tr>
         <tr ng-repeat="user in details2">
             <td>
                 Offline {{user}}
             </td>
             <td>
-                <img ng-show="statusList[user] == 'OK'" src="/images/Okay.png" height="15%" width="15%"/><img ng-show="statusList[user] == 'Help'" src="/images/Warning.png" height="15%" width="15%"/><img ng-show="statusList[user] == 'Emergency'" src="/images/Emergency.png" height="7%" width="15%"/>
+                <button ng-show="statusList[user] == 'OK'" type="button" class="btn btn-success btn-circle"><i class="glyphicon glyphicon-ok"></i></button><button ng-show="statusList[user] == 'Help'" type="button" class="btn btn-warning btn-circle"><i class="glyphicon glyphicon-exclamation-sign"></i></button><button ng-show="statusList[user] == 'Emergency'" type="button" class="btn btn-danger btn-circle"><i class="glyphicon glyphicon-remove"></i></button>
 
             </td>
 			<td><button ng-click="openPrivateChat(user)">Chat</button></td>
