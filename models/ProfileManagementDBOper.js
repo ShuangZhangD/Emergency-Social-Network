@@ -33,7 +33,7 @@ class ProfileManagementDBoper{
                 new_user.checkUser(db, newusername, function(result, err) {
                     if(result.length == 0 || newusername == profileusername) {
                         var usercollection = db.collection("USERS");
-                        usercollection.update({"username": profileusername}, {$set :{"accountstatus":accountstatus, "privilegelevel": privilegelevel, "password" : password, "username": newusername}},callback);
+                        usercollection.update({"username": profileusername}, {$set :{"accountstatus":accountstatus, "privilegelevel": privilegelevel, "password" : password, "username": newusername}}, callback);
                         db.close();
                     }
                     else {
@@ -102,8 +102,16 @@ class ProfileManagementDBoper{
                             }else{
                                 console.log("In updateName in Messages");
                                 var messagecollection = db.collection("MESSAGES");
-                                messagecollection.updateMany({"receiver": profileusername}, {$set :{"receiver": newusername}},callback);
-                                db.close();
+                                messagecollection.updateMany({"receiver": profileusername}, {$set :{"receiver": newusername}}, function(err, results) {
+                                    if(err) {
+                                        console.log("Error:" + err);
+                                    }
+                                    else {
+                                        var usercollection = db.collection("USERS");
+                                        usercollection.update({"emergencycontact": profileusername}, {$set :{"emergencycontact": newusername}}, callback);
+                                        db.close();
+                                    }
+                                });
                             }
                         });
                     }
