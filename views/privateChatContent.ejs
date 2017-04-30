@@ -19,10 +19,15 @@
 
 
     <div class="container" ng-show="userClass.displayHistory">
-        <div class="form-signin">
-            <input ng-model="private_msg" id="private_msg" type="text" class="form-control" placeholder="Send Private Msg" required autofocus>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="postPrivateMsg()">Send Private Msg</button>
-        </div>
+        <!--<div class="form-signin">-->
+            <!--<input ng-model="private_msg" id="private_msg" type="text" class="form-control" placeholder="Send Private Msg" required autofocus>-->
+            <!--<button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="postPrivateMsg()">Send Private Msg</button>-->
+        <!--</div>-->
+
+        <center>
+            <input style="border: 1px solid #ccc; height:45px; width:84%" ng-model="private_msg" size="30" id="private_msg" type="text" placeholder="Send Private Msg" required autofocus>
+            <button type="button" ng-click="postPrivateMsg()" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-send"></i></button>
+        </center>
     </div>
     <center>
     <button ng-show="!userClass.displayHistory" type="button" class="btn btn-info btn-circle btn-lg"><i ng-show="!userClass.displayHistory" class="glyphicon glyphicon-chevron-down" ng-click="showHistoryMsg()"></i></button>
