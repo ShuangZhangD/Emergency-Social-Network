@@ -134,12 +134,12 @@ class ProfileManagementDBoper{
                     }
                     else {
                         var messagecollection = db.collection("MESSAGES");
-                        messagecollection.update({"sender": profileusername}, {$set :{"accountstatus": accountstatus}},function (err, results) {
+                        messagecollection.update({"sender": profileusername}, {$set :{"senderaccountstatus": accountstatus}},function (err, results) {
                             if(err){
 
                             }else{
                                 var messagecollection = db.collection("MESSAGES");
-                                messagecollection.update({"receiver": profileusername}, {$set :{"accountstatus": accountstatus}},callback);
+                                messagecollection.update({"receiver": profileusername}, {$set :{"receiveraccountstatus": accountstatus}},callback);
                                 db.close();
                             }
                         });
