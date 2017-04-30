@@ -31,7 +31,7 @@ var ProfileManagementCtrl = require("./controller/ProfileManagementCtrl.js");
 // init data
 EmergencyShelterCtrl.initData(function (args) {});
 //TODO uncomment it back
-ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
+// ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
 
 // var sockets = require("./socket.js");
 // view engine setup
@@ -39,7 +39,9 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+// app.use(favicon(path.join(__dirname+'/favicon.ico')));
+
+// app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
