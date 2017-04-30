@@ -39,13 +39,11 @@
                               <label class="btn btn-primary"><input type="radio" class="radio" name="coordinator" id="coordinator" value="2" ng-model="privilegelevel">Coordinator</label>
                               <label class="btn btn-primary"><input type="radio" class="radio" name="admin" id="admin" value="3" ng-model="privilegelevel">Admin</label>
                           </div> -->
-
-                            <select ng-model="privilegelevel">
-                                <option value=""></option>
-                                <option value="Citizen" >Citizen</option>
-                                <option value="Coordinator">Coordinator</option>
-                                <option value="Administator">Administrator</option>
-                            </select>
+                            <div class="btn-group" data-toggle="buttons">
+                                <label><input type="radio" ng-model="privilegelevel" value="Citizen">Citizen </label>
+                                <label><input type="radio" ng-model="privilegelevel" value="Coordinator"> Coordinator </label>
+                                <label><input type="radio" ng-model="privilegelevel" value="Administator"> Administrator </label>
+                            </div>
 
                         </td>
                     </tr>

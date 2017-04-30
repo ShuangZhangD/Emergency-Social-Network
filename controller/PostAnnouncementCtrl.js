@@ -17,7 +17,8 @@ class PostAnnouncementCtrl {
         var info = req.body;
         var announcement = info["announcement"];
         var username = info["username"];
-        dboper.InsertAnnouncement(username, announcement, Date.now(), url, function (err, results) {
+        var accountstatus = info["accountstatus"];
+        dboper.InsertAnnouncement(username, announcement, Date.now(), accountstatus,url, function (err, results) {
             if (err) {
                 // console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});

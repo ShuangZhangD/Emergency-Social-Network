@@ -41,7 +41,7 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
         }
     });
 
-    mySocket.on("AccountStatus Changed In Public Chat", function(params) {
+    mySocket.on("AccountStatus Changed In Announcement", function(params) {
         //$scope.displaymsg.push(params);
         if(params.profileusername != $scope.userClass["username"]){
             getAnnouncement();
@@ -52,7 +52,8 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
         var announcement_data = {
             announcement: $scope.announcement_content,
             username: $scope.userClass["username"],
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            accountstatus:"Active"
         };
         $http({
             method:"post",
