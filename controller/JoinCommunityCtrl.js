@@ -133,10 +133,18 @@ class JoinCommunityController {
             else{
                 var sorted_content1 = SortUserList(content1);
                 var sorted_content2 = SortUserList(content2);
-                dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode, user_status) {
-                    if(statuscode == 200)
-                        res.json({"success":1, "data1":sorted_content1, "data2":sorted_content2, "status":user_status});
-                    else res.json({success:0, err_type: 1, err_msg:content1});
+                dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode_em, user_status_em) {
+                    dboper.GetAllUsernameAndAccountstatus(url, function (statuscode, user_status) {
+                        if (statuscode == 200)
+                            res.json({
+                                "success": 1,
+                                "data1": sorted_content1,
+                                "data2": sorted_content2,
+                                "status": user_status_em,
+                                "accountstatus": user_status
+                            });
+                        else res.json({success: 0, err_type: 1, err_msg: content1});
+                    });
                 });
             }
         });

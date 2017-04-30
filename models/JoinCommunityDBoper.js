@@ -154,6 +154,22 @@ class JoinCommunityDBOper {
         });
     }
 
+    GetAllUsernameAndAccountstatus(url, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                //console.log("Error:" + err);
+                callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
+            }
+            else {
+                let new_user = new User("", "", "", "");
+                new_user.getAllUsernameAndAccountstatus(db, function(results, err){
+                    console.log(err);
+                    callback(success_statuscode, results);
+                });
+            }
+        });
+    }
+
     RemoveUser(username, url, callback) {
         MongoClient.connect(url, function(err, db) {
             if (err) {
@@ -180,5 +196,6 @@ module.exports = {
     Logout: dboper.Logout,
     GetUserEmergencyStatus: dboper.GetUserEmergencyStatus,
     GetAllUsernameAndEmergencyStatus: dboper.GetAllUsernameAndEmergencyStatus,
+    GetAllUsernameAndAccountstatus: dboper.GetAllUsernameAndAccountstatus,
     RemoveUser: dboper.RemoveUser
 };
