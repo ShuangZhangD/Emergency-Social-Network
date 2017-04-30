@@ -29,7 +29,7 @@ var EmergencyShelterCtrl = require("./controller/EmergencyShelterCtrl.js");
 var ProfileManagementCtrl = require("./controller/ProfileManagementCtrl.js");
 
 // init data
-EmergencyShelterCtrl.initData(function (args) {});
+// EmergencyShelterCtrl.initData(function (args) {});
 //TODO uncomment it back
 // ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
 
