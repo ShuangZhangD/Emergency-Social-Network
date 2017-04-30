@@ -17,7 +17,8 @@ class PostAnnouncementCtrl {
         var info = req.body;
         var announcement = info["announcement"];
         var username = info["username"];
-        dboper.InsertAnnouncement(username, announcement, Date.now(), url, function (err, results) {
+        var accountstatus = info["accountstatus"];
+        dboper.InsertAnnouncement(username, announcement, Date.now(), accountstatus,url, function (err, results) {
             if (err) {
                 // console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
@@ -30,6 +31,19 @@ class PostAnnouncementCtrl {
         return function(data) {
             socket.emit("Post Announcement", data);
             socket.broadcast.emit("Post Announcement", data);
+        };
+    }
+
+    changeUsernameSocket (socket) {
+        return function(params) {
+            //socket.emit("Public Message", data);
+            socket.broadcast.emit("Username Changed In Announcement", params);
+        };
+    }
+
+    changeAccountStatusSocket (socket) {
+        return function(params) {
+            socket.broadcast.emit("AccountStatus Changed In Announcement", params);
         };
     }
 
@@ -67,5 +81,7 @@ module.exports = {
     AddAnnouncement: pac.AddAnnouncement,
     AnnouncementSocket: pac.AnnouncementSocket,
     LoadAnnouncement: pac.LoadAnnouncement,
-    searchPublicAnn: pac.searchPublicAnn
+    searchPublicAnn: pac.searchPublicAnn,
+    changeUsernameSocket: pac.changeUsernameSocket,
+    changeAccountStatusSocket: pac.changeAccountStatusSocket
 };

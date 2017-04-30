@@ -32,7 +32,7 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
     var getMessage=function(){
         $http({
             method:"get",
-            url:"/public",
+            url:"/public"
             //data:{pubmsg:$scope.pubmsg, username:$scope.username}
         }).success(function(rep){
             console.log(rep);
@@ -46,11 +46,27 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
     mySocket.on("Public Message", function(data) {
         $scope.displaymsg.push(data);
     });
+
+    //socket on if others' username is changed
+    mySocket.on("Username Changed In Public Chat", function(params) {
+        //$scope.displaymsg.push(params);
+        if(params.profileusername != $scope.userClass["username"]){
+            getMessage();
+        }
+    });
+
+    mySocket.on("AccountStatus Changed In Public Chat", function(params) {
+        //$scope.displaymsg.push(params);
+        if(params.profileusername != $scope.userClass["username"]){
+            getMessage();
+        }
+    });
+
     $scope.postMsg = function() {
         $http({
             method:"post",
             url:"/public",
-            data:{pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timeStamp:Date.now(), emergencystatus:$scope.userClass["status"]}
+            data:{pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timeStamp:Date.now(), emergencystatus:$scope.userClass["status"],senderaccountstatus:"Active"}
         }).success(function(rep){
             console.log(rep);
             var data = {pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timestamp:Date.now(),emergencystatus:$scope.userClass["status"]};

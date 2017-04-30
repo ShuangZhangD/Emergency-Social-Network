@@ -18,7 +18,8 @@ class PublicChatCtrl{
         var message = info["pubmsg"];
         var sender = info["username"];
         var emergencystatus = info["emergencystatus"];
-        dboper.InsertMessage(sender, "", message, "public", Date.now(),emergencystatus, url, function (err, results) {
+        var senderaccountstatus = info["senderaccountstatus"];
+        dboper.InsertMessage(sender, "", message, "public", Date.now(),emergencystatus, senderaccountstatus, "",url, function (err, results) {
             if (err) {
                 // console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
@@ -34,6 +35,20 @@ class PublicChatCtrl{
             socket.broadcast.emit("Public Message", data);
         };
     }
+
+    changeUsernameSocket (socket) {
+        return function(params) {
+            //socket.emit("Public Message", data);
+            socket.broadcast.emit("Username Changed In Public Chat", params);
+        };
+    }
+
+    changeAccountStatusSocket (socket) {
+        return function(params) {
+            socket.broadcast.emit("AccountStatus Changed In Public Chat", params);
+        };
+    }
+
     LoadPublicMessage (req, res){
         dboper.LoadPublicMessage(url, function (err, results) {
             if (err) {
@@ -68,5 +83,7 @@ module.exports={
     AddPublicMessage: pubtrl.AddPublicMessage,
     publicMessageSocket: pubtrl.publicMessageSocket,
     LoadPublicMessage: pubtrl.LoadPublicMessage,
-    searchPublicMessages: pubtrl.searchPublicMessages
+    searchPublicMessages: pubtrl.searchPublicMessages,
+    changeUsernameSocket: pubtrl.changeUsernameSocket,
+    changeAccountStatusSocket: pubtrl.changeAccountStatusSocket
 };

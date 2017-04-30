@@ -13,6 +13,7 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
                 $scope.profile["profilepassword"] = rep.data.newpassword;
                 $scope.profile["profileaccountstatus"] = rep.data.accountstatus;
                 $scope.profile["profileprivilegelevel"] = rep.data.privilegelevel;
+                console.log(rep.data.privilegelevel);
 
             }
             else {

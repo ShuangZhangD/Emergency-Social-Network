@@ -11,7 +11,7 @@ var success_statuscode = 200;
 
 class PostAnnouncementDBoper {
 
-    InsertAnnouncement (username, announcement, postTime, url, callback) {
+    InsertAnnouncement (username, announcement, postTime, accountstatus, url, callback) {
         //connect to database
         MongoClient.connect(url, function (err, db) {
             if (err) {
@@ -21,7 +21,7 @@ class PostAnnouncementDBoper {
             else {
                 var collection = db.collection("announcement");
                 //insert into table
-                var data = [{"username": username, "announcement": announcement, "postTime": postTime}];
+                var data = [{"username": username, "announcement": announcement, "postTime": postTime,"accountstatus":accountstatus}];
                 collection.insert(data, callback);
                 db.close();
             }
@@ -42,7 +42,10 @@ class PostAnnouncementDBoper {
                     data["username"] = result.username;
                     data["announcement"] = result.announcement;
                     data["timestamp"] = result.postTime;
-                    datas.push(data);
+                    data["accountstatus"] = result.accountstatus;
+                    if(result.accountstatus =="Active") {
+                        datas.push(data);
+                    }
                 });
                 callback(err,datas);
                 db.close();
