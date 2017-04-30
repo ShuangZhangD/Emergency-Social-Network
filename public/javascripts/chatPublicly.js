@@ -27,7 +27,7 @@ app.factory("mySocket", function($rootScope) {
     };
 });
 
-app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
+app.controller("chatPubliclyCtrl", function($window, $scope, $rootScope, $http, mySocket) {
     //$scope.name = "Runoob";
     var getMessage=function(){
         $http({
@@ -41,10 +41,14 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
         });
 
     };
-    getMessage();
+    //getMessage();
     //$scope.displaymsg = [];
     mySocket.on("Public Message", function(data) {
         $scope.displaymsg.push(data);
+    });
+
+    $rootScope.$on("loginGetPublicChat", function() {
+        getMessage();
     });
 
     //socket on if others' username is changed

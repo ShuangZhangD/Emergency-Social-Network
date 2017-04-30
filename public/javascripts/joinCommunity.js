@@ -207,6 +207,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
 
 
     $scope.showPublicChat = function () {
+        $rootScope.$emit("loginGetPublicChat");
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
@@ -297,6 +298,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
       //}
     };
     $scope.showAnnouncement = function () {
+        $rootScope.$emit("loginGetAnnouncement");
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
