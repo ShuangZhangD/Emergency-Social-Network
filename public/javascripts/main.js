@@ -46,5 +46,7 @@ app.controller("initCtrl", function($scope, $http) {
     $scope.historyList1 = [];
     $scope.historyList2 = [];
     $scope.historyStatus = [];
+    $scope.historyaccountstatus = [];
+    $scope.accountstatus = [];
     console.log($scope);
 });

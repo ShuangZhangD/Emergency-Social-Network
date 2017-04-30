@@ -150,6 +150,7 @@ class JoinCommunityDBOper {
                     console.log(err);
                     callback(success_statuscode, results);
                 });
+                db.close();
             }
         });
     }
@@ -166,6 +167,7 @@ class JoinCommunityDBOper {
                     console.log(err);
                     callback(success_statuscode, results);
                 });
+                db.close();
             }
         });
     }
