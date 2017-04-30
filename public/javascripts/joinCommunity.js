@@ -90,6 +90,8 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     $rootScope.$emit("loginGetPrivateChatList");
                     $rootScope.$emit("loginGetShareStatus");
                     $rootScope.$emit("loginGetGroupList");
+                    $rootScope.$emit("loginGetProfile");
+
                 }
                 else {
                     // sign up failed
@@ -502,5 +504,3 @@ function check_usr(username){
 //         console.log("Error in displaying the directory");
 //     });
 // }
-
-
