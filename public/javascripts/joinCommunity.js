@@ -74,31 +74,8 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         }
         else {
             alert("Username and password should not be empty or reserved keywords");
-
         }
     }; // end of login
-
-    $scope.logout = function () {
-        if ($scope.logined) {
-            $http({
-                method:"post",
-                url:"/logout",
-                data:{username:$scope.username}
-            }).success(function(rep){
-                // logout
-                console.log(rep);
-                $scope.logined = false;
-                $scope.directoryShow = false;
-                $scope.loginShow = true;
-            });
-            mySocket.emit("left");
-        }
-        for (var item in $scope.showList) {
-            $scope.showList[item] = false;
-        }
-        $scope.showList["login"] = true;
-
-    };
 
     var logout = function () {
         if ($scope.logined) {
@@ -122,6 +99,12 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
 
     };
 
+    $scope.logout = function () {
+        logout();
+    };
+
+
+
     $scope.showPublicChat = function () {
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
@@ -141,31 +124,6 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
 
     $rootScope.userChangedStatus = function(data) {
         $scope.statusList[data.username] = data.emergencystatus;
-    };
-
-    $scope.showDirectory = function () {
-        if ($scope.logined) {
-            $http({
-                method:"get",
-                url:"/userlist"
-            }).then(function successCallback(response) {
-                $scope.details1 = response.data.data1;
-                $scope.details2 = response.data.data2;
-                $scope.statusList = response.data.status;
-                $scope.historyList1 = $scope.details1;
-                $scope.historyList2 = $scope.details2;
-                $scope.historyStatus = $scope.statusList;
-                console.log(response);
-            }, function errorCallback(response) {
-                console.log(response);
-                console.log("Error in displaying the directory");
-            });
-        }
-        for (var item in $scope.showList) {
-            $scope.showList[item] = false;
-        }
-        $scope.showList["directory"] = true;
-        console.log("Debug-01");
     };
 
     var showDirectory = function () {
@@ -188,6 +146,17 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         }
     };
 
+    $scope.showDirectory = function () {
+        showDirectory();
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList["directory"] = true;
+        console.log("Debug-01");
+    };
+
+
+
     $scope.getStatus = function (value) {
         console.log("value" + value);
         $http({
@@ -195,21 +164,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             url : "/userlist/searchstatus/",
             data: {value:value}
         }).success(function(req){
-        // var history_detail1 = $scope.historyList1;
-        // var history_detail2 = $scope.historyList2;
-        // // console.log("History msg are: "+$scope.historyList1);
-        // for(i = 0 ; i <= history_detail1.length-1 ; i++){
-        //     var name1 = history_detail1[i];
-        //     if(IfKeyWordExist(SearchKeys, name1)){
-        //         directory_search_result1.push(history_detail1[i]);
-        //     }
-        // }
-        // for(i = 0 ; i <= history_detail2.length-1 ; i++){
-        //     var name2 = history_detail2[i];
-        //     if(IfKeyWordExist(SearchKeys, name2)){
-        //         directory_search_result2.push(history_detail2[i]);
-        //     }
-        // }
+
             console.log("In search");
             console.log(req.data1);
             if(req.data1.length ===0 && req.data2.length ===0)
@@ -217,21 +172,10 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             $scope.details1 = req.data1;
             $scope.details2 = req.data2;
 
-    // $scope.showList["annoucementSearchResult"] = true;
-    // $scope.namesearchmsg="";
         });
 
     };
 
-    /** Check if one keyword of key_words exist in msg
-
-    var IfKeyWordExist=function(key_words, msg){
-        for(var i = 0 ; i < key_words.length ; i++){
-            if(msg != null && msg.includes(key_words[i]))
-                return true;
-        }
-        return false;
-    };*/
 
     $scope.searchDirectory = function() {
         //var directory_search_result1 = [];
@@ -251,31 +195,13 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                 i++;
             }
         }
-        //if search keys is not empty, search it and get the result msg array suite
-        /*if(SearchKeys.length == 0) {
-          alert("No results for search criteria.");
-        }
-        if(SearchKeys.length > 0){*/
+
         $http({
             method : "post",
             url : "/userlist/searchname/",
             data: SearchKeys
         }).success(function(req){
-            // var history_detail1 = $scope.historyList1;
-            // var history_detail2 = $scope.historyList2;
-            // // console.log("History msg are: "+$scope.historyList1);
-            // for(i = 0 ; i <= history_detail1.length-1 ; i++){
-            //     var name1 = history_detail1[i];
-            //     if(IfKeyWordExist(SearchKeys, name1)){
-            //         directory_search_result1.push(history_detail1[i]);
-            //     }
-            // }
-            // for(i = 0 ; i <= history_detail2.length-1 ; i++){
-            //     var name2 = history_detail2[i];
-            //     if(IfKeyWordExist(SearchKeys, name2)){
-            //         directory_search_result2.push(history_detail2[i]);
-            //     }
-            // }
+
             console.log("In search");
             console.log(req.data1);
             if(req.data1.length ===0 && req.data2.length ===0)
@@ -320,43 +246,13 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["groupList"] = true;
     };
     mySocket.on("userJoined",function(username){
-        if ($scope.logined) {
-            $http({
-                method: "get",
-                url: "/userlist"
-            }).then(function successCallback(response) {
-                $scope.details1 = response.data.data1;
-                $scope.details2 = response.data.data2;
-                $scope.statusList = response.data.status;
-                $scope.historyList1 = $scope.details1;
-                $scope.historyList2 = $scope.details2;
-                $scope.historyStatus = $scope.statusList;
-                console.log(username);
-            }, function errorCallback(response) {
-                console.log(response);
-                console.log("Error in displaying the directory");
-            });
-        }
+        showDirectory();
     });
 
     mySocket.on("userleft",function(){
-        if ($scope.logined) {
-            $http({
-                method: "get",
-                url: "/userlist"
-            }).then(function successCallback(response) {
-                $scope.details1 = response.data.data1;
-                $scope.details2 = response.data.data2;
-                $scope.statusList = response.data.status;
-                $scope.historyList1 = $scope.details1;
-                $scope.historyList2 = $scope.details2;
-                $scope.historyStatus = $scope.statusList;
-            }, function errorCallback(response) {
-                console.log(response);
-                console.log("Error in displaying the directory");
-            });
-        }
+        showDirectory();
     });
+
     mySocket.on("windowclose", function(){
         if ($scope.logined) {
             $http({
@@ -493,17 +389,6 @@ function check_usr(username){
     return true;
 }
 
-/*function check_pwd(password) {
-    if (!password) {
-        return false;
-    }
-    var b=/^[a-zA-Z\d]\w{4,18}[a-zA-Z\d]$/;
-    if(!b.test(password)) {
-        //alert("Invalid password. Password should start with an alphabet or number and must be atleast 4 characters long");
-        return false;
-    }
-    return true;
-}*/
 
 
 /*
