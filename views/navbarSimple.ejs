@@ -24,14 +24,14 @@
 <sidebarjs>
   <h3>ESN</h3>
   <nav>
-      <a sidebarjs-toggle href="#" ng-click='showDirectory()' ng-show="logined">Directory</a>
-      <a sidebarjs-toggle href="#" ng-click='showPublicChat()' ng-show="logined">PublicChat</a>
-      <a sidebarjs-toggle href="#" ng-click='showAnnouncement()' ng-show="logined">Announcements</a>
-      <a sidebarjs-toggle href="#" ng-click='showShareStatus()' ng-show="logined">Share Status</a>
-      <a sidebarjs-toggle href="#" ng-click='showPrivateChat()' ng-show="logined">PrivateChat (<span ng-show="userClass.hasNewMsg" style="color:red">{{userClass.newMsgNum}}</span><span ng-show="!userClass.hasNewMsg">0</span>) </a>
-      <a sidebarjs-toggle href="#" ng-click='showGroup()' ng-show="logined">Group</a>
-      <a sidebarjs-toggle href="#" ng-click='showShelter()' ng-show="logined">Emergency Shelters</a>
-      <a sidebarjs-toggle href="#" ng-click='logout()' ng-show="logined">Logout({{userClass.username}})</a>
+      <a sidebarjs-toggle href="#" ng-click='showDirectory()' ng-show="logined"><i class="material-icons">account_box</i> Directory</a>
+      <a sidebarjs-toggle href="#" ng-click='showPublicChat()' ng-show="logined"><i class="material-icons">forum</i> PublicChat</a>
+      <a sidebarjs-toggle href="#" ng-click='showAnnouncement()' ng-show="logined"><i class="material-icons">announcement</i> Announcements</a>
+      <a sidebarjs-toggle href="#" ng-click='showShareStatus()' ng-show="logined"><i class="material-icons">thumbs_up_down</i> Share Status</a>
+      <a sidebarjs-toggle href="#" ng-click='showPrivateChat()' ng-show="logined"><i class="material-icons">contact_mail</i> PrivateChat (<span ng-show="userClass.hasNewMsg" style="color:red">{{userClass.newMsgNum}}</span><span ng-show="!userClass.hasNewMsg">0</span>) </a>
+      <a sidebarjs-toggle href="#" ng-click='showGroup()' ng-show="logined"><i class="material-icons">group</i> Group</a>
+      <a sidebarjs-toggle href="#" ng-click='showShelter()' ng-show="logined"><i class="material-icons">local_hospital</i> Emergency Shelters</a>
+      <a sidebarjs-toggle href="#" ng-click='logout()' ng-show="logined"><i class="material-icons">highlight_off</i> Logout({{userClass.username}})</a>
   </nav>
 </sidebarjs>
 <!--<nav class = "navbar navbar-default" ng-show="logined" role = "navigation">-->
