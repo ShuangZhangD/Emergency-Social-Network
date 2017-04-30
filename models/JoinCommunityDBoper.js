@@ -32,6 +32,9 @@ class JoinCommunityDBOper {
                         callback(user_not_exist_statuscode, user_not_exist_msg);
                     }
                     //if username exist
+                    else if (result[0].accountstatus != "Active") {
+                        callback(403, "User Inactive.");
+                    }
                     else {
                         new_user.checkPassword(db, username, password, function(pwdres, err){
                             console.log(err);
