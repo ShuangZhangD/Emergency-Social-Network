@@ -48,7 +48,7 @@
       </thead>
       <tr ng-repeat="user in details1">
         <td>
-            Online {{user}}
+            <i class="material-icons" style="color: #5cb85c;">radio_button_checked</i> {{user}}
         </td>
           <td>
               <button ng-show="statusList[user] == 'OK'" type="button" class="btn btn-success btn-circle"><i class="glyphicon glyphicon-ok"></i></button>
@@ -61,7 +61,7 @@
       </tr>
         <tr ng-repeat="user in details2">
             <td>
-                Offline {{user}}
+                <i class="material-icons" style="color: #d9534f;">radio_button_unchecked</i> {{user}}
             </td>
             <td>
                 <button ng-show="statusList[user] == 'OK'" type="button" class="btn btn-success btn-circle"><i class="glyphicon glyphicon-ok"></i></button>
