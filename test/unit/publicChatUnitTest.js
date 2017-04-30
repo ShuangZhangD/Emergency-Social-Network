@@ -56,7 +56,7 @@ suite('Public Chat Unit Tests', function(){
     });
 
     test('Testing Public Chat Function', function(done){
-        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test", "public",Date.now(), "OK",url, function (err, results1){
+        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test", "public",Date.now(), "OK","Active","Active",url, function (err, results1){
             dboper.LoadPublicMessage(url, function (err, results2) {
                expect(results2[results2.length-1]["pubmsg"]).to.equal("testing public chat function in Unit Test");
                done();
@@ -65,14 +65,14 @@ suite('Public Chat Unit Tests', function(){
     });
 
     test('Testing Public Chat Function with err_url', function(done){
-        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test err_url", "public",Date.now(), "OK",error_url, function (err, results1){
+        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test err_url", "public",Date.now(), "OK","Active","Active",error_url, function (err, results1){
             expect(err).to.equal(400);
             done();
         });
     });
 
     test('Testing Public Load Function with err_url', function(done){
-        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test err_url", "public",Date.now(), "OK",url, function (err, results1){
+        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test err_url", "public",Date.now(), "OK","Active","Active",url, function (err, results1){
             expect(err).to.equal(null);
             dboper.LoadPublicMessage(error_url, function (err, results2) {
                 expect(err).to.equal(400);
@@ -90,7 +90,7 @@ suite('Public Chat Unit Tests', function(){
     });
 
     test('Test Public Chat Search Function in models', function(done){
-        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test err_url", "public",Date.now(), "OK",url, function (statuscode0, content0){
+        dboper.InsertMessage("keqin", "","testing public chat function in Unit Test err_url", "public",Date.now(), "OK","Active","Active",url, function (statuscode0, content0){
             expect(statuscode0).to.equal(null);
             dboper.SearchPublicMessages(["chat", "hi"], url,function(err1, results1){
                 expect(err1).to.equal(200); //TODO test if results content equal or not

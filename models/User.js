@@ -85,6 +85,7 @@ class User {
         this.collection.find().toArray(function(err, results) {
             var userstatuslist = {};
             results.forEach(function (result) {
+                console.log("getting username "+result.username+" account status "+result.accountstatus);
                 userstatuslist[result.username] = result.accountstatus;
             });
             callback(userstatuslist, null);

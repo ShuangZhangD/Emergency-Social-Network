@@ -88,7 +88,7 @@ class ProfileManagementDBoper{
 
                 var announcementcollection = db.collection("announcement");
                 //insert into table
-                announcementcollection.update({"username": profileusername}, {$set :{"username": newusername}},function (err, results) {
+                announcementcollection.updateMany({"username": profileusername}, {$set :{"username": newusername}},function (err, results) {
                     if (err) {
                         console.log("Error:"+ err);
                     }
@@ -96,13 +96,13 @@ class ProfileManagementDBoper{
                         console.log("In updateName in ANN");
 
                         var messagecollection = db.collection("MESSAGES");
-                        messagecollection.update({"sender": profileusername}, {$set :{"sender": newusername}},function (err, results) {
+                        messagecollection.updateMany({"sender": profileusername}, {$set :{"sender": newusername}},function (err, results) {
                             if(err){
                                 console.log("Error:"+ err);
                             }else{
                                 console.log("In updateName in Messages");
                                 var messagecollection = db.collection("MESSAGES");
-                                messagecollection.update({"receiver": profileusername}, {$set :{"receiver": newusername}},callback);
+                                messagecollection.updateMany({"receiver": profileusername}, {$set :{"receiver": newusername}},callback);
                                 db.close();
                             }
                         });
@@ -128,18 +128,18 @@ class ProfileManagementDBoper{
             else {
                 var announcementcollection = db.collection("announcement");
                 //insert into table
-                announcementcollection.update({"username": profileusername}, {$set :{"accountstatus": accountstatus}},function (err, results) {
+                announcementcollection.updateMany({"username": profileusername}, {$set :{"accountstatus": accountstatus}},function (err, results) {
                     if (err) {
 
                     }
                     else {
                         var messagecollection = db.collection("MESSAGES");
-                        messagecollection.update({"sender": profileusername}, {$set :{"senderaccountstatus": accountstatus}},function (err, results) {
+                        messagecollection.updateMany({"sender": profileusername}, {$set :{"senderaccountstatus": accountstatus}},function (err, results) {
                             if(err){
 
                             }else{
                                 var messagecollection = db.collection("MESSAGES");
-                                messagecollection.update({"receiver": profileusername}, {$set :{"receiveraccountstatus": accountstatus}},callback);
+                                messagecollection.updateMany({"receiver": profileusername}, {$set :{"receiveraccountstatus": accountstatus}},callback);
                                 db.close();
                             }
                         });
