@@ -17,7 +17,8 @@ app.controller("initCtrl", function($scope, $http) {
         announcementHistory: false,
         groupList:false,
         groupChatContent:false,
-        profileManagement:false
+        profileManagement:false,
+        ownProfileManagement:false
     };
     $scope.myGroupTable=false;
     $scope.allGroupTable=true;
@@ -32,7 +33,8 @@ app.controller("initCtrl", function($scope, $http) {
         displayHistory: false,
         status: "TEST",
         privilegelevel: "Citizen",
-        profileManagement: "false"
+        profileManagement: "false",
+        emergencycontact: ""
     };
     $scope.profile = {
         profileusername : "",

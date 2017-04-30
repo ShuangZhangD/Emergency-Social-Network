@@ -1,0 +1,53 @@
+<form ng-submit="submit()" class="container" ng-controller="OwnProfileManagementCtrl" ng-show="showList.ownProfileManagement">
+	<div class="container">
+        <h5><center><b>Profile</b></center></h5>
+      	<table class="table">
+                  <tr>
+                      <td>
+                          First Name
+                      </td>
+                      <td>
+                          <input type="text" id="firstname" ng-model="firstname"></input>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          Last Name
+                      </td>
+                      <td>
+                          <input type="text" id="lastname" ng-model="lastname"></input>
+                      </td>
+                  </tr>
+              	  <tr>
+                      <td>
+                          Email
+                      </td>
+                      <td>
+                          <input type="text" id="email" ng-model="email"></input>
+              		    </td>
+                  </tr>
+                  <tr>
+                        <td>
+                            Emergency Contact
+                        </td>
+                        <td>
+                            <input type="text" id="emergencycontact" ng-model="emergencycontact"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                          <td>
+                              Emergency Contact Email
+                          </td>
+                          <td>
+                              <input type="text" id="contactemail" ng-model="contactemail"></input>
+                          </td>
+                    </tr>
+                    <tr>
+                          <td colspan="2">
+                              <center><input type="submit" id="submit" value="Submit" ng-click="updateOwnProfileDetails();"/></center>
+                          </td>
+                    </tr>
+        </table>
+    </div>
+</form>
+</br></br>

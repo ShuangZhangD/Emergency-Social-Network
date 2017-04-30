@@ -27,6 +27,7 @@ var ShareStatusCtrl = require("./controller/ShareStatusCtrl");
 var GroupChatCtrl = require("./controller/GroupChatCtrl.js");
 var EmergencyShelterCtrl = require("./controller/EmergencyShelterCtrl.js");
 var ProfileManagementCtrl = require("./controller/ProfileManagementCtrl.js");
+var OwnProfileManagementCtrl = require("./controller/OwnProfileManagementCtrl.js");
 
 // init data
 EmergencyShelterCtrl.initData(function (args) {});
@@ -96,6 +97,9 @@ app.get("/profile/:profileusername", ProfileManagementCtrl.getProfile);
 app.post("/profile", ProfileManagementCtrl.updateProfile);
 app.post("/updatename", ProfileManagementCtrl.updateName);
 app.post("/updateaccountstatus", ProfileManagementCtrl.updateAccountStatus);
+
+app.get("/ownprofile/:username", OwnProfileManagementCtrl.getOwnProfile);
+app.post("/ownprofile", OwnProfileManagementCtrl.updateOwnProfile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

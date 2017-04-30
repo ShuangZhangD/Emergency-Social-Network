@@ -43,6 +43,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     $rootScope.$emit("loginGetPrivateChatList");
                     $rootScope.$emit("loginGetShareStatus");
                     $rootScope.$emit("loginGetGroupList");
+                    $rootScope.$emit("loginGetProfile");
                 }
                 else {
                     // login failed
@@ -237,6 +238,12 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["shareStatus"] = true;
     };
 
+    $scope.showOwnProfile = function() {
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList["ownProfileManagement"] = true;
+    };
 
     $scope.showGroup = function() {
         for (var item in $scope.showList) {
@@ -347,6 +354,7 @@ function addUser($scope, $rootScope, $http, tmpUsername, mySocket) {
                 $rootScope.$emit("loginGetPrivateChatList");
                 $rootScope.$emit("loginGetShareStatus");
                 $rootScope.$emit("loginGetGroupList");
+                $rootScope.$emit("loginGetProfile");
             }
             else {
                 // sign up failed
@@ -411,5 +419,3 @@ function displayDirectory($scope, $http) {
         console.log("Error in displaying the directory");
     });
 }
-
-
