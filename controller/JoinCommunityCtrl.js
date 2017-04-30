@@ -135,7 +135,11 @@ class JoinCommunityController {
                 var sorted_content2 = SortUserList(content2);
                 dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode_em, user_status_em) {
                     dboper.GetAllUsernameAndAccountstatus(url, function (statuscode, user_status) {
-                        if (statuscode == 200)
+                        if (statuscode == 200){
+                            console.log("666====here is");
+                            console.dir(user_status);
+                            console.log("777====here is");
+                            console.dir(user_status_em);
                             res.json({
                                 "success": 1,
                                 "data1": sorted_content1,
@@ -143,6 +147,7 @@ class JoinCommunityController {
                                 "status": user_status_em,
                                 "accountstatus": user_status
                             });
+                        }
                         else res.json({success: 0, err_type: 1, err_msg: content1});
                     });
                 });

@@ -60,7 +60,7 @@ class ProfileManagementController {
     }
 
     updateAccountStatus(req, res){
-        console.log("In updateAccountStatus in ProfileManagementCtrl");
+        console.log("999======In updateAccountStatus in ProfileManagementCtrl");
         var info = req.body;
         // console.log(req);
         var profileusername = info["profileusername"];

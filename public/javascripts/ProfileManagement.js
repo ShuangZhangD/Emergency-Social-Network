@@ -101,13 +101,19 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
                 if($scope.profile["profilepassword"] != $scope.newpassword){
                     mySocket.emit("Password Change", params);
                 }
+                console.log("888==="+$scope.profile["profileaccountstatus"]);
+                console.log("999==="+$scope.accountstatus);
                 if($scope.profile["profileaccountstatus"] != $scope.accountstatus){
+
                     updateAccountStatus(params);
                 }
                 if($scope.profile["profileprivilegelevel"] != $scope.privilegelevel){
                     mySocket.emit("Privilegelevel Change", params);
                 }
                 $scope.profile["profileusername"] = $scope.newusername;
+                $scope.profile["profilepassword"] = $scope.newpassword;
+                $scope.profile["profileaccountstatus"] = $scope.accountstatus;
+                $scope.profile["profileprivilegelevel"] = $scope.privilegelevel;
             }
             else {
                 console.log("Error in updating profile");
