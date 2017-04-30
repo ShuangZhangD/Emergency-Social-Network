@@ -26,7 +26,7 @@
                     {{allgroup}}
                 </td>
                 <td>
-                    <button ng-click="joinGroup(allgroup)">Join</button>
+                    <button type="button" class="btn btn-info btn-circle"><i class="material-icons" ng-click="joinGroup(allgroup)">group_add</i></button>
                 </td>
             </tr>
         </table>
@@ -54,10 +54,12 @@
                         {{group.group}}
                     </td>
                     <td>
-                        <button ng-click="openMsg(group.group)">Open</button>
+                    <button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-send" ng-click="openMsg(group.group)"></i></button>
+
                     </td>
                     <td>
-                        <button ng-click="leaveGroup(group.group)">Leave</button>
+                        <button type="button" class="btn btn-danger btn-circle"><i class="glyphicon glyphicon-trash" ng-click="leaveGroup(group.group)"></i></button>
+
                     </td>
                 </tr>
             </table>

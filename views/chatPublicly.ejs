@@ -12,11 +12,16 @@
 <!--div class="container"  ng-app="chatPubliclyAPP" ng-controller="chatPubliclyCtrl"-->
 <div class="container" ng-controller="chatPubliclyCtrl" ng-show="showList.chatPublicly">
     <h3> Public Chat </h3>
+    <!--<div class="container">-->
+        <!--<input ng-model="pubsearchmsg" id="pubsearchmsg" type="text" class="form-control" placeholder="Search Public Msg">-->
+        <!--<button class="btn btn-info btn-block" type="submit" ng-click="searchPublicMsg()">Search</button>-->
+    <!--</div>-->
     <div class="container">
-        <input ng-model="pubsearchmsg" id="pubsearchmsg" type="text" class="form-control" placeholder="Search Public Msg">
-        <button class="btn btn-info btn-block" type="submit" ng-click="searchPublicMsg()">Search</button>
+        <center>
+            <input style="border: 1px solid #ccc; height:30px; width:90%" ng-model="pubsearchmsg" size="30" id="pubsearchmsg" type="text" placeholder="Search Public Msg">
+            <button type="button" ng-click="searchPublicMsg()" class="btn btn-circle"><i class="glyphicon glyphicon-search"></i></button>
+        </center>
     </div>
-
     <br>
 
     <div class="container" ng-show="showList.publicSearchResult">
@@ -26,7 +31,9 @@
         </div>
 
         <div ng-if="SearchPublicMsgMore">
-            <div style="cursor:pointer" ng-click="GetMorePublicSearchResults()">----More----</div><br><br>
+            <center>
+                <button type="button" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-chevron-down" ng-click="GetMorePublicSearchResults()"></i></button>
+            </center>
         </div>
     </div>
 
@@ -38,8 +45,6 @@
 
             <div class="panel-heading"><span>{{msg.username}} @ </span><span>(Status: {{msg.emergencystatus}}){{msg.timestamp |  date: 'MM.dd.yyyy HH:mma' }}</span></div>
             <div class="panel-body"><span class="content">{{msg.pubmsg}}</span><span class="avatar"></span></div>
-
-
         </div>
 
 
