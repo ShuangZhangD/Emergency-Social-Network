@@ -83,7 +83,7 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
 
     mySocket.on("receiver username changed", function (param) {
         var changed_part = param.profileusername;
-        if(changed_part == $scope.userClass["privateChatSender"]){
+        if(changed_part == $scope.userClass["privateChatSender"] &&  $scope.showList["privateChatContent"]){
             $rootScope.$emit("loginGetPrivateChatList");
             for (var item in $scope.showList) {
                 $scope.showList[item] = false;
@@ -99,7 +99,7 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
 
     mySocket.on("receiver Accountstatus changed", function (param) {
         var changed_part = param.profileusername;
-        if(changed_part == $scope.userClass["privateChatSender"]){
+        if(changed_part == $scope.userClass["privateChatSender"] &&  $scope.showList["privateChatContent"]){
             $rootScope.$emit("loginGetPrivateChatList");
             for (var item in $scope.showList) {
                 $scope.showList[item] = false;

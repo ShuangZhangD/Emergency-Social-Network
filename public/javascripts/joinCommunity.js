@@ -61,6 +61,9 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                         // username or password invalid
                         alert("Username or password is invalid. Username should start with an alphabet or number and must be atleast 3 characters long. Password should start with an alphabet or number and must be atleast 4 characters long. ");
                     }
+                    else if (rep.err_type == 5) {
+                        alert("This is a inactive user! Contact admin if you want to active it.");
+                    }
                     else {
                         alert("Unexpected error, please try again.");
                     }

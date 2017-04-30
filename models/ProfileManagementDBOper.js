@@ -140,12 +140,13 @@ class ProfileManagementDBoper{
                             }else{
                                 var messagecollection = db.collection("MESSAGES");
                                 messagecollection.update({"receiver": profileusername}, {$set :{"accountstatus": accountstatus}},callback);
+                                db.close();
                             }
                         });
                     }
                 });
             }
-            db.close();
+
         });
     }
 }
