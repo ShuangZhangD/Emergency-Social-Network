@@ -48,8 +48,8 @@ class JoinCommunityController {
 
     LoginCommunity (req, res) {
         var info = req.body;
-        var username = info["username"];
         var password = info["password"];
+        var username = info["username"];
         var encry_password = md5(password);
 
         //validate the username and password
@@ -57,15 +57,15 @@ class JoinCommunityController {
             res.json({success:0, err_type:4, err_msg: "username or password invalid"}); //username or password invalid
         }
         else {
-            dboper.Login(username, encry_password, url, function(statuscode, content){
-                if(statuscode != 200){
-                    if(statuscode == 400)
+            dboper.Login(username, encry_password, url, function(statuscode_login, content){
+                if(statuscode_login != 200){
+                    if(statuscode_login == 400)
                         res.json({success:0, err_type: 1, err_msg:content});
-                    else if(statuscode == 401)
+                    else if(statuscode_login == 401)
                         res.json({success:0, err_type: 2, err_msg:content});
-                    else if(statuscode == 402)
+                    else if(statuscode_login == 402)
                         res.json({success:0, err_type: 3, err_msg:content});
-                    else if (statuscode == 403) {
+                    else if (statuscode_login == 403) {
                         res.json({success:0, err_type: 5, err_msg:content});
                     }
                 }
@@ -124,8 +124,8 @@ class JoinCommunityController {
                 res.json({success:0, err_type: 1, err_msg:content1});
             }
             else{
-                var sorted_content1 = SortUserList(content1);
                 var sorted_content2 = SortUserList(content2);
+                var sorted_content1 = SortUserList(content1);
                 dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode_em, user_status_em) {
                     dboper.GetAllUsernameAndAccountstatus(url, function (statuscode, user_status) {
                         if (statuscode == 200){
