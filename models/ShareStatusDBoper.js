@@ -126,13 +126,13 @@ class ShareStatusDBoper{
 
               var data={};
               usercollection.find({"username": username}).toArray(function(err, results){
-                                      var time = new Date();
-                                      data = {
-                                          "sender" : "EmergencyAdmin",
-                                          "receiver" : results[0].emergencycontact,
-                                          "PrivateMsg" : "Your contact " + results[0].username + " has updated the emergency status to " + results[0].emergencystatus + ".",
-                                          "timestamp" : time
-                                      };
+                  var time = new Date();
+                  data = {
+                      "sender" : "EmergencyAdmin",
+                      "receiver" : results[0].emergencycontact,
+                      "PrivateMsg" : "Your contact " + results[0].username + " has updated the emergency status to " + results[0].emergencystatus + ".",
+                      "timestamp" : time
+                  };
 
                                       let newpcdboper = new PrivateChatDBOper("EmergencyAdmin", results[0].emergencycontact, url);
                                       newpcdboper.InsertMessage(data, function(statuscode, content){
