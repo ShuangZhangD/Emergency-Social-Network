@@ -20,7 +20,7 @@ module.exports = function(grunt){
                     clearRequireCache:false,
                     ui: 'tdd'
                 },
-                src: ['test/unit/profile*.js']
+                src: ['test/unit/*.js']
             }
         },
 
