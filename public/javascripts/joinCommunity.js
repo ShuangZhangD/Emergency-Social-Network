@@ -68,7 +68,9 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         }
     };
     var addUser = function(tmpUsername) {
+        //var add=0;
         var add = confirm("User does not exist, do you want to sign up?");
+        //add = alertify.confirm("ESN", 'User does not exist, do you want to sign up?', function(){ add = 1; }, function(){ add = 0;});
         if (add) {
             $http({
                 method:"post",
@@ -77,7 +79,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             }).success(function(rep){
                 if (rep.success == 1) {
                     // sign up success
-                    alert("Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
+                    alertify.alert("ESN","Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
                     $scope.userClass["username"] = tmpUsername;
                     $scope.logined = true;
                     $scope.showList.login = false;
@@ -90,6 +92,8 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     $rootScope.$emit("loginGetPrivateChatList");
                     $rootScope.$emit("loginGetShareStatus");
                     $rootScope.$emit("loginGetGroupList");
+                    $rootScope.$emit("loginGetProfile");
+
                 }
                 else {
                     // sign up failed
@@ -98,7 +102,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     }
                     else if (rep.err_type == 4) {
                         // username or password invalid
-                        alert("Password invalid!");
+                        alertify.alert("ESN","Password invalid!");
                     }
                     else {
                         console.log("Unexpected");
@@ -126,7 +130,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                 if (rep.success == 1) {
                     // login success
                     console.log(rep);
-                    alert("Login success!");
+                    alertify.alert("ESN", "Login success! Welcome!");
                     $scope.userClass["username"] = tmpUsername;
                     $scope.userClass["privilegelevel"] = rep.privilegelevel;
                     $scope.test = "456";
@@ -143,6 +147,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     $rootScope.$emit("loginGetPrivateChatList");
                     $rootScope.$emit("loginGetShareStatus");
                     $rootScope.$emit("loginGetGroupList");
+                    $rootScope.$emit("loginGetProfile");
                 }
                 else {
                     // login failed
@@ -156,17 +161,17 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     }
                     else if (rep.err_type == 3) {
                         // Password Incorrect
-                        alert("Password is incorrect, please try again.");
+                        alertify.alert("ESN","Password is incorrect, please try again.");
                     }
                     else if (rep.err_type == 4) {
                         // username or password invalid
-                        alert("Username or password is invalid. Username should start with an alphabet or number and must be atleast 3 characters long. Password should start with an alphabet or number and must be atleast 4 characters long. ");
+                        alertify.alert("ESN","Username or password is invalid. Username should start with an alphabet or number and must be atleast 3 characters long. Password should start with an alphabet or number and must be atleast 4 characters long. ");
                     }
                     else if (rep.err_type == 5) {
-                        alert("This is a inactive user! Contact admin if you want to active it.");
+                        alertify.alert("ESN","This is a inactive user! Contact admin if you want to active it.");
                     }
                     else {
-                        alert("Unexpected error, please try again.");
+                        alertify.alert("ESN","Unexpected error, please try again.");
                     }
                 }
             }).error(function (rep) {
@@ -174,7 +179,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             });
         }
         else {
-            alert("Username and password should not be empty or reserved keywords");
+            alertify.alert("ESN","Username and password should not be empty or reserved keywords");
         }
     }; // end of login
 
@@ -251,7 +256,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             console.log("In search");
             console.log(req.data1);
             if(req.data1.length ===0 && req.data2.length ===0)
-                alert("There are no matches");
+                alertify.alert("ESN", "There are no matches");
             $scope.details1 = req.data1;
             $scope.details2 = req.data2;
 
@@ -288,7 +293,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             console.log("In search");
             console.log(req.data1);
             if(req.data1.length ===0 && req.data2.length ===0)
-                alert("There are no matches");
+                alertify.alert("ESN","There are no matches");
             $scope.details1 = req.data1;
             $scope.details2 = req.data2;
 
@@ -321,6 +326,12 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["shareStatus"] = true;
     };
 
+    $scope.showOwnProfile = function() {
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList["ownProfileManagement"] = true;
+    };
 
     $scope.showGroup = function() {
         for (var item in $scope.showList) {
@@ -394,7 +405,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             $rootScope.$emit("openPrivateChat");
         }
         else {
-            alert("Only in WeChat you can chat with yourself! Not here!");
+            alertify.alert("ESN","Only in WeChat you can chat with yourself! Not here!");
         }
     };
 
@@ -405,7 +416,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             $rootScope.$emit("openProfile");
         }
         else {
-            alert("You cannot update your own data");
+            alertify.alert("ESN","You cannot update your own data");
         }
     };
 });
@@ -497,5 +508,3 @@ function check_usr(username){
 //         console.log("Error in displaying the directory");
 //     });
 // }
-
-

@@ -1,5 +1,6 @@
 "use strict";
 
+var esnAdmin = require("../models/ESNAdmin");
 var dboper = require("../models/ProfileManagementDBoper");
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
@@ -15,11 +16,10 @@ class ProfileManagementController {
 
         dboper.updateProfileForUser(profileusername, info, url, function (err, results) {
             if (err) {
-                // console.log("Error:"+ err);
+                console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
             }
             else {
-                //console.log(results);
                 res.json({success:1, suc_msg: "Success"});
             }
         });
@@ -37,7 +37,6 @@ class ProfileManagementController {
             }
             else {
                 res.json({success:1, data: results});
-
             }
         });
     }
@@ -76,11 +75,9 @@ class ProfileManagementController {
             }
         });
     }
-
     checkDefaultAdmin(callback) {
-
+        esnAdmin.init(url, callback);
     }
-
 }
 
 let pmc = new ProfileManagementController();
@@ -91,5 +88,4 @@ module.exports = {
     checkDefaultAdmin : pmc.checkDefaultAdmin,
     updateName : pmc.updateName,
     updateAccountStatus : pmc.updateAccountStatus
-
 };

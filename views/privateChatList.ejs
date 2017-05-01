@@ -1,13 +1,15 @@
 <div class="container" ng-controller="privateChatListCtrl" ng-show="showList.privateChatList">
     <div class="container">
         <h3> Private Chat List </h3>
+        <!--<div class="container">-->
+            <!--<input ng-model="privatechat_search_area" id="privatechat_search_area" type="text" class="form-control" placeholder="Search Private Chat Contents" >-->
+            <!--<button class="btn btn-info btn-block" type="submit" ng-click="searchPrivateChat()">Search</button>-->
+        <!--</div>-->
         <div class="container">
-            <div class="input-group">
-                <input ng-model="privatechat_search_area" id="privatechat_search_area" type="text" class="form-control" placeholder="Search Private Chat Contents" >
-                <span class="input-group-btn">
-<button class="btn btn-info" type="submit" ng-click="searchPrivateChat()">Search</button>
-                </span>
-            </div>
+            <center>
+                <input style="border: 1px solid #ccc; height:30px; width:75%" ng-model="privatechat_search_area" size="30" id="privatechat_search_area" type="text" placeholder="Search Private Chat Contents">
+                <button type="button" ng-click="searchPrivateChat()" class="btn btn-circle"><i class="glyphicon glyphicon-search"></i></button>
+            </center>
         </div>
 
         <div class="container" ng-show="showList.privateChatSearchResult">
@@ -17,7 +19,9 @@
             </div>
 
             <div ng-if="searchPrivateChatMore">
-                <div style="cursor:pointer" ng-click="GetMoreSearchResults()">----More----</div>
+                <center>
+                    <button type="button" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-chevron-down" ng-click="GetMoreSearchResults()"></i></button>
+                </center>
             </div>
         </div>
 
@@ -52,7 +56,7 @@
                     </th>
                     <th>
                         Chat Page
-                    </th> 
+                    </th>
                 </tr>
             </thead>
             <tr ng-repeat="sender in privateSenderList track by $index">
@@ -62,7 +66,7 @@
                 <td>
                     <span style="color:red">{{sender.count}}</span>
                 <td>
-                    <button ng-click="openMsg(sender.sender, false)">Open</button>
+                <button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-send" ng-click="openMsg(sender.sender, false)"></i></button>
                 </td>
             </tr>
         </table>

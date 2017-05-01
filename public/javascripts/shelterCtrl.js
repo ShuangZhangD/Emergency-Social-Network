@@ -1,8 +1,8 @@
 app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySocket) {
-    
+
     $scope.location = {
         valid: false,
-        latitude: "not appliable", 
+        latitude: "not appliable",
         longitude: "not appliable"
     };
 
@@ -15,7 +15,7 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
                 function(p) {
                     var location = {
                         valid: true,
-                        latitude: p.coords.latitude, 
+                        latitude: p.coords.latitude,
                         longitude: p.coords.longitude
                     };
                     $scope.location = location;
@@ -69,7 +69,7 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
         $scope.location = GoogleMap["location"];
         $scope.mapAvaible = GoogleMap["success"] && $scope.location.valid;
         if (!$scope.location.valid) {
-            // flow A3: no-location, map / no-map. 
+            // flow A3: no-location, map / no-map.
             $scope.notification = "Cannot get your location";
             console.log($scope.location);
             console.log(GoogleMap);
@@ -115,11 +115,11 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
         /*
         window.setTimeout(function () {
             //document.getElementById("map").style.height = "70%";
-            window.resizeBy(50, 50); 
+            window.resizeBy(50, 50);
             console.log("time out!");
         }, 5000);
         */
-      
+
     });
 
 
@@ -129,7 +129,7 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
         //$scope.shelter_search_areaalert($scope.shelter_search_area);
         var keywordList = $scope.shelter_search_area.match(/\S+/g) || [];
         if (keywordList.length <= 0 || keywordList.length > 5) {
-            alert("Keyword number should limit 1 to 5!");
+            alertify.alert("ESN", "The keyword limit is from 1 to 5!");
             return;
         }
 
@@ -145,7 +145,7 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
                 //     drawMarkerListBySearch($scope.location, $scope.locationResult);
                 // }
                 if ($scope.searchResult.length <= 0) {
-                    alert("Cannot find city which name contains '" + $scope.shelter_search_area + "', please search again.");
+                    alertify.alert("ESN", "Cannot find city which name contains '" + $scope.shelter_search_area + "', please search again.");
                 }
             }
             else {
@@ -160,10 +160,6 @@ app.controller("shelterCtrl", function($window, $scope, $rootScope, $http, mySoc
             console.log(res);
         });
     }
-
-
-
-
 });
 
 
@@ -211,7 +207,7 @@ var drawMarkerListBySearch = function(location, cityList) {
             data.push(p);
         });
     });
-    
+
     drawMarkerList(location, data);
 }
 
@@ -281,18 +277,18 @@ var mapMarker = function (location) {
     console.log(location);
     map = new OpenLayers.Map("mapdiv");
     map.addLayer(new OpenLayers.Layer.OSM());
-    
+
     epsg4326 =  new OpenLayers.Projection("EPSG:4326"); //WGS 1984 projection
     projectTo = map.getProjectionObject(); //The map projection (Spherical Mercator)
-   
+
     var lonLat = new OpenLayers.LonLat( location.longitude - 0.007, location.latitude + 0.007 ).transform(epsg4326, projectTo);
-          
-    
+
+
     var zoom=15;
     map.setCenter (lonLat, zoom);
 
     var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
-    
+
     // Define markers as "features" of the vector layer:
     var p1 = new OpenLayers.Geometry.Point( location.longitude, location.latitude ).transform(epsg4326, projectTo);
     /*var p1 = new OpenLayers.Geometry.Point(16.373056, 48.208333);
@@ -303,15 +299,15 @@ var mapMarker = function (location) {
             p1,
             {description:'<br>You are here!<br>'} ,
             {externalGraphic: '/images/icon.png', graphicHeight: 25, graphicWidth: 21, graphicXOffset:-12, graphicYOffset:-25  }
-        );    
+        );
     vectorLayer.addFeatures(feature);
-    
+
     var feature = new OpenLayers.Feature.Vector(
             //new OpenLayers.Geometry.Point( -0.1244324, 51.5006728  ).transform(epsg4326, projectTo),
             new OpenLayers.Geometry.Point(location.longitude + 0.002, location.latitude + 0.002 ).transform(epsg4326, projectTo),
             {description:'Big Ben'} ,
             {externalGraphic: '/images/marker.png', graphicHeight: 25, graphicWidth: 21, graphicXOffset:-12, graphicYOffset:-25  }
-        );    
+        );
     vectorLayer.addFeatures(feature);
 
     var feature = new OpenLayers.Feature.Vector(
@@ -319,13 +315,13 @@ var mapMarker = function (location) {
             new OpenLayers.Geometry.Point( location.longitude - 0.002, location.latitude + 0.002  ).transform(epsg4326, projectTo),
             {description:'London Eye'} ,
             {externalGraphic: '/images/marker.png', graphicHeight: 25, graphicWidth: 21, graphicXOffset:-12, graphicYOffset:-25  }
-        );    
+        );
     vectorLayer.addFeatures(feature);
 
-   
+
     map.addLayer(vectorLayer);
- 
-    
+
+
     //Add a selector control to the vectorLayer with popup functions
     /*
     var controls = {
@@ -349,12 +345,9 @@ var mapMarker = function (location) {
       feature.popup.destroy();
       feature.popup = null;
     }
-    
+
     map.addControl(controls['selector']);
     controls['selector'].activate();
     */
     return map;
 }
-
-
-

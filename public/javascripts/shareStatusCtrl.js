@@ -33,20 +33,29 @@ app.controller("shareStatusCtrl", function($window, $scope, $rootScope, $http, m
     });
 
     $scope.setStatus = function(value) {
+        var time = new Date();
+        var msg_data = {
+           private_msg : "Your contact " + $scope.userClass["username"] + " has updated the emergency status to " + value + ".",
+           sender : "EmergencyAdmin",
+           receiver : $scope.userClass["emergencycontact"],
+           emergency_status : "Undefined",
+           timestamp : time
+        };
         $http({
             method:"post",
             url:"/userstatus",
             data: {username:$scope.userClass["username"], emergencystatus: value }
         }).success(function(rep) {
             mySocket.emit("Update Share Status", {username:$scope.userClass["username"], emergencystatus: value });
+            mySocket.emit("Private Message", msg_data);
             if (rep.success == 1) {
-                alert("Updated your status to " + value);
+                alertify.alert("ESN", "Updated your status to " + value);
                 $scope.currentstatus.emergencystatus = value;
                 $scope.userClass["status"] = value;
             }
             else {
                 console.log("Unexpected error in setting status");
-                alert("Error in setting status");
+                alertify.alert("ESN", "Error in setting status");
             }
         });
     };

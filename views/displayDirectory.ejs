@@ -3,33 +3,36 @@
     <h3> Directory </h3>
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
-            <button type="button" type="submit" ng-click="searchByStatus()" class="btn btn-default">Search By Status</button>
+            <button type="button" type="submit" ng-click="searchByStatus()" class="btn btn-default"><i class="glyphicon glyphicon-search"></i> Status</button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" type="submit" ng-click="searchByName()" class="btn btn-default">Search By Name</button>
+            <button type="button" type="submit" ng-click="searchByName()" class="btn btn-default"><i class="glyphicon glyphicon-search"></i> Name</button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" type="submit" ng-click="reset()" class="btn btn-default">Reset</button>
+            <button type="button" type="submit" ng-click="reset()" class="btn btn-default"><i class="glyphicon glyphicon-refresh"></i> Reset</button>
         </div>
     </div><br>
 
     <center>
-    <div class="btn-group" data-toggle="buttons" ng-show="searchStatus">
+    <div class="btn-group btn-group-justified" data-toggle="buttons" ng-show="searchStatus">
 
-        <label class="btn btn-primary ok"><input type="radio" name="status" id="OK" value="OK" ng-click="getStatus('OK')">OK</label>
-        <label class="btn btn-primary help"><input type="radio" name="status" id="Help" value="Help" ng-click="getStatus('Help')">Help</label>
-        <label class="btn btn-primary emergency"><input type="radio" name="status" id="Emergency" value="Emergency" ng-click="getStatus('Emergency')">Emergency</label>
+        <label class="btn btn-success"><input type="radio" name="status" id="OK" value="OK" ng-click="getStatus('OK')">OK</label>
+        <label class="btn btn-warning"><input type="radio" name="status" id="Help" value="Help" ng-click="getStatus('Help')">Help</label>
+        <label class="btn btn-danger"><input type="radio" name="status" id="Emergency" value="Emergency" ng-click="getStatus('Emergency')">Emergency</label>
 
     </div>
     </center>
+
     <div class="container" ng-show="searchName">
-        <div class="input-group">
-        <input ng-model="namesearchmsg" id="namesearchmsg" type="text" class="form-control" placeholder="Search Citizen Name" autofocus>
-            <span class="input-group-btn">
-                <button class="btn btn-info" type="submit" ng-click="searchDirectory()">Search</button>
-            </span>
-        </div>
+        <center>
+            <input style="border: 1px solid #ccc; height:30px; width:90%" ng-model="namesearchmsg" id="namesearchmsg" type="text" placeholder="Search Citizen Name" autofocus>
+            <button type="button" ng-click="searchDirectory()" class="btn btn-circle"><i class="glyphicon glyphicon-search"></i></button>
+        </center>
     </div>
+    <!--<div class="container" ng-show="searchName">-->
+        <!--<input ng-model="namesearchmsg" id="namesearchmsg" type="text" class="form-control" placeholder="Search Citizen Name" autofocus>-->
+        <!--<button class="btn btn-info btn-block" type="submit" ng-click="searchDirectory()">Search</button>-->
+    <!--</div>-->
     <table class="table">
       <thead>
         <tr>
@@ -40,27 +43,34 @@
               Status
           </th>
             <th>Chat</th>
+            <th ng-show="userClass.privilegelevel == 'Administrator'">Profile</th>
         </tr>
       </thead>
       <tr ng-repeat="user in details1">
         <td>
-            Online {{user}}
+            <i class="material-icons" style="color: #5cb85c;">radio_button_checked</i> {{user}}
         </td>
           <td>
-              {{ statusList[user]}}
+              <button ng-show="statusList[user] == 'OK'" type="button" class="btn btn-success btn-circle"><i class="glyphicon glyphicon-ok"></i></button>
+              <button ng-show="statusList[user] == 'Help'" type="button" class="btn btn-warning btn-circle"><i class="glyphicon glyphicon-exclamation-sign"></i></button>
+              <button ng-show="statusList[user] == 'Emergency'" type="button" class="btn btn-danger btn-circle"><i class="glyphicon glyphicon-remove"></i></button>
+              <button ng-show="statusList[user] == 'Undefined'" type="button" class="btn btn-circle"><i class="glyphicon glyphicon-question-sign"></i></button>
           </td>
-		<td><button ng-click="openPrivateChat(user)">Chat</button></td>
-    <td><button ng-click="showProfile(user)" ng-show="userClass.privilegelevel == 'Administrator'">Profile</button></td>
+          <td><button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-send" ng-click="openPrivateChat(user)"></i></button></td>
+          <td><button ng-click="showProfile(user)" ng-show="userClass.privilegelevel == 'Administrator'" type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-user" ng-click="showProfile(user)" ng-show="userClass.privilegelevel == 'Administrator'"></i></button></td>
       </tr>
         <tr ng-repeat="user in details2">
             <td>
-                Offline {{user}}
+                <i class="material-icons" style="color: #d9534f;">radio_button_unchecked</i> {{user}}
             </td>
             <td>
-                {{ statusList[user]}}
+                <button ng-show="statusList[user] == 'OK'" type="button" class="btn btn-success btn-circle"><i class="glyphicon glyphicon-ok"></i></button>
+                <button ng-show="statusList[user] == 'Help'" type="button" class="btn btn-warning btn-circle"><i class="glyphicon glyphicon-exclamation-sign"></i></button>
+                <button ng-show="statusList[user] == 'Emergency'" type="button" class="btn btn-danger btn-circle"><i class="glyphicon glyphicon-remove"></i></button>
+                <button ng-show="statusList[user] == 'Undefined'" type="button" class="btn btn-circle"><i class="glyphicon glyphicon-question-sign"></i></button>
             </td>
-			<td><button ng-click="openPrivateChat(user)">Chat</button></td>
-      <td><button ng-click="showProfile(user)" ng-show="userClass.privilegelevel == 'Administrator'">Profile</button></td>
+			<td><button type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-send" ng-click="openPrivateChat(user)"></i></button></td>
+            <td><button ng-click="showProfile(user)" ng-show="userClass.privilegelevel == 'Administrator'" type="button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-user" ng-click="showProfile(user)" ng-show="userClass.privilegelevel == 'Administrator'"></i></button></td>
         </tr>
     </table>
     <!--h5 ng-show="userClass.privilegelevel == 'Citizen'">123</h5-->

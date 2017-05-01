@@ -93,7 +93,7 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
 
             $scope.userClass["privateChatSender"] = param.newusername;
 
-            alert(param.profileusername+" has changed the username to "+param.newusername);
+            alertify.alert("ESN", param.profileusername+" has changed the username to "+param.newusername);
         }
     });
 
@@ -107,7 +107,7 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
             $scope.showList["privateChatList"] = true;
             $scope.showList["privateChatTable"] =true;
 
-            alert(param.profileusername+" has changed the Accountstatus");
+            alertify.alert("ESN", param.profileusername+" has changed the Accountstatus");
         }
     });
 });

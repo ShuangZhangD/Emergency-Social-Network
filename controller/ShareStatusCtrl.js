@@ -4,9 +4,53 @@
 "use strict";
 
 var dboper = require("../models/ShareStatusDBoper");
+var User = require("../models/User");
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
+let nodemailer = require("nodemailer");
+
+var InformContact = function(username, url)   {
+    console.log("Inside InformContact");
+
+    console.log("Calling the function to send a mail");
+    // create reusable transporter object using the default SMTP transport
+    SendEmail(username, url);
+    console.log("Calling the function to send a message");
+    SendPrivateChat(username, url);
+};
+
+var SendEmail = function (username, url) {
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+          user: 'emergencyservicenetworkfse@gmail.com',
+          pass: 'KomalaESN'
+      }
+    });
+
+    dboper.GetEmailForUser(username, url, transporter, function (err, results) {
+        if (err) {
+             console.log("Error in sending mail:"+ err);
+        }
+        else {
+            console.log("Sent mail");
+        }
+    });
+
+}
+
+var SendPrivateChat = function(username, url) {
+    console.log("In SendPrivateChat");
+    dboper.SendPrivateChat(username, url, function (err, results) {
+        if(err) {
+            console.log("Error in sending message");
+        }
+        else {
+            console.log("Send message");
+        }
+    });
+};
 
 class ShareStatusController {
 
@@ -21,6 +65,7 @@ class ShareStatusController {
                 res.json({success:0, err_type: 1, err_msg:results});
             }
             else {
+                InformContact(username, url);
                 res.json({success:1, suc_msg: "Success"});
             }
         });

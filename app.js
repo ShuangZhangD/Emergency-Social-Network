@@ -27,11 +27,12 @@ var ShareStatusCtrl = require("./controller/ShareStatusCtrl");
 var GroupChatCtrl = require("./controller/GroupChatCtrl.js");
 var EmergencyShelterCtrl = require("./controller/EmergencyShelterCtrl.js");
 var ProfileManagementCtrl = require("./controller/ProfileManagementCtrl.js");
+var OwnProfileManagementCtrl = require("./controller/OwnProfileManagementCtrl.js");
 
 // init data
 EmergencyShelterCtrl.initData(function (args) {});
 //TODO uncomment it back
-//ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
+ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
 
 // var sockets = require("./socket.js");
 // view engine setup
@@ -39,7 +40,9 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+// app.use(favicon(path.join(__dirname+'/favicon.ico')));
+
+// app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -96,6 +99,9 @@ app.get("/profile/:profileusername", ProfileManagementCtrl.getProfile);
 app.post("/profile", ProfileManagementCtrl.updateProfile);
 app.post("/updatename", ProfileManagementCtrl.updateName);
 app.post("/updateaccountstatus", ProfileManagementCtrl.updateAccountStatus);
+
+app.get("/ownprofile/:username", OwnProfileManagementCtrl.getOwnProfile);
+app.post("/ownprofile", OwnProfileManagementCtrl.updateOwnProfile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

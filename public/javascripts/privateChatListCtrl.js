@@ -121,7 +121,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
             var history_privatechat_set = [];
             var count = 0;
             if(all_history_privatechat.length === 0)
-                alert("There are no matches");
+                alertify.alert("ESN","There are no matches");
             for(var i=all_history_privatechat.length-1; i>=0; i--){
                 count++;
                 history_privatechat_set.push(all_history_privatechat[i]);
@@ -165,7 +165,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
         var changed_part = param.profileusername;
         if(changed_part != $scope.userClass["username"] && $scope.showList["privateChatList"]){
             getPrivateSenderList();
-            alert("someone changes the name");
+            alert("someone has changed the name.");
         }
     });
 
@@ -173,7 +173,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
         var changed_part = param.profileusername;
         if(changed_part != $scope.userClass["username"] && $scope.showList["privateChatList"]){
             getPrivateSenderList();
-            alert("someone account status changes");
+            alert("someone has changed the account status");
         }
     });
 });

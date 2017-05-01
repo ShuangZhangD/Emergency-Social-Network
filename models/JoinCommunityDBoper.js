@@ -1,7 +1,7 @@
 "use strict";
 var MongoClient = require("mongodb").MongoClient;
 var User = require("./User.js");
-
+var Message = require("./Message.js");
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 //var url = "mongodb://localhost:27017/test";
 
@@ -78,14 +78,17 @@ class JoinCommunityDBOper {
                     else {
                         new_user.createUser(db, function(result, err){
                             console.log(err);
-                            new_user.displayStatusUsers(db, "online", function(results, err) {
-                                console.log(err);
-                                var userlist = [];
-                                results.forEach(function (result) {
-                                    userlist.push(result.username);
+                            let msg = new Message ("", "", "", "", "", "", "");
+                            msg.deleteMessages(db, username, function (data, err) {
+                                new_user.displayStatusUsers(db, "online", function(results, err) {
+                                    console.log(err);
+                                    var userlist = [];
+                                    results.forEach(function (result) {
+                                        userlist.push(result.username);
+                                    });
+                                    callback(success_statuscode, userlist);
+                                    db.close();
                                 });
-                                callback(success_statuscode, userlist);
-                                db.close();
                             });
                         });
                     } // if (result>0)

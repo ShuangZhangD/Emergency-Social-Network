@@ -13,7 +13,6 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
                 $scope.profile["profilepassword"] = rep.data.newpassword;
                 $scope.profile["profileaccountstatus"] = rep.data.accountstatus;
                 $scope.profile["profileprivilegelevel"] = rep.data.privilegelevel;
-                console.log(rep.data.privilegelevel);
 
             }
             else {
@@ -71,9 +70,7 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
 
         console.log($scope.privilegelevel);
         if(!check_usr($scope.newusername) || (($scope.newpassword!= $scope.profile["profilepassword"]) && (!check_pwd($scope.newpassword)))) {
-            //alert($scope.newusername);
-            //alert($scope.newpassword);
-            alert("Username or password not according to rules");
+            alertify.alert("ESN","Username or password not according to rules");
             return;
         }
         var params = {
@@ -84,18 +81,15 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
             accountstatus:$scope.accountstatus,
             privilegelevel:$scope.privilegelevel
         };
-
         $http({
             method:"post",
             url:"/profile",
             data: params
         }).success(function(rep) {
             if (rep.success == 1) {
-                alert("Updated the profile!");
-                alert("old username"+$scope.profile["profileusername"]);
-                alert("new username"+$scope.newusername);
+                alertify.alert("ESN","Updated the profile!");
                 if($scope.profile["profileusername"] != $scope.newusername){
-                    alert("Updated Name!");
+                    //alert("Updated Name!");
                     updateName(params);
                 }
                 if($scope.profile["profilepassword"] != $scope.newpassword){
@@ -117,7 +111,8 @@ app.controller("ProfileManagementCtrl", function($window, $scope, $rootScope, $h
             }
             else {
                 console.log("Error in updating profile");
-                alert("Username already in use, please choose a different username.");
+                console.log(rep);
+                alertify.alert("ESN","Username already in use, please choose a different username.");
             }
         });
     };
