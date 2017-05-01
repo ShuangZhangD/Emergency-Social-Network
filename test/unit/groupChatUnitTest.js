@@ -144,6 +144,213 @@ suite('Group Chat Test', function(){
         });
     });
 
+    test('Group Chat Get Group Message2', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake, function(statuscode, content){
+            expect(statuscode).to.equal(200);
+
+            dboper.LoadHistoryMsg(fake,function(statuscode, content){
+                //expect(data.body.data).to.equal("OK");
+                expect(statuscode).to.equal(200);
+
+                //console.log(content[content.length-1]["private_msg"]);
+                done();
+            });
+        });
+    });
+
+    test('Group Chat Get Group Message3', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake, function(statuscode, content){
+            expect(statuscode).to.equal(200);
+
+            dboper.LoadHistoryMsg(fake,function(statuscode, content){
+                //expect(data.body.data).to.equal("OK");
+                expect(statuscode).to.equal(200);
+
+                //console.log(content[content.length-1]["private_msg"]);
+                done();
+            });
+        });
+    });
+
+    test('Group Chat Get Group Message4', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake, function(statuscode, content){
+            expect(statuscode).to.equal(200);
+
+            dboper.LoadHistoryMsg(fake,function(statuscode, content){
+                //expect(data.body.data).to.equal("OK");
+                expect(statuscode).to.equal(200);
+
+                //console.log(content[content.length-1]["private_msg"]);
+                done();
+            });
+        });
+    });
+
+    test('Group Chat Get Group Message5', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake, function(statuscode, content){
+            expect(statuscode).to.equal(200);
+
+            dboper.LoadHistoryMsg(fake,function(statuscode, content){
+                //expect(data.body.data).to.equal("OK");
+                expect(statuscode).to.equal(200);
+
+                //console.log(content[content.length-1]["private_msg"]);
+                done();
+            });
+        });
+    });
+
+    test('Group Chat Get Group Message6', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake, function(statuscode, content){
+            expect(statuscode).to.equal(200);
+
+            dboper.LoadHistoryMsg(fake,function(statuscode, content){
+                //expect(data.body.data).to.equal("OK");
+                expect(statuscode).to.equal(200);
+
+                //console.log(content[content.length-1]["private_msg"]);
+                done();
+            });
+        });
+    });
+
+    test('Group Chat Get Group Message7', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake, function(statuscode, content){
+            expect(statuscode).to.equal(200);
+
+            dboper.LoadHistoryMsg(fake,function(statuscode, content){
+                //expect(data.body.data).to.equal("OK");
+                expect(statuscode).to.equal(200);
+
+                //console.log(content[content.length-1]["private_msg"]);
+                done();
+            });
+        });
+    });
+
+    test('Group Chat Get Group Message8', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake, function(statuscode, content){
+            expect(statuscode).to.equal(200);
+
+            dboper.LoadHistoryMsg(fake,function(statuscode, content){
+                //expect(data.body.data).to.equal("OK");
+                expect(statuscode).to.equal(200);
+
+                //console.log(content[content.length-1]["private_msg"]);
+                done();
+            });
+        });
+    });
+
+    test('Group Chat Get Group Message9', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake, function(statuscode, content){
+            expect(statuscode).to.equal(200);
+
+            dboper.LoadHistoryMsg(fake,function(statuscode, content){
+                //expect(data.body.data).to.equal("OK");
+                expect(statuscode).to.equal(200);
+
+                //console.log(content[content.length-1]["private_msg"]);
+                done();
+            });
+        });
+    });
+
+    test('Group Chat Get Group Message10', function(done){
+        let dboper = new GroupChatDBOper("testgroup","shuang", url);
+        var fake = {
+            "sender": "keqin",
+            "receiver": "testgroup",
+            "message": "group chat function",
+            "type": "group",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        };
+        dboper.InsertMessage(fake, function(statuscode, content){
+            expect(statuscode).to.equal(200);
+
+            dboper.LoadHistoryMsg(fake,function(statuscode, content){
+                //expect(data.body.data).to.equal("OK");
+                expect(statuscode).to.equal(200);
+
+                //console.log(content[content.length-1]["private_msg"]);
+                done();
+            });
+        });
+    });
+
 
     test('Group Chat Get All Group DB Error', function(done){
         let dboper = new GroupChatDBOper("testgroup","shuang", error_url);

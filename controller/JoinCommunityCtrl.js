@@ -39,13 +39,6 @@ var IfKeyWordExist = function (key_words, msg){
 };
 
 class JoinCommunityController {
-/*
-    Validate (username, password) {
-        if( /\w{3,}/.test(username) && /\w{4,}/.test(password) )
-            return true;
-        else
-            return false;
-    }*/
 
     SortUserList (userlist) {
         //userlist should be an array of users
@@ -172,13 +165,6 @@ class JoinCommunityController {
             }
         });
     }
-    /*IfKeyWordExist(key_words, msg){
-        for(var i = 0 ; i < key_words.length ; i++){
-            if(msg != null && msg.includes(key_words[i]))
-                return true;
-        }
-        return false;
-    }*/
 
     SearchUserByName (req, res){
         var keywords = req.body;
@@ -226,13 +212,9 @@ class JoinCommunityController {
                 res.json({success:0, err_type: 1, err_msg:content1});
             }
             else{
-              // var directory_search_result1 = [];
-              // var directory_search_result2 = [];
 
                 var sorted_content1 = SortUserList(content1);
                 var sorted_content2 = SortUserList(content2);
-                //console.log("directory_search_result1" + directory_search_result1);
-                //console.log("search user by name" + sorted_content1);
                 dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode, user_status) {
                     var directory_search_result1 = [];
                     var directory_search_result2 = [];
