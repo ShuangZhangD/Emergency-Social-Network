@@ -6,8 +6,9 @@
 var MongoClient = require("mongodb").MongoClient;
 var Message = require("./Message.js");
 var db_err_msg = "Database Error";
-var db_err_statuscode = 400;
 var success_statuscode = 200;
+var db_err_statuscode = 400;
+
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 
 class PublicChatDBoper {
@@ -57,8 +58,8 @@ class PublicChatDBoper {
                     callback(err,datas);
                 }
                 db.close();
-            });
-        });
+            })
+        })
     }
 
     SearchPublicMessages(words, url, callback) {

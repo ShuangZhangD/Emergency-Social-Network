@@ -155,8 +155,8 @@ class Message {
 
     getAllMessagesForSearch(db, username, words, callback) {
         this.collection = db.collection("MESSAGES");
-        var datas=[];
         var searchTerm = words[0];
+        var datas=[];
         words.forEach(function(word) {
             searchTerm=searchTerm+"|"+word;
         });

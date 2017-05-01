@@ -31,8 +31,8 @@ class PrivateChatDBOper {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
             else {
-                var sender = message.sender;
                 var receiver = message.receiver;
+                var sender = message.sender;
                 var msg = message.PrivateMsg;
                 var status = message.emergency_status;
                 var time = message.timestamp;
@@ -118,11 +118,11 @@ class PrivateChatDBOper {
                                 if(i == unread_senderlist.length-1){
                                     callback(success_statuscode, results);
                                 }
-                            });
+                            })
                         })(i);
                     }
                     db.close();
-                });
+                })
             }
         });
     }
