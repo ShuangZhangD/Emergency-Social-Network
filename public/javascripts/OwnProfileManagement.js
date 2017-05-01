@@ -32,12 +32,12 @@ app.controller("OwnProfileManagementCtrl", function($window, $scope, $rootScope,
             emergencycontact:$scope.emergencycontact,
             contactemail:$scope.contactemail
         };
-      
+
         if ((($scope.email == undefined) || ($scope.email == "") || (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.com)+$/.test($scope.email))) && (($scope.contactemail == undefined) || ($scope.contactemail=="") || (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.com)+$/.test($scope.contactemail)))) {
             console.log("Valid emails");
         }
         else {
-            alert("Invalid email format. The format should be of the form <sample@mail.com>.");
+            alertify.alert("ESN","Invalid email format. The format should be of the form <sample@mail.com>.");
             return;
         }
 
@@ -48,11 +48,11 @@ app.controller("OwnProfileManagementCtrl", function($window, $scope, $rootScope,
             data: params
         }).success(function(rep) {
             if (rep.success == 1) {
-                alert("Updated your profile!");
+                alertify.alert("ESN","Updated your profile!");
             }
             else {
                 console.log("Unexpected error in updating profile");
-                alert("Error in updating your profile, please try again.");
+                alertify.alert("ESN","Error in updating your profile, please try again.");
             }
         });
     };
