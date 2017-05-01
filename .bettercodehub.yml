@@ -3,6 +3,7 @@ exclude:
 - /StaticAnalysis/.*
 - /routes/.*
 - /socket.js
+- /public/javascripts/alertify.js
 component_depth: 1
 languages:
 - javascript
