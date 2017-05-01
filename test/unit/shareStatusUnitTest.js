@@ -104,7 +104,7 @@ suite('Share Status Tests', function(){
                 expect(err).to.equal(null);
                 dboper.Getsharestatus(name, url, function(err, results1){
                     expect(results1["emergencystatus"]).to.equal("OK");
-                    testDB.collection("USERS").drop();
+                    //testDB.collection("USERS").drop();
                     done();
                 });
             });
@@ -163,13 +163,13 @@ suite('Share Status Tests', function(){
      });
      });
 
-    test('Sending message to Emergency Contact', function(done){
-        dboper.SendPrivateChat("test123", url, function(err, results) {
-            console.log(results);
-            expect(err).to.equal(null);
-            done();
-        });
-    });
+    // test('Sending message to Emergency Contact', function(done){
+    //     dboper.SendPrivateChat("test123", url, function(err, results) {
+    //         console.log(results);
+    //         expect(err).to.equal(null);
+    //         done();
+    //     });
+    // });
 
     test('Share Status Send Email DB Error', function(done){
      let transporter = nodemailer.createTransport({
