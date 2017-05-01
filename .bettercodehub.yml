@@ -1,0 +1,8 @@
+exclude:
+- /Gruntfile.js
+- /StaticAnalysis/.*
+- /routes/.*
+- /socket.js
+component_depth: 1
+languages:
+- javascript
