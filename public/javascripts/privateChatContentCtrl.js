@@ -12,7 +12,7 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
         $scope.newMsgs = [];
         $http({
             method:"get",
-            url:"/privatechat/" + $scope.userClass["privateChatSender"] + "/" + $scope.userClass["username"]  // TODO helen define this API
+            url:"/privatechat/" + $scope.userClass["privateChatSender"] + "/" + $scope.userClass["username"]
         }).success(function(rep) {
             $scope.privateMsgs = rep.data;
             $scope.newMsgs = [];
@@ -49,7 +49,7 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
             url : "/privatechat",
             data : msg_data
         }).success(function (rep) {
-				// TODO socket.io
+
             if (rep.success == 1) {
                 var msg_data_2 = {
                     sender : $scope.userClass["username"],
@@ -69,7 +69,7 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
         });
     };
 
-    // TODO socket.io
+
     mySocket.on("PrivateChat", function(data) {
         if ($scope.showList.privateChatContent && $scope.userClass["privateChatSender"] == data.sender) {
             $scope.privateMsgs.push(data);

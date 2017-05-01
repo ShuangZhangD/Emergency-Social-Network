@@ -50,12 +50,7 @@ class GroupChatCtrl{
 
         let dboper = new GroupChatDBOper(group, username, url);
         dboper.leaveGroup(function(err, content){
-            // if(err){
-            //     res.json({success:0, err_type: 1, err_msg:content});
-            // }
-            // else{
                 res.json({success:1, suc_msg: "Success"});
-            // }
         });
     }
 
