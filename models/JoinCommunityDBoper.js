@@ -45,10 +45,10 @@ class JoinCommunityDBOper {
                             else {
                                 var privilegelevel = pwdres[0].privilegelevel;
                                 new_user.updateStatus(db, username, "online", function(updateres, err) {console.log(err);});
-                                new_user.displayStatusUsers(db, "online", function(results, err) {
+                                new_user.displayStatusUsers(db, "online", function(results_login, err) {
                                     console.log(err);
                                     var userlist = [];
-                                    results.forEach(function(result) {
+                                    results_login.forEach(function(result) {
                                         userlist.push(result.username);
                                     });
                                     callback(success_statuscode, {userlist: userlist, privilegelevel: privilegelevel});

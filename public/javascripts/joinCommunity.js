@@ -67,6 +67,20 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             });
         }
     };
+    var login_changestatus = function(tmpUsername){
+        $scope.logined = true;
+        $scope.showList.login = false;
+        $scope.showList.directory = true;
+        showDirectory();
+        // displayDirectory($scope, $http);
+        mySocket.emit("userJoinCommunity", tmpUsername);
+        // After logged in, get announcements, private chats, etc.
+        $rootScope.$emit("loginGetAnnouncement");
+        $rootScope.$emit("loginGetPrivateChatList");
+        $rootScope.$emit("loginGetShareStatus");
+        $rootScope.$emit("loginGetGroupList");
+        $rootScope.$emit("loginGetProfile");
+    }
     var addUser = function(tmpUsername) {
         //var add=0;
         var add = confirm("User does not exist, do you want to sign up?");
@@ -81,18 +95,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     // sign up success
                     alertify.alert("ESN","Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
                     $scope.userClass["username"] = tmpUsername;
-                    $scope.logined = true;
-                    $scope.showList.login = false;
-                    $scope.showList.directory = true;
-                    showDirectory();
-                    // displayDirectory($scope, $http);
-                    mySocket.emit("userJoinCommunity", tmpUsername);
-                    // After logged in, get announcements, private chats, etc.
-                    $rootScope.$emit("loginGetAnnouncement");
-                    $rootScope.$emit("loginGetPrivateChatList");
-                    $rootScope.$emit("loginGetShareStatus");
-                    $rootScope.$emit("loginGetGroupList");
-                    $rootScope.$emit("loginGetProfile");
+                    login_changestatus(tmpUsername);
 
                 }
                 else {
@@ -134,20 +137,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     $scope.userClass["username"] = tmpUsername;
                     $scope.userClass["privilegelevel"] = rep.privilegelevel;
                     $scope.test = "456";
-                    $scope.logined = true;
-                    $scope.showList.login = false;
-                    $scope.showList.directory = true;
-                    showDirectory();
-                    // displayDirectory($scope, $http);
-                    //socket !!!
-                    mySocket.emit("userJoinCommunity", tmpUsername);
-
-                    // After logged in, get announcements, private chats, etc. (public chat seems ....)
-                    $rootScope.$emit("loginGetAnnouncement");
-                    $rootScope.$emit("loginGetPrivateChatList");
-                    $rootScope.$emit("loginGetShareStatus");
-                    $rootScope.$emit("loginGetGroupList");
-                    $rootScope.$emit("loginGetProfile");
+                    login_changestatus(tmpUsername);
                 }
                 else {
                     // login failed
@@ -212,6 +202,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
 
 
     $scope.showPublicChat = function () {
+        $rootScope.$emit("loginGetPublicChat");
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
@@ -251,13 +242,11 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             url : "/userlist/searchstatus/",
             data: {value:value}
         }).success(function(req){
-
-            console.log("In search");
             console.log(req.data1);
             if(req.data1.length ===0 && req.data2.length ===0)
                 alertify.alert("ESN", "There are no matches");
-            $scope.details1 = req.data1;
             $scope.details2 = req.data2;
+            $scope.details1 = req.data1;
 
         });
 
@@ -302,6 +291,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
       //}
     };
     $scope.showAnnouncement = function () {
+        $rootScope.$emit("loginGetAnnouncement");
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
@@ -345,27 +335,27 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
     mySocket.on("userleft",function(){
         showDirectory();
     });
-
-    mySocket.on("windowclose", function(){
-        if ($scope.logined) {
-            $http({
-                method:"post",
-                url:"/logout",
-                data:{username:$scope.username}
-            }).success(function(rep){
-                // logout
-                console.log(rep);
-                $scope.logined = false;
-                $scope.directoryShow = false;
-                $scope.loginShow = true;
-            });
-            mySocket.emit("left");
-        }
-        for (var item in $scope.showList) {
-            $scope.showList[item] = false;
-        }
-        $scope.showList["login"] = true;
-    });
+    //maybe need to remove
+    // mySocket.on("windowclose", function(){
+    //     if ($scope.logined) {
+    //         $http({
+    //             method:"post",
+    //             url:"/logout",
+    //             data:{username:$scope.username}
+    //         }).success(function(rep){
+    //             // logout
+    //             console.log(rep);
+    //             $scope.logined = false;
+    //             $scope.directoryShow = false;
+    //             $scope.loginShow = true;
+    //         });
+    //         mySocket.emit("left");
+    //     }
+    //     for (var item in $scope.showList) {
+    //         $scope.showList[item] = false;
+    //     }
+    //     $scope.showList["login"] = true;
+    // });
 
     mySocket.on("Name Change", function(data) {
         if(data["profileusername"] == $scope.userClass["username"]){

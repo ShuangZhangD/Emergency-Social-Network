@@ -27,6 +27,8 @@ var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 // var server = request.agent("http://localhost:5000");
 
+var dboper = require("../../models/ProfileManagementDBoper");
+
 var test_ESNAdmin = {
     "username": "ESNAdmin",
     "password": "21232f297a57a5a743894a0e4a801fc3",
@@ -54,6 +56,41 @@ var test_ESNAdmin_citizen = {
     "privilegelevel": "Citizen"
 };
 
+var test_profile_1 = {
+    profileusername: "test_profile_1",
+    accountstatus: "Active",
+    privilegelevel: "Citizen",
+    newpassword: "1234",
+    profilepassword: "1234",
+    newusername: "test_profile_1"
+};
+
+var test_user_1 = {
+    "username": "test_user_1",
+    "password": "21232f297a57a5a743894a0e4a801fc3",
+    "status": "online",
+    "emergencystatus": "OK",
+    "accountstatus": "Active",
+    "privilegelevel": "Citizen"
+};
+
+var test_user_2 = {
+    "username": "test_user_2",
+    "password": "21232f297a57a5a743894a0e4a801fc3",
+    "status": "online",
+    "emergencystatus": "OK",
+    "accountstatus": "Active",
+    "privilegelevel": "Citizen"
+};
+
+var test_profile_2 = {
+    profileusername: "test_profile_1",
+    accountstatus: "Active",
+    privilegelevel: "Citizen",
+    newpassword: "1234",
+    profilepassword: "1234",
+    newusername: "test_user_2"
+};
 
 suite('Profile Management Unit Tests', function(){
     this.timeout(15000);
@@ -114,6 +151,118 @@ suite('Profile Management Unit Tests', function(){
                             expect(results.length).to.equal(0);
                             done();
                         });
+                    });
+                });
+            });
+        });
+    });
+
+    test("Test Error url updateProfileForUser", function(done) {
+        dboper.updateProfileForUser("test_profile_1", test_profile_1, error_url, function (code, msg) {
+            expect(code).to.equal(400);
+            expect(msg).to.equal("Database Error");
+            done();
+        });
+    });
+
+    test("Test Error url getProfileForUser", function(done) {
+        dboper.getProfileForUser("test_profile_1", error_url, function (code, msg) {
+            expect(code).to.equal(400);
+            expect(msg).to.equal("Database Error");
+            done();
+        });
+    });
+
+    test("Test Error url updateName", function(done) {
+        dboper.updateName("test_profile_1", test_profile_1, error_url, function (code, msg) {
+            expect(code).to.equal(400);
+            expect(msg).to.equal("Database Error");
+            done();
+        });
+    });
+
+    test("Test Error url updateAccountStatus", function(done) {
+        dboper.updateAccountStatus("test_profile_1", test_profile_1, error_url, function (code, msg) {
+            expect(code).to.equal(400);
+            expect(msg).to.equal("Database Error");
+            done();
+        });
+    });
+
+    test("Test updateProfileForUser success", function(done) {
+        MongoClient.connect(dbconfig.getURL(), function(err, db) {
+            expect(err).to.equal(null);
+            var collection = db.collection("USERS");
+            collection.remove({}, function (err, results) {
+                collection.insert(test_user_1, function (err, results) {
+                    expect(err).to.equal(null);
+                    dboper.updateProfileForUser("test_user_1", test_profile_1, dbconfig.getURL(), function (code, msg) {
+                        expect(code).to.equal(null);
+                        done();
+                    });
+                });
+            });
+        });
+    });
+
+    test("Test updateProfileForUser userexists", function(done) {
+        MongoClient.connect(dbconfig.getURL(), function(err, db) {
+            expect(err).to.equal(null);
+            var collection = db.collection("USERS");
+            collection.remove({}, function (err, results) {
+                collection.insert(test_user_1, function (err, results) {
+                    expect(err).to.equal(null);
+                    collection.insert(test_user_2, function (err, results) {
+                        expect(err).to.equal(null);
+                        // want to change "test_user_1" to "test_user_2"
+                        dboper.updateProfileForUser("test_user_1", test_profile_2, dbconfig.getURL(), function (code, msg) {
+                            expect(code).to.equal(405);
+                            done();
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    test("Test getProfileForUser", function(done) {
+        MongoClient.connect(dbconfig.getURL(), function(err, db) {
+            expect(err).to.equal(null);
+            var collection = db.collection("USERS");
+            collection.remove({}, function (err, results) {
+                collection.insert(test_user_1, function (err, results) {
+                    dboper.getProfileForUser("test_user_1", dbconfig.getURL(), function (err, data) {
+                        expect(data.newusername).to.equal("test_user_1");
+                        done();
+                    });
+                });
+            });
+        });
+    });
+
+    test("Test updateName", function(done) {
+        MongoClient.connect(dbconfig.getURL(), function(err, db) {
+            expect(err).to.equal(null);
+            var collection = db.collection("USERS");
+            collection.remove({}, function (err, results) {
+                collection.insert(test_user_1, function (err, results) {
+                    dboper.updateName("test_user_1", test_profile_2, dbconfig.getURL(), function (err, data) {
+                        expect(err).to.equal(null);
+                        done();
+                    });
+                });
+            });
+        });
+    });
+    test("Test updateAccountStatus", function(done) {
+        MongoClient.connect(dbconfig.getURL(), function(err, db) {
+            expect(err).to.equal(null);
+            var collection = db.collection("USERS");
+            collection.remove({}, function (err, results) {
+                collection.insert(test_user_1, function (err, results) {
+                    dboper.updateAccountStatus("test_user_1", test_profile_2, dbconfig.getURL(), function (err, data) {
+                        expect(err).to.equal(null);
+                        done();
                     });
                 });
             });

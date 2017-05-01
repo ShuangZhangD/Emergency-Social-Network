@@ -154,7 +154,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
     // For Test
     //$scope.privateSenderList = [{"sender":"helen","count":0},{"sender":"ivy","count":3}];
 
-    // TODO socket.io
+
 // Open Private Chat Content Page of a sender.
     $scope.openMsg = function (group) {
 
@@ -221,7 +221,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
         });
     };
 
-    // TODO socket.io
+
     mySocket.on("GroupChat", function(data) {
         if ($scope.showList.groupChatContent && $scope.userClass["groupChatSender"] == data.receiver) {
             $scope.groupMsgs.push(data);

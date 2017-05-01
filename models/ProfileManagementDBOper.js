@@ -52,7 +52,7 @@ class ProfileManagementDBoper{
             }
             else {
                 var usercollection = db.collection("USERS");
-                // To do here, invoke dbmethods to get particular user"s status
+
                 var data={};
                 usercollection.find({"username": profileusername}).toArray(function(err, results){
                       results.forEach(function(result){

@@ -26,19 +26,11 @@ class PrivateChatSocketCtrl{
             var status = msg.emergency_status;
             msg["timestamp"] = Date.now();
             msg["EmergencyStatus"] = status;
-            //socket.emit("PrivateChat", msg);
             if (ConnectedSockets.hasOwnProperty(receiver)) {
                 ConnectedSockets[receiver].emit("PrivateChat", msg);
                 //emit update notification of unread
                 //emit count of all unread msg(public + private)
                 let dboper = new PrivateChatDBOper(sender, receiver, url);
-                /*dboper.GetCount_AllUnreadMsg(function (statuscode, count) {
-                 if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("AllUnreadMsgCnt", count);
-                 });
-                 //emit count of all unread msg(private)
-                 dboper.GetCount_AllPrivateUnreadMsg(function (statuscode, count) {
-                 if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("AllPrivateUnreadMsgCnt", count);
-                 });*/
                 //emit individual count of unread msg(private)
                 dboper.GetCount_IndividualUnreadMsg(function (statuscode, results) {
                     if (statuscode == success_statuscode) ConnectedSockets[receiver].emit("IndividualPrivateUnreadMsgCnt", results);
@@ -118,26 +110,6 @@ class PrivateChatSocketCtrl{
         });
     }
 
-    /*
-     For testing, ignore it
-     */
-    /*privateMessageTest (req,res){
-     // emit msg
-     // msg should be in form of {"sender": , "receiver": , "private_msg": }
-     var receiver = req.param("receiver");
-     let dboper = new PrivateChatDBOper("", receiver, url);
-     console.log(res);
-     //emit individual count of unread msg(private)
-     dboper.Get_LatestIndividualUnreadMsg(function (statuscode, results) {
-     if (statuscode == success_statuscode) {
-     console.dir(results);
-     }
-     });
-
-     dboper.GetUserEmergencyStatus(receiver, function(statuscode, status){
-     console.log("STATUS:" + status);
-     });
-     }*/
 
     /* Called in socket.io when private msg between sender and receiver are read
      * It is supposed to be called when receiver is in private chat page with sender, which means all the message sent

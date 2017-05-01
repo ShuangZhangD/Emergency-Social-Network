@@ -16,6 +16,7 @@ var express = require('express');
 var dboper = require("../../models/ShareStatusDBoper");
 var createoper = require("../../models/User.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
+//var nodemailer = require("nodemailer");
 
 var app = express();
 
@@ -103,7 +104,7 @@ suite('Share Status Tests', function(){
                 expect(err).to.equal(null);
                 dboper.Getsharestatus(name, url, function(err, results1){
                     expect(results1["emergencystatus"]).to.equal("OK");
-                    testDB.collection("USERS").drop();
+                    //testDB.collection("USERS").drop();
                     done();
                 });
             });
@@ -131,6 +132,58 @@ suite('Share Status Tests', function(){
             done();
         });
     });
+
+    // test('Sending mail to Emergency Contact', function(done){
+    //  let transporter = nodemailer.createTransport({
+    //  service: 'gmail',
+    //  auth: {
+    //  user: 'emergencyservicenetworkfse@gmail.com',
+    //  pass: 'KomalaESN'
+    //  }
+    //  });
+    //  dboper.GetEmailForUser("test123", url, transporter, function(err, results) {
+    //  console.log(results);
+    //  expect(err).to.equal(null);
+    //  done();
+    //  });
+    //  });
+    //
+    //  test('Sending mail to Invalid Emergency Contact', function(done){
+    //  let transporter = nodemailer.createTransport({
+    //  service: 'gmail',
+    //  auth: {
+    //  user: 'emergencyservicenetworkfse@gmail.com',
+    //  pass: 'KomalaESN'
+    //  }
+    //  });
+    //  dboper.GetEmailForUser("test1234", url, transporter, function(err, results) {
+    //  console.log(results);
+    //  expect(err).to.equal(null);
+    //  done();
+    //  });
+    //  });
+
+    // test('Sending message to Emergency Contact', function(done){
+    //     dboper.SendPrivateChat("test123", url, function(err, results) {
+    //         console.log(results);
+    //         expect(err).to.equal(null);
+    //         done();
+    //     });
+    // });
+
+    // test('Share Status Send Email DB Error', function(done){
+    //  let transporter = nodemailer.createTransport({
+    //  service: 'gmail',
+    //  auth: {
+    //  user: 'emergencyservicenetworkfse@gmail.com',
+    //  pass: 'KomalaESN'
+    //  }
+    //  });
+    //  dboper.GetEmailForUser("test1234", error_url, transporter, function(err, results) {
+    //  expect(err).to.equal(400);
+    //  done();
+    //  });
+    //  });
 
 
 });
