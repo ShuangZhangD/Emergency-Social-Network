@@ -88,8 +88,9 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
             for (var item in $scope.showList) {
                 $scope.showList[item] = false;
             }
-            $scope.showList["privateChatList"] = true;
             $scope.showList["privateChatTable"] =true;
+            $scope.showList["privateChatList"] = true;
+
 
             $scope.userClass["privateChatSender"] = param.newusername;
 

@@ -67,15 +67,15 @@ class Message {
             "receiveraccountstatus" : "Active",
             "type": "private"
         }).toArray(function (err, results) {
-            console.log(err);
             var datas = [];
+            console.log(err);
             results.forEach(function (result) {
                 var data = {};
-                data["sender"] = result.sender;
                 data["receiver"] = result.receiver;
+                data["sender"] = result.sender;
                 data["private_msg"] = result.message;
-                data["timestamp"] = result.postTime;
                 data["emergency_status"] = result.emergencystatus;
+                data["timestamp"] = result.postTime;
                 datas.push(data);
             });
             //var jsonString = JSON.stringify(datas);
@@ -94,9 +94,9 @@ class Message {
                 var data = {};
                 data["sender"] = result.sender;
                 data["receiver"] = result.receiver;
-                data["group_msg"] = result.message;
                 data["timestamp"] = result.postTime;
                 data["emergency_status"] = result.emergencystatus;
+                data["group_msg"] = result.message;
                 datas.push(data);
             });
             //var jsonString = JSON.stringify(datas);
@@ -155,8 +155,8 @@ class Message {
 
     getAllMessagesForSearch(db, username, words, callback) {
         this.collection = db.collection("MESSAGES");
-        var datas=[];
         var searchTerm = words[0];
+        var datas=[];
         words.forEach(function(word) {
             searchTerm=searchTerm+"|"+word;
         });
@@ -188,8 +188,8 @@ class Message {
             console.log(err);
             results.forEach(function (result) {
                 var data = {};
-                data["username"] = result.sender;
                 data["pubmsg"] = result.message;
+                data["username"] = result.sender;
                 data["timestamp"] = result.postTime;
                 data["emergencystatus"] = result.emergencystatus;
                 datas.push(data);

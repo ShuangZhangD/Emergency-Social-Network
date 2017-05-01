@@ -12,8 +12,9 @@ var MongoClient = require("mongodb").MongoClient;
 var Message = require("./Message.js");
 
 var db_err_msg = "Database Error";
-var db_err_statuscode = 400;
 var success_statuscode = 200;
+var db_err_statuscode = 400;
+
 
 class PrivateChatDBOper {
 
@@ -30,8 +31,8 @@ class PrivateChatDBOper {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
             else {
-                var sender = message.sender;
                 var receiver = message.receiver;
+                var sender = message.sender;
                 var msg = message.PrivateMsg;
                 var status = message.emergency_status;
                 var time = message.timestamp;
@@ -50,15 +51,15 @@ class PrivateChatDBOper {
      * Also update all unread private msg to be read
      */
     LoadHistoryMsg(callback) {
-        var sender = this.sender;
-        var receiver = this.receiver;
+        var Receiver = this.receiver;
+        var Sender = this.sender;
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
-            }// DB Error. Here error of connecting to db
+            }
             else {
                 //set all <sender,receiver> private messages to be read
-                let MSG = new Message(sender, receiver, "", "", "", "", "");
+                let MSG = new Message(Sender, Receiver, "", "", "", "", "");
                 MSG.updateReadStatus(db, function (result, err) {
                     console.log(err);
                     //load all private messages between sender and receiver
@@ -94,34 +95,34 @@ class PrivateChatDBOper {
      * return type is an object
      */
     GetCount_IndividualUnreadMsg(callback) {
-        var receiver = this.receiver;
+        var receiver_unread = this.receiver;
         MongoClient.connect(this.url, function (err, db) {
             if (err) {
                 callback(db_err_statuscode, db_err_msg);
             }// DB Error. Here error of connecting to db
             else {
-                let MSG = new Message("", receiver, "", "", "", "", "");
-                MSG.getUnreadMsgSenderList(db, function (senderlist, err) {
+                let MSG = new Message("", receiver_unread, "", "", "", "", "");
+                MSG.getUnreadMsgSenderList(db, function (unread_senderlist, err) {
                     console.log(err);
                     var results = [];
-                    if(senderlist.length == 0)callback(success_statuscode, results);
-                    for(var i = 0 ; i < senderlist.length;i++){
+                    if(unread_senderlist.length == 0)callback(success_statuscode, results);
+                    for(var i = 0 ; i < unread_senderlist.length;i++){
                         (function (i) {
-                            var sender = senderlist[i];
-                            MSG.getCount_PrivateUnreadMsg(db, sender, receiver, function (count, err) {
-                                console.log(err);
+                            var sender = unread_senderlist[i];
+                            MSG.getCount_PrivateUnreadMsg(db, sender, receiver_unread, function (count, err) {
                                 var result = {};
+                                console.log(err);
                                 result["sender"] = sender;
                                 result["count"] = count;
                                 results.push(result);
-                                if(i == senderlist.length-1){
+                                if(i == unread_senderlist.length-1){
                                     callback(success_statuscode, results);
                                 }
-                            });
+                            })
                         })(i);
                     }
                     db.close();
-                });
+                })
             }
         });
     }

@@ -4,10 +4,10 @@
 "use strict";
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
+var success_statuscode = 200;
 var url = dbconfig.getURL();
 var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
 
-var success_statuscode = 200;
 class PrivateChatCtrl{
     /* Insert a private message into database
      */
