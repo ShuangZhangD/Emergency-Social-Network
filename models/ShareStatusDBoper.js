@@ -26,7 +26,7 @@ class ShareStatusDBoper{
             else {
                 var usercollection = db.collection("USERS");
                 usercollection.update({"username": username}, {$set :{"emergencystatus":emergencystatus}},callback);
-                //To do here, invoke dbmethods to update user status
+
                 db.close();
             }
         });
@@ -43,7 +43,7 @@ class ShareStatusDBoper{
 
                 var usercollection = db.collection("USERS");
               //  usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
-                //To do here, invoke dbmethods to get particular user"s status
+
                 var data={};
 
                 usercollection.find({"username": username}).toArray(function(err, results){
@@ -79,7 +79,7 @@ class ShareStatusDBoper{
 
               var usercollection = db.collection("USERS");
             //  usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
-              //To do here, invoke dbmethods to get particular user"s status
+
 
               usercollection.find({"username": username}).toArray(function(err, results){
                   if(err) {
@@ -123,7 +123,7 @@ class ShareStatusDBoper{
           else {
               var usercollection = db.collection("USERS");
             //  usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
-              //To do here, invoke dbmethods to get particular user"s status
+
               var data={};
               usercollection.find({"username": username}).toArray(function(err, results){
                                       var time = new Date();

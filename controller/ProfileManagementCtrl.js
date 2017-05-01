@@ -11,7 +11,6 @@ class ProfileManagementController {
     updateProfile(req, res){
         console.log("In updateProfile in ProfileManagementCtrl");
         var info = req.body;
-        // console.log(req);
         var profileusername = info["profileusername"];
 
         dboper.updateProfileForUser(profileusername, info, url, function (err, results) {
@@ -32,7 +31,6 @@ class ProfileManagementController {
         var profileusername = req.params.profileusername;
         dboper.getProfileForUser(profileusername, url, function(err, results){
             if(err) {
-                // console.log("Error:" +err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }
             else {
@@ -43,16 +41,13 @@ class ProfileManagementController {
     updateName(req, res){
         console.log("In updateName in ProfileManagementCtrl");
         var info = req.body;
-        // console.log(req);
         var profileusername = info["profileusername"];
         console.log("going to call");
         dboper.updateName(profileusername, info, url, function (err, results) {
             if (err) {
-                // console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
             }
             else {
-                //console.log(results);
                 res.json({success:1, suc_msg: "Success"});
             }
         });
@@ -61,16 +56,13 @@ class ProfileManagementController {
     updateAccountStatus(req, res){
         console.log("999======In updateAccountStatus in ProfileManagementCtrl");
         var info = req.body;
-        // console.log(req);
         var profileusername = info["profileusername"];
 
         dboper.updateAccountStatus(profileusername, info, url, function (err, results) {
             if (err) {
-                // console.log("Error:"+ err);
                 res.json({success:0, err_type: 1, err_msg:results});
             }
             else {
-                //console.log(results);
                 res.json({success:1, suc_msg: "Success"});
             }
         });

@@ -47,7 +47,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
     var getPrivateSenderList = function() {
         $http({
             method:"get",
-            url:"/privatechat/" + $scope.userClass["username"]  // TODO helen define this API
+            url:"/privatechat/" + $scope.userClass["username"]
         }).success(function(rep){
             $scope.privateSenderList = rep.data;
             $scope.updateNewMsgNum();
@@ -61,7 +61,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
     // For Test
     //$scope.privateSenderList = [{"sender":"helen","count":0},{"sender":"ivy","count":3}];
 
-    // TODO socket.io
+
 
     // Open Private Chat Content Page of a sender.
     $scope.openMsg = function (sender, isFromDirectory) {

@@ -13,7 +13,6 @@ var test_no_city_no_map = require("./routes/test_no_city_no_map");
 var chatPubliclyRouter = require("./routes/chatPubliclyRouter");
 var http = require("http");
 var app = express();
-// app.set("port", (process.env.PORT || 5000));
 var server = http.createServer(app);
 var io = require("socket.io").listen(server);
 // var io;
@@ -31,7 +30,7 @@ var OwnProfileManagementCtrl = require("./controller/OwnProfileManagementCtrl.js
 
 // init data
 EmergencyShelterCtrl.initData(function (args) {});
-//TODO uncomment it back
+
 ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
 
 // var sockets = require("./socket.js");
@@ -42,7 +41,6 @@ app.set("view engine", "ejs");
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname+'/favicon.ico')));
 
-// app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -122,24 +120,6 @@ app.use(function(err, req, res, next) {
 });
 // var server;
 
-
-// exports.start = function(cb) {
-//     server = app.listen(process.env.PORT || 5000, function() {
-//         io = sockets(server);
-//         if (cb) {
-//             cb();
-//         }
-//     });
-// };
-//
-// exports.close = function(cb) {
-//     if (io) io.close();
-//     if (server) server.close(cb);
-// };
-// // when app.js is launched directly
-// if (module.id === require.main.id) {
-//     exports.start();
-// }
 module.exports = app;
 //
 var ConnectedSockets = {};
@@ -180,7 +160,7 @@ io.on("connection", function(socket) {
     socket.on("userJoinCommunity", function(username){
         socket.broadcast.emit("userJoined",username);
         ConnectedSockets[username] = socket;
-        //privateChat.UnreadCount(socket, username);
+
     });
 
     socket.on("left", function(username){
@@ -199,4 +179,4 @@ io.on("connection", function(socket) {
     socket.on("Accountstatus Change", PostAnnouncementCtrl.changeAccountStatusSocket(socket));
 });
 
-// module.exports = app;
+
