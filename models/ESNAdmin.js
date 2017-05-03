@@ -29,28 +29,28 @@ class ESNAdmin {
                     // if no admin exists
                     collection.find({"username": "ESNAdmin"}).toArray(function (err, results) {
                         if (results.length == 0) {
-                                    // no ESNAdmin, insert.
-                                    collection.insert(default_ESNAdmin, function (err, results) {
-                                        callback("Insert ESNAdmin.");
-                                        db.close();
-                                    });
-                                }
-                                else {
-                                    // ESNAdmin exists but not admin, update.
-                                    collection.update({"username" : "ESNAdmin"}, {$set : {"privilegelevel": "Administrator"}}, function (err, results) {
-                                        callback("Update ESNAdmin.");
-                                        db.close();
-                                    });
-                                }
-                           // }
-                        });
-                    }
-                    else {
-                        // some admin exists, do nothing
-                        callback("Some admin exists.");
-                        db.close();
-                    }
-                //}
+                            // no ESNAdmin, insert.
+                            collection.insert(default_ESNAdmin, function (err, results) {
+                                console.log(results);
+                                callback("Insert ESNAdmin.");
+                                db.close();
+                            });
+                        }
+                        else {
+                            // ESNAdmin exists but not admin, update.
+                            collection.update({"username" : "ESNAdmin"}, {$set : {"privilegelevel": "Administrator"}}, function (err, results) {
+                                console.log(results);
+                                callback("Update ESNAdmin.");
+                                db.close();
+                            });
+                        }
+                    });
+                }
+                else {
+                    // some admin exists, do nothing
+                    callback("Some admin exists.");
+                    db.close();
+                }
             });
         });
     }
