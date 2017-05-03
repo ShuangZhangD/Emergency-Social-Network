@@ -40,7 +40,7 @@ class EmergencyShelterCtrl {
                     distance += (longitude - result[0].location[1]) * (longitude - result[0].location[1]);
                     if (distance < 0.5) {
                         res.json({success:1, data: result[0]});
-                    }  
+                    }
                     else {
                         res.json({success:0, err_type: 3, err_msg:"No neaber city!"});
                     }
@@ -67,10 +67,7 @@ class EmergencyShelterCtrl {
                 res.json({success:0, err_type: err_type, err_msg: result});
             }
         });
-
-        
     }
-
 }
 
 

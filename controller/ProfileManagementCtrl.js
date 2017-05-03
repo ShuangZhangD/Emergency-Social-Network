@@ -9,10 +9,8 @@ var url = dbconfig.getURL();
 class ProfileManagementController {
 
     updateProfile(req, res){
-        console.log("In updateProfile in ProfileManagementCtrl");
         var info = req.body;
         var profileusername = info["profileusername"];
-
         dboper.updateProfileForUser(profileusername, info, url, function (err, results) {
             if (err) {
                 console.log("Error:"+ err);
@@ -25,9 +23,6 @@ class ProfileManagementController {
     }
 
     getProfile(req, res){
-        console.log("In getProfile in ProfileManagementCtrl");
-        //var info=req.body;
-        //var username = info["username"];
         var profileusername = req.params.profileusername;
         dboper.getProfileForUser(profileusername, url, function(err, results){
             if(err) {
@@ -39,7 +34,6 @@ class ProfileManagementController {
         });
     }
     updateName(req, res){
-        console.log("In updateName in ProfileManagementCtrl");
         var info = req.body;
         var profileusername = info["profileusername"];
         console.log("going to call");
@@ -54,7 +48,6 @@ class ProfileManagementController {
     }
 
     updateAccountStatus(req, res){
-        console.log("999======In updateAccountStatus in ProfileManagementCtrl");
         var info = req.body;
         var profileusername = info["profileusername"];
 
