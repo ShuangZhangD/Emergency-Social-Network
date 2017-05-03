@@ -16,7 +16,7 @@ var express = require('express');
 var dboper = require("../../models/ShareStatusDBoper");
 var createoper = require("../../models/User.js");
 var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
-// var nodemailer = require("nodemailer");
+ var nodemailer = require("nodemailer");
 
 var app = express();
 
@@ -133,7 +133,7 @@ suite('Share Status Tests', function(){
         });
     });
 
-    /*test('Sending mail to Emergency Contact', function(done){
+    test('Sending mail to Emergency Contact', function(done){
      let transporter = nodemailer.createTransport({
      service: 'gmail',
      auth: {
@@ -141,11 +141,14 @@ suite('Share Status Tests', function(){
      pass: 'KomalaESN'
      }
      });
-     dboper.GetEmailForUser("test123", url, transporter, function(err, results) {
-     console.log(results);
-     expect(err).to.equal(null);
-     done();
-     });
+        let new_user = new createoper("test123","1234", "online","OK");
+        new_user.createUser(testDB, function(results0, err0) {
+            dboper.GetEmailForUser("test123", url, transporter, function (err, results) {
+                console.log(results);
+                expect(err).to.equal(null);
+                done();
+            });
+        });
      });
 
      test('Sending mail to Invalid Emergency Contact', function(done){
@@ -156,13 +159,16 @@ suite('Share Status Tests', function(){
      pass: 'KomalaESN'
      }
      });
-     dboper.GetEmailForUser("test1234", url, transporter, function(err, results) {
-     console.log(results);
-     expect(err).to.equal(null);
-     done();
+         let new_user = new createoper("test1234","1234", "online","OK");
+         new_user.createUser(testDB, function(results0, err0) {
+             dboper.GetEmailForUser("test1234", url, transporter, function (err, results) {
+                 console.log(results);
+                 expect(err).to.equal(null);
+                 done();
+             });
+         });
      });
-     });
-    */
+
     test('Sending message to Emergency Contact', function(done){
         let new_user = new createoper("test123","1234", "online","OK");
         new_user.createUser(testDB, function(results0, err0) {
@@ -174,7 +180,7 @@ suite('Share Status Tests', function(){
         });
     });
 
-    /*test('Share Status Send Email DB Error', function(done){
+    test('Share Status Send Email DB Error', function(done){
      let transporter = nodemailer.createTransport({
      service: 'gmail',
      auth: {
@@ -186,7 +192,7 @@ suite('Share Status Tests', function(){
      expect(err).to.equal(400);
      done();
      });
-     });*/
+     });
 
 
 });
