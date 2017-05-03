@@ -80,6 +80,7 @@ class JoinCommunityDBOper {
                             console.log(err);
                             let msg = new Message ("", "", "", "", "", "", "");
                             msg.deleteMessages(db, username, function (data, err) {
+                                console.log(err);
                                 new_user.displayStatusUsers(db, "online", function(results, err) {
                                     console.log(err);
                                     var userlist = [];
@@ -100,7 +101,6 @@ class JoinCommunityDBOper {
     GetAllUsers (url, callback){
         MongoClient.connect(url, function(err, db) {
             if(err){
-                //console.log("Error:"+ err);
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
             //insert information into database
@@ -128,7 +128,6 @@ class JoinCommunityDBOper {
     Logout (username, url, callback){
         MongoClient.connect(url, function(err, db) {
             if(err){
-                //console.log("Error:"+ err);
                 callback(db_err_statuscode, db_err_msg);// DB Error. Here error of connecting to db
             }
             let new_user = new User("username", "", "offline");

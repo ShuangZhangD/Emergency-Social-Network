@@ -372,27 +372,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
     mySocket.on("userleft",function(){
         showDirectory();
     });
-    //maybe need to remove
-    // mySocket.on("windowclose", function(){
-    //     if ($scope.logined) {
-    //         $http({
-    //             method:"post",
-    //             url:"/logout",
-    //             data:{username:$scope.username}
-    //         }).success(function(rep){
-    //             // logout
-    //             console.log(rep);
-    //             $scope.logined = false;
-    //             $scope.directoryShow = false;
-    //             $scope.loginShow = true;
-    //         });
-    //         mySocket.emit("left");
-    //     }
-    //     for (var item in $scope.showList) {
-    //         $scope.showList[item] = false;
-    //     }
-    //     $scope.showList["login"] = true;
-    // });
+
 
     mySocket.on("Name Change", function(data) {
         if(data["profileusername"] == $scope.userClass["username"]){
@@ -446,51 +426,6 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
     };
 });
 
-// function addUser($scope, $rootScope, $http, tmpUsername, mySocket) {
-//     var add = confirm("User does not exist, do you want to sign up?");
-//     if (add) {
-//         $http({
-//             method:"post",
-//             url:"/signup",
-//             data:{username:$scope.username, password:$scope.password}
-//         }).success(function(rep){
-//             if (rep.success == 1) {
-//                 // sign up success
-//                 alert("Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
-//                 $scope.userClass["username"] = tmpUsername;
-//                 $scope.logined = true;
-//                 $scope.showList.login = false;
-//                 $scope.showList.directory = true;
-//                 showDirectory();
-//                 // displayDirectory($scope, $http);
-//                 mySocket.emit("userJoinCommunity", tmpUsername);
-//                 // After logged in, get announcements, private chats, etc.
-//                 $rootScope.$emit("loginGetAnnouncement");
-//                 $rootScope.$emit("loginGetPrivateChatList");
-//                 $rootScope.$emit("loginGetShareStatus");
-//                 $rootScope.$emit("loginGetGroupList");
-//             }
-//             else {
-//                 // sign up failed
-//                 if (rep.err_type == 1) {
-//                     // data base error
-//                 }
-//                 else if (rep.err_type == 4) {
-//                     // username or password invalid
-//                     alert("Password invalid!");
-//                 }
-//                 else {
-//                     console.log("Unexpected");
-//                 }
-//             }
-//         }).error(function (rep) {
-//             console.log(rep);
-//         });
-//     }
-//     else {
-//         console.log("Unexpected error in joinCommunity.js");
-//     }
-// }
 
 function check_usr(username){
     if(!username) {
@@ -513,23 +448,3 @@ function check_usr(username){
 
 
 
-/*
-    Komala write this function
-*/
-// function displayDirectory($scope, $http) {
-//     $scope.showList.directory = true;
-//     $http({
-//         method:"get",
-//         url:"/userlist"
-//     }).then(function successCallback(response) {
-//         $scope.details1 = response.data.data1;
-//         $scope.details2 = response.data.data2;
-//         $scope.statusList = response.data.status;
-//         $scope.historyList1 = $scope.details1;
-//         $scope.historyList2 = $scope.details2;
-//         $scope.historyStatus = $scope.statusList;
-//     }, function errorCallback(response) {
-//         console.log(response);
-//         console.log("Error in displaying the directory");
-//     });
-// }
