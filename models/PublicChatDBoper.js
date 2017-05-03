@@ -6,13 +6,14 @@
 var MongoClient = require("mongodb").MongoClient;
 var Message = require("./Message.js");
 var db_err_msg = "Database Error";
-var db_err_statuscode = 400;
 var success_statuscode = 200;
+var db_err_statuscode = 400;
+
 //var url = "mongodb://root:1234@ds137730.mlab.com:37730/esnsv7";
 
 class PublicChatDBoper {
 
-    InsertMessage (sender, receiver, message, type, postTime,emergencystatus, url, callback) {
+    InsertMessage (sender, receiver, message, type, postTime, emergencystatus, senderaccountstatus,receiveraccountstatus,url, callback) {
         //connect to database
         MongoClient.connect(url, function (err, db) {
             if (err) {
@@ -21,7 +22,7 @@ class PublicChatDBoper {
             }
             var collection = db.collection("MESSAGES");
             //insert into table
-            var data = [{"sender":sender,"receiver":receiver, "message": message, "type": type, "postTime": postTime,"emergencystatus":emergencystatus}];
+            var data = [{"sender":sender,"receiver":receiver, "message": message, "type": type, "postTime": postTime,"emergencystatus":emergencystatus,"senderaccountstatus":senderaccountstatus, "receiveraccountstatus":receiveraccountstatus}];
             collection.insert(data, callback);
             db.close();
         });
@@ -47,14 +48,18 @@ class PublicChatDBoper {
                         data["pubmsg"] = result.message;
                         data["timestamp"] = result.postTime;
                         data["emergencystatus"] = result.emergencystatus;
-                        datas.push(data);
+                        data["senderaccountstatus"] = result.senderaccountstatus;
+                        //console.log("1111====="+result.senderaccountstatus);
+                        if(result.senderaccountstatus=="Active") {
+                            datas.push(data);
+                        }
                     });
                     //var jsonString = JSON.stringify(datas);
                     callback(err,datas);
                 }
                 db.close();
-            });
-        });
+            })
+        })
     }
 
     SearchPublicMessages(words, url, callback) {

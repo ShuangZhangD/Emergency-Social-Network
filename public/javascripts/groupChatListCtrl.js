@@ -55,7 +55,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
                     group: group,
                 };
                 $scope.myGroupList.push(group_data1);
-                alert("Successfully Join Group");
+                alertify.alert("ESN","Successfully Join Group");
                 $scope.allGroupTable = false;
                 $scope.myGroupTable = true;
             }
@@ -67,7 +67,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
             console.log("Not join group");
         }
         }else{
-           alert("Already in the group");
+           alertify.alert("ESN","Already in the group");
         }
     };
 
@@ -87,10 +87,10 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
             if (rep.success == 1) {
                 console.log("Leave Group Success!");
                 getMyGroupList();
-                alert("Successfully Leave Group");
+                alertify.alert("ESN","Successfully left the group.");
             }
             else {
-                console.log("Unexpected error in leave group");
+                console.log("Unexpected error in leaving the group.");
             }
         });
         }else{
@@ -108,9 +108,9 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
         }
 
         if($scope.newgroup == null){
-            alert("Group name can not be empty!");
+            alertify.alert("ESN","Group name can not be empty!");
         }else if(exist == 1){
-            alert("Group name already exist!");
+            alertify.alert("ESN","Group name already exist!");
         } else{
         var add = confirm("Do you want to create the group?");
         if(add){
@@ -133,7 +133,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
                 $scope.myGroupList.push(group_data1);
                 $scope.allGroupList.push($scope.newgroup);
                 $scope.newgroup = "";
-                alert("Successfully Create Group");
+                alertify.alert("ESN","Successfully Created Group");
             }
             else {
                 console.log("Unexpected error in create group");
@@ -154,7 +154,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
     // For Test
     //$scope.privateSenderList = [{"sender":"helen","count":0},{"sender":"ivy","count":3}];
 
-    // TODO socket.io
+
 // Open Private Chat Content Page of a sender.
     $scope.openMsg = function (group) {
 
@@ -221,7 +221,7 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
         });
     };
 
-    // TODO socket.io
+
     mySocket.on("GroupChat", function(data) {
         if ($scope.showList.groupChatContent && $scope.userClass["groupChatSender"] == data.receiver) {
             $scope.groupMsgs.push(data);

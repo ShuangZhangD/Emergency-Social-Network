@@ -27,12 +27,12 @@ app.factory("mySocket", function($rootScope) {
     };
 });
 
-app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
+app.controller("chatPubliclyCtrl", function($window, $scope, $rootScope, $http, mySocket) {
     //$scope.name = "Runoob";
     var getMessage=function(){
         $http({
             method:"get",
-            url:"/public",
+            url:"/public"
             //data:{pubmsg:$scope.pubmsg, username:$scope.username}
         }).success(function(rep){
             console.log(rep);
@@ -41,16 +41,36 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
         });
 
     };
-    getMessage();
+    //getMessage();
     //$scope.displaymsg = [];
     mySocket.on("Public Message", function(data) {
         $scope.displaymsg.push(data);
     });
+
+    $rootScope.$on("loginGetPublicChat", function() {
+        getMessage();
+    });
+
+    //socket on if others' username is changed
+    mySocket.on("Username Changed In Public Chat", function(params) {
+        //$scope.displaymsg.push(params);
+        if(params.profileusername != $scope.userClass["username"]){
+            getMessage();
+        }
+    });
+
+    mySocket.on("AccountStatus Changed In Public Chat", function(params) {
+        //$scope.displaymsg.push(params);
+        if(params.profileusername != $scope.userClass["username"]){
+            getMessage();
+        }
+    });
+
     $scope.postMsg = function() {
         $http({
             method:"post",
             url:"/public",
-            data:{pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timeStamp:Date.now(), emergencystatus:$scope.userClass["status"]}
+            data:{pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timeStamp:Date.now(), emergencystatus:$scope.userClass["status"],senderaccountstatus:"Active"}
         }).success(function(rep){
             console.log(rep);
             var data = {pubmsg:$scope.pubmsg, username:$scope.userClass["username"], timestamp:Date.now(),emergencystatus:$scope.userClass["status"]};
@@ -124,7 +144,7 @@ app.controller("chatPubliclyCtrl", function($window, $scope, $http, mySocket) {
             var history_public_msg = req.data;
             var count = 0;
             if(history_public_msg.length === 0)
-                alert("There are no matches");
+                alertify.alert("ESN", "There are no matches");
             for(i = history_public_msg.length-1 ; i >= 0 ; i--){
                 //var pub_msg = history_public_msg[i].pubmsg;
                 //if(IfKeyWordExist(SearchKeys, pub_msg)){

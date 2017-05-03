@@ -28,7 +28,7 @@ function initMap() {
         console.log(map);
         GoogleMap["success"] = true;
     });
-    
+
 }
 
 var getLocation = function (successCallback) {

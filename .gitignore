@@ -11,3 +11,4 @@ workspace.xml
 backups/
 shippable/*
 coverage/*
+StaticAnalysis/*

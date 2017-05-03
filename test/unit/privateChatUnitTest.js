@@ -134,6 +134,406 @@ suite('Private Chat Test', function(){
         });
 
     });
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver2', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0) {
+            expect(statuscode0).to.equal(200);
+            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
+                expect(statuscode1).to.equal(200);
+                var fake = {
+                    "sender": "keqin",
+                    "receiver": "test1000lkq",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
+                    "timestamp": ""
+                };
+                dboper.InsertMessage(fake, function (statuscode2, content2) {
+                    expect(statuscode2).to.equal(200);
+                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
+                        expect(statuscode3).to.equal(200);
+                        for (var i = 0; i < results3.length; i++) {
+                            if (results3[i]["sender"] === "keqin") {
+                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
+                            }
+                        }
+                        done();
+                    });
+                });
+            });
+        });
+
+    });
+
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver3', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0) {
+            expect(statuscode0).to.equal(200);
+            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
+                expect(statuscode1).to.equal(200);
+                var fake = {
+                    "sender": "keqin",
+                    "receiver": "test1000lkq",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
+                    "timestamp": ""
+                };
+                dboper.InsertMessage(fake, function (statuscode2, content2) {
+                    expect(statuscode2).to.equal(200);
+                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
+                        expect(statuscode3).to.equal(200);
+                        for (var i = 0; i < results3.length; i++) {
+                            if (results3[i]["sender"] === "keqin") {
+                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
+                            }
+                        }
+                        done();
+                    });
+                });
+            });
+        });
+
+    });
+
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver4', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0) {
+            expect(statuscode0).to.equal(200);
+            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
+                expect(statuscode1).to.equal(200);
+                var fake = {
+                    "sender": "keqin",
+                    "receiver": "test1000lkq",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
+                    "timestamp": ""
+                };
+                dboper.InsertMessage(fake, function (statuscode2, content2) {
+                    expect(statuscode2).to.equal(200);
+                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
+                        expect(statuscode3).to.equal(200);
+                        for (var i = 0; i < results3.length; i++) {
+                            if (results3[i]["sender"] === "keqin") {
+                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
+                            }
+                        }
+                        done();
+                    });
+                });
+            });
+        });
+
+    });
+
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver5', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0) {
+            expect(statuscode0).to.equal(200);
+            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
+                expect(statuscode1).to.equal(200);
+                var fake = {
+                    "sender": "keqin",
+                    "receiver": "test1000lkq",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
+                    "timestamp": ""
+                };
+                dboper.InsertMessage(fake, function (statuscode2, content2) {
+                    expect(statuscode2).to.equal(200);
+                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
+                        expect(statuscode3).to.equal(200);
+                        for (var i = 0; i < results3.length; i++) {
+                            if (results3[i]["sender"] === "keqin") {
+                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
+                            }
+                        }
+                        done();
+                    });
+                });
+            });
+        });
+
+    });
+
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver6', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0) {
+            expect(statuscode0).to.equal(200);
+            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
+                expect(statuscode1).to.equal(200);
+                var fake = {
+                    "sender": "keqin",
+                    "receiver": "test1000lkq",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
+                    "timestamp": ""
+                };
+                dboper.InsertMessage(fake, function (statuscode2, content2) {
+                    expect(statuscode2).to.equal(200);
+                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
+                        expect(statuscode3).to.equal(200);
+                        for (var i = 0; i < results3.length; i++) {
+                            if (results3[i]["sender"] === "keqin") {
+                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
+                            }
+                        }
+                        done();
+                    });
+                });
+            });
+        });
+
+    });
+
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver7', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0) {
+            expect(statuscode0).to.equal(200);
+            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
+                expect(statuscode1).to.equal(200);
+                var fake = {
+                    "sender": "keqin",
+                    "receiver": "test1000lkq",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
+                    "timestamp": ""
+                };
+                dboper.InsertMessage(fake, function (statuscode2, content2) {
+                    expect(statuscode2).to.equal(200);
+                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
+                        expect(statuscode3).to.equal(200);
+                        for (var i = 0; i < results3.length; i++) {
+                            if (results3[i]["sender"] === "keqin") {
+                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
+                            }
+                        }
+                        done();
+                    });
+                });
+            });
+        });
+
+    });
+
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver8', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0) {
+            expect(statuscode0).to.equal(200);
+            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
+                expect(statuscode1).to.equal(200);
+                var fake = {
+                    "sender": "keqin",
+                    "receiver": "test1000lkq",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
+                    "timestamp": ""
+                };
+                dboper.InsertMessage(fake, function (statuscode2, content2) {
+                    expect(statuscode2).to.equal(200);
+                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
+                        expect(statuscode3).to.equal(200);
+                        for (var i = 0; i < results3.length; i++) {
+                            if (results3[i]["sender"] === "keqin") {
+                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
+                            }
+                        }
+                        done();
+                    });
+                });
+            });
+        });
+
+    });
+
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver9', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0) {
+            expect(statuscode0).to.equal(200);
+            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
+                expect(statuscode1).to.equal(200);
+                var fake = {
+                    "sender": "keqin",
+                    "receiver": "test1000lkq",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
+                    "timestamp": ""
+                };
+                dboper.InsertMessage(fake, function (statuscode2, content2) {
+                    expect(statuscode2).to.equal(200);
+                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
+                        expect(statuscode3).to.equal(200);
+                        for (var i = 0; i < results3.length; i++) {
+                            if (results3[i]["sender"] === "keqin") {
+                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
+                            }
+                        }
+                        done();
+                    });
+                });
+            });
+        });
+
+    });
+
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver10', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0) {
+            expect(statuscode0).to.equal(200);
+            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
+                expect(statuscode1).to.equal(200);
+                var fake = {
+                    "sender": "keqin",
+                    "receiver": "test1000lkq",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
+                    "timestamp": ""
+                };
+                dboper.InsertMessage(fake, function (statuscode2, content2) {
+                    expect(statuscode2).to.equal(200);
+                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
+                        expect(statuscode3).to.equal(200);
+                        for (var i = 0; i < results3.length; i++) {
+                            if (results3[i]["sender"] === "keqin") {
+                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
+                            }
+                        }
+                        done();
+                    });
+                });
+            });
+        });
+
+    });
+
+    //to test message number of a particular receiver
+    test('test message number of a particular receiver11', function(done){
+        let dboper = new PrivateChatDBOper("keqin", "test1000lkq", url);
+        var fake0 = {
+            "sender": "keqin",
+            "receiver": "test1000lkq",
+            "message": "private chat function",
+            "type": "private",
+            "emergencystatus": "OK",
+            "timestamp": ""
+        }
+        dboper.InsertMessage(fake0, function(statuscode0, content0) {
+            expect(statuscode0).to.equal(200);
+            dboper.GetCount_IndividualPrivateSender(function (statuscode1, results1) {
+                expect(statuscode1).to.equal(200);
+                var fake = {
+                    "sender": "keqin",
+                    "receiver": "test1000lkq",
+                    "message": "private chat function",
+                    "type": "private",
+                    "emergencystatus": "OK",
+                    "timestamp": ""
+                };
+                dboper.InsertMessage(fake, function (statuscode2, content2) {
+                    expect(statuscode2).to.equal(200);
+                    dboper.GetCount_IndividualPrivateSender(function (statuscode3, results3) {
+                        expect(statuscode3).to.equal(200);
+                        for (var i = 0; i < results3.length; i++) {
+                            if (results3[i]["sender"] === "keqin") {
+                                expect(results3[i]["count"]).to.equal(results1[i]["count"] + 1);
+                            }
+                        }
+                        done();
+                    });
+                });
+            });
+        });
+
+    });
+
 
     //to test unread number
     test('Unread Function Test', function(done){

@@ -1,4 +1,4 @@
-var app = angular.module("ESN-APP", []);
+var app = angular.module("ESN-APP", ['ngSidebarJS']);
 // to init variables in $scope
 app.controller("initCtrl", function($scope, $http) {
     $scope.showList = {
@@ -16,7 +16,9 @@ app.controller("initCtrl", function($scope, $http) {
         publicHistory: false,
         announcementHistory: false,
         groupList:false,
-        groupChatContent:false
+        groupChatContent:false,
+        profileManagement:false,
+        ownProfileManagement:false
     };
     $scope.myGroupTable=false;
     $scope.allGroupTable=true;
@@ -29,7 +31,16 @@ app.controller("initCtrl", function($scope, $http) {
         privateChatSender: "",
         newMsgOfSender: 0,
         displayHistory: false,
-        status: "TEST"
+        status: "TEST",
+        privilegelevel: "Citizen",
+        profileManagement: "false",
+        emergencycontact: ""
+    };
+    $scope.profile = {
+        profileusername : "",
+        profilepassword : "",
+        profileaccountstatus : "",
+        profileprivilegelevel : ""
     };
     $scope.logined = false;
     $scope.username = "";
@@ -37,5 +48,7 @@ app.controller("initCtrl", function($scope, $http) {
     $scope.historyList1 = [];
     $scope.historyList2 = [];
     $scope.historyStatus = [];
+    $scope.historyaccountstatus = [];
+    $scope.accountstatus = [];
     console.log($scope);
 });

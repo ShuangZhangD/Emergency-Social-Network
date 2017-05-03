@@ -39,13 +39,6 @@ var IfKeyWordExist = function (key_words, msg){
 };
 
 class JoinCommunityController {
-/*
-    Validate (username, password) {
-        if( /\w{3,}/.test(username) && /\w{4,}/.test(password) )
-            return true;
-        else
-            return false;
-    }*/
 
     SortUserList (userlist) {
         //userlist should be an array of users
@@ -55,8 +48,8 @@ class JoinCommunityController {
 
     LoginCommunity (req, res) {
         var info = req.body;
-        var username = info["username"];
         var password = info["password"];
+        var username = info["username"];
         var encry_password = md5(password);
 
         //validate the username and password
@@ -64,18 +57,21 @@ class JoinCommunityController {
             res.json({success:0, err_type:4, err_msg: "username or password invalid"}); //username or password invalid
         }
         else {
-            dboper.Login(username, encry_password, url, function(statuscode, content){
-                if(statuscode != 200){
-                    if(statuscode == 400)
+            dboper.Login(username, encry_password, url, function(statuscode_login, content){
+                if(statuscode_login != 200){
+                    if(statuscode_login == 400)
                         res.json({success:0, err_type: 1, err_msg:content});
-                    else if(statuscode == 401)
+                    else if(statuscode_login == 401)
                         res.json({success:0, err_type: 2, err_msg:content});
-                    else if(statuscode == 402)
+                    else if(statuscode_login == 402)
                         res.json({success:0, err_type: 3, err_msg:content});
+                    else if (statuscode_login == 403) {
+                        res.json({success:0, err_type: 5, err_msg:content});
+                    }
                 }
                 else{
-                    var sorted_content = SortUserList(content);
-                    res.json({"success":1, "data":sorted_content});
+                    var sorted_content = SortUserList(content.userlist);
+                    res.json({"success":1, "data":sorted_content, "privilegelevel": content.privilegelevel});
                     io.on("connection", function()
                     {
                         //broadcast to every users of this user"s join
@@ -128,12 +124,25 @@ class JoinCommunityController {
                 res.json({success:0, err_type: 1, err_msg:content1});
             }
             else{
-                var sorted_content1 = SortUserList(content1);
                 var sorted_content2 = SortUserList(content2);
-                dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode, user_status) {
-                    if(statuscode == 200)
-                        res.json({"success":1, "data1":sorted_content1, "data2":sorted_content2, "status":user_status});
-                    else res.json({success:0, err_type: 1, err_msg:content1});
+                var sorted_content1 = SortUserList(content1);
+                dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode_em, user_status_em) {
+                    dboper.GetAllUsernameAndAccountstatus(url, function (statuscode, user_status) {
+                        if (statuscode == 200){
+                            console.log("666====here is");
+                            console.dir(user_status);
+                            console.log("777====here is");
+                            console.dir(user_status_em);
+                            res.json({
+                                "success": 1,
+                                "data1": sorted_content1,
+                                "data2": sorted_content2,
+                                "status": user_status_em,
+                                "accountstatus": user_status
+                            });
+                        }
+                        else res.json({success: 0, err_type: 1, err_msg: content1});
+                    });
                 });
             }
         });
@@ -156,13 +165,6 @@ class JoinCommunityController {
             }
         });
     }
-    /*IfKeyWordExist(key_words, msg){
-        for(var i = 0 ; i < key_words.length ; i++){
-            if(msg != null && msg.includes(key_words[i]))
-                return true;
-        }
-        return false;
-    }*/
 
     SearchUserByName (req, res){
         var keywords = req.body;
@@ -210,13 +212,9 @@ class JoinCommunityController {
                 res.json({success:0, err_type: 1, err_msg:content1});
             }
             else{
-              // var directory_search_result1 = [];
-              // var directory_search_result2 = [];
 
                 var sorted_content1 = SortUserList(content1);
                 var sorted_content2 = SortUserList(content2);
-                //console.log("directory_search_result1" + directory_search_result1);
-                //console.log("search user by name" + sorted_content1);
                 dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode, user_status) {
                     var directory_search_result1 = [];
                     var directory_search_result2 = [];
@@ -240,6 +238,36 @@ class JoinCommunityController {
             }
         });
     }
+
+    updateNameSocket (socket) {
+        return function(data) {
+            socket.emit("Name Change", data);
+            socket.broadcast.emit("Name Change", data);
+        };
+    }
+    updatePasswordSocket (socket) {
+        return function(data) {
+            socket.emit("Password Change", data);
+            socket.broadcast.emit("Password Change", data);
+        };
+    }
+    updateAccountstatusSocket (socket) {
+        return function(data) {
+            socket.emit("Post Announcement", data);
+            socket.broadcast.emit("Accountstatus Change", data);
+        };
+    }
+    updatePrivilegelevelSocket (socket) {
+        return function(data) {
+            socket.emit("Privilegelevel Change", data);
+            socket.broadcast.emit("Privilegelevel Change", data);
+        };
+    }
+
+
+
+
+
 }
 
 let jcc = new JoinCommunityController();
@@ -250,5 +278,9 @@ module.exports = {
     ListUser: jcc.ListUser,
     Logout: jcc.Logout,
     SearchUserByName: jcc.SearchUserByName,
-    SearchUserByStatus: jcc.SearchUserByStatus
+    SearchUserByStatus: jcc.SearchUserByStatus,
+    updateNameSocket: jcc.updateNameSocket,
+    updatePasswordSocket: jcc.updatePasswordSocket,
+    updateAccountstatusSocket: jcc.updateAccountstatusSocket,
+    updatePrivilegelevelSocket: jcc.updatePrivilegelevelSocket
 };

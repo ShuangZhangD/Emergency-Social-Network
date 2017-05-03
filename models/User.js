@@ -5,11 +5,18 @@
 class User {
 
     // Constructor for initializing values for a new user
-    constructor(username, password, status, EmergencyStatus) {
+    constructor(username, password, status, EmergencyStatus, AccountStatus, PrivilegeLevel, firstname, lastname, email, emergencycontact, contactemail) {
         this.username = username;
         this.password = password;
         this.status   = status;
         this.emergencystatus = EmergencyStatus;
+        this.accountstatus = AccountStatus;
+        this.privilegelevel = PrivilegeLevel;
+        this.firstname   = firstname;
+        this.lastname   = lastname;
+        this.email   = email;
+        this.emergencycontact   = emergencycontact;
+        this.contactemail   = contactemail;
     }
 
     // Method to create a new user, takes the "USERS" collection as a parameter
@@ -19,7 +26,14 @@ class User {
             "username"  : this.username,
             "password"  : this.password,
             "status"    : this.status,
-            "emergencystatus" : "Undefined"
+            "emergencystatus" : "Undefined",
+            "accountstatus" : "Active",
+            "privilegelevel" : "Citizen",
+            "firstname"  : "",
+            "lastname"  : "",
+            "email"  : "",
+            "emergencycontact"  : "",
+            "contactemail"  : ""
         }, function(err, results) {
             callback(results, null);
         });
@@ -67,7 +81,7 @@ class User {
     }
     getAllUsernameAndEmergencyStatus(db, callback){
         this.collection = db.collection("USERS");
-        this.collection.find({}, {username:1, emergencystatus:1}).toArray(function(err, results) {
+        this.collection.find().toArray(function(err, results) {
             var userstatuslist = {};
             results.forEach(function (result) {
                 userstatuslist[result.username] = result.emergencystatus;
@@ -75,6 +89,19 @@ class User {
             callback(userstatuslist, null);
         });
     }
+
+    getAllUsernameAndAccountstatus(db, callback){
+        this.collection = db.collection("USERS");
+        this.collection.find().toArray(function(err, results) {
+            var userstatuslist = {};
+            results.forEach(function (result) {
+                console.log("getting username "+result.username+" account status "+result.accountstatus);
+                userstatuslist[result.username] = result.accountstatus;
+            });
+            callback(userstatuslist, null);
+        });
+    }
+
 }
 
 module.exports = User;

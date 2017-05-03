@@ -47,7 +47,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
     var getPrivateSenderList = function() {
         $http({
             method:"get",
-            url:"/privatechat/" + $scope.userClass["username"]  // TODO helen define this API
+            url:"/privatechat/" + $scope.userClass["username"]
         }).success(function(rep){
             $scope.privateSenderList = rep.data;
             $scope.updateNewMsgNum();
@@ -61,7 +61,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
     // For Test
     //$scope.privateSenderList = [{"sender":"helen","count":0},{"sender":"ivy","count":3}];
 
-    // TODO socket.io
+
 
     // Open Private Chat Content Page of a sender.
     $scope.openMsg = function (sender, isFromDirectory) {
@@ -121,7 +121,7 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
             var history_privatechat_set = [];
             var count = 0;
             if(all_history_privatechat.length === 0)
-                alert("There are no matches");
+                alertify.alert("ESN","There are no matches");
             for(var i=all_history_privatechat.length-1; i>=0; i--){
                 count++;
                 history_privatechat_set.push(all_history_privatechat[i]);
@@ -160,4 +160,20 @@ app.controller("privateChatListCtrl", function ($window, $scope, $rootScope, $ht
             $scope.searchPrivateChatMore = false;
         }
     };
+
+    mySocket.on("receiver username changed", function (param) {
+        var changed_part = param.profileusername;
+        if(changed_part != $scope.userClass["username"] && $scope.showList["privateChatList"]){
+            getPrivateSenderList();
+            alert("someone has changed the name.");
+        }
+    });
+
+    mySocket.on("receiver Accountstatus changed", function (param) {
+        var changed_part = param.profileusername;
+        if(changed_part != $scope.userClass["username"] && $scope.showList["privateChatList"]){
+            getPrivateSenderList();
+            alert("someone has changed the account status");
+        }
+    });
 });

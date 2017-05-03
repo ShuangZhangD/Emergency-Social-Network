@@ -27,16 +27,33 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
     // receive a new announcement from server vie socket.io
     mySocket.on("Post Announcement", function(data) {
         $scope.announcementList.push(data);
-		// TODO notification of new announcement
+
         if (data.username != $scope.userClass["username"]) {
             alert("New Announcement (" + data.username + ") : " + data.announcement);
         }
     });
+
+    //socket on if others' username is changed
+    mySocket.on("Username Changed In Announcement", function(params) {
+        //$scope.displaymsg.push(params);
+        if(params.profileusername != $scope.userClass["username"]){
+            getAnnouncement();
+        }
+    });
+
+    mySocket.on("AccountStatus Changed In Announcement", function(params) {
+        //$scope.displaymsg.push(params);
+        if(params.profileusername != $scope.userClass["username"]){
+            getAnnouncement();
+        }
+    });
+
     $scope.submitAnnouncement = function() {
         var announcement_data = {
             announcement: $scope.announcement_content,
             username: $scope.userClass["username"],
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            accountstatus:"Active"
         };
         $http({
             method:"post",
@@ -103,7 +120,7 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
             var history_announce = req.data;
             var count = 0;
             if(history_announce.length === 0)
-                alert("There are no matches");
+                alertify.alert("ESN","There are no matches");
             for( i = history_announce.length-1 ; i >= 0 ; i--){
                 //var announcement = history_announce[i].announcement;
                 //  if(IfKeyWordExist(SearchKeys, announcement)){

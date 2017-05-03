@@ -12,7 +12,7 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
         $scope.newMsgs = [];
         $http({
             method:"get",
-            url:"/privatechat/" + $scope.userClass["privateChatSender"] + "/" + $scope.userClass["username"]  // TODO helen define this API
+            url:"/privatechat/" + $scope.userClass["privateChatSender"] + "/" + $scope.userClass["username"]
         }).success(function(rep) {
             $scope.privateMsgs = rep.data;
             $scope.newMsgs = [];
@@ -49,7 +49,7 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
             url : "/privatechat",
             data : msg_data
         }).success(function (rep) {
-				// TODO socket.io
+
             if (rep.success == 1) {
                 var msg_data_2 = {
                     sender : $scope.userClass["username"],
@@ -69,7 +69,7 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
         });
     };
 
-    // TODO socket.io
+
     mySocket.on("PrivateChat", function(data) {
         if ($scope.showList.privateChatContent && $scope.userClass["privateChatSender"] == data.sender) {
             $scope.privateMsgs.push(data);
@@ -78,6 +78,37 @@ app.controller("privateChatContentCtrl", function ($window, $scope, $rootScope, 
         }
         else {
             $rootScope.updateNewMsgNumByData(data);
+        }
+    });
+
+    mySocket.on("receiver username changed", function (param) {
+        var changed_part = param.profileusername;
+        if(changed_part == $scope.userClass["privateChatSender"] &&  $scope.showList["privateChatContent"]){
+            $rootScope.$emit("loginGetPrivateChatList");
+            for (var item in $scope.showList) {
+                $scope.showList[item] = false;
+            }
+            $scope.showList["privateChatTable"] =true;
+            $scope.showList["privateChatList"] = true;
+
+
+            $scope.userClass["privateChatSender"] = param.newusername;
+
+            alertify.alert("ESN", param.profileusername+" has changed the username to "+param.newusername);
+        }
+    });
+
+    mySocket.on("receiver Accountstatus changed", function (param) {
+        var changed_part = param.profileusername;
+        if(changed_part == $scope.userClass["privateChatSender"] &&  $scope.showList["privateChatContent"]){
+            $rootScope.$emit("loginGetPrivateChatList");
+            for (var item in $scope.showList) {
+                $scope.showList[item] = false;
+            }
+            $scope.showList["privateChatList"] = true;
+            $scope.showList["privateChatTable"] =true;
+
+            alertify.alert("ESN", param.profileusername+" has changed the Accountstatus");
         }
     });
 });

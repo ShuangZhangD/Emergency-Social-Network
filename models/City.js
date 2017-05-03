@@ -3,8 +3,8 @@
  */
 "use strict";
 
-var DBConfig = require("../controller/DBConfig");
-let dbconfig = new DBConfig();
+//var DBConfig = require("../controller/DBConfig");
+//let dbconfig = new DBConfig();
 var MongoClient = require("mongodb").MongoClient;
 
 class City {
@@ -34,10 +34,9 @@ class City {
         return true;
     }
 
-    // TODO add callback
-    initDB() {
+    initDB(url, callback) {
         var city = this;
-        MongoClient.connect(dbconfig.getURL(), function(err, db) {
+        MongoClient.connect(url, function(err, db) {
             
             var collection = db.collection("city");
             collection.find({"name": city.name}).toArray(function(err, results){
@@ -45,6 +44,7 @@ class City {
                 if (results.length === 0) {
                     collection.insert(city.json, function(err, results) {
                         console.log("insert" + city)
+                        callback("insert new city");
                         db.close();
                     });
                 }
@@ -53,10 +53,12 @@ class City {
                     if (!city.compareTo(city2)) {
                         collection.update({"name" : city.name}, {$set : { "location" :  city.location, "shelter": city.shelter}}, function(err, results) {
                             console.log("update" + city)
+                            callback("update a city");
                             db.close();
                         });
                     }
                     else {
+                        callback("do nothing");
                         db.close();
                     }
                 }
@@ -66,16 +68,16 @@ class City {
         });
     }
 
-    search(keywordList, callback) {
+    search(url, keywordList, callback) {
         var city = this;
-        MongoClient.connect(dbconfig.getURL(), function(err, db) {
+        MongoClient.connect(url, function (err, db) {
             
             var collection = db.collection("city");
             var query_city = keywordList[0];
             for (var i = 1; i < keywordList.length; i++) {
                 query_city += " " + keywordList[i];
             }
-            collection.find({"name": query_city}).toArray(function(err, results){
+            collection.find({"name": query_city}).toArray(function (err, results) {
                 
                 if (results.length > 0) {
                     var result_city = results[0];

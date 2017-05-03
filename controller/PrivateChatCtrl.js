@@ -4,10 +4,10 @@
 "use strict";
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
+var success_statuscode = 200;
 var url = dbconfig.getURL();
 var PrivateChatDBOper = require("../models/PrivateChatDBOper.js");
 
-var success_statuscode = 200;
 class PrivateChatCtrl{
     /* Insert a private message into database
      */
@@ -81,7 +81,6 @@ class PrivateChatCtrl{
                 res.json({success:1, data: results});
             }
             else {
-                // console.log("err");
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }
         });
@@ -100,27 +99,6 @@ class PrivateChatCtrl{
     // }
 
 
-    /*
-      For testing, ignore it
-     */
-    /*privateMessageTest (req,res){
-        // emit msg
-        // msg should be in form of {"sender": , "receiver": , "private_msg": }
-        var receiver = req.param("receiver");
-        let dboper = new PrivateChatDBOper("", receiver, url);
-        console.log(res);
-        //emit individual count of unread msg(private)
-        dboper.Get_LatestIndividualUnreadMsg(function (statuscode, results) {
-            if (statuscode == success_statuscode) {
-                console.dir(results);
-            }
-        });
-
-        dboper.GetUserEmergencyStatus(receiver, function(statuscode, status){
-            console.log("STATUS:" + status);
-        });
-    }*/
-
 
     /*
      * User search for serval keywords
@@ -136,7 +114,6 @@ class PrivateChatCtrl{
 
             }
             else{
-                // console.log("err");
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }
         });

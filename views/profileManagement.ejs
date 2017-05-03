@@ -1,0 +1,52 @@
+<div class="container" ng-controller="ProfileManagementCtrl" ng-show="showList.profileManagement">
+
+    <h3><center><b>{{profile["profileusername"]}} User Profile</b></center></h3>
+      	<table class="table">
+                  <tr>
+                      <td>
+                          Username
+                      </td>
+                      <td>
+                          <input type="text" id="username" ng-model="newusername"></input>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          Password
+                      </td>
+                      <td>
+                          <input type="password" id="password" ng-model="newpassword"></input>
+                      </td>
+                  </tr>
+              	  <tr>
+                      <td>
+                          Account Status
+                      </td>
+                      <td>
+                            <div class="radio"><label class="btn btn-success" ng-class="{'active':accountstatus=='Active'}" style="width:10em"><input type="radio" ng-model="accountstatus" value="Active" name="accountstatus"><i class="glyphicon glyphicon-eye-open"></i> Active</label></div>
+                            <div class="radio"><label class="btn btn-danger" ng-class="{'active':accountstatus=='Inactive'}" style="width:10em"><input type="radio" ng-model="accountstatus" value="Inactive" name="accountstatus"><i class="glyphicon glyphicon-eye-close"></i> Inactive</label></div>
+              		    </td>
+                  </tr>
+                  <tr>
+                        <td>
+                            Privilege Level
+                        </td>
+                        <td>
+                          <!-- <div class="btn-group" data-toggle="buttons">
+                              <label class="btn btn-primary" ng-class="{'active':privilegelevel=='Citizen'}"><input type="radio" ng-model="privilegelevel" value="Citizen" name="privilegelevel"> Citizen </label>
+                              <label class="btn btn-primary" ng-class="{'active':privilegelevel=='Coordinator'}"><input type="radio" ng-model="privilegelevel" value="Coordinator" name="privilegelevel"> Coordinator </label>
+                              <label class="btn btn-primary" ng-class="{'active':privilegelevel=='Administrator'}"><input type="radio" ng-model="privilegelevel" value="Administrator" name="privilegelevel"> Administrator </label>
+                          </div> -->
+                          <div class="radio"><label class="btn btn-info" ng-class="{'active':privilegelevel=='Citizen'}" style="width:10em"><input type="radio" ng-model="privilegelevel" value="Citizen" name="privilegelevel"><i class="material-icons">person</i>   Citizen</label></div>
+                          <div class="radio"><label class="btn btn-info" ng-class="{'active':privilegelevel=='Coordinator'}" style="width:10em"><input type="radio" ng-model="privilegelevel" value="Coordinator" name="privilegelevel"><i class="material-icons">record_voice_over</i> Coordinator</label></div>
+                          <div class="radio"><label class="btn btn-info" ng-class="{'active':privilegelevel=='Administrator'}" style="width:10em"><input type="radio" ng-model="privilegelevel" value="Administrator" name="privilegelevel"><i class="material-icons">settings</i> Administrator</label></div>
+                        </td>
+                    </tr>
+                    <tr>
+                          <td colspan="2">
+                              <center><button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="updateProfileDetails();">Submit</button></center>
+                          </td>
+                    </tr>
+        </table>
+</div>
+</br></br>

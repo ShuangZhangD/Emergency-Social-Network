@@ -14,6 +14,111 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.details1 = $scope.historyList1;
         $scope.details2 = $scope.historyList2;
     };
+    var showDirectory = function () {
+        if ($scope.logined) {
+            $http({
+                method:"get",
+                url:"/userlist"
+            }).then(function successCallback(response) {
+                $scope.accountstatus = response.data.accountstatus;
+                console.log("===here");
+                console.dir(response.data.accountstatus);
+
+                if($scope.userClass["privilegelevel"] == "Citizen" || $scope.userClass["privilegelevel"] == "Coordinator"){
+                    var directory_account_result1 = [];
+                    var directory_account_result2 = [];
+                    for(var i = 0 ; i <= response.data.data1.length-1 ; i++){
+                        var name1 = response.data.data1[i];
+                        if($scope.accountstatus[name1] == "Active"){
+                            console.log("online active+++++++++++"+directory_account_result1);
+
+                            directory_account_result1.push(response.data.data1[i]);
+                        }
+                    }
+
+                    for(i = 0 ; i <= response.data.data2.length-1 ; i++){
+                        var name2 = response.data.data2[i];
+                        if($scope.accountstatus[name2] == "Active"){
+                            directory_account_result2.push(response.data.data2[i]);
+                        }
+                    }
+                    console.log("online active"+directory_account_result1);
+
+                    $scope.details1 = directory_account_result1;
+                    $scope.details2 = directory_account_result2;
+                    $scope.statusList = response.data.status;
+
+                } else{
+                    $scope.details1 = response.data.data1;
+                    $scope.details2 = response.data.data2;
+                    $scope.statusList = response.data.status;
+                }
+
+
+                $scope.historyList1 = $scope.details1;
+                $scope.historyList2 = $scope.details2;
+                $scope.historyStatus = $scope.statusList;
+                $scope.historyaccountstatus = response.data.accountstatus;
+
+                console.log(response);
+            }, function errorCallback(response) {
+                console.log(response);
+                console.log("Error in displaying the directory");
+            });
+        }
+    };
+    var login_changestatus = function(tmpUsername){
+        $scope.logined = true;
+        $scope.showList.login = false;
+        $scope.showList.directory = true;
+        showDirectory();
+        // displayDirectory($scope, $http);
+        mySocket.emit("userJoinCommunity", tmpUsername);
+        // After logged in, get announcements, private chats, etc.
+        $rootScope.$emit("loginGetAnnouncement");
+        $rootScope.$emit("loginGetPrivateChatList");
+        $rootScope.$emit("loginGetShareStatus");
+        $rootScope.$emit("loginGetGroupList");
+        $rootScope.$emit("loginGetProfile");
+    }
+    var addUser = function(tmpUsername) {
+        //var add=0;
+        var add = confirm("User does not exist, do you want to sign up?");
+        //add = alertify.confirm("ESN", 'User does not exist, do you want to sign up?', function(){ add = 1; }, function(){ add = 0;});
+        if (add) {
+            $http({
+                method:"post",
+                url:"/signup",
+                data:{username:$scope.username, password:$scope.password}
+            }).success(function(rep){
+                if (rep.success == 1) {
+                    // sign up success
+                    alertify.alert("ESN","Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
+                    $scope.userClass["username"] = tmpUsername;
+                    login_changestatus(tmpUsername);
+
+                }
+                else {
+                    // sign up failed
+                    if (rep.err_type == 1) {
+                        // data base error
+                    }
+                    else if (rep.err_type == 4) {
+                        // username or password invalid
+                        alertify.alert("ESN","Password invalid!");
+                    }
+                    else {
+                        console.log("Unexpected");
+                    }
+                }
+            }).error(function (rep) {
+                console.log(rep);
+            });
+        }
+        else {
+            console.log("Unexpected error in joinCommunity.js");
+        }
+    };
 
 
     $scope.login = function() {
@@ -27,20 +132,12 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             }).success(function(rep){
                 if (rep.success == 1) {
                     // login success
-                    alert("Login success!");
+                    console.log(rep);
+                    alertify.alert("ESN", "Login success! Welcome!");
                     $scope.userClass["username"] = tmpUsername;
+                    $scope.userClass["privilegelevel"] = rep.privilegelevel;
                     $scope.test = "456";
-                    $scope.logined = true;
-                    $scope.showList.login = false;
-                    displayDirectory($scope, $http);
-                    //socket !!!
-                    mySocket.emit("userJoinCommunity", tmpUsername);
-
-                    // After logged in, get announcements, private chats, etc. (public chat seems ....)
-                    $rootScope.$emit("loginGetAnnouncement");
-                    $rootScope.$emit("loginGetPrivateChatList");
-                    $rootScope.$emit("loginGetShareStatus");
-                    $rootScope.$emit("loginGetGroupList");
+                    login_changestatus(tmpUsername);
                 }
                 else {
                     // login failed
@@ -49,18 +146,22 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                     }
                     else if (rep.err_type == 2) {
                         // Username not Exist
-                        addUser($scope, $rootScope, $http, tmpUsername,mySocket);
+                        addUser(tmpUsername);
+                        // addUser($scope, $rootScope, $http, tmpUsername,mySocket);
                     }
                     else if (rep.err_type == 3) {
                         // Password Incorrect
-                        alert("Password is incorrect, please try again.");
+                        alertify.alert("ESN","Password is incorrect, please try again.");
                     }
                     else if (rep.err_type == 4) {
                         // username or password invalid
-                        alert("Username or password is invalid. Username should start with an alphabet or number and must be atleast 3 characters long. Password should start with an alphabet or number and must be atleast 4 characters long. ");
+                        alertify.alert("ESN","Username or password is invalid. Username should start with an alphabet or number and must be atleast 3 characters long. Password should start with an alphabet or number and must be atleast 4 characters long. ");
+                    }
+                    else if (rep.err_type == 5) {
+                        alertify.alert("ESN","This is a inactive user! Contact admin if you want to active it.");
                     }
                     else {
-                        alert("Unexpected error, please try again.");
+                        alertify.alert("ESN","Unexpected error, please try again.");
                     }
                 }
             }).error(function (rep) {
@@ -68,12 +169,11 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             });
         }
         else {
-            alert("Username and password should not be empty or reserved keywords");
-
+            alertify.alert("ESN","Username and password should not be empty or reserved keywords");
         }
     }; // end of login
 
-    $scope.logout = function () {
+    var logout = function () {
         if ($scope.logined) {
             $http({
                 method:"post",
@@ -94,7 +194,15 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["login"] = true;
 
     };
+
+    $scope.logout = function () {
+        logout();
+    };
+
+
+
     $scope.showPublicChat = function () {
+        $rootScope.$emit("loginGetPublicChat");
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
@@ -115,30 +223,18 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.statusList[data.username] = data.emergencystatus;
     };
 
+
     $scope.showDirectory = function () {
-        if ($scope.logined) {
-            $http({
-                method:"get",
-                url:"/userlist"
-            }).then(function successCallback(response) {
-                $scope.details1 = response.data.data1;
-                $scope.details2 = response.data.data2;
-                $scope.statusList = response.data.status;
-                $scope.historyList1 = $scope.details1;
-                $scope.historyList2 = $scope.details2;
-                $scope.historyStatus = $scope.statusList;
-                console.log(response);
-            }, function errorCallback(response) {
-                console.log(response);
-                console.log("Error in displaying the directory");
-            });
-        }
+        showDirectory();
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
         $scope.showList["directory"] = true;
         console.log("Debug-01");
     };
+
+
+
     $scope.getStatus = function (value) {
         console.log("value" + value);
         $http({
@@ -146,43 +242,16 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             url : "/userlist/searchstatus/",
             data: {value:value}
         }).success(function(req){
-        // var history_detail1 = $scope.historyList1;
-        // var history_detail2 = $scope.historyList2;
-        // // console.log("History msg are: "+$scope.historyList1);
-        // for(i = 0 ; i <= history_detail1.length-1 ; i++){
-        //     var name1 = history_detail1[i];
-        //     if(IfKeyWordExist(SearchKeys, name1)){
-        //         directory_search_result1.push(history_detail1[i]);
-        //     }
-        // }
-        // for(i = 0 ; i <= history_detail2.length-1 ; i++){
-        //     var name2 = history_detail2[i];
-        //     if(IfKeyWordExist(SearchKeys, name2)){
-        //         directory_search_result2.push(history_detail2[i]);
-        //     }
-        // }
-            console.log("In search");
             console.log(req.data1);
             if(req.data1.length ===0 && req.data2.length ===0)
-                alert("There are no matches");
-            $scope.details1 = req.data1;
+                alertify.alert("ESN", "There are no matches");
             $scope.details2 = req.data2;
+            $scope.details1 = req.data1;
 
-    // $scope.showList["annoucementSearchResult"] = true;
-    // $scope.namesearchmsg="";
         });
 
     };
 
-    /** Check if one keyword of key_words exist in msg
-
-    var IfKeyWordExist=function(key_words, msg){
-        for(var i = 0 ; i < key_words.length ; i++){
-            if(msg != null && msg.includes(key_words[i]))
-                return true;
-        }
-        return false;
-    };*/
 
     $scope.searchDirectory = function() {
         //var directory_search_result1 = [];
@@ -202,35 +271,17 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
                 i++;
             }
         }
-        //if search keys is not empty, search it and get the result msg array suite
-        /*if(SearchKeys.length == 0) {
-          alert("No results for search criteria.");
-        }
-        if(SearchKeys.length > 0){*/
+
         $http({
             method : "post",
             url : "/userlist/searchname/",
             data: SearchKeys
         }).success(function(req){
-            // var history_detail1 = $scope.historyList1;
-            // var history_detail2 = $scope.historyList2;
-            // // console.log("History msg are: "+$scope.historyList1);
-            // for(i = 0 ; i <= history_detail1.length-1 ; i++){
-            //     var name1 = history_detail1[i];
-            //     if(IfKeyWordExist(SearchKeys, name1)){
-            //         directory_search_result1.push(history_detail1[i]);
-            //     }
-            // }
-            // for(i = 0 ; i <= history_detail2.length-1 ; i++){
-            //     var name2 = history_detail2[i];
-            //     if(IfKeyWordExist(SearchKeys, name2)){
-            //         directory_search_result2.push(history_detail2[i]);
-            //     }
-            // }
+
             console.log("In search");
             console.log(req.data1);
             if(req.data1.length ===0 && req.data2.length ===0)
-                alert("There are no matches");
+                alertify.alert("ESN","There are no matches");
             $scope.details1 = req.data1;
             $scope.details2 = req.data2;
 
@@ -240,6 +291,7 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
       //}
     };
     $scope.showAnnouncement = function () {
+        $rootScope.$emit("loginGetAnnouncement");
         for (var item in $scope.showList) {
             $scope.showList[item] = false;
         }
@@ -262,6 +314,12 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["shareStatus"] = true;
     };
 
+    $scope.showOwnProfile = function() {
+        for (var item in $scope.showList) {
+            $scope.showList[item] = false;
+        }
+        $scope.showList["ownProfileManagement"] = true;
+    };
 
     $scope.showGroup = function() {
         for (var item in $scope.showList) {
@@ -271,63 +329,62 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
         $scope.showList["groupList"] = true;
     };
     mySocket.on("userJoined",function(username){
-        if ($scope.logined) {
-            $http({
-                method: "get",
-                url: "/userlist"
-            }).then(function successCallback(response) {
-                $scope.details1 = response.data.data1;
-                $scope.details2 = response.data.data2;
-                $scope.statusList = response.data.status;
-                $scope.historyList1 = $scope.details1;
-                $scope.historyList2 = $scope.details2;
-                $scope.historyStatus = $scope.statusList;
-                console.log(username);
-            }, function errorCallback(response) {
-                console.log(response);
-                console.log("Error in displaying the directory");
-            });
-        }
+        showDirectory();
     });
 
     mySocket.on("userleft",function(){
-        if ($scope.logined) {
-            $http({
-                method: "get",
-                url: "/userlist"
-            }).then(function successCallback(response) {
-                $scope.details1 = response.data.data1;
-                $scope.details2 = response.data.data2;
-                $scope.statusList = response.data.status;
-                $scope.historyList1 = $scope.details1;
-                $scope.historyList2 = $scope.details2;
-                $scope.historyStatus = $scope.statusList;
-            }, function errorCallback(response) {
-                console.log(response);
-                console.log("Error in displaying the directory");
-            });
+        showDirectory();
+    });
+    //maybe need to remove
+    // mySocket.on("windowclose", function(){
+    //     if ($scope.logined) {
+    //         $http({
+    //             method:"post",
+    //             url:"/logout",
+    //             data:{username:$scope.username}
+    //         }).success(function(rep){
+    //             // logout
+    //             console.log(rep);
+    //             $scope.logined = false;
+    //             $scope.directoryShow = false;
+    //             $scope.loginShow = true;
+    //         });
+    //         mySocket.emit("left");
+    //     }
+    //     for (var item in $scope.showList) {
+    //         $scope.showList[item] = false;
+    //     }
+    //     $scope.showList["login"] = true;
+    // });
+
+    mySocket.on("Name Change", function(data) {
+        if(data["profileusername"] == $scope.userClass["username"]){
+            logout();
+        }else{
+            showDirectory();
         }
     });
-    mySocket.on("windowclose", function(){
-        if ($scope.logined) {
-            $http({
-                method:"post",
-                url:"/logout",
-                data:{username:$scope.username}
-            }).success(function(rep){
-                // logout
-                console.log(rep);
-                $scope.logined = false;
-                $scope.directoryShow = false;
-                $scope.loginShow = true;
-            });
-            mySocket.emit("left");
+
+    mySocket.on("Password Change", function(data) {
+        if(data["profileusername"] == $scope.userClass["username"]){
+            logout();
         }
-        for (var item in $scope.showList) {
-            $scope.showList[item] = false;
-        }
-        $scope.showList["login"] = true;
     });
+
+    mySocket.on("Accountstatus Change", function(data) {
+        if(data["profileusername"] == $scope.userClass["username"]){
+            logout();
+        }else{
+            showDirectory();
+        }
+    });
+
+    mySocket.on("Privilegelevel Change", function(data) {
+        if(data["profileusername"] == $scope.userClass["username"]){
+            logout();
+        }
+    });
+
 
     // in directory, open private chat
     $scope.openPrivateChat = function (sender) {
@@ -336,54 +393,67 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             $rootScope.$emit("openPrivateChat");
         }
         else {
-            alert("Only in WeChat you can chat with yourself! Not here!");
+            alertify.alert("ESN","Only in WeChat you can chat with yourself! Not here!");
+        }
+    };
+
+    $scope.showProfile = function (profileusername) {
+        if (profileusername != $scope.userClass["username"]) {
+            $scope.profile["profileusername"] = profileusername;
+            $scope.profile["newusername"] = profileusername;
+            $rootScope.$emit("openProfile");
+        }
+        else {
+            alertify.alert("ESN","You cannot update your own data");
         }
     };
 });
 
-function addUser($scope, $rootScope, $http, tmpUsername, mySocket) {
-    var add = confirm("User does not exist, do you want to sign up?");
-    if (add) {
-        $http({
-            method:"post",
-            url:"/signup",
-            data:{username:$scope.username, password:$scope.password}
-        }).success(function(rep){
-            if (rep.success == 1) {
-                // sign up success
-                alert("Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
-                $scope.userClass["username"] = tmpUsername;
-                $scope.logined = true;
-                $scope.showList.login = false;
-                displayDirectory($scope, $http);
-                mySocket.emit("userJoinCommunity", tmpUsername);
-                // After logged in, get announcements, private chats, etc.
-                $rootScope.$emit("loginGetAnnouncement");
-                $rootScope.$emit("loginGetPrivateChatList");
-                $rootScope.$emit("loginGetShareStatus");
-                $rootScope.$emit("loginGetGroupList");
-            }
-            else {
-                // sign up failed
-                if (rep.err_type == 1) {
-                    // data base error
-                }
-                else if (rep.err_type == 4) {
-                    // username or password invalid
-                    alert("Password invalid!");
-                }
-                else {
-                    console.log("Unexpected");
-                }
-            }
-        }).error(function (rep) {
-            console.log(rep);
-        });
-    }
-    else {
-        console.log("Unexpected error in joinCommunity.js");
-    }
-}
+// function addUser($scope, $rootScope, $http, tmpUsername, mySocket) {
+//     var add = confirm("User does not exist, do you want to sign up?");
+//     if (add) {
+//         $http({
+//             method:"post",
+//             url:"/signup",
+//             data:{username:$scope.username, password:$scope.password}
+//         }).success(function(rep){
+//             if (rep.success == 1) {
+//                 // sign up success
+//                 alert("Sign up success! You can use these status: OK:Green, Help:Yellow, Emergency:Red, Undefined.");
+//                 $scope.userClass["username"] = tmpUsername;
+//                 $scope.logined = true;
+//                 $scope.showList.login = false;
+//                 $scope.showList.directory = true;
+//                 showDirectory();
+//                 // displayDirectory($scope, $http);
+//                 mySocket.emit("userJoinCommunity", tmpUsername);
+//                 // After logged in, get announcements, private chats, etc.
+//                 $rootScope.$emit("loginGetAnnouncement");
+//                 $rootScope.$emit("loginGetPrivateChatList");
+//                 $rootScope.$emit("loginGetShareStatus");
+//                 $rootScope.$emit("loginGetGroupList");
+//             }
+//             else {
+//                 // sign up failed
+//                 if (rep.err_type == 1) {
+//                     // data base error
+//                 }
+//                 else if (rep.err_type == 4) {
+//                     // username or password invalid
+//                     alert("Password invalid!");
+//                 }
+//                 else {
+//                     console.log("Unexpected");
+//                 }
+//             }
+//         }).error(function (rep) {
+//             console.log(rep);
+//         });
+//     }
+//     else {
+//         console.log("Unexpected error in joinCommunity.js");
+//     }
+// }
 
 function check_usr(username){
     if(!username) {
@@ -404,36 +474,25 @@ function check_usr(username){
     return true;
 }
 
-/*function check_pwd(password) {
-    if (!password) {
-        return false;
-    }
-    var b=/^[a-zA-Z\d]\w{4,18}[a-zA-Z\d]$/;
-    if(!b.test(password)) {
-        //alert("Invalid password. Password should start with an alphabet or number and must be atleast 4 characters long");
-        return false;
-    }
-    return true;
-}*/
 
 
 /*
     Komala write this function
 */
-function displayDirectory($scope, $http) {
-    $scope.showList.directory = true;
-    $http({
-        method:"get",
-        url:"/userlist"
-    }).then(function successCallback(response) {
-        $scope.details1 = response.data.data1;
-        $scope.details2 = response.data.data2;
-        $scope.statusList = response.data.status;
-        $scope.historyList1 = $scope.details1;
-        $scope.historyList2 = $scope.details2;
-        $scope.historyStatus = $scope.statusList;
-    }, function errorCallback(response) {
-        console.log(response);
-        console.log("Error in displaying the directory");
-    });
-}
+// function displayDirectory($scope, $http) {
+//     $scope.showList.directory = true;
+//     $http({
+//         method:"get",
+//         url:"/userlist"
+//     }).then(function successCallback(response) {
+//         $scope.details1 = response.data.data1;
+//         $scope.details2 = response.data.data2;
+//         $scope.statusList = response.data.status;
+//         $scope.historyList1 = $scope.details1;
+//         $scope.historyList2 = $scope.details2;
+//         $scope.historyStatus = $scope.statusList;
+//     }, function errorCallback(response) {
+//         console.log(response);
+//         console.log("Error in displaying the directory");
+//     });
+// }

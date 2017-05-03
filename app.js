@@ -13,7 +13,6 @@ var test_no_city_no_map = require("./routes/test_no_city_no_map");
 var chatPubliclyRouter = require("./routes/chatPubliclyRouter");
 var http = require("http");
 var app = express();
-// app.set("port", (process.env.PORT || 5000));
 var server = http.createServer(app);
 var io = require("socket.io").listen(server);
 // var io;
@@ -26,9 +25,13 @@ var PostAnnouncementCtrl = require("./controller/PostAnnouncementCtrl.js");
 var ShareStatusCtrl = require("./controller/ShareStatusCtrl");
 var GroupChatCtrl = require("./controller/GroupChatCtrl.js");
 var EmergencyShelterCtrl = require("./controller/EmergencyShelterCtrl.js");
+var ProfileManagementCtrl = require("./controller/ProfileManagementCtrl.js");
+var OwnProfileManagementCtrl = require("./controller/OwnProfileManagementCtrl.js");
 
 // init data
-EmergencyShelterCtrl.initData();
+EmergencyShelterCtrl.initData(function (args) {});
+
+ProfileManagementCtrl.checkDefaultAdmin(function (args) {});
 
 // var sockets = require("./socket.js");
 // view engine setup
@@ -36,7 +39,8 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+// app.use(favicon(path.join(__dirname+'/favicon.ico')));
+
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -89,6 +93,14 @@ app.post("/groupchat/create", GroupChatCtrl.createGroup);
 app.get("/groupchat/message/:group", GroupChatCtrl.LoadGroupHistoryMessage);
 app.post("/groupchat/message", GroupChatCtrl.AddGroupMessage);
 
+app.get("/profile/:profileusername", ProfileManagementCtrl.getProfile);
+app.post("/profile", ProfileManagementCtrl.updateProfile);
+app.post("/updatename", ProfileManagementCtrl.updateName);
+app.post("/updateaccountstatus", ProfileManagementCtrl.updateAccountStatus);
+
+app.get("/ownprofile/:username", OwnProfileManagementCtrl.getOwnProfile);
+app.post("/ownprofile", OwnProfileManagementCtrl.updateOwnProfile);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error("Not Found");
@@ -108,24 +120,6 @@ app.use(function(err, req, res, next) {
 });
 // var server;
 
-
-// exports.start = function(cb) {
-//     server = app.listen(process.env.PORT || 5000, function() {
-//         io = sockets(server);
-//         if (cb) {
-//             cb();
-//         }
-//     });
-// };
-//
-// exports.close = function(cb) {
-//     if (io) io.close();
-//     if (server) server.close(cb);
-// };
-// // when app.js is launched directly
-// if (module.id === require.main.id) {
-//     exports.start();
-// }
 module.exports = app;
 //
 var ConnectedSockets = {};
@@ -142,6 +136,11 @@ io.on("connection", function(socket) {
     socket.on("Private Message", privateChat2.privateMessageSocket(socket, ConnectedSockets));
     socket.on("Group Message", GroupChatCtrl.groupMessageSocket(socket, ConnectedSockets));
     socket.on("Create Group", GroupChatCtrl.createGroupSocket(socket, ConnectedSockets));
+    socket.on("Name Change", JoinCommunityCtrl.updateNameSocket(socket));
+    socket.on("Password Change", JoinCommunityCtrl.updatePasswordSocket(socket));
+    socket.on("Accountstatus Change", JoinCommunityCtrl.updateAccountstatusSocket(socket));
+    socket.on("Privilegelevel Change", JoinCommunityCtrl.updatePrivilegelevelSocket(socket));
+
 
     //when total number of unread(private+public) message is needed
     //socket.on("GetCount AllUnreadMsg", privateChat.getCount_AllUnreadMsg(socket));
@@ -161,7 +160,7 @@ io.on("connection", function(socket) {
     socket.on("userJoinCommunity", function(username){
         socket.broadcast.emit("userJoined",username);
         ConnectedSockets[username] = socket;
-        //privateChat.UnreadCount(socket, username);
+
     });
 
     socket.on("left", function(username){
@@ -170,6 +169,14 @@ io.on("connection", function(socket) {
             delete ConnectedSockets[username];
         }
     });
+
+    socket.on("Name Change", privateChat2.ReceiverUsernameChange(socket));
+    socket.on("Name Change", publicChat.changeUsernameSocket(socket));
+    socket.on("Name Change", PostAnnouncementCtrl.changeUsernameSocket(socket));
+
+    socket.on("Accountstatus Change", privateChat2.ReceiverAccountstatusChange(socket));
+    socket.on("Accountstatus Change", publicChat.changeAccountStatusSocket(socket));
+    socket.on("Accountstatus Change", PostAnnouncementCtrl.changeAccountStatusSocket(socket));
 });
 
-// module.exports = app;
+

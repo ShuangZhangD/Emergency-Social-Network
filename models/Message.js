@@ -27,6 +27,8 @@ class Message {
             "message": this.message,
             "postTime": this.postTime,
             "emergencystatus": this.EmergencyStatus,
+            "senderaccountstatus" : "Active",
+            "receiveraccountstatus": "Active",
             "ReadStatus": this.ReadStatus
         }, function (err, results) {
             console.log(err);
@@ -34,6 +36,14 @@ class Message {
 
         });
     }
+
+     // delete messages for particular conversation - needed for Inform Emergency Contact use case
+     deleteMessages(db, username, callback) {
+         this.collection = db.collection("MESSAGES");
+         this.collection.remove({"sender" : "EmergencyAdmin", "receiver" : username}, function(err, results) {
+             callback(results, null);
+         });
+     }
 
     //update all private messages between sender and receiver to be read
     updateReadStatus(db, callback) {
@@ -53,17 +63,19 @@ class Message {
         this.collection.find({
             "sender": { $in: [this.sender, this.receiver] },
             "receiver": { $in: [this.sender, this.receiver] },
+            "senderaccountstatus" : "Active",
+            "receiveraccountstatus" : "Active",
             "type": "private"
         }).toArray(function (err, results) {
-            console.log(err);
             var datas = [];
+            console.log(err);
             results.forEach(function (result) {
                 var data = {};
-                data["sender"] = result.sender;
                 data["receiver"] = result.receiver;
+                data["sender"] = result.sender;
                 data["private_msg"] = result.message;
-                data["timestamp"] = result.postTime;
                 data["emergency_status"] = result.emergencystatus;
+                data["timestamp"] = result.postTime;
                 datas.push(data);
             });
             //var jsonString = JSON.stringify(datas);
@@ -82,9 +94,9 @@ class Message {
                 var data = {};
                 data["sender"] = result.sender;
                 data["receiver"] = result.receiver;
-                data["group_msg"] = result.message;
                 data["timestamp"] = result.postTime;
                 data["emergency_status"] = result.emergencystatus;
+                data["group_msg"] = result.message;
                 datas.push(data);
             });
             //var jsonString = JSON.stringify(datas);
@@ -98,6 +110,8 @@ class Message {
             "sender" : sender,
             "receiver": receiver,
             "type" : "private",
+            "senderaccountstatus" : "Active",
+            "receiveraccountstatus" : "Active",
             "ReadStatus": "unread"
         }).toArray(function (err, results) {
             callback(results.length, null);
@@ -109,6 +123,8 @@ class Message {
         this.collection = db.collection("MESSAGES");
         this.collection.distinct("sender",{
             "receiver":this.receiver,
+            "senderaccountstatus" : "Active",
+            "receiveraccountstatus" : "Active",
             "ReadStatus": "unread"
         }, function (err, results) {
             console.log(err);
@@ -120,7 +136,7 @@ class Message {
     getPrivateMsgSenderList(db, callback){
         var receiver = this.receiver;
         this.collection = db.collection("MESSAGES");
-        this.collection.aggregate([{$match: {"type":"private", $or: [{"receiver":receiver}, {"sender":receiver}]}}, {$group: {"_id": {sender: "$sender",receiver: "$receiver"} }}], function (err, results) {
+        this.collection.aggregate([{$match: {"senderaccountstatus" : "Active", "receiveraccountstatus" : "Active", "type":"private", $or: [{"receiver":receiver}, {"sender":receiver}]}}, {$group: {"_id": {sender: "$sender",receiver: "$receiver"} }}], function (err, results) {
             console.log(err);
             var userlist = [];
             results.forEach(function(result){
@@ -139,13 +155,13 @@ class Message {
 
     getAllMessagesForSearch(db, username, words, callback) {
         this.collection = db.collection("MESSAGES");
-        var datas=[];
         var searchTerm = words[0];
+        var datas=[];
         words.forEach(function(word) {
             searchTerm=searchTerm+"|"+word;
         });
         var regExWord = new RegExp(".*" + searchTerm + ".*");
-        this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message":  regExWord, "type":"private"}).toArray(function(err, results) {
+        this.collection.find({$or: [{"sender" : username}, {"receiver":username}], "message":  regExWord, "type":"private", "senderaccountstatus" : "Active", "receiveraccountstatus" : "Active"}).toArray(function(err, results) {
             console.log(err);
             results.forEach(function (result) {
                 var data = {};
@@ -168,12 +184,12 @@ class Message {
             searchTerm=searchTerm+"|"+word;
         });
         var regExWord = new RegExp(".*" + searchTerm + ".*");
-        this.collection.find({ "message":  regExWord, "type":"public"}).toArray(function(err, results) {
+        this.collection.find({ "message":  regExWord, "type":"public", "senderaccountstatus" : "Active"}).toArray(function(err, results) {
             console.log(err);
             results.forEach(function (result) {
                 var data = {};
-                data["username"] = result.sender;
                 data["pubmsg"] = result.message;
+                data["username"] = result.sender;
                 data["timestamp"] = result.postTime;
                 data["emergencystatus"] = result.emergencystatus;
                 datas.push(data);

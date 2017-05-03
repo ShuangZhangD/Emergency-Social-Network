@@ -1,5 +1,6 @@
 <div class="container" ng-controller="shareStatusCtrl" ng-show="showList.shareStatus">
-<div class="container">
+    <h3> Share Status </h3>
+    <div class="container">
 	<table class="table">
             <tr>
                 <th>
@@ -20,7 +21,7 @@
                     I am OK, I do not need help.
                 </td>
                 <td>
-                    <img src="/images/Okay.png" height="20%" width="50%" />
+                    <button type="button" class="btn btn-success btn-circle btn-lg"><i class="glyphicon glyphicon-ok"></i></button>
                 </td>
             </tr>
             <tr>
@@ -31,7 +32,7 @@
                     I need help, but this is not a life threatening emergency.
                 </td>
                 <td>
-                    <img src="/images/Warning.png" height="20%" width="50%"/>
+                    <button type="button" class="btn btn-warning btn-circle btn-lg"><i class="glyphicon glyphicon-exclamation-sign"></i></button>
                 </td>
             </tr>
         	<tr>
@@ -42,17 +43,17 @@
                     I need help now, as this is a life threatening emergency!
         		</td>
                 <td>
-                    <img src="/images/Emergency.png" height="10%" width="50%"/>
+                    <button type="button" class="btn btn-danger btn-circle btn-lg"><i class="glyphicon glyphicon-remove"></i></button>
                 </td>
             </tr>
         </table>
 		<center>
 		<h5>Your current status is: <span>{{currentstatus.emergencystatus}}</span>
 		<br/> Choose your status: </h5>
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary ok"><input type="radio" name="status" id="OK" value="OK" ng-click="setStatus('OK')">OK</label>
-            <label class="btn btn-primary help"><input type="radio" name="status" id="Help" value="Help" ng-click="setStatus('Help')">Help</label>
-            <label class="btn btn-primary emergency"><input type="radio" name="status" id="Emergency" value="Emergency" ng-click="setStatus('Emergency')">Emergency</label>
+        <div class="btn-group btn-group-justified" data-toggle="buttons">
+            <label class="btn btn-success"><input type="radio" name="status" id="OK" value="OK" ng-click="setStatus('OK')">OK</label>
+            <label class="btn btn-warning"><input type="radio" name="status" id="Help" value="Help" ng-click="setStatus('Help')">Help</label>
+            <label class="btn btn-danger"><input type="radio" name="status" id="Emergency" value="Emergency" ng-click="setStatus('Emergency')">Emergency</label>
         </div>
         </center>
 </div></div>
