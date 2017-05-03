@@ -33,7 +33,7 @@ class User {
             "lastname"  : "",
             "email"  : "",
             "emergencycontact"  : "",
-            "contactemail"  : ""
+            "contactemail"  : this.contactemail
         }, function(err, results) {
             callback(results, null);
         });
