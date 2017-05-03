@@ -56,4 +56,6 @@ app.controller("OwnProfileManagementCtrl", function($window, $scope, $rootScope,
             }
         });
     };
+
+
 });
