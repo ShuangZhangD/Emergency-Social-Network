@@ -1,6 +1,6 @@
 "use strict";
 
-var dboper = require("../models/OwnProfileManagementDBoper");
+var dboper = require("../models/OwnProfileManagementDBOper");
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();
