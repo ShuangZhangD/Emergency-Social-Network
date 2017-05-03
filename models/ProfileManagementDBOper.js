@@ -102,14 +102,21 @@ class ProfileManagementDBoper{
                             }else{
                                 console.log("In updateName in Messages");
                                 var messagecollection = db.collection("MESSAGES");
-                                messagecollection.updateMany({"receiver": profileusername}, {$set :{"receiver": newusername}}, function(err, results) {
+                                messagecollection.updateMany({"receiver": profileusername,"type":{ $in: ["public", "private"] }}, {$set :{"receiver": newusername}}, function(err, results) {
                                     if(err) {
                                         console.log("Error:" + err);
                                     }
                                     else {
                                         var usercollection = db.collection("USERS");
-                                        usercollection.update({"emergencycontact": profileusername}, {$set :{"emergencycontact": newusername}}, callback);
-                                        db.close();
+                                        usercollection.update({"emergencycontact": profileusername}, {$set :{"emergencycontact": newusername}}, function (err,results) {
+                                            if(err){
+
+                                            }else{
+                                                var groupcollection = db.collection("GROUPS");
+                                                groupcollection.updateMany({"username": profileusername}, {$set :{"username": newusername}},callback);
+                                                db.close();
+                                            }
+                                        });
                                     }
                                 });
                             }
@@ -147,7 +154,7 @@ class ProfileManagementDBoper{
 
                             }else{
                                 var messagecollection = db.collection("MESSAGES");
-                                messagecollection.updateMany({"receiver": profileusername}, {$set :{"receiveraccountstatus": accountstatus}},callback);
+                                messagecollection.updateMany({"receiver": profileusername,"type":{ $in: ["public", "private"] }}, {$set :{"receiveraccountstatus": accountstatus}},callback);
                                 db.close();
                             }
                         });
