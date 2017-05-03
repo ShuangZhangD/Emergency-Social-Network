@@ -33,11 +33,10 @@ app.controller("OwnProfileManagementCtrl", function($window, $scope, $rootScope,
             contactemail:$scope.contactemail
         };
 
-        if ((($scope.email == undefined) || ($scope.email == "") || (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.com)+$/.test($scope.email))) && (($scope.contactemail == undefined) || ($scope.contactemail=="") || (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.com)+$/.test($scope.contactemail)))) {
-            console.log("Valid emails");
+        if ((($scope.email == undefined) || ($scope.email == "") || (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test($scope.email))) && (($scope.contactemail == undefined) || ($scope.contactemail=="") || (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test($scope.contactemail)))){            console.log("Valid emails");
         }
         else {
-            alertify.alert("ESN","Invalid email format. The format should be of the form <sample@mail.com>.");
+            alertify.alert("ESN","Invalid email format. The format should be of the form sample@mail.com.");
             return;
         }
 
