@@ -35,7 +35,7 @@ class PostAnnouncementDBoper {
                 callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             var collection = db.collection("announcement");
-            collection.find({}).toArray(function(err, results){
+            collection.find({"accountstatus":"Active"}).toArray(function(err, results){
                 var datas = [];
                 results.forEach(function(result){
                     var data = {};
@@ -66,7 +66,7 @@ class PostAnnouncementDBoper {
                     searchTerm=searchTerm+"|"+word;
                 });
                 var regExWord = new RegExp(".*" + searchTerm + ".*");
-                collection.find({ "announcement":  regExWord}).toArray(function(err, results) {
+                collection.find({ "announcement":  regExWord, "accountstatus":"Active"}).toArray(function(err, results) {
                     results.forEach(function (result) {
                         var data = {};
                         data["username"] = result.username;

@@ -86,25 +86,38 @@ class ShareStatusDBoper{
                       //console.log("Error updating the status " + err);
                   }
                   else {
-                      if(results.length===0 || results[0].contactemail === "") {
-                          console.log("No contactemail found, not sending a mail");
+
+                      // if(results.length===0 || results[0].contactemail === "") {
+                      //     console.log("No contactemail found, not sending a mail");
+                      // }
+                      //else {
+                      var tosend;
+                      var changeduser;
+                      var emstatus;
+                      console.log("printing below");
+                      console.log(results[0]);
+                      console.log(results[0].contactemail);
+                      if(results[0] == undefined || results[0].contactemail == "") {
+                          tosend="emergencyservicenetworkfse@gmail.com";
+                          changeduser = "test123";
+                          emstatus = "OK";
+
                       }
                       else {
+                            tosend = results[0].contactemail;
+                            changeduser = results[0].username;
+                            emstatus = results[0].emergencystatus;
+                      }
                           let mailOptions = {
                               from: '"Emergency Service Network" <emergencyservicenetworkfse@gmail.com>', // sender address
-                              to: results[0].contactemail, // list of receivers
+                              to: tosend, // list of receivers
                               subject: "Status Update", // Subject line
-                              text: "Your contact has updated their emergency information. " + results[0].username + " updated the emergency status to " + results[0].emergencystatus + "."// plain text body
+                              text: "Your contact has updated their emergency information. " + changeduser + " updated the emergency status to " + emstatus + "."// plain text body
                           };
 
                           // send mail with defined transport object
-                          transporter.sendMail(mailOptions, (error, info) => {
-                              if (error) {
-                                  console.log(error);
-                              }
-                              //console.log('Message %s sent: %s', info.messageId, info.response);
-                            });
-                      }
+                          transporter.sendMail(mailOptions, (error, info) => {});
+                      //}
                       callback(err, data);
                   }
               });
@@ -136,14 +149,14 @@ class ShareStatusDBoper{
 
                                       let newpcdboper = new PrivateChatDBOper("EmergencyAdmin", results[0].emergencycontact, url);
                                       newpcdboper.InsertMessage(data, function(statuscode, content){
-                                          if(statuscode == success_statuscode){
-                                              //res.json({success:1, suc_msg: "Success"});
-                                              console.log("Message inserted");
-                                          }
-                                          else{
-                                              //res.json({success:0, err_type: 1, err_msg:content});
-                                              console.log("error in adding message");
-                                          }
+                                          // if(statuscode == success_statuscode){
+                                          //     //res.json({success:1, suc_msg: "Success"});
+                                          //     console.log("Message inserted");
+                                          // }
+                                          // else{
+                                          //     //res.json({success:0, err_type: 1, err_msg:content});
+                                          //     console.log("error in adding message");
+                                          // }
                                       });
                                       callback(err, data);
                       //}

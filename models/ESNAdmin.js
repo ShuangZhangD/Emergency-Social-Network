@@ -25,19 +25,19 @@ class ESNAdmin {
         MongoClient.connect(url, function(err, db) {
             var collection = db.collection("USERS");
             collection.find({"privilegelevel": "Administrator"}).toArray(function (err, results) {
-                if (err) {
-                    console.log("err");
-                    db.close();
-                }
-                else {
+                //if (err) {
+                    //console.log("err");
+                 //   db.close();
+                //}
+                //else {
                     if (results.length == 0) {
                         // if no admin exists
                         collection.find({"username": "ESNAdmin"}).toArray(function (err, results) {
-                            if (err) {
-                                console.log("err");
-                                db.close();
-                            }
-                            else {
+                            //if (err) {
+                                //console.log("err");
+                               // db.close();
+                            //}
+                            //else {
                                 if (results.length == 0) {
                                     // no ESNAdmin, insert.
                                     collection.insert(default_ESNAdmin, function (err, results) {
@@ -52,7 +52,7 @@ class ESNAdmin {
                                         db.close();
                                     });
                                 }
-                            }
+                           // }
                         });
                     }
                     else {
@@ -60,7 +60,7 @@ class ESNAdmin {
                         callback("Some admin exists.");
                         db.close();
                     }
-                }
+                //}
             });
         });
     }
