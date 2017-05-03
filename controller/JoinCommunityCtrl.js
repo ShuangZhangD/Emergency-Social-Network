@@ -217,7 +217,7 @@ class JoinCommunityController {
                 var sorted_content2 = SortUserList(content2);
                 dboper.GetAllUsernameAndEmergencyStatus(url, function (statuscode, user_status) {
                     dboper.GetAllUsernameAndAccountstatus(url, function (statuscode1, user_status1) {
-
+                        console.log(user_status1);
                         var directory_search_result1 = [];
                         var directory_search_result2 = [];
                         for (var i = 0; i <= sorted_content1.length - 1; i++) {

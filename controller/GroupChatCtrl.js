@@ -50,7 +50,8 @@ class GroupChatCtrl{
 
         let dboper = new GroupChatDBOper(group, username, url);
         dboper.leaveGroup(function(err, content){
-                res.json({success:1, suc_msg: "Success"});
+            console.log(content);
+            res.json({success:1, suc_msg: "Success"});
         });
     }
 
@@ -109,14 +110,11 @@ class GroupChatCtrl{
         };
     }
 
-
-
     createGroupSocket (socket, ConnectedSockets){
         return function(data) {
             socket.broadcast.emit("Create Group", data);
         };
     }
-
 
     changeUsernameSocket (socket) {
         return function(params) {

@@ -4,7 +4,6 @@
 "use strict";
 var MongoClient = require("mongodb").MongoClient;
 var PrivateChatDBOper = require("./PrivateChatDBOper.js");
-var User = require("./User.js");
 var db_err_msg = "Database Error";
 
 //var url = "mongodb://localhost:27017/test";
