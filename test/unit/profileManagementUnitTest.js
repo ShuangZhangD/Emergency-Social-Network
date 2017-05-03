@@ -27,7 +27,7 @@ var error_url = "mongodb://root:123@ds137730.mlab.com:37730/esns";
 var server = request.agent("https://quiet-peak-31270.herokuapp.com");
 // var server = request.agent("http://localhost:5000");
 
-var dboper = require("../../models/ProfileManagementDBoper");
+var dboper = require("../../models/ProfileManagementDBOper");
 
 var test_ESNAdmin = {
     "username": "ESNAdmin",

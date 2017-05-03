@@ -231,4 +231,16 @@ app.controller("groupChatListCtrl", function ($window, $scope, $rootScope, $http
     mySocket.on("Create Group", function(data) {
             $scope.allGroupList.push(data);
     });
+
+    mySocket.on("Username Changed In Group", function(data) {
+        if ($scope.showList.groupChatContent) {
+            getGroupMsgs();
+        }
+    });
+
+    mySocket.on("AccountStatus Changed In Group", function(data) {
+        if ($scope.showList.groupChatContent) {
+            getGroupMsgs();
+        }
+    });
 });

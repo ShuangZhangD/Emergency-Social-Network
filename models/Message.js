@@ -86,7 +86,8 @@ class Message {
         this.collection = db.collection("MESSAGES");
         this.collection.find({
             "receiver": this.receiver ,
-            "type": "group"
+            "type": "group",
+            "senderaccountstatus" : "Active"
         }).toArray(function (err, results) {
             console.log(err);
             var datas = [];

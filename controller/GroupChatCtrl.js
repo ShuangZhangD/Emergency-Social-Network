@@ -116,6 +116,19 @@ class GroupChatCtrl{
             socket.broadcast.emit("Create Group", data);
         };
     }
+
+
+    changeUsernameSocket (socket) {
+        return function(params) {
+            socket.broadcast.emit("Username Changed In Group", params);
+        };
+    }
+
+    changeAccountStatusSocket (socket) {
+        return function(params) {
+            socket.broadcast.emit("AccountStatus Changed In Group", params);
+        };
+    }
 }
 
 let groupChatCtrl = new GroupChatCtrl();
@@ -128,5 +141,8 @@ module.exports={
     AddGroupMessage: groupChatCtrl.AddGroupMessage,
     LoadGroupHistoryMessage: groupChatCtrl.LoadGroupHistoryMessage,
     groupMessageSocket:groupChatCtrl.groupMessageSocket,
-    createGroupSocket:groupChatCtrl.createGroupSocket
+    createGroupSocket:groupChatCtrl.createGroupSocket,
+    changeUsernameSocket:groupChatCtrl.changeUsernameSocket,
+    changeAccountStatusSocket:groupChatCtrl.changeAccountStatusSocket
+
 };
