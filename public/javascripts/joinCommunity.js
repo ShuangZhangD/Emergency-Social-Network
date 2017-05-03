@@ -276,14 +276,51 @@ app.controller("joinCommunityCtrl", function($window, $scope, $rootScope, $http,
             method : "post",
             url : "/userlist/searchname/",
             data: SearchKeys
-        }).success(function(req){
+        }).success(function(response){
 
             console.log("In search");
-            console.log(req.data1);
-            if(req.data1.length ===0 && req.data2.length ===0)
+            console.log(response.data1);
+
+            console.log(response.data1);
+            console.log(response.status);
+
+            // console.log(response.accountstatus);
+            if(response.data1.length ===0 && response.data2.length ===0)
                 alertify.alert("ESN","There are no matches");
-            $scope.details1 = req.data1;
-            $scope.details2 = req.data2;
+
+
+
+            if($scope.userClass["privilegelevel"] == "Citizen" || $scope.userClass["privilegelevel"] == "Coordinator"){
+                var directory_account_result1 = [];
+                var directory_account_result2 = [];
+                for(var i = 0 ; i <= response.data1.length-1 ; i++){
+                    var name1 = response.data1[i];
+                    if($scope.accountstatus[name1] == "Active"){
+                        console.log("online active+++++++++++"+directory_account_result1);
+
+                        directory_account_result1.push(response.data1[i]);
+                    }
+                }
+
+                for(i = 0 ; i <= response.data2.length-1 ; i++){
+                    var name2 = response.data2[i];
+                    if($scope.accountstatus[name2] == "Active"){
+                        directory_account_result2.push(response.data2[i]);
+                    }
+                }
+                console.log("online active"+directory_account_result1);
+                if(directory_account_result1.length ===0 &&directory_account_result2.length === 0){
+                    alertify.alert("ESN","There are no matches");
+                }
+
+                $scope.details1 = directory_account_result1;
+                $scope.details2 = directory_account_result2;
+
+            } else{
+                $scope.details1 = response.data1;
+                $scope.details2 = response.data2;
+            }
+
 
             // $scope.showList["annoucementSearchResult"] = true;
             $scope.namesearchmsg="";
