@@ -1,7 +1,7 @@
 "use strict";
 
 var esnAdmin = require("../models/ESNAdmin");
-var dboper = require("../models/ProfileManagementDBoper");
+var dboper = require("../models/ProfileManagementDBOper");
 var DBConfig = require("./DBConfig");
 let dbconfig = new DBConfig();
 var url = dbconfig.getURL();

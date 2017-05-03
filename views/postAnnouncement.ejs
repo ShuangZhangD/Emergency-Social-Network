@@ -33,14 +33,15 @@
         </div>
     </div>
     <div class="container" ng-show="showList.announcementHistory">
-        <!--<div class="form-signin" ng-show="userClass.privilegelevel != 'Citizen'">-->
-            <!--<input ng-model="announcement_content" id="postAnnouncement" type="text" class="form-control" placeholder="Post Announcement" required autofocus>-->
-            <!--<button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="submitAnnouncement()">Post Announcement</button>-->
-        <!--</div>-->
-
-         <center>
+        <div class="form-signin" ng-show="userClass.privilegelevel != 'Citizen'">
+            <center>
                 <input style="border: 1px solid #ccc; height:45px; width:74%" ng-model="announcement_content" size="30" id="postAnnouncement" type="text" placeholder="Post Announcement" required autofocus>
                 <button type="button" ng-click="submitAnnouncement()" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-send"></i></button>
-         </center>
+            </center>
+            <!--<input ng-model="announcement_content" id="postAnnouncement" type="text" class="form-control" placeholder="Post Announcement" required autofocus>-->
+            <!--<button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="submitAnnouncement()">Post Announcement</button>-->
+        </div>
+
+
     </div>
 </div>
