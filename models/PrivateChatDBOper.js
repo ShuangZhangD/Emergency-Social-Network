@@ -118,11 +118,11 @@ class PrivateChatDBOper {
                                 if(i == unread_senderlist.length-1){
                                     callback(success_statuscode, results);
                                 }
-                            })
+                            });
                         })(i);
                     }
                     db.close();
-                })
+                });
             }
         });
     }

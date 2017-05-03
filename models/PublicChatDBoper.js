@@ -49,7 +49,6 @@ class PublicChatDBoper {
                         data["timestamp"] = result.postTime;
                         data["emergencystatus"] = result.emergencystatus;
                         data["senderaccountstatus"] = result.senderaccountstatus;
-                        //console.log("1111====="+result.senderaccountstatus);
                         if(result.senderaccountstatus=="Active") {
                             datas.push(data);
                         }
@@ -58,8 +57,8 @@ class PublicChatDBoper {
                     callback(err,datas);
                 }
                 db.close();
-            })
-        })
+            });
+        });
     }
 
     SearchPublicMessages(words, url, callback) {

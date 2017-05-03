@@ -37,13 +37,13 @@ class Message {
         });
     }
 
-     // delete messages for particular conversation - needed for Inform Emergency Contact use case
-     deleteMessages(db, username, callback) {
-         this.collection = db.collection("MESSAGES");
-         this.collection.remove({"sender" : "EmergencyAdmin", "receiver" : username}, function(err, results) {
-             callback(results, null);
-         });
-     }
+    // delete messages for particular conversation - needed for Inform Emergency Contact use case
+    deleteMessages(db, username, callback) {
+        this.collection = db.collection("MESSAGES");
+        this.collection.remove({"sender" : "EmergencyAdmin", "receiver" : username}, function(err, results) {
+            callback(results, null);
+        });
+    }
 
     //update all private messages between sender and receiver to be read
     updateReadStatus(db, callback) {
