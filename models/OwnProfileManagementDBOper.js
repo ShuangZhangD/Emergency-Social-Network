@@ -38,15 +38,15 @@ class OwnProfileManagementDBoper{
                 var usercollection = db.collection("USERS");
                 var data={};
                 usercollection.find({"username": username}).toArray(function(err, results){
-                          results.forEach(function(result){
-                              data["username"] = result.username;
-                              data["firstname"] = result.firstname;
-                              data["lastname"] = result.lastname;
-                              data["email"] = result.email;
-                              data["emergencycontact"] = result.emergencycontact;
-                              data["contactemail"] = result.contactemail;
-                          });
-                      callback(err, data);
+                    results.forEach(function(result){
+                        data["username"] = result.username;
+                        data["firstname"] = result.firstname;
+                        data["lastname"] = result.lastname;
+                        data["email"] = result.email;
+                        data["emergencycontact"] = result.emergencycontact;
+                        data["contactemail"] = result.contactemail;
+                    });
+                    callback(err, data);
                 });
             }
             //db.close();

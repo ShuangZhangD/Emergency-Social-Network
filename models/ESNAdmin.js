@@ -16,7 +16,7 @@ var default_ESNAdmin = {
 };
 
 class ESNAdmin {
-    
+
     constructor() {
 
     }
@@ -25,42 +25,32 @@ class ESNAdmin {
         MongoClient.connect(url, function(err, db) {
             var collection = db.collection("USERS");
             collection.find({"privilegelevel": "Administrator"}).toArray(function (err, results) {
-                //if (err) {
-                    //console.log("err");
-                 //   db.close();
-                //}
-                //else {
-                    if (results.length == 0) {
-                        // if no admin exists
-                        collection.find({"username": "ESNAdmin"}).toArray(function (err, results) {
-                            //if (err) {
-                                //console.log("err");
-                               // db.close();
-                            //}
-                            //else {
-                                if (results.length == 0) {
-                                    // no ESNAdmin, insert.
-                                    collection.insert(default_ESNAdmin, function (err, results) {
-                                        callback("Insert ESNAdmin.");
-                                        db.close();
-                                    });
-                                }
-                                else {
-                                    // ESNAdmin exists but not admin, update.
-                                    collection.update({"username" : "ESNAdmin"}, {$set : {"privilegelevel": "Administrator"}}, function (err, results) {
-                                        callback("Update ESNAdmin.");
-                                        db.close();
-                                    });
-                                }
-                           // }
-                        });
-                    }
-                    else {
-                        // some admin exists, do nothing
-                        callback("Some admin exists.");
-                        db.close();
-                    }
-                //}
+                if (results.length == 0) {
+                    // if no admin exists
+                    collection.find({"username": "ESNAdmin"}).toArray(function (err, results) {
+                        if (results.length == 0) {
+                            // no ESNAdmin, insert.
+                            collection.insert(default_ESNAdmin, function (err, results) {
+                                console.log(results);
+                                callback("Insert ESNAdmin.");
+                                db.close();
+                            });
+                        }
+                        else {
+                            // ESNAdmin exists but not admin, update.
+                            collection.update({"username" : "ESNAdmin"}, {$set : {"privilegelevel": "Administrator"}}, function (err, results) {
+                                console.log(results);
+                                callback("Update ESNAdmin.");
+                                db.close();
+                            });
+                        }
+                    });
+                }
+                else {
+                    // some admin exists, do nothing
+                    callback("Some admin exists.");
+                    db.close();
+                }
             });
         });
     }
