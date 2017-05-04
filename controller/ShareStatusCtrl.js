@@ -90,6 +90,7 @@ class ShareStatusController {
     }
 }
 
+
 let ssc = new ShareStatusController();
 
 module.exports = {
