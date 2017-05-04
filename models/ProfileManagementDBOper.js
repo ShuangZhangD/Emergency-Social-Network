@@ -18,9 +18,10 @@ class ProfileManagementDBoper{
         var password = data["newpassword"];
         var profilepassword = data["profilepassword"];
         var newusername = data["newusername"];
-        if(profilepassword != password) {
-            // Need to compute hash only if password is changed
+        //if(profilepassword != password) {
+        if(password.length < 20) {    // Need to compute hash only if password is changed
             password = md5(password);
+        //}
         }
         MongoClient.connect(url, function (err, db) {
             //console.log("Connected to "+url+" Successfully");

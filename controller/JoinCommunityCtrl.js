@@ -262,7 +262,7 @@ class JoinCommunityController {
     }
     updateAccountstatusSocket (socket) {
         return function(data) {
-            socket.emit("Post Announcement", data);
+            socket.emit("Accountstatus Change", data);
             socket.broadcast.emit("Accountstatus Change", data);
         };
     }
