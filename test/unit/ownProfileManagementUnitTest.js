@@ -34,7 +34,7 @@ suite('Inform Emergency Contact Unit Tests', function(){
 
     test("New User ProfileTestUser SignUp", function(done){
         dboper.RemoveUser("profiletestuser", url, function (statuscode1, content1){
-            dboper.AddDB("profiletestuser2", "testpwd", url, function (statuscode1, content1){
+            dboper.AddDB("profiletestuser3", "testpwd", url, function (statuscode1, content1){
                 expect(statuscode1).to.equal(200);
             });
         });

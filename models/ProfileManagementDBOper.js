@@ -86,42 +86,42 @@ class ProfileManagementDBoper{
                 var announcementcollection = db.collection("announcement");
                 //insert into table
                 announcementcollection.updateMany({"username": profileusername}, {$set :{"username": newusername}},function (err, results) {
-                    if (err) {
-                        console.log("Error:"+ err);
-                        console.log(results);
-                    }
-                    else {
+                    // if (err) {
+                    //     console.log("Error:"+ err);
+                    //     console.log(results);
+                    // }
+                    //else {
                         console.log("In updateName in ANN");
 
                         var messagecollection = db.collection("MESSAGES");
                         messagecollection.updateMany({"sender": profileusername}, {$set :{"sender": newusername}},function (err, results) {
-                            if(err){
-                                console.log("Error:"+ err);
-                                console.log(results);
-                            }else{
+                            // if(err){
+                            //     console.log("Error:"+ err);
+                            //     console.log(results);
+                            // }else{
                                 console.log("In updateName in Messages");
                                 var messagecollection = db.collection("MESSAGES");
                                 messagecollection.updateMany({"receiver": profileusername,"type":{ $in: ["public", "private"] }}, {$set :{"receiver": newusername}}, function(err, results) {
-                                    if(err) {
-                                        console.log("Error:" + err);
-                                        console.log(results);
-                                    }
-                                    else {
+                                    // if(err) {
+                                    //     console.log("Error:" + err);
+                                    //     console.log(results);
+                                    // }
+                                    // else {
                                         var usercollection = db.collection("USERS");
                                         usercollection.update({"emergencycontact": profileusername}, {$set :{"emergencycontact": newusername}}, function (err,results) {
-                                            if(err){
-                                                console.log(results);
-                                            }else{
+                                            // if(err){
+                                            //     console.log(results);
+                                            // }else{
                                                 var groupcollection = db.collection("GROUPS");
                                                 groupcollection.updateMany({"username": profileusername}, {$set :{"username": newusername}},callback);
                                                 db.close();
-                                            }
+                                            //}
                                         });
-                                    }
+                                    //}
                                 });
-                            }
+                            //}
                         });
-                    }
+                    //}
                 });
             }
         });
