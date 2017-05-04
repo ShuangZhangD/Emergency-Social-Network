@@ -32,7 +32,7 @@ class User {
             "firstname"  : "",
             "lastname"  : "",
             "email"  : "",
-            "emergencycontact"  : "",
+            "emergencycontact"  : this.emergencycontact,
             "contactemail"  : this.contactemail
         }, function(err, results) {
             callback(results, null);
