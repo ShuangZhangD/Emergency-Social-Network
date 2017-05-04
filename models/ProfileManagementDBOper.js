@@ -77,8 +77,8 @@ class ProfileManagementDBoper{
         MongoClient.connect(url, function (err, db) {
             //console.log("Connected to "+url+" Successfully");
             if (err) {
-                // console.log("Error:"+ err);
-                // callback(400, db_err_msg);// DB Error. Here error of connecting to db
+                console.log("Error:"+ err);
+                callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             else {
                 console.log("In updateName in ProfileManagementCtrlDB");
@@ -87,8 +87,8 @@ class ProfileManagementDBoper{
                 //insert into table
                 announcementcollection.updateMany({"username": profileusername}, {$set :{"username": newusername}},function (err, results) {
                     if (err) {
-                        // console.log("Error:"+ err);
-                        // console.log(results);
+                        console.log("Error:"+ err);
+                        console.log(results);
                     }
                     else {
                         console.log("In updateName in ANN");
@@ -96,21 +96,21 @@ class ProfileManagementDBoper{
                         var messagecollection = db.collection("MESSAGES");
                         messagecollection.updateMany({"sender": profileusername}, {$set :{"sender": newusername}},function (err, results) {
                             if(err){
-                                // console.log("Error:"+ err);
-                                // console.log(results);
+                                console.log("Error:"+ err);
+                                console.log(results);
                             }else{
                                 console.log("In updateName in Messages");
                                 var messagecollection = db.collection("MESSAGES");
                                 messagecollection.updateMany({"receiver": profileusername,"type":{ $in: ["public", "private"] }}, {$set :{"receiver": newusername}}, function(err, results) {
                                     if(err) {
-                                        // console.log("Error:" + err);
-                                        // console.log(results);
+                                        console.log("Error:" + err);
+                                        console.log(results);
                                     }
                                     else {
                                         var usercollection = db.collection("USERS");
                                         usercollection.update({"emergencycontact": profileusername}, {$set :{"emergencycontact": newusername}}, function (err,results) {
                                             if(err){
-                                                // console.log(results);
+                                                console.log(results);
                                             }else{
                                                 var groupcollection = db.collection("GROUPS");
                                                 groupcollection.updateMany({"username": profileusername}, {$set :{"username": newusername}},callback);
@@ -134,20 +134,20 @@ class ProfileManagementDBoper{
             //console.log("Connected to "+url+" Successfully");
             if (err) {
                 //console.log("Error:"+ err);
-                // callback(400, db_err_msg);// DB Error. Here error of connecting to db
+                callback(400, db_err_msg);// DB Error. Here error of connecting to db
             }
             else {
                 var announcementcollection = db.collection("announcement");
                 //insert into table
                 announcementcollection.updateMany({"username": profileusername}, {$set :{"accountstatus": accountstatus}},function (err, results) {
                     if (err) {
-                        // console.log(results);
+                        console.log(results);
                     }
                     else {
                         var messagecollection = db.collection("MESSAGES");
                         messagecollection.updateMany({"sender": profileusername}, {$set :{"senderaccountstatus": accountstatus}},function (err, results) {
                             if(err){
-                                // console.log(results);
+                                console.log(results);
                             }else{
                                 var messagecollection = db.collection("MESSAGES");
                                 messagecollection.updateMany({"receiver": profileusername,"type":{ $in: ["public", "private"] }}, {$set :{"receiveraccountstatus": accountstatus}},callback);
