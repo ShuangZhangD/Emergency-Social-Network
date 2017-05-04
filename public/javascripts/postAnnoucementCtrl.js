@@ -27,7 +27,9 @@ app.controller("postAnnouncementCtrl", function($window, $scope, $rootScope, $ht
     // receive a new announcement from server vie socket.io
     mySocket.on("Post Announcement", function(data) {
         $scope.announcementList.push(data);
-
+        if (data.username != $scope.userClass["username"]) {
+            alert("New Announcement (" + data.username + ") : " + data.announcement);
+        }
     });
 
     //socket on if others' username is changed
