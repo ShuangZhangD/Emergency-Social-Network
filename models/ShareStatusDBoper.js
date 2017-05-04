@@ -122,7 +122,7 @@ class ShareStatusDBoper{
                 var data={};
 
                 usercollection.find({"username": username}).toArray(function(err, results){
-                    var tosend;
+                    var tosend; 
                     var changeduser;
                     var emstatus;
                     if(results[0] == undefined || results[0].emergencycontact == null || results[0].emergencycontact == "") {
