@@ -120,19 +120,20 @@ class ShareStatusDBoper{
                 var usercollection = db.collection("USERS");
                 // usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
                 var data={};
-                var tosend;
-                var changeduser;
-                var emstatus;
-                if(results[0] == undefined || results[0].emergencycontact == null || results[0].emergencycontact == "") {
-                    tosend="sample";
 
-                }
-                else {
-                    tosend = results[0].emergencycontact;
-                    changeduser = results[0].username;
-                    emstatus = results[0].emergencystatus;
-                }
                 usercollection.find({"username": username}).toArray(function(err, results){
+                    var tosend;
+                    var changeduser;
+                    var emstatus;
+                    if(results[0] == undefined || results[0].emergencycontact == null || results[0].emergencycontact == "") {
+                        tosend="sample";
+
+                    }
+                    else {
+                        tosend = results[0].emergencycontact;
+                        changeduser = results[0].username;
+                        emstatus = results[0].emergencystatus;
+                    }
                     var time = new Date();
                     data = {
                         "sender" : "EmergencyAdmin",
