@@ -83,7 +83,7 @@ class ShareStatusDBoper{
                         var emstatus;
                         console.log("printing below");
                         console.log(results[0]);
-                        console.log(results[0].contactemail);
+                        //console.log(results[0].contactemail);
                         if(results[0] == undefined || results[0].contactemail == "") {
                             tosend="emergencyservicenetworkfse@gmail.com";
                             changeduser = "test123";
