@@ -120,16 +120,29 @@ class ShareStatusDBoper{
                 var usercollection = db.collection("USERS");
                 // usercollection.update({"username": username}, {$set :{"EmergencyStatus":emergencystatus}},callback);
                 var data={};
+
                 usercollection.find({"username": username}).toArray(function(err, results){
+                    var tosend; 
+                    var changeduser;
+                    var emstatus;
+                    if(results[0] == undefined || results[0].emergencycontact == null || results[0].emergencycontact == "") {
+                        tosend="sample";
+
+                    }
+                    else {
+                        tosend = results[0].emergencycontact;
+                        changeduser = results[0].username;
+                        emstatus = results[0].emergencystatus;
+                    }
                     var time = new Date();
                     data = {
                         "sender" : "EmergencyAdmin",
-                        "receiver" : results[0].emergencycontact,
-                        "PrivateMsg" : "Your contact " + results[0].username + " has updated the emergency status to " + results[0].emergencystatus + ".",
+                        "receiver" : tosend,
+                        "PrivateMsg" : "Your contact " + changeduser + " has updated the emergency status to " + emstatus + ".",
                         "timestamp" : time
                     };
 
-                    let newpcdboper = new PrivateChatDBOper("EmergencyAdmin", results[0].emergencycontact, url);
+                    let newpcdboper = new PrivateChatDBOper("EmergencyAdmin", tosend, url);
                     newpcdboper.InsertMessage(data, function(statuscode, content){
                         console.log(statuscode);
                         console.log(content);
