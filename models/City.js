@@ -37,13 +37,14 @@ class City {
     initDB(url, callback) {
         var city = this;
         MongoClient.connect(url, function(err, db) {
-            
+
             var collection = db.collection("city");
             collection.find({"name": city.name}).toArray(function(err, results){
-                
+
                 if (results.length === 0) {
                     collection.insert(city.json, function(err, results) {
-                        console.log("insert" + city)
+                        console.log(results);
+                        console.log("insert" + city);
                         callback("insert new city");
                         db.close();
                     });
@@ -52,7 +53,8 @@ class City {
                     let city2 = new City(results[0]);
                     if (!city.compareTo(city2)) {
                         collection.update({"name" : city.name}, {$set : { "location" :  city.location, "shelter": city.shelter}}, function(err, results) {
-                            console.log("update" + city)
+                            console.log(results);
+                            console.log("update" + city);
                             callback("update a city");
                             db.close();
                         });
@@ -62,23 +64,24 @@ class City {
                         db.close();
                     }
                 }
-                
+
             });
-            
+
         });
     }
 
     search(url, keywordList, callback) {
         var city = this;
+        console.log(city);
         MongoClient.connect(url, function (err, db) {
-            
+
             var collection = db.collection("city");
             var query_city = keywordList[0];
             for (var i = 1; i < keywordList.length; i++) {
                 query_city += " " + keywordList[i];
             }
             collection.find({"name": query_city}).toArray(function (err, results) {
-                
+
                 if (results.length > 0) {
                     var result_city = results[0];
                     if (result_city.shelter.length == 0) {
@@ -94,16 +97,16 @@ class City {
                     // keywords match, find possible
                     keywordSearch(collection, keywordList, callback, db);
                 }
-                
+
             });
-            
+
         });
     }
 
 }
 
 var findNearbyCities = function (collection, result_city, callback, db) {
-    collection.ensureIndex( { "location": "2d"} )
+    collection.ensureIndex( { "location": "2d"} );
     collection.find( {"location": { $near:  result_city.location} } ).toArray(function(err, results){
         if(err) {
             console.log("Find city_query Error: " + err);
@@ -114,7 +117,7 @@ var findNearbyCities = function (collection, result_city, callback, db) {
         }
         db.close();
     });
-}
+};
 
 var keywordSearch = function(collection, keywordList, callback, db) {
     var searchTerm = keywordList[0];
@@ -132,6 +135,6 @@ var keywordSearch = function(collection, keywordList, callback, db) {
         }
         db.close();
     });
-}
+};
 
 module.exports = City;

@@ -146,13 +146,13 @@ class GroupChatDBOper {
             else {
                 //set all <sender,receiver> private messages to be read
                 let MSG = new Message("", group, "group", "", "", "", "");
+                console.log(err);
+                //load all private messages between sender and receiver
+                MSG.loadGroupHistoryMsg(db, function (results, err) {
                     console.log(err);
-                    //load all private messages between sender and receiver
-                    MSG.loadGroupHistoryMsg(db, function (results, err) {
-                        console.log(err);
-                        callback(success_statuscode, results);
-                        db.close();
-                    });
+                    callback(success_statuscode, results);
+                    db.close();
+                });
             }
         });
     }
