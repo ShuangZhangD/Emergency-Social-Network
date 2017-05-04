@@ -76,7 +76,7 @@ class ShareStatusController {
                 // console.log("Error:" +err);
                 res.json({success:0, err_type: 1, err_msg:"Database Error"});
             }
-            else {
+            else { 
                 res.json({success:1, data: results});
             }
         });
